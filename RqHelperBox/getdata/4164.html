@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>&nbsp;&nbsp;&nbsp; 对于普通单元格我们可以通过显示格式来控制日期型数据，或者日期时间型数据的显示格式。但是如果单元格编辑风格时下拉日历的话，我们设置的显示格式就不起作用了。比如说客户想把“yyyy-mm-dd”改成“yyyy年mm月dd日”。通过自定义下拉日历控件是可以实现的。但是就为了一个显示格式就去定义一个控件，客户可能会觉得很麻烦，下面就提供一种简单的方法来修改，下拉日历控件的显示格式。<br /> &nbsp; 首先在应用下找到WEB-INF/lib下找到datetimeformat.jar这个jar包，然后用WinRar文件管理器打开，里面有两个文件“datetimeformat_zh.properties”和 “datetimeformat_en.properties”打开这两个文件发现里面的内容是一样的。</p> 
+  <p>date=yyyy-MM-dd<br /> time=HH:mm:ss<br /> datetime=yyyy-MM-dd HH:mm:ss</p> 
+  <p>这里我们把date、time、datetime修改成我们想要的格式，例如：</p> 
+  <p>date=yyyy/MM/dd<br /> time=HH:mm:ss<br /> datetime=yyyy/MM/dd HH:mm:ss</p> 
+  <p>&nbsp;&nbsp;&nbsp; 具体这两个文件的区别我也不清楚，把这两个文件修改好后保存。然后重新启动一下应用服务器。再做一张简单的报表<br /> <img style="width: 446px; height: 129px;" src="/wp-content/uploads/2011/09/748ea086-57f5-42f0-acae-afca372e192d.png" border="0" alt="" width="886" height="355" /></p> 
+  <p>&nbsp;&nbsp;&nbsp; 然后在浏览器下发布这张报表用日历随便选择一个日期。显示效果如下：</p> 
+  <p><img src="/wp-content/uploads/2011/09/798926e3-426c-408e-be29-dc660668f3de.png" border="0" alt="" /><br /> &nbsp;&nbsp; 这样通过简单的修改两个文件就能改变下拉日历的显示格式了。<br /> </p>  
+ </body>
+</html>

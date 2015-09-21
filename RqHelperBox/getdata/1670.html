@@ -1,0 +1,13 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>Web报表设计器不仅要有较强的操作性，同时还要有完善的设计可塑性以满足用户在设计报表时的个性化设计需求。即提供用户全面的web页面显示样式的设计途径，能够方便满足用户进行个性化设计，使设计出来的页面风格统一、整洁美观。润乾报表提供了一系列的方法，可以灵活的设计报表的背景、颜色等项目，使整个页面看起来更加协调、美观，下面就以修改润乾报表提供的下拉日历的样式为例展示一下实现方法以及达到的效果。</p> 
+  <p>润乾报表提供的下拉日历功能，在web报表开发中被广泛应用在查询、填报中，其默认的样式如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/tu1.png" alt="tu1.png" width="266" height="281" /></p> 
+  <p>从上图可以看出，润乾报表提供的下拉日历的样式风格与报表设计的整体的样式风格不太协调。若将下拉日历显示样式改成如下图中的风格，则整个报表发布页面风格更加统一和美观。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/tu2.png" alt="tu2.png" width="268" height="227" /></p> 
+  <p>具体的修改办法是，在发布报表的jsp页面添加如下这段js代码，这是一段设置下拉日历各项内容显示效果的代码。</p> 
+  <p><span style="color: #0000ff;">&lt;script language=javascript&gt;<br /> </span><span style="color: #0000ff;">var _calendarMainBackColor = “#87cefa”;</span> //设置主面板背景颜色<br /> <span style="color: #0000ff;">var _calendarWeekColor = “#ba55d3″;</span> //设置周文字颜色<br /> <span style="color: #0000ff;">var _calendarDayColor = “#191970″;//</span> 设置日期文字颜色<br /> <span style="color: #0000ff;">var _calendarDayBackColor = “#e6e6fa”;</span> //设置日期面板背景颜色<br /> <span style="color: #0000ff;">&lt;/script&gt;</span></p> 
+  <p>其中包括了对下拉日历的主面板背景颜色、周日期问题颜色、日期文字颜色以及日期板背景颜色的设置语句，用户可根据自己设计报表的实际样式改变代码中的具体值，从而调整下拉日历风格与报表的整体风格一致。</p>  
+ </body>
+</html>

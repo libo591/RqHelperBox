@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;">带参数模板的报表，封装打印方法时，要注意传参。</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;">应用举例</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;"><strong>1，如下封装，见下面的jsp代码：</strong></span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;">&lt;%@ page contentType=”text/html;charset=GBK” %&gt;<br /> &lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report” %&gt;<br /> &lt;report:param name=”form1″ paramFileName=”4.4_arg.raq” needSubmit=”yes” /&gt;<br /> &lt;report:html name=”report1″ reportFileName=”4.4.raq”<br /> exceptionPage=”/reportJsp/myError2.jsp”<br /> /&gt;<br /> &lt;a href=”#” onclick=”report1_print();return false”&gt;打印&lt;/a&gt;<br /> &lt;script language=javascript&gt;<br /> function report1_print() {<br /> document.report1_printIFrame.location = ” http://192.168.0.132:6001/demo/reportServlet?action=2&amp;name=report1&amp;reportFileName=4.4.raq&amp;srcType=file&amp;appletJarName=runqianReport4Applet.jar”;<br /> }<br /> &lt;/script&gt;</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;">打印的效果图：</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;"><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-022p5642a4d6.png" alt="" width="554" height="430" /></span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;"><strong>2，如下封装，见下面的jsp代码：</strong></span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;">&lt;%@ page contentType=”text/html;charset=GBK” %&gt;<br /> &lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report” %&gt;<br /> &lt;%<br /> request.setCharacterEncoding(”GBK”);<br /> <span style="color: #ff0000;">String paramsId = request.getParameter(”reportParamsId”);</span><br /> %&gt;<br /> &lt;report:param name=”form1″ paramFileName=”4.4_arg.raq” needSubmit=”yes” /&gt;<br /> &lt;report:html name=”report1″ reportFileName=”4.4.raq”<br /> exceptionPage=”/reportJsp/myError2.jsp”<br /> /&gt;<br /> &lt;a href=”#” onclick=”report1_print();return false”&gt;打印&lt;/a&gt;<br /> &lt;script language=javascript&gt;<br /> function report1_print() {<br /> document.report1_printIFrame.location = ” http://192.168.0.132:6001/demo/reportServlet?action=2&amp;name=report1&amp;reportFileName=4.4.raq&amp;srcType=file&amp;appletJarName=runqianReport4Applet.jar <span style="color: #ff0000;">&amp;reportParamsId=”+”&lt;%=paramsId.toString()% &gt;”;<br /> </span>}<br /> &lt;/script&gt;</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;">打印的效果图：</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;"><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-023neab9398.png" alt="" width="553" height="428" /></span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体; color: black;">1和2两个页面不同的地方是：</span></span></span></span></p> 
+  <p><span style="font-family: 宋体;">String paramsId = request.getParameter(”reportParamsId”);<br /> reportParamsId=&lt;%=paramsId.toString()%&gt;</span></p> 
+  <p><span style="font-family: 宋体;">将这个</span>reportParamsId<span style="font-family: 宋体;">传给了打印方法。</span></p>  
+ </body>
+</html>

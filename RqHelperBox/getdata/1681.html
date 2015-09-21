@@ -1,0 +1,23 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>统计报表的日常工作中都遇到过这样一种情况：每个月填入的数据很多都是一些固定的数据，而这些固定数据之间有着关联对应的关系，如果能在报表中加入一些关联关系，那么只需要填入其中一种数据，其他的数据信息就会根据关联关系自动被填充好，这样即提高了统计人员的工作效率，也减少了可能误填的情况。本文就简要介绍一种在润乾报表设计器中实现此需求的方法。</p> 
+   <p>实现思路：</p> 
+   <p>利用润乾报表中的自动计算功能就可以完成不同单元格信息的自动关联，自动计算表达式采用的是javascript表达式或者函数，并且可以引用单元格的值。</p> 
+   <p>实现步骤：</p> 
+   <p>第一步、设计一张填报表，格式如下图：</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-4rux1i0rc2v2c3.png" alt="报表模板.png" width="319" height="156" /></p> 
+   <p>其中，B2单元格的填报属性中设置成可写单元格，如下图所示：</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-1-e00b74j00edwd.png" alt="填报属性1.png" width="255" height="141" /></p> 
+   <p>在C2单元格的填报属性中设置自动计算函数,如下图中的getName(${B2})，此函数的作用是在getName(${B2})函数中传入B1单元格的值，然后进行自动计算，如下图所示：</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-e00b74j00edwd.png" alt="填报属性2.png" width="256" height="165" /></p> 
+   <p>第二步、编写自动计算函数</p> 
+   <p>在报表发布的jsp文件中编写自动计算函数getName()，当用户在网页上录入数据时触发此函数来完成单元格C2自动计算，具体代码如下：</p> 
+   <p>&lt;script type=”text/javascript”&gt;<br /> var idArray = new Array(1,2,3,4,5); //生成部门ID的数组<br /> var nameArray = new Array(’市场部’,’研发部’,’技术支持部’,’咨询部’,’综合部’);<br /> //生成部门名称的数组<br /> function getName(id){ //自动计算函数<br /> var name = “”;<br /> for(var i=0;i&lt;idArray.length;i++){ //通过循环判断B1单元格输入的值，来计算出应当返回的值<br /> if(idArray[i]==id){<br /> name = nameArray[i];<br /> break;<br /> }<br /> }<br /> return name; // 返回自动计算出的值到C2单元格中<br /> }<br /> &lt;/script&gt;</p> 
+   <p>设置完成后，发布报表预览效果，web预览图如下图所示，左图为用户输入部门ID项；右图为当用户鼠标焦点离开部门ID单元格后，部门名称单元格便自动关联填充上与此ID相对应的部门名称。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-wcsp4n.png" alt="左图.png" width="196" height="126" /><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-nprs4e.png" alt="右图.png" width="196" height="127" /></p> 
+   <p>利用自动计算函数与web报表开发中，能完成多种业务逻辑功能，例如日期的换算、金额的累加或HTML内容样式变换等等。这样的应用可以简化用户的输入，减少失误带来的错误的发生，而且用于自动计算的函数可以由客户自定义JavaScript函数来实现，这种方法简单易行，方便调试，省去了大量编码带来的繁琐与不便。</p> 
+  </div>  
+ </body>
+</html>

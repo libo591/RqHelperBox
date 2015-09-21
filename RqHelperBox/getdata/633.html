@@ -1,0 +1,9 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表实际应用的过程中，有些情况下需要动态改变填报保存数据的数据源。比如：在网页上，根据终端用户选择的不同选项，填报的数据要更新到不同的数据库中，如何实现？</p> 
+  <p>解决方案</p> 
+  <p>这种情况下要调用报表api，在运行的时候改变填报更新的数据源。</p> 
+  <p>ReportDefine rd = (ReportDefine)ReportUtils.read(raq);<br /> INormalCell cell = rd.getCell(2, (short)1);<br /> InputProperty ip = cell.getInputProperty();<br /> ArrayList al = ip.getUpdateList();<br /> UpdateProperty up = (UpdateProperty)al.get(0);<br /> // 获取对应关系<br /> Object relations = up.getRelation();<br /> if(relations instanceof com.runqian.report4.usermodel.input.TableRelations){<br /> TableRelations trs = (TableRelations)relations;<br /> System.out.println(trs.getDataSourceName());<br /> trs.setDataSourceName(“northwind”);<br /> up.setRelation(trs);<br /> ArrayList ups = new ArrayList(1);<br /> ups.add(up);<br /> ip.setUpdateList(ups);<br /> cell.setInputProperty(ip);</p>  
+ </body>
+</html>

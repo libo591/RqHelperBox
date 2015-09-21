@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>当我们将单元格的编辑风格设置成“下拉列表框”的时候，会出现“代码值”和“显示值”的设置。顾名思义，“显示值”就是在页面上显示出来的值，“代码值”是传如SQL语句中进行运算的值。这一点相信大家都明白。</p> 
+  <p>但是，我接到客户这样一个问题：</p> 
+  <p>需求：当选中下拉列表框中的“2月”时，查询出1月和2月的数据，选“3月”查出1月，2月和3月的数据，以此类推。</p> 
+  <p>并且将单元格进行如下设置：</p> 
+  <p>&nbsp;<img title="461" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/461.jpg" alt="461" width="552" height="454" /></p> 
+  <p>然后在SQL语句中使用in来进行过滤：select * from table where yuefen in (?),并且将参数设置成“字符串组”。</p> 
+  <p>也许，我们觉得上面的设置虽然不常见，但是也应该没有什么问题。因为如果像上图那样设置的话，当我们选中一个月份之后，如选中“3月”，SQL语句会变成:select * from table where yuefen in(‘3’,’2’,’1’),这似乎没有什么错误。</p> 
+  <p>的确，在这一步确实找不出什么破绽！</p> 
+  <p>但是，在页面上浏览的时候会出现如下现象：</p> 
+  <p>&nbsp;<img title="471" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/471.jpg" alt="471" width="273" height="251" /></p> 
+  <p>我们会发现“显示值”变成了“1，2月”，“2，1，3月”，原来显示值将一部分的“代码值”给带出来了。</p> 
+  <p>这是因为“代码值”中包含了英文的逗号，从而导致报表的分隔符发生错误。</p> 
+  <p>而且，即便是我们选择“5月”进行查询，产出来的数据也仅仅是与5月对应的，报表并不会将1至5月的数据查询出来。如下图：</p> 
+  <p>&nbsp;<img title="481" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/481.jpg" alt="481" width="549" height="182" /></p> 
+  <p>如果你将“5月”代码值设置成：</p> 
+  <p>&nbsp;<img title="491" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/491.jpg" alt="491" width="402" height="324" /></p> 
+  <p>然后在选择“5月”查询的时候查出的是1月的数据。如下图：</p> 
+  <p>&nbsp;<img title="501" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/501.jpg" alt="501" width="545" height="167" /></p> 
+  <p>其意思已经很明确了，报表在解析代码值当中的数据的时候，只会解析第一个数值或字符串，不会解析逗号之后的数据。</p> 
+  <p>我想造成这种现象，是由于客户对“代码值”的理解有偏差。</p> 
+  <p>如果想实现同事查询多月的数据这类的需求，建议使用教程上的讲解的方法。</p>  
+ </body>
+</html>

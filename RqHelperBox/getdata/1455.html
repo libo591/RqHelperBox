@@ -1,0 +1,134 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>润乾报表专业版服务器提供了界面友好、使用方便的企业控制台来供系统管理员进行后台管理。该模块和具体业务无关，跨平台、跨webserver，可独立运行，也可与现有系统集成使用。</p> 
+   <ul> 
+    <li><strong>服务器参数管理</strong></li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/14.png" alt="1.png" width="578" height="321" /></p> 
+   <p>服务器参数管理页面提供以下几项配置界面：</p> 
+   <ul> 
+    <li>License文件</li> 
+    <li>报表根目录</li> 
+    <li><span id="TheWorldHiLightStyleID" style="margin: 0px; background: #ffff00; float: none; color: #000000; padding: 0px;"></span>文件</li> 
+    <li>日志配置文件</li> 
+    <li>JSP字符集</li> 
+    <li>Web应用地址</li> 
+    <li>下拉树图片路径</li> 
+    <li>错误处理页</li> 
+    <li>Jre安装包路径</li> 
+    <li>Jre安装包版本</li> 
+   </ul> 
+   <p>并可以保存、载入配置以及恢复初始值。</p> 
+   <ul> 
+    <li><strong>数据源管理</strong></li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/26.png" alt="2.png" height="369" /></p> 
+   <p>数据源管理页面提供图形化的数据源配置界面。可以配置报表支持的两种数据源：Web服务器的JNDI数据源和JDBC直连数据源。</p> 
+   <p>JNDI数据源的参数配置列表：</p> 
+   <ul> 
+    <li>数据源名称</li> 
+    <li>数据库类型</li> 
+    <li>客户端字符集</li> 
+    <li>数据库字符集</li> 
+    <li>是否转换检索句字符集</li> 
+    <li>是否转换结算内容字符集</li> 
+   </ul> 
+   <p>JDBC数据源的参数配置列表：</p> 
+   <ul> 
+    <li>数据源名称</li> 
+    <li>数据库类型</li> 
+    <li>数据源url</li> 
+    <li>驱动类名</li> 
+    <li>用户名</li> 
+    <li>口令</li> 
+    <li>客户端字符集</li> 
+    <li>数据库字符集</li> 
+   </ul> 
+   <p>还有应用服务器类型的选择以及默认数据源的设定。同样可以保存、载入数据源的配置。</p> 
+   <ul> 
+    <li><strong>性能调优管理</strong></li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/35.png" alt="3.png" height="292" /></p> 
+   <p>本页面可配置与性能优化相关的系统参数，包括：</p> 
+   <ul> 
+    <li>是否每次都读取报表定义</li> 
+    <li>缓存目录</li> 
+    <li>参数缓存时间</li> 
+    <li>报表缓存的前缀</li> 
+    <li>报表缓存时间</li> 
+    <li>可同时计算的报表个数</li> 
+    <li>可同时等待计算的报表个数</li> 
+    <li>报表等待计算的最长时间</li> 
+    <li>最大并发单元格数</li> 
+   </ul> 
+   <p>提供几套推荐的配置方案：初始值、访问量高、数据量大、开发模式。同样也可以保存、载入配置方案。</p> 
+   <ul> 
+    <li><strong>日志分析</strong></li> 
+   </ul> 
+   <p>日志分析页面整体分为上下两部分：上面为参数界面，设置要分析的日志文件、开始时间、结束时间和要分析的报表；下面是对应的分析结果，此处提供多种分析角度，以Tab页的方式划分。</p> 
+   <ul> 
+    <li>参数设置</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/42.png" alt="4.png" height="157" /></p> 
+   <p>提供要分析的日志的选择界面，可以分析的日志包括：</p> 
+   <ol> 
+    <li>系统当前的日志</li> 
+    <li>服务器上的其他日志</li> 
+    <li>本地日志</li> 
+   </ol> 
+   <p>并且提供友好的界面来设置分析日志的起始时间和结束时间，以及分析结果的刷新时间（缺省为5秒）。”指定分析报表”可以设置多表分析时要分析的报表。</p> 
+   <ul> 
+    <li>分析结果</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/53.png" alt="5.png" height="276" /></p> 
+   <p>分析结果提供多种分析角度，通过Tab页可进行切换。</p> 
+   <p>目前提供的日志分析包括：</p> 
+   <ul> 
+    <li>DsahBoard：用来显示其他几个分析页面中比较重要的图表，缺省显示整体趋势分析和异常趋势分析两张统计图。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/63.png" alt="6.png" height="277" /></p> 
+   <ul> 
+    <li>多表压力排名：按从多到少的顺序，列出访问量最频繁的报表。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/710.png" alt="7.png" height="242" /></p> 
+   <ul> 
+    <li>整体趋势分析：用于分析一定时间内大量报表的连接数趋势，使用时间走势图展示。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/8.png" alt="8.png" height="222" /></p> 
+   <ul> 
+    <li>多表趋势分析：统计用户选择的多个报表的访问数，并将每个报表作为一个系列显示在统计图中。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/9.png" alt="9.png" height="220" /></p> 
+   <ul> 
+    <li>整体压力分析：按照设置的时间段，统计所有报表请求的压力。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/10.png" alt="10.png" height="217" /></p> 
+   <ul> 
+    <li>多表压力分析：统计用户选择的多个报表的请求压力，并将每个报表作为一个系列显示在统计图上。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/112.png" alt="11.png" height="219" /></p> 
+   <ul> 
+    <li>异常频度排名：按异常分类统计异常的发生数量，并将其按从多到少的顺序显示出来。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/121.png" alt="12.png" height="250" /></p> 
+   <ul> 
+    <li>异常趋势分析：统计一定时间段内异常的发生趋势，使用时间走势图显示这种趋势。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/131.png" alt="13.png" height="219" /></p> 
+   <ul> 
+    <li>异常趋势分类分析：统计一定时间段内异常的发生趋势，将每种异常作为一个系列显示在统计图中。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/141.png" alt="14.png" height="232" /></p> 
+   <ul> 
+    <li>异常频度分析：按用户设置的时间单位统计异常发生的频度。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/15.png" alt="15.png" height="236" /></p> 
+   <ul> 
+    <li>异常频度分类分析：将每种异常作为一个系列，进行频度分析，最后显示为多系列统计图。</li> 
+   </ul> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/16.png" alt="16.png" height="223" /><br /> <span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

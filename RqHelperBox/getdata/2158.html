@@ -1,0 +1,32 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>问题描述</strong></p> 
+  <p>客户经常遇到这样一个问题：报表字体为宋体，在windows中展现正常，能达到需要的效果，但是把应用放到linux中，同样的报表展示的字体样式就跟windows不一样，未达到预期效果。最后检查客户linux的字体发现是客户linux中的宋体版本跟windows中的不一样造成的，所以造成展现的报表里面字的样式不一致。</p> 
+  <p><strong>解决方法</strong></p> 
+  <p>同步windows的字体到linux系统中，使二者的字体版本和样式一样，这样展现出来的字体样式就没有区别了。</p> 
+  <p><strong>实现步骤</strong></p> 
+  <p>给linux安装字体的步骤如下（以debain版本的linux为例）：</p> 
+  <p><strong>1，拷贝字体到系统字体目录下，比如/usr/share/fonts/truetype/hahafonts(hahafonts请自行建立)。</strong></p> 
+  <p>到win下找到你需要的字体，比如拷贝了simhei.ttf simyou.ttf tahoma.ttf verdana.ttf simsun.ttc tahomabd.ttf verdanab.ttf等7款字体。当然，如果想要简单可以只拷simsun，tahoma就行了。</p> 
+  <p>cp *.tt* /usr/share/fonts/truetype/hahafonts/<br /> cd /usr/share/fonts/truetype/hahafonts/</p> 
+  <p><strong>2，生成字体的fonts.dir+fonts.scale文件：</strong></p> 
+  <p>Debian下：</p> 
+  <p>apt-get install ttmkfdir<br /> ttmkfdir &amp;&amp; cp fonts.scale fonts.dir</p> 
+  <p><strong>3，把字体路径加到xfree86文件中，如/etc/X11/XF86Config-4：</strong></p> 
+  <p>添加内容如下：</p> 
+  <p>FontPath “/var/lib/defoma/x-ttcidfont-conf.d/dirs/TrueType”<br /> FontPath “/var/lib/defoma/x-ttcidfont-conf.d/dirs/CID”<br /> FontPath “/usr/share/fonts/truetype/gbk”<br /> FontPath “/usr/share/fonts/truetype/hahafonts”</p> 
+  <p>注：/usr/share/fonts/truetype/gbk中为其他点阵字体，可以不加。</p> 
+  <p><strong>4，执行fc-cache -v -f：</strong></p> 
+  <p>注：fc-cache — build font information cache files</p> 
+  <p><strong>5，firefly补丁：</strong></p> 
+  <p>http://hahaghost.512j.com/linuxbak/fonts.conf替换/etc/fonts/里的fonts.conf文件，然后加上源：</p> 
+  <p>把下面2行加到/etc/apt/sources.list里<br /> deb http://debian.okey.net/debian-uo/ sid firefly java marillat rareware misc<br /> deb http://debian.okey.net/debian-fonts/ ./</p> 
+  <p>然后执行apt-get update&amp;&amp;apt-get upgrade就可以了。</p> 
+  <p>注：执行apt-get upgrade后，自动升级的有：libfontconfig,libxft,fontconfig都是修改的过的补丁。</p> 
+  <p><strong>6，重启之后就可以看到适合的字体了：</strong></p> 
+  <p>然后xfsfonts | grep gbk，查找您需要的字体，添加到gtkrc或者gtkrc.zh_CN中。</p> 
+  <p>其中的gbk是个例子，可以换成自己需要的，比如simsun等。</p> 
+  <p>这样，报表在Linux和Windows中字体显示就一致了。</p>  
+ </body>
+</html>

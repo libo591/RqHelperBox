@@ -1,0 +1,31 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表中，常常需要根据一些参数来动态改变报表的在web页面展现样式。润乾报表中对于单元格样式可以通过表达式来动态设置，大大降低了实现一些复杂功能的困难度。对于一些无法用表达式来控制的属性，运用润乾报表的API也可实现一些属性的控制。</p> 
+  <p>在有一些报表中，表头是动态的，也就是说，表头列的个数不是一定的。本文介绍润乾报表中怎样实现web报表根据不同的情况固定不同的表头。</p> 
+  <p>这里举一个动态设置左表头的例子（使用设计器自带的demo数据源）：</p> 
+  <p><strong>第一步：利用API生成一张新报表</strong></p> 
+  <p>package demo;</p> 
+  <p>import java.io.FileOutputStream;<br /> import java.io.OutputStream;</p> 
+  <p>import com.runqian.report4.model.ReportDefine;<br /> import com.runqian.report4.model.ReportDefine2;<br /> import com.runqian.report4.usermodel.ByteMap;<br /> import com.runqian.report4.usermodel.Context;<br /> import com.runqian.report4.usermodel.DataSetMetaData;<br /> import com.runqian.report4.usermodel.Engine;<br /> import com.runqian.report4.usermodel.IByteMap;<br /> import com.runqian.report4.usermodel.IColCell;<br /> import com.runqian.report4.usermodel.INormalCell;<br /> import com.runqian.report4.usermodel.IReport;<br /> import com.runqian.report4.usermodel.SQLDataSetConfig;<br /> import com.runqian.report4.util.ReportUtils;</p> 
+  <p>public class apiReadReport {<br /> public static void main(String[] args) {<br /> //新建一张3行3列报表<br /> ReportDefine rd = new ReportDefine2(3, 3);</p> 
+  <p>rd.addCol((short) 2);<br /> rd.addRow(2);<br /> //设置展现字段<br /> INormalCell inc1 = rd.getCell(1, (short) 1);<br /> inc1.setValue(”类别ID”);</p> 
+  <p>INormalCell inc2 = rd.getCell(1, (short) 2);<br /> inc2.setValue(”类别名称”);<br /> //设置表达式<br /> INormalCell inc3 = rd.getCell(2, (short) 1);<br /> IByteMap map1 = new ByteMap();<br /> map1.put(INormalCell.VALUE, “ds1.select(类别ID,false)”);<br /> inc3.setExpMap(map1);</p> 
+  <p>INormalCell inc4 = rd.getCell(2, (short) 2);<br /> IByteMap map2 = new ByteMap();<br /> map2.put(INormalCell.VALUE, “ds1.类别名称”);<br /> inc4.setExpMap(map2);</p> 
+  <p><strong>第二步：根据参数动态设置左表头</strong></p> 
+  <p>//设置几列为左表头(这个就是控制几列为左表头的参数,传进来几列,前几列就为左表头;参数为2,就是前两列为左表头)</p> 
+  <p>int colnum = 2;//这个位置可以通过前台传递的参数来动态改变,例如:String colnum = request.getParameter( “colnum” );<br /> //循环设置列的左表头属性,有把几列设为左表头就循环几次<br /> for(int i = 0 ;i&lt;colnum;i++){<br /> IColCell colCell = rd.getColCell((short)(i+1));<br /> //设置左表头<br /> colCell.setColType(IColCell.TYPE_LEFT_HEADER);<br /> }<br /> //设置数据集<br /> DataSetMetaData dsmd = new DataSetMetaData();<br /> SQLDataSetConfig sdc = new SQLDataSetConfig();<br /> sdc.setName(”ds1″);<br /> sdc.setSQL(”SELECT 类别.类别ID,类别.类别名称 from 类别”);<br /> dsmd.addDataSetConfig(sdc);<br /> rd.setDataSetMetaData(dsmd);<br /> try {<br /> //保存报表<br /> ReportUtils.write(”D:\\aa.raq”, rd);<br /> System.out.println(”报表保存成功！”);//这个时候用报表设计打开报表,就可以看到前两列被设置成左表头了.<br /> } catch (Exception e)<br /> e.printStackTrace();<br /> } catch (Throwable e) {<br /> e.printStackTrace();<br /> }<br /> }<br /> }</p> 
+  <p><strong>第三步:在展现报表的jsp标签中增加滚动条属性</strong></p> 
+  <p>&lt;table align=center&gt;<br /> &lt;tr&gt;&lt;td&gt;<br /> &lt;report:html name=”report1″ reportFileName=”&lt;%=report%&gt;”<br /> funcBarLocation=””<br /> needPageMark=”yes”<br /> generateParamForm=”no”<br /> needLinkStyle=”yes”<br /> params=”&lt;%=param.toString()%&gt;”<br /> needScroll=”yes”//是否固定住左表头<br /> scrollWidth=”250″//固定表头报表的显示宽度<br /> scrollHeight=”400″//固定表头报表的显示高度<br /> exceptionPage=”/reportJsp/myError2.jsp”<br /> /&gt;<br /> &lt;/td&gt;&lt;/tr&gt;<br /> &lt;/table&gt;</p> 
+  <p>效果：设置后的报表模版：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/144.png" alt="1.png" width="404" height="147" /></p> 
+  <p>参数模版：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/231.png" alt="2.png" width="300" height="114" /></p> 
+  <p>参数模版中B2单元格的web变量设置：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/328.png" alt="3.png" width="290" height="147" /></p> 
+  <p>这样就可以通过参数模版来设置表头的个数了。</p> 
+  <p>在页面上的展现效果为：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/421.png" alt="4.png" width="349" height="330" /></p> 
+  <p>当报表中的一些功能无法通过单纯设置报表模版来实现时，利用API也可以达到想要的效果，而且，利用API还可以完成一些较复杂的功能，如一些动态变更展现效果，动态更换数据源等等。</p>  
+ </body>
+</html>

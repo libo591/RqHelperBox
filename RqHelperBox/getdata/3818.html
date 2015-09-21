@@ -1,0 +1,112 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <div style="LAYOUT-GRID: 15.6pt none" class="Section1"> 
+   <br /> 
+   <p class="MsoNormal"><a name="OLE_LINK2"></a><a name="OLE_LINK1"><span><span>98</span></span></a><span><span><span style="FONT-FAMILY: 宋体">怎样解决无法获取</span><span>MYSQL</span></span></span><span><span><span style="FONT-FAMILY: 宋体">字段别名问题</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span style="FONT-FAMILY: 宋体">有客户通过润乾报表连接</span><span>mysql</span></span></span><span><span><span style="FONT-FAMILY: 宋体">数据库，数据集语法使用了别名（例如</span><span>select id as testid from test</span></span></span><span><span><span style="FONT-FAMILY: 宋体">），但是在报表中无法通过别名获取值。</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span style="FONT-FAMILY: 宋体">通过</span><span>jdbc</span></span></span><span><span><span style="FONT-FAMILY: 宋体">直连测试各版本</span><span>jdbc</span></span></span><span><span><span style="FONT-FAMILY: 宋体">驱动测试，程序如下，</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>&lt;%</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>try</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>{</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>String driverName=”com.mysql.jdbc.Driver”;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>String userName=”root”;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>String userPasswd=”&quot;;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>String dbName=”test”;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>String tableName=”user”;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>String url=”jdbc:mysql://localhost:3306/”+dbName+”?user=”+userName+”&amp;password=”+userPasswd;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>Class.forName(“com.mysql.jdbc.Driver”).newInstance();</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>Connection conn=DriverManager.getConnection(url);</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>String sql=”select id as testid from num”;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>Statement stmt=conn.createStatement();</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>ResultSet rs=stmt.executeQuery(sql);</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>ResultSetMetaData<span>&nbsp;&nbsp; </span>rsmd<span>&nbsp;&nbsp; </span>=<span>&nbsp;&nbsp; </span>rs.getMetaData(); </span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>String colname= rsmd.getColumnName(1) ;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>String colname1= rsmd.getColumnLabel(1) ;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>System.out.println(“aaaaaaaaaaaaaaaaaaaaaaaaaaa=”+colname);</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>System.out.println(“aaaaaaaaaaaaaaaaaaaaaaaaaaa=”+colname1);</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>while(rs.next())</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>{</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>%&gt;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>&lt;tr&gt;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span><span>&nbsp;&nbsp; </span>&lt;td&gt;&lt;%=rs.getInt(“testid”)%&gt;&lt;/td&gt;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>&lt;/tr&gt;</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>&lt;%</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>}</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>rs.close();</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>stmt.close();</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>conn.close();</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>}</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>catch(Exception e)</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>{</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>e.printStackTrace(); </span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>}</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span>%&gt;</span></span></span><span><span><span style="FONT-FAMILY: 宋体">，</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span style="FONT-FAMILY: 宋体">发现使用</span><span>jdbc5.1.x</span></span></span><span><span><span style="FONT-FAMILY: 宋体">系列驱动</span><span>getColumnName</span></span></span><span><span><span style="FONT-FAMILY: 宋体">获取的不是别名。</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span><span style="FONT-FAMILY: 宋体">使用润乾报表连接</span><span>mysql</span></span></span><span><span><span style="FONT-FAMILY: 宋体">数据库时如果用到别名，可以通过使用</span><span>5.0.x</span></span></span><span><span><span style="FONT-FAMILY: 宋体">系列及以下驱动解决不能获取别名的问题。</span></span></span></p> 
+   <br /> 
+   <p class="MsoNormal"></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">附</span><span>jdbc</span><span style="FONT-FAMILY: 宋体">驱动与</span><span>Mysql</span><span style="FONT-FAMILY: 宋体">版本对应关系：</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span>Connector/J 5.1 </span><span style="FONT-FAMILY: 宋体">支持</span><span>Mysql 4.1</span><span style="FONT-FAMILY: 宋体">、</span><span>Mysql 5.0</span><span style="FONT-FAMILY: 宋体">、</span><span>Mysql 5.1</span><span style="FONT-FAMILY: 宋体">、</span><span>Mysql 6.0 alpha</span><span style="FONT-FAMILY: 宋体">这些版本。</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span>Connector/J 5.0 </span><span style="FONT-FAMILY: 宋体">支持</span><span>MySQL 4.1</span><span style="FONT-FAMILY: 宋体">、</span><span>MySQL 5.0 servers</span><span style="FONT-FAMILY: 宋体">、</span><span>distributed transaction (XA)</span><span style="FONT-FAMILY: 宋体">。</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span>Connector/J 3.1 </span><span style="FONT-FAMILY: 宋体">支持</span><span>MySQL 4.1</span><span style="FONT-FAMILY: 宋体">、</span><span>MySQL 5.0 servers</span><span style="FONT-FAMILY: 宋体">、</span><span>MySQL 5.0 except distributed transaction (XA) support</span><span style="FONT-FAMILY: 宋体">。</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span>Connector/J 3.0 </span><span style="FONT-FAMILY: 宋体">支持</span><span>MySQL 3.x or MySQL 4.1</span><span style="FONT-FAMILY: 宋体">。</span></p> 
+  </div> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

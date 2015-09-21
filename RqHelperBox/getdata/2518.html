@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>有些时候客户在IE中浏览报表的时候会出现这么一种情况：前几行不是特别高，但是某一行会特别高，可能连一页纸都展示不完全。这样的报表在导出word的时候某一页会有大量的留白，导致word文档不好看，也比较浪费。</p> 
+  <p>下面举例说明一下这种情况：</p> 
+  <p>报表在页面上展现的效果：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/18-1.jpg"><img class="alignnone size-medium wp-image-2519" title="18-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/18-1-300x273.jpg" alt="" width="300" height="273" /></a></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图1</p> 
+  <p>那么像这样的报表在导出word之后的效果</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/18-2.jpg"><img class="alignnone size-medium wp-image-2520" title="18-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/18-2-300x177.jpg" alt="" width="300" height="177" /></a></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图2</p> 
+  <p>以下是第二页：</p> 
+  <p>&nbsp;&nbsp;&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/18-3.jpg"><img class="alignnone size-medium wp-image-2521" title="18-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/18-3-300x161.jpg" alt="" width="300" height="161" /></a></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图3</p> 
+  <p>这样的话，当我们查看word文档的时候，会看到大量的空白处，且需要拖动滚动条才能看到下面的数据。客户对这种情况不甚满意，希望第一页和第二页的数据能衔接起来。</p> 
+  <p>那么，如何让两页间的数据能够衔接起来呢？</p> 
+  <p>这个时候“单元格拆分”就派上用场了。</p> 
+  <p>在设计器中找到那个数据量比较多且扩展出来行特别高的单元格，然后选中该单元格所在的行，然后插入一些空白行，将该行与插入的空白行合并，然后选中这一行，将右边属性栏中的“拆分单元格”勾选上。如下图：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/18-4.jpg"><img class="alignnone size-medium wp-image-2522" title="18-4" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/18-4-300x227.jpg" alt="" width="300" height="227" /></a></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图4</p> 
+  <p>然后导出word之后，第一页和第二页的数据就可以衔接起来了。</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/18-5.jpg"><img class="alignnone size-medium wp-image-2523" title="18-5" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/18-5-300x206.jpg" alt="" width="300" height="206" /></a></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图5</p> 
+  <p>（注意：插入多少空白行并不固定，如果数据量特别大插入的空白行就多一点。）</p>  
+ </body>
+</html>

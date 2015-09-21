@@ -1,0 +1,41 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>Web报表设计中，会出现查询一个时间区间内的数据的需求，即获取一个时间段内的所有数据。比如查询某个日期所在周的所有信息详情，一般的报表工具若使用普通参数来解决这个问题时，需要用户手动设置这一周的起始时间和结束时间，这样做操作繁琐，且容易出错。润乾报表设计器可以通过使用动态参数和特有的内置函数来简化这个问题，用户只需要选择某个日期，系统就会自动计算出该日期所在周的起始时间和结束时间，简化了客户的操作，并且提高了准确度。</p> 
+  <p>下面以一个例子来说明如何实现这个需求。</p> 
+  <p>一、需求描述</p> 
+  <p>对于下图这个订货单信息报表，如何得到某个日期所在那一个星期的所有订单信息。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-4kr262hi8fjkdca.png" alt="订单统计表.png" width="361" height="275" /></p> 
+  <p>二、实现过程</p> 
+  <p>1、首先对上述报表模板设置参数，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-2-jf0b6.png" alt="图2.png" width="491" height="115" /></p> 
+  <p>为报表添加一个日期型普通参数和两个日期型动态参数，这个普通参数是用来输入指定日期的，两个动态参数表达式设置为：</p> 
+  <p>动态参数arg2的值表达式：weekbegin(arg1)；</p> 
+  <p>动态参数arg3的值表达式：weekend(arg1)；</p> 
+  <p>其中weekbegin()和weekend()这两个函数是润乾报表设计器的内置函数，他们的作用分别是计算某个日期所在周的起始时间和结束时间。</p> 
+  <p>在本例中，通过普通参数得到时间，然后动态参数通过函数计算起始时间和结束时间，并将得到的时间赋给arg2和arg3，系统将arg2和arg3作为检索条件进行查询。</p> 
+  <p>2 、对报表模板的设置做相应修改</p> 
+  <p>对原报表模板的数据集进行编辑，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-3-jf0b6.png" alt="图3.png" width="438" height="194" /></p> 
+  <p>打开数据集编辑对话页面，选择参数选项卡，将两个动态参数添加进来。用户可以双击参数表达式对话框，弹出表达式编辑对话框，如下图所示，双击参数名来进行添加或者手动输入参数名。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-5-jf0b4.png" alt="图5.png" width="404" height="292" /></p> 
+  <p>然后选择检索条件选项卡，对数据集检索条件进行编辑。对话框编辑内容如下：订单.订购日期 &gt;? AND 订单.订购日期 &lt;?。即查询所定义的两个参数设定的区间段内的订单信息。（这里要注意，这句表达式中问号的顺序与参数选项卡中定义的参数的顺序是一一对应的，用户在定义参数时要注意顺序问题。）如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-5nq180dc4am61c2.png" alt="检索条件.png" width="439" height="192" /></p> 
+  <p>这时打开语法选项卡会看到数据集中已经加入查询过滤条件WHERE 订单.订购日期 &gt;? AND 订单.订购日期 &lt;?。查询语言熟练的用户也可以直接在语法选项卡中手动输入，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-4-jf0b6.png" alt="图4.png" width="440" height="150" /></p> 
+  <p>对报表模板进行设置，将A2单元格表达式改为为：=str(arg2)+”到”+str(arg3)+”订货单”，即将检索的起始时间和结束时间显示出来，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-6-jf0b2.png" alt="图6.png" width="340" height="108" /></p> 
+  <p>报表模板修改完成。预览报表时会弹出设置参数arg1的对话框，用户输入一个日期，即可查询到该日期所在一周的所有订单信息，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-y5q80d7x0azx3b1.png" alt="输入参数.png" width="276" height="75" /></p> 
+  <p>上图中输入的指定日期是1996-07-08，得到查询结果如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-gtvr03coxhczo.png" alt="预览结果.png" width="357" height="208" /></p> 
+  <p>若在web输出预览，可通过设计一个参数模板来实现，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-8nr642bgpb95d1.png" alt="参数模板.png" width="436" height="96" /></p> 
+  <p>B1单元格变量名的值写入参数arg1，模板保存时名字保存为主报表名+_arg.raq。保存后点击web预览，并选择日期，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-web1-xp7l634e.png" alt="web预览1.png" width="578" height="156" /></p> 
+  <p>选择好日期后，点查询按钮，得到查询结果如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-web-t08il22d1.png" alt="web预览.png" width="357" height="264" /></p> 
+  <p>这样，就通过使用润乾报表的内置函数和灵活的使用动态参数实现了获取指定日期所在的区间的功能。</p> 
+  <p>润乾报表设计器提供了丰富的内置函数和灵活的参数使用功能，除了weekbegin()和weekend()这两个取指定日期所在周的首尾时间的函数外，还有monthbegin()和monthend()两个取指定日期所在月的首尾时间的函数，以及quaterbegin()和quaterend()两个取指定日期所在季度的首尾时间的函数。报表设计者可通过灵活使用动态参数和润乾报表内置函数来控制报表查询条件，从而灵活而简便的实现一表多查的功能。</p>  
+ </body>
+</html>

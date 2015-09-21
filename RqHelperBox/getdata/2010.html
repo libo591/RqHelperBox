@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表的使用过程中，许多客户希望将润乾报表展现的数据导出成txt格式的文本文件，将报表的数据导出成txt文件需要写API代码来实现。下面就用一个简单的例子，实现导出txt的功能。</p> 
+  <p>实现上面提到的导出txt文件的功能，需要执行一下四个步骤：</p> 
+  <p><strong>第一步：制作一张报表</strong></p> 
+  <p>首先打开报表设计器，新建一张空白的网格式报表，报表的数据集sql如下：</p> 
+  <p>SELECT 订单.订单ID,订单.货主名称,订单.货主国家,订单.运货费 FROM 订单 WHERE 订单.订单ID &lt;10255 ORDER BY 订单.订单ID ASC</p> 
+  <p>然后在单元格内写入如下图所示的内容，然后这张简单的网格式报表就做好了。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/1-0038.png" alt="1.png" width="367" height="87" /></p> 
+  <p><strong>第二步：编写代码和jsp实现导出txt功能</strong></p> 
+  <p>为了实现导出txt的功能，需要写JSP，在JSP中写API代码，用这张JSP来发布上面的报表。JSP的代码和注释如下：</p> 
+  <p><span style="color: #0000ff;">&lt;%@ page contentType=”text/html;charset=gb2312″ %&gt;<br /> &lt;%@ page import=”java.io.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.usermodel.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.model.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.view.html.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.util.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.view.excel.*”%&gt;<br /> &lt;%<br /> //第一步，读取报表模板<br /> InputStream fis=application.getResourceAsStream(”/reportFiles/test.raq”);<br /> ReportDefine rd = (ReportDefine)ReportUtils.read( fis );<br /> //第二步，运算报表<br /> Context context = new Context();<br /> Engine enging = new Engine( rd, context);<br /> IReport iReport = enging.calc();<br /> ReportUtils ruReport = new ReportUtils();<br /> //第三步<br /> //1、展现输出html页面<br /> HtmlReport hReport = new HtmlReport( iReport,”report1″ );<br /> String htmlRS = hReport.generateHtml();<br /> out.print(htmlRS);//把html输出到浏览器，也可以报表结果保存为html文件</span></p> 
+  <p>File fileNew = new File( “c:\\Temp\\test.html” );<br /> FileWriter pw = new FileWriter( fileNew );<br /> pw.write(htmlRS);<br /> pw.flush();<br /> //第四步导出txt文件<br /> FileOutputStream fosReport = new FileOutputStream(”D:\\reportHome\\webapps\\demo\\test.txt”); ruReport.exportToText(fosReport,iReport);<br /> %&gt;</p> 
+  <p>写好JSP后，保存这个JSP在\reportHome\webapps\demo\reportJsp这个目录下，保存为test.jsp</p> 
+  <p><strong>第三步：启动tomcat，发布这张报表</strong></p> 
+  <p>如下图所示，点击设计器右上角的图标启动tomcat，然后发布这张报表到\reportHome\webapps\demo\reportFiles目录下，保存为：test.raq</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/2-0034.png" alt="2.png" width="557" height="221" /></p> 
+  <p><strong>第四步：访问这张报表，并导出txt文件</strong></p> 
+  <p>打开IE浏览器，在浏览器的地址栏里输入内容：http://127.0.0.1:6001/demo/reportJsp/test.jsp，展现的内容如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/3-0029.png" alt="3.png" width="402" height="150" /></p> 
+  <p><strong>第五步：找到txt文件</strong></p> 
+  <p>在展现报表的同时，txt文件已经被导出了，根据上面API代码的内容，txt文件被设置成导出到D:\reportHome\webapps\demo路径下，如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/4-0027.png" alt="4.png" width="440" height="268" /></p> 
+  <p>打开这个txt文件就能看见报表的数据被成功导出了，如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/5-0021.png" alt="5.png" width="217" height="145" /></p> 
+  <p>通过以上五个步骤，快逸报表导出txt格式文件的功能就实现了。</p>  
+ </body>
+</html>

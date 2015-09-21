@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>设计报表的时候往往都有显示值和真实值之分，通常真实值对应的是数据库中的代码，显示值对应的是实际业务术语。然而，excel文件中是没有显示值和真实值之分的。那么，当把展现出来的报表（以显示值的方式）导出为excel文件的时候，是导出了显示值还是真实值呢？通过测试得知，只有当单元格的真实值是字符串型时导出的是显示值，其余的情况导出的都是真实值（这大概和excel偏重于计算有关）。</p> 
+   <div class="postentry"> 
+    <p>当需要按照显示值导出数据时，就需要在报表中把真实值先转换为字符串型（需要用到单元格的值进行计算时再转回原来的类型），然后再设置其显示值，这样就可以保证导出excel中的数据和web端展现的一致了。</p> 
+    <p>下面举个简单的例子说明：</p> 
+    <p>对于非字符串型的数据，设置了其显示值：</p> 
+    <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/15.png" alt="1.png" height="129" /></p> 
+    <p>在web上正常按照显示值的设置展现，导出到excel的却是报表中的真实值：</p> 
+    <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/28.png" alt="2.png" height="155" /></p> 
+    <p>将数据的类型转换为字符串型，导出到excel的就是显示值了：</p> 
+    <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/35.png" alt="3.png" height="162" /><br /> <span lang="EN-US"></span></p> 
+   </div> 
+  </div>  
+ </body>
+</html>

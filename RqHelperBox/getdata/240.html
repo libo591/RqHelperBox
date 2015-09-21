@@ -1,0 +1,9 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font color="#ff0000">问题描述</font>:</p> 
+  <p>通过内网访问服务器进行报表打印正常, 外网通过VPN访问打印报表时，报错:服务器的IP和签名的IP：*********不符,java控制台报 bad magic number，打印因此无法进行下去。</p> 
+  <p><font color="#ff0000">解决方法</font>:</p> 
+  <p>经过测试最终发现:与JRE的版本有关系<br /> 因此在配置文件中配置的时候需要配置以下两个选项来避免此问题<br /> 使用如下：<br /> &lt;config&gt;<br /> &nbsp;&nbsp;&lt;name&gt;jreInstallName&lt;/name&gt;<br /> &nbsp;&nbsp;&lt;value&gt;/j2re-1_5_1-windows-i586-i.exe#Version=1,5,1,0&lt;/value&gt;<br /> &lt;/config&gt;<br /> &lt;config&gt;<br /> &nbsp;&nbsp;&lt;name&gt;jreVersion&lt;/name&gt;<br /> &nbsp;&nbsp;&lt;value&gt;1.5&lt;/value&gt;<br /> &lt;/config&gt;</p>  
+ </body>
+</html>

@@ -1,0 +1,40 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在实际的项目需求中，经常用到分组报表，并且要求能动态的增加分组后的某一条数据。</p> 
+  <p>需求展示如图：</p> 
+  <p>动态增加各个类别中的产品</p> 
+  <p><img src="../know-how/wp-content/uploads/2010/04/1-0007.png" alt="1.png" width="237" height="374" /></p> 
+  <p><strong>一：实现思路</strong></p> 
+  <p>通过在报表后面添加一个增加数据的超链接，超链接中调用一个js方法，弹出一个小窗口，在新弹出的页面中实现添加产品，保存成功后返回并刷新主页面。</p> 
+  <p><strong>二：实现步骤</strong></p> 
+  <p><span style="color: #0000ff;">1：创建报表模板，设置超链接</span></p> 
+  <p><img src="../know-how/wp-content/uploads/2010/04/2-0007.png" alt="2.png" width="541" height="227" /></p> 
+  <p>数据源使用润乾自带的demo</p> 
+  <p>数据集为：SELECT 产品.类别ID,产品.产品名称,产品.产品ID FROM 产品</p> 
+  <p>A2表达式为：ds1.group(类别ID,false,类别ID!=NULL)</p> 
+  <p>B2表达式为：ds1.select(产品ID)</p> 
+  <p>C2表达式为：ds1.产品名称</p> 
+  <p>D2的左主格设置为A2,</p> 
+  <p>超链接表达式为：”javascript:openNewWindow(’showReportdky.jsp?raq=/dky/product_add.raq&amp;类别ID=”+A2+”‘,800,600)”</p> 
+  <p>此超链接的目的：弹出一个新窗口，url为：http://127.0.0.1:6001/demo/reportJsp/showReportdky.jsp?raq=/dky/product_add.raq&amp;类别ID=1</p> 
+  <p>其中类别ID为所其左主格A2的ID值。</p> 
+  <p><span style="color: #0000ff;">2：定义弹出新窗口的JavaScript</span></p> 
+  <p>打开新窗口的JavaScript为：</p> 
+  <p>//打开新窗口<br /> function openNewWindow(URL,width,Height)<br /> {<br /> var top,left;<br /> left=(window.screen.width-width)/2;<br /> top=(window.screen.height-Height)/2-40;<br /> window.open(URL,””,”left=”+left+”,top=”+top+”,width=”+width+”,height=”+Height+”,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes, resizable=no”);<br /> }</p> 
+  <p><span style="color: #0000ff;">3：创建新增产品的填报表</span></p> 
+  <p>数据源为demo，数据集为：SELECT 产品.产品ID,产品.产品名称 FROM 产品</p> 
+  <p>增加一个类别ID的参数，并设置更新属性。</p> 
+  <p><span style="color: #0000ff;">4：增加保存后返回并刷新主页面的JavaScript</span></p> 
+  <p>增加保存后返回并刷新主页面的js，所以自定义提交保存的js。</p> 
+  <p>数据源为demo，数据集为：SELECT 产品.产品ID,产品.产品名称 FROM 产品<br /> 增加一个类别ID的参数，并设置更新属性。<br /> 4：增加保存后返回并刷新主页面的JavaScript<br /> 增加保存后返回并刷新主页面的js，所以自定义提交保存的js。<br /> &lt;script language=”javascript”&gt;<br /> //report1为tag标签name值<br /> function _submitTablejade( report1 ){<br /> //调用润乾提交数据保存的js<br /> _submitTable( report1 );<br /> //以下为关闭当前窗口，刷新主窗口的js代码<br /> window.opener.refresh();<br /> window.focus();<br /> window.opener=null;<br /> window.open(””,”_self”);<br /> window.close();<br /> }<br /> &lt;/script&gt;</p> 
+  <p><strong>三：运行效果</strong></p> 
+  <p>点击增加，弹出新窗口</p> 
+  <p><img src="../know-how/wp-content/uploads/2010/04/4-0004.png" alt="4.png" width="336" height="375" /></p> 
+  <p>输入要填报的数据，点击保存按钮。</p> 
+  <p><img src="../know-how/wp-content/uploads/2010/04/5-0003.png" alt="5.png" width="497" height="82" /></p> 
+  <p>提交成功后刷新主页面。</p> 
+  <p><img src="../know-how/wp-content/uploads/2010/04/6-0001.png" alt="6.png" width="286" height="382" /></p> 
+  <p>总结：利用此思路不仅可以实现增加数据，也可以实现删除数据，更新数据等等。</p>  
+ </body>
+</html>

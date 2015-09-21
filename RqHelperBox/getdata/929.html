@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>润乾报表的数据源配置是在reportConfig.xml中进行设置的，支持jndi数据源配置和jdbc直连数据源配置两种。在读取配置文件的时候，会首先读取jndi的配置，如果没有相关的数据源配置则会读取jdbc直连配置的数据源。</p> 
+   <p>1、jndi数据源配置（即：在dataSource中配置）</p> 
+   <p>此配置适用于在j2ee的服务器中配置了jndi连接池，比如：tomcat服务器下在conf\Catalina\ localhost配置了连接池，则可以通过reportConfig.xml的jndi配置连接数据源。</p> 
+   <p>关于reportConfig.xml中的jndi数据源的配置详细如下：</p> 
+   <p>数据源的JNDI名称,数据库类型[,取数时是否需要转换编码,数据库字符集编码,显示报表时的字符集编 码][,SQL是否需要转码];[重复]……</p> 
+   <p>另外需要注意的：这里的数据源的jndi名称要与连接池中配置的jndi数据源名称一致。</p> 
+   <p>2、jdbc直连数据源配置</p> 
+   <p>此配置适用于没有在j2ee服务器上配置jndi连接池的情况。</p> 
+   <p>详细的配置方法如下：</p> 
+   <p>在&lt;reportConfig&gt;&lt;/reportConfig&gt;加入如下的配置：</p> 
+   <p>&lt;jdbc-ds-configs&gt;<br /> &lt;jdbc-ds-config&gt;<br /> &lt;name&gt;db2&lt;/name&gt;<br /> &lt;db-type&gt;db2&lt;/db-type&gt;<br /> &lt;connection-url&gt;jdbc:db2://192.168.0.217:50000/sample&lt;/connection-url&gt;<br /> &lt;driver-class&gt;com.ibm.db2.jcc.DB2Driver&lt;/driver-class&gt;<br /> &lt;user-name&gt;administrator&lt;/user-name&gt;<br /> &lt;password&gt;runqian&lt;/password&gt;<br /> &lt;db-charset&gt;gbk&lt;/db-charset&gt;<br /> &lt;client-charset&gt;gbk&lt;/client-charset&gt;<br /> &lt;extend-properties&gt;&lt;/extend-properties&gt;<br /> &lt;/jdbc-ds-config&gt;<br /> &lt;/jdbc-ds-configs&gt;</p> 
+   <p><span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

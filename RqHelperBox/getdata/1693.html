@@ -1,0 +1,56 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>超链接是一个非常实用的功能，在各种项目、应用中使用广泛，润乾报表也支持这个功能。本文介绍润乾报表设计器如何在报表中设置超链接。</p> 
+  <p>报表的超链接就是设置单元格的超链接属性，可以分为以下三种形式：</p> 
+  <p>1、普通超链接：若超链接字符串不需要动态生成，可以直接写所要链接的页面路径，则可以直接在超链接属性编辑框中编辑。如：”reportJsp/showReport.jsp?raq=超链接例子2.raq”。</p> 
+  <p>2、绝对路径的超链接：可输入超链接的绝对路径，即在超链接属性表达式中写完整的绝对路径，如包含传输协议的超链接：<a href="http://www.runqian.com.cn/">http://www.runqian.com.cn</a>。</p> 
+  <p>3、带参数的超链接：超链接字符串可以根据单元格或者参数值动态生成，用输入表达式来实现。如：”reportJsp/showReport.jsp?raq=超链接例子2.raq&amp;arg=”+”润乾公司官网：<a href="http://www.runqian.com.cn/">http://www.runqian.com.cn</a>“。</p> 
+  <p>下面介绍一下这三种超链接形式的实现方法。</p> 
+  <ul> 
+   <li><strong>第一步 创建报表并设置超链接</strong></li> 
+  </ul> 
+  <p>新建一张报表，命名为超链接例子1.raq，报表模板如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-4rux1i0rc2v2c5.png" alt="报表模板.png" width="262" height="98" /></p> 
+  <p>在报表的单元格输入如下内容：</p> 
+  <p>A1:超链接示例； A3:普通超链接；B3:润乾官方网站；A4:带参数的超链接（字体颜色属个性化设置，用户可自行设计）。并且给A3、B3、A4设置下划线，设置方法是选中目标单元格，打开设计器右边”字体”属性组，勾选”下划线”属性，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-ghqz1hl44c.png" alt="下划线.png" width="227" height="94" /></p> 
+  <p><strong style="color: #800000;">第一种超链接形式：普通超链接。</strong></p> 
+  <p>选中A3单元格，在右边超链接属性表达式里面输入：”reportJsp/showReport.jsp?raq=超链接例子2.raq”，意为超链接到报表超链接例子2.raq，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-gzuw5d069csfc50i.png" alt="普通超链接.png" width="299" height="156" /></p> 
+  <p>若想在新窗口打开链接到的网页，就在属性超链接窗口的值设置为”_blank”，默认值为”_self”，表示在原来的窗口打开。</p> 
+  <p><span style="color: #800000;"><strong>第二种超链接形式：绝对路径的超链接。</strong></span></p> 
+  <p>选中B3单元格，在右边超链接属性值里面输入：<a href="http://www.runqian.com.cn/">http://www.runqian.com.cn</a>，意为超链接到润乾官方网站，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-cet65fvsej09aclpesal90b.png" alt="绝对路径超链接.png" width="299" height="136" /></p> 
+  <p>也可以在表达式里面写入上面的网址，需要用双引号引起来，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-ei2br8h2ufm36bjnsfvae25b.png" alt="绝对路径超链接2.png" width="298" height="146" /></p> 
+  <p><span style="color: #800000;"><strong>第三种超链接形式：带参数的超链接。</strong></span></p> 
+  <p>选中A4单元格，在右边超链接属性表达式里面输入：</p> 
+  <p>“reportJsp/showReport.jsp?raq=超链接例子2.raq&amp;arg=”+”润乾公司官网：<a href="http://www.runqian.com.cn/">http://www.runqian.com.cn</a>“</p> 
+  <p>意为超链接到报表 超链接例子2.raq，并且把润乾公司网站信息传过去，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-8nrr5vwqeez4ck2h.png" alt="带参超链接.png" width="301" height="156" /></p> 
+  <ul> 
+   <li><strong>第二步 创建链接目标报表</strong></li> 
+  </ul> 
+  <p>新建一个报表，命名为超链接例子2.raq，模板如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-msvsly7cq3x.png" alt="目标模板.png" width="262" height="88" /></p> 
+  <p>给报表添加一个参数 arg，用于接收上一个报表传过来的信息。</p> 
+  <p>单元格输入的内容如下：A1: 超链接示例：目标报表</p> 
+  <p>A2: 了解我们：</p> 
+  <p>B2:=@arg</p> 
+  <ul> 
+   <li><strong>第三步 预览</strong></li> 
+  </ul> 
+  <p>将”超链接例子1.raq”发布到web页面，预览图如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-ey2a330a.png" alt="预览.png" width="189" height="138" /></p> 
+  <p>点击”普通超链接”可以连接到报表”超链接例子2.raq”，预览图如下。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-1-in1d571b3.png" alt="预览1.png" width="304" height="96" /></p> 
+  <p>点击”润乾官方网站”就可以连接到润乾的官方网站，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-web2-xp7l634e2.png" alt="web预览2.png" width="143" height="99" /></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-qkq423ae6n8uq1.png" alt="润乾官网.png" width="303" height="156" /></p> 
+  <p>点击”带参数的超链接”就可以连接到”超链接例子2.raq”，并且把润乾官网信息传到报表”超链接例子2.raq”中，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-web3-xp7l634e.png" alt="web预览3.png" width="156" height="112" /></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-8nr207jkij.png" alt="参预览.png" width="310" height="99" /></p> 
+  <p>润乾报表设计器提供的三种超链接设计方法，已完全能够满足用户的所有形式的超链接需求，用户可在今后web报表设计中实际操作一下。</p>  
+ </body>
+</html>

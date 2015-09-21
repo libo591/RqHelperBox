@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>有时统计图的数据分类非常多，画出的图形过于密集，失去了统计图的可读性，因此往往取数据值最大的前几条记录来制图。</p> 
+  <p>当仅用前几条数据来画图时，为了保证数据的完整性，系统会把剩余的数据合并成“其他”，作为单独一个分类来显示。</p> 
+  <p>以下面的报表为例，其数据集定义：“SELECT 客户.城市,客户.公司名称,客户.联系人姓名,客户.联系人职务,客户.地区 FROM 客户”。</p> 
+  <p>报表设计如图1所示。</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-1.jpg"><img class="alignnone size-full wp-image-2373" title="3-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-1.jpg" alt="" width="169" height="58" /></a></p> 
+  <p>我们设置了在图中显示百分比后，统计出的其他分类所占的百分比也会显示，如下图所示：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-2.jpg"><img class="alignnone size-full wp-image-2374" title="3-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-2.jpg" alt="" width="253" height="177" /></a></p> 
+  <p>但当我们想在统计图中显示出其标题，按照常规的分组方式，和按前几条记录统计就会出现问题,如下图所示：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-3.jpg"><img class="alignnone size-full wp-image-2375" title="3-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-3.jpg" alt="" width="244" height="168" /></a></p> 
+  <p>因为在数据分组统计是数据中没有“其他”这个字段值与之对应，所以我们需要让报表中固定显示这个字段来实现，报表设计如下图所示。</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-4.jpg"><img class="alignnone size-full wp-image-2376" title="3-4" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-4.jpg" alt="" width="293" height="68" /></a></p> 
+  <p>其统计属性如下图所示：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-5.jpg"><img class="alignnone size-full wp-image-2377" title="3-5" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-5.jpg" alt="" width="233" height="199" /></a></p> 
+  <p>并且将图中显示数据设置为“标题”，预览一下设置后的效果。</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-6.jpg"><img class="alignnone size-full wp-image-2378" title="3-6" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/3-6.jpg" alt="" width="149" height="100" /></a></p> 
+  <p>通过以上设置，在统计图中“其他”就不仅可以显示，还可以显示统计数据占总数的百分比大小。</p>  
+ </body>
+</html>

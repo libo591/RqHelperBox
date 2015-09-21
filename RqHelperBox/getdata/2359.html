@@ -1,0 +1,42 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>使用润乾的客户可以通过位移坐标实现，上期比、同期比等数据的计算，但当其授权文件中没有位移坐标的功能点的时候，实现起来就比较困难了，通常建议客户在SQL中计算得出。</p> 
+  <p>下面就是通过SQL语句计算出上期比的实例。</p> 
+  <p>数据结构如下：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/1.jpg"><img class="alignnone size-full wp-image-2360" title="1" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/1.jpg" alt="" width="149" height="40" /></a></p> 
+  <p>其中的数据为：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/2.jpg"><img class="alignnone size-full wp-image-2361" title="2" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/2.jpg" alt="" width="171" height="130" /></a></p> 
+  <p>报表中的数据集如下所示：</p> 
+  <p>select&nbsp; temp2.nian 年,temp2.yue 月,temp2.zonge1 销售量,temp3.zonge1/temp2.zonge1*100 上期比</p> 
+  <p>from</p> 
+  <p>(</p> 
+  <p>&nbsp; select&nbsp;&nbsp; nian, yue ,sum(zonge) as zonge1</p> 
+  <p>&nbsp; from</p> 
+  <p>&nbsp;&nbsp;(</p> 
+  <p>&nbsp;&nbsp;&nbsp; select year(日期) as nian,month(日期) as&nbsp; yue,销售量 as zonge</p> 
+  <p>&nbsp;&nbsp;&nbsp; from dbo.DezaiCn_Sale</p> 
+  <p>&nbsp; ) temp1</p> 
+  <p>&nbsp; group by nian,yue</p> 
+  <p>) temp2 ,</p> 
+  <p>(</p> 
+  <p>&nbsp;&nbsp;&nbsp; select&nbsp;&nbsp; nian, yue ,sum(zonge) as zonge1</p> 
+  <p>&nbsp;&nbsp;&nbsp; from</p> 
+  <p>&nbsp;&nbsp;&nbsp; (</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; select year(日期) as nian,month(日期) as&nbsp; yue,销售量 as zonge</p> 
+  <p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;from dbo.DezaiCn_Sale</p> 
+  <p>&nbsp;&nbsp;&nbsp; ) temp1</p> 
+  <p>&nbsp;&nbsp;&nbsp; group by nian,yue</p> 
+  <p>)&nbsp; temp3</p> 
+  <p>where temp2.nian = temp3.nian&nbsp; and temp2.yue = temp3.yue-1</p> 
+  <p>报表设计如下图所示：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/3.jpg"><img class="alignnone size-full wp-image-2362" title="3" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/3.jpg" alt="" width="163" height="36" /></a></p> 
+  <p>我们在预览一下结果，看是否是我们想要的样式。</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/4.jpg"><img class="alignnone size-full wp-image-2363" title="4" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/4.jpg" alt="" width="145" height="164" /></a>&nbsp;</p> 
+  <p>这个报表中，“比上期”这个指标的运算逻辑是：本月订单销售量/上月销售量。</p> 
+  <p>从上图中可以看出，D2格的表达式最关键的在于如何表达出前一个月的销售量，该报表是根据年分组并按年、月进行排序，因此我们想得到上一期的销售量，只要能得到扩展后C2单元格上一单元格的销售量就可以了，我们来看一下润乾报表是如何实现的。</p> 
+  <p>数据集ds1：SELECT DezaiCn_Sale.ID,DezaiCn_Sale.日期,DezaiCn_Sale.销售量 FROM DezaiCn_Sale WHERE&nbsp; DezaiCn_Sale.日期&nbsp; is not null &nbsp;</p> 
+  <p>这里用到了润乾报表非线性模型中的位移坐标，我们把D2格的表达式写成：= C2/C2[-1]，如下图所示：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/5.gif"><img class="alignnone size-full wp-image-2364" title="5" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/5.gif" alt="" width="330" height="72" /></a><br /> 不用复杂的SQL计算，就能轻松的完成上期比的计算，由此可见，润乾对于数据的统计功能可见一斑。</p>  
+ </body>
+</html>

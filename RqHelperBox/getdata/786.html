@@ -1,0 +1,11 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>一般情况下我们都是通过odbc来连接access数据库，但是在j2ee的服务器上运算报表需要通过数据库url来连接access数据库。</p> 
+  <p>解决方案：</p> 
+  <p>可以通过jdbc-odbc桥来实现。连接方法如下：</p> 
+  <p>驱动程序: sun.jdbc.odbc.JdbcOdbcDriver</p> 
+  <p>数据库url: jdbc:odbc: Access</p> 
+  <p>其中sun.jdbc.odbc.JdbcOdbcDriver类是来自rt.jar，它在环境变量java_home目录的jre\lib下。access是通过odbc管理工具注册的数据源。</p>  
+ </body>
+</html>

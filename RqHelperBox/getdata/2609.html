@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了内置的str函数，str函数可将对象转换成字符型，转换过程中可以进行格式化。在报表设计中灵活应用此函数，可以满足制作报表过程中的多种需求。下面我们就介绍一下str函数及其特殊用法。</p> 
+  <p>str()函数说明：</p> 
+  <p>将对象转换成字符型，转换过程中可以进行格式化</p> 
+  <p>语法： str(expression{, format})</p> 
+  <p>参数说明：</p> 
+  <p>&nbsp;&nbsp;&nbsp; Expression:需要转换成字符串的常数对象或表达式;</p> 
+  <p>&nbsp;&nbsp;&nbsp; Format:转换过程中进行格式化的格式串;</p> 
+  <p>返回值：字符型</p> 
+  <p>示例：</p> 
+  <p>&nbsp;&nbsp;&nbsp; 例1：str(123)&nbsp;&nbsp;&nbsp;&nbsp; 返回值：“123″</p> 
+  <p>&nbsp;&nbsp;&nbsp; 例2：str(arg1,”yyyy年MM月dd日“)，其中arg1为日期型参数，值为1972-09-09，&nbsp;&nbsp;&nbsp;&nbsp; 返回值：“1972年09月09日“</p> 
+  <p>例3：str(3456.9876,”￥#,##0.00″)&nbsp;&nbsp;&nbsp;&nbsp; 返回值：“￥3,456.99″</p> 
+  <p>str函数的特殊用法:</p> 
+  <p>在制作报表过程中，有时会用到参数类型为字符串组的参数，在报表中接受了该类型的参数后，参数值会纵向扩展，一个值在一个单元格，如图所示：</p> 
+  <p>&nbsp;<img title="143" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/143.jpg" alt="143" width="554" height="92" /></p> 
+  <p>&nbsp;<img title="144" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/144.jpg" alt="144" width="77" height="233" /></p> 
+  <p>如果想对参数进一步操作就变的很麻烦。这时可以用str函数。在接收参数的单元格写str(@arg1)就可以了。</p> 
+  <p>&nbsp;<img title="145" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/145.jpg" alt="145" width="156" height="25" /></p> 
+  <p>这样，报表中接收的参数就跟传的参数的显示方式一样了，可以轻松进行下一步操作。</p>  
+ </body>
+</html>

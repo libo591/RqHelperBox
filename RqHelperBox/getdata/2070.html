@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>OC4J是Oracle公司提供的作为J2EE的服务器，通常情况下，在安装Oracle数据库的时候，会自带OC4J服务器，在与Oracle数据库集成和部署上，具有得天独厚的优势。</p> 
+  <p>本文介绍润乾报表在OC4J服务器上的部署方法：</p> 
+  <p>这里以Oracle10g自带的oc4j服务器为例，假设安装在D:\oracle\product\10.2.0\db_1目录下，文件夹名称为oc4j，接下来所说目录都是相对于 D:\oracle\product\10.2.0\db_1\oc4j目录。</p> 
+  <p><strong>第一步：配置数据源</strong></p> 
+  <p>进到j2ee\home\config文件夹下，打开data-sources.xml文件，可以看到里边有&lt;data-source/&gt;标签。里边配置信息即数据源的配置，这里的数据源名称按照这里边的默认即可，更改下连接数据库的url及数据库用户名和密码，更改后的文件内容如下：</p> 
+  <p><span style="color: #0000ff;">&lt;?xml version=”1.0″ standalone=’yes’?&gt;<br /> &lt;!DOCTYPE data-sources PUBLIC “Orion data-sources” “http://xmlns.oracle.com/ias/dtds/data-sources-9_04.dtd”&gt;<br /> &lt;data-sources&gt;<br /> &lt;data-source<br /> class=”com.evermind.sql.DriverManagerDataSource”<br /> name=”OracleDS”<br /> location=”jdbc/OracleCoreDS”<br /> xa-location=”jdbc/xa/OracleXADS”<br /> ejb-location=”jdbc/OracleDS”<br /> connection-driver=”oracle.jdbc.driver.OracleDriver”<br /> username=”system”<br /> password=”rain”<br /> url=”jdbc:oracle:thin:@localhost:1521:rain”<br /> inactivity-timeout=”30″<br /> /&gt;<br /> &lt;/data-sources&gt;</span></p> 
+  <p>需要注意的是：location=”jdbc/OracleCoreDS”，这个是数据源名称，稍后还会用到，然后保存该文件，这样数据源配置完成。</p> 
+  <p><strong>第二步： 制作报表应用</strong></p> 
+  <p>发布应用的时候可以把应用打成war包形式，需要注意打war包之前要修改reportConfig.xml中授权配置以及其他相对路径属性的配置，因为在war包生成以后，相对路径会发生变化。接下来看下数据源的配置，找到JNDIPrefix标签，把value值清空（注意：tomcat下默认是 java:comp/env），然后更改datasource的值，改成&lt;value&gt;jdbc/OracleCoreDS,ORACLE,GBK,1&lt;/value&gt;，注意第一个数据源名称也就是前边提到的配置文件中的location的值。<br /> 配置文件修改后就可以把应用打成war包形式，cd 到应用目录下 用 jar -cvf report.war *.*命令，即可看到在应用目录下多了个report.war,把report.war拷贝到D:\oracle\product\10.2.0\db_1\oc4j\j2ee\home\applications下也就是oc4j的应用根目录，这样这个war包会自动解压成文件夹形式。</p> 
+  <p><strong>第三步： 发布应用</strong></p> 
+  <p>首先，告诉容器WAR文件被发布到哪里。用编辑器打开j2ee、home/config/application.xml文件，增加&lt;web-module&gt;标签，定义WAR文件属性。 &lt;web-module id=”report” path=”../../home/applications/report.war”/&gt;这里指向的是刚才的report.war。</p> 
+  <p>其次，告诉OC4J HTTP服务器关于如何通过URL来访问部署的WAR文件。用编辑器打开j2ee/home/config/http-web-site.xml文件。添加&lt;web-app&gt;标签，并为你的Web程序定义属性。请注意，application属性必须定义为”default”，是因为发布的是默认应用程序。name属性应该匹配你的Web程序所定义的ID属性。</p> 
+  <p>&lt;web-app application=”default” name=”report” root=”/report”/&gt;</p> 
+  <p>WAR文件被OC4J发布，并可通过浏览器来访问/report目录。</p> 
+  <p><strong>第四步：启动 oc4j服务器访问报表</strong></p> 
+  <p>运行中cd到 D:\oracle\product\10.2.0\db_1\oc4j\j2ee\home 执行命令java -jar oc4j.jar即可启动服务器，然后在IE上访问http://localhost:8888/report/index.jsp，默认端口是8888，要确保该端口没被其他程序占用，否则启动有问题。</p>  
+ </body>
+</html>

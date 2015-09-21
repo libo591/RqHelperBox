@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">在做润乾报表时，使用了一个自定义函数，结果运行时报如下异常<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">Unsupported major.minor version 49.0 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题解决<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">这个错误是由于低版本的<span lang="EN-US" xml:lang="EN-US"> JVM</span> 无法加载高版本的 <span lang="EN-US" xml:lang="EN-US">class</span> 文件<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">造成的<span lang="EN-US" xml:lang="EN-US">.(</span>比如<span lang="EN-US" xml:lang="EN-US">:jvm</span>是<span lang="EN-US" xml:lang="EN-US">1.4,</span>而<span lang="EN-US" xml:lang="EN-US">classes</span>文件是用<span lang="EN-US" xml:lang="EN-US">1.5</span>编译的<span lang="EN-US" xml:lang="EN-US">.),</span>只要<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">将<span lang="EN-US" xml:lang="EN-US">JDK1.5</span>的<span lang="EN-US" xml:lang="EN-US">LIB</span>下面的<span lang="EN-US" xml:lang="EN-US">TOOLS.JAR</span>覆盖<span lang="EN-US" xml:lang="EN-US">TOMCAT5.0</span>目录<span lang="EN-US" xml:lang="EN-US">/common/lib 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">下面的<span lang="EN-US" xml:lang="EN-US">tools.jar,</span>然后重启<span lang="EN-US" xml:lang="EN-US">TOMCAT5.0</span>就可以了<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><br /></p>  
+ </body>
+</html>

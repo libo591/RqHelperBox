@@ -1,0 +1,30 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>对于一串有规律的数字，如果靠手动填写就显的机械化。例如，一年有十二个月，一个月有多少天都是有规律的，对于这样的数字我们可以用to函数去实现，但是如果随便输入一个年份，随便输入一个月份，自动扩展出来该年对应的该月有多少天这个需求如何实现呢，下面简单介绍一下。</p> 
+  <p>实现这个需求的思路是：首先判断出哪年是润年，将润年中的特殊天数特殊处理，其次按照规律设置每个月的天数，最后用函数计算从给定的日期相差n天后的新的日期数据，然后从指定日期到新日期自动扩展。</p> 
+  <p>实现步骤：</p> 
+  <p>制作报表：如图所示：</p> 
+  <p>&nbsp;<img title="1011" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1011.jpg" alt="1011" width="362" height="70" /></p> 
+  <p>第一步：设置每个月天数；</p> 
+  <p>A1单元格中内容为：</p> 
+  <p>case(@arg2,1,”31″,2,”29″,3,”31″,4,”30″,5,”31″,6,”30″,7,”31″,8,”31″,9,”30″,10,”31″,11,”30″,12,”31″)</p> 
+  <p>根据月份判断该月的天数。</p> 
+  <p>第二步：计算参数是否是润年，如果是则对二月份进行判断；</p> 
+  <p>A2单元格内容为：</p> 
+  <p>if(@arg1%4!=0&amp;&amp;@arg2==2,to(1,int(A1)-1),to(1,int(A1)))</p> 
+  <p>arg1为年份，arg2为月份。</p> 
+  <p>第三步：用函数计算日期差；</p> 
+  <p>B2单元格中表达式为：</p> 
+  <p>relDate(B1,A2-1)</p> 
+  <p>realDate函数说明：从给定的日期型数据中，算出相差n天后的新的日期数据。参数说明： 第一个参数：给定的起始日期表达式，其结果必须为日期或标准日期格式的字符串，第二个参数为整数表达式，是需要求得nExp天后的新日期。</p> 
+  <p>B1单元格为年份和月份拼成的日期类型，</p> 
+  <p>A2单元格为当月天数的扩展。</p> 
+  <p>预览效果如下图所示：</p> 
+  <p>&nbsp;<img title="1021" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1021.jpg" alt="1021" width="554" height="85" /></p> 
+  <p>&nbsp;<img title="1031" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1031.jpg" alt="1031" width="74" height="711" /></p> 
+  <p><img title="1041" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1041.jpg" alt="1041" width="554" height="78" /></p> 
+  <p><img title="1051" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1051.jpg" alt="1051" width="67" height="661" /></p> 
+  <p>如图所示，按照以上的步骤，就可以实现随便输入一个年份、月份，自动扩展出来该年对应的该月的每一天。</p>  
+ </body>
+</html>

@@ -1,0 +1,79 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="Section1" style="text-align: left; layout-grid: 15.6pt none;"> 
+   <h1 style="text-align: center;"><span>Swing</span><span>中实现参数查询</span></h1> 
+   <h2><span>需求背景</span></h2> 
+   <p class="MsoNormal" style="text-indent: 21pt;"><span>基于</span><span>Swing</span><span>开发项目的用户，不仅仅满足于把结果报表在</span><span>JFrame</span><span>窗口中展现、打印，他们还希望自己能够输入查询条件，以实现实时的数据查询。</span></p> 
+   <h2><span>解决思路</span></h2> 
+   <h3><span>1.</span><span>做一个带有参数查询的报表，报表的具体设计如下图所示。</span></h3> 
+   <p class="MsoNormal" style="text-align: left;"><span style="border: windowtext 1pt solid; padding: 0cm;"><img src="/wp-content/uploads/2011/08/f797a370-7fb3-4956-a513-3dac05d2f7c4.jpg" alt="" width="560" height="274" /></span></p> 
+   <h3><span>2.</span><span>构建参数查询面板</span></h3> 
+   <p class="MsoNormal" style="text-indent: 21pt;"><span>在面板中通过</span><span style="background: silver;">JLabel</span><span style="color: black;">，</span><span style="background: silver; color: black;">JTextField</span><span style="color: black;">，</span><span style="background: silver; color: black;">JButton</span><span>对象，分别作为参数查询的提示字符，参数输入框，以及查询按钮控件，构建出参数模板的样式。</span></p> 
+   <h3><span>3.</span><span>传递参数给报表，</span></h3> 
+   <p class="MsoNormal" style="text-indent: 21pt;"><span>对于</span><span style="background: silver; color: black;">JButton</span><span>控件添加事件监听，对于输入的参数可以传递到报表中，以便计算报表。</span></p> 
+   <h3><span>4.</span><span>报表在面板中进行展现</span></h3> 
+   <p class="MsoNormal" style="text-indent: 21pt;"><span>构造</span><span>CSReport</span><span>控件，设置在面板中显示的相应属性，在面板中进行输出。</span></p> 
+   <h2><span>需求实现的部分代码</span></h2> 
+   <h3><span>1.</span><span>构建查询面板</span></h3> 
+   <p class="MsoNormal" style="text-indent: 7.5pt; margin-left: 10.5pt;"><span style="color: #0000c0;">frame</span><span> = <strong><span style="color: #7f0055;">new</span></strong> JFrame(<span style="color: #2a00ff;">“</span></span><span style="color: #2a00ff;">参数模板</span><span style="color: #2a00ff;">“</span><span>);</span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span><span>&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: #0000c0;">frame</span>.setSize(900, 900);</span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span><span>&nbsp;&nbsp;&nbsp; </span><span style="color: #0000c0;">panel</span> = <strong><span style="color: #7f0055;">new</span></strong> JPanel();</span></p> 
+   <p class="MsoNormal" style="text-indent: 10.5pt; margin-left: 10.5pt;"><span>FlowLayout flowLayout = <strong><span style="color: #7f0055;">new</span></strong> FlowLayout();<span>&nbsp;&nbsp; </span></span></p> 
+   <p class="MsoNormal" style="text-indent: 10.5pt; margin-left: 31.5pt;"><span>flowLayout.setHgap(10);<span>&nbsp;&nbsp; </span></span></p> 
+   <p class="MsoNormal" style="text-indent: 26.25pt; margin-left: 10.5pt;"><span>flowLayout.setVgap(10);</span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span style="color: #0000c0;">panel</span><span>.setLayout(flowLayout); </span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span style="color: #0000c0;">frame</span><span>.setDefaultCloseOperation(JFrame.<em><span style="color: #0000c0;">EXIT_ON_CLOSE</span></em>);</span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span><span>&nbsp;&nbsp;&nbsp; </span><span style="color: #0000c0;">frame</span>.setContentPane(<span style="color: #0000c0;">panel</span>);</span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span><span>&nbsp;&nbsp;&nbsp; </span><span style="text-decoration: underline;"><span style="color: #0000c0;">frame</span>.show()</span>;</span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span><span>&nbsp;&nbsp;&nbsp; </span><span style="color: #0000c0;">button</span> = <strong><span style="color: #7f0055;">new</span></strong> JButton();</span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span><span>&nbsp;&nbsp;&nbsp; </span><span style="color: #0000c0;">button</span>.setText(<span style="color: #2a00ff;">“</span></span><span style="color: #2a00ff;">查询</span><span style="color: #2a00ff;">“</span><span>);</span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span><span>&nbsp;&nbsp;&nbsp; </span><span style="color: #0000c0;">label</span> = <strong><span style="color: #7f0055;">new</span></strong> JLabel();</span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span><span>&nbsp;&nbsp;&nbsp; </span><span style="color: #0000c0;">label</span>.setText(<span style="color: #2a00ff;">“</span></span><span style="color: #2a00ff;">请您输入参数</span><span style="color: #2a00ff;">“</span><span>);</span></p> 
+   <p class="MsoNormal" style="margin-left: 10.5pt;"><span><span>&nbsp;&nbsp;&nbsp; </span><span style="color: #0000c0;">text</span>=<strong><span style="color: #7f0055;">new</span></strong> JTextField(20);</span></p> 
+   <h3><span>2.</span><span>给</span><span style="background: silver;">JButton</span><span>的按钮添加事件监听。</span></h3> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: red;"><span>&nbsp;&nbsp;&nbsp; </span>button.addActionListener(<strong>new</strong> Listener(text));</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span></span><span></span></span><span style="color: #0000c0;">panel</span><span style="color: black;">.add(</span><span style="color: #0000c0;">label</span><span style="color: black;">);</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp; </span></span><span style="color: #0000c0;">panel</span><span style="color: black;">.add(</span><span style="color: #0000c0;">text</span><span style="color: black;">);</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp; </span></span><span style="color: #0000c0;">panel</span><span style="color: black;">.add(</span><span style="color: #0000c0;">button</span><span style="color: black;">);</span></p> 
+   <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span style="color: black;"></span><span style="color: #0000c0;">frame</span><span style="color: black;">.validate();</span></p> 
+   <h3><span>3.</span><span>在监听类中获取到</span><span>JTextField</span><span>中输入的值。</span></h3> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span style="color: #7f0055;">public</span></strong><span style="color: black;"> </span><strong><span style="color: #7f0055;">class</span></strong><span style="color: black;"> Listener </span><strong><span style="color: #7f0055;">implements</span></strong><span style="color: black;"> ActionListener {</span></p> 
+   <p class="MsoNormal" style="text-align: left;">&nbsp;</p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp; </span>JTextField </span><span style="color: #0000c0;">lab</span><span style="color: black;">;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp; </span></span><strong><span style="color: #7f0055;">public</span></strong><span style="color: black;"> Listener(JTextField text) {</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><strong><span style="color: #7f0055;">this</span></strong><span style="color: black;">.</span><span style="color: #0000c0;">lab</span><span style="color: black;"> = text;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp; </span></span><strong><span style="color: #7f0055;">public</span></strong><span style="color: black;"> </span><strong><span style="color: #7f0055;">void</span></strong><span style="color: black;"> actionPerformed(ActionEvent e) {</span></p> 
+   <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String param = </span><span style="color: #0000c0;">lab</span><span style="color: black;">.getText();}}</span></p> 
+   <h3><span>4.</span><span>设置报表参数值。</span></h3> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ParamMetaData pmd = rd.getParamMetaData(); </span><span style="color: #3f7f5f;">// </span><span style="color: #3f7f5f;">从报表定义中取得参数元对象</span><span style="color: #3f7f5f;">ParamMetaData</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String paramOrMocrName = </span><span style="color: #2a00ff;">“”</span><span style="color: black;">;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><strong><span style="color: #7f0055;">if</span></strong><span style="color: black;"> (pmd != </span><strong><span style="color: #7f0055;">null</span></strong><span style="color: black;">) {</span></p> 
+   <p class="MsoNormal" style="text-align: left;">&nbsp;</p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><strong><span style="color: #7f0055;">for</span></strong><span style="color: black;"> (</span><strong><span style="color: #7f0055;">int</span></strong><span style="color: black;"> i = 0, count = pmd.getParamCount(); i &lt; count; i++) { </span><span style="color: #3f7f5f;">// </span><span style="color: #3f7f5f;">讲究优化的写法</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>paramOrMocrName = pmd.getParam(i).getParamName(); </span><span style="color: #3f7f5f;">// </span><span style="color: #3f7f5f;">获取参数名</span></p> 
+   <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ctx.setParamValue(paramOrMocrName, param); </span><span style="color: #3f7f5f;">// </span><span style="color: #3f7f5f;">设参数值</span></p> 
+   <h3><span>5.</span><span>计算报表并在进行展现</span></h3> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Engine engine = </span><strong><span style="color: #7f0055;">new</span></strong><span style="color: black;"> Engine(rd, ctx);</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>IReport iReport = engine.calc(); </span><span style="color: #3f7f5f;">// </span><span style="color: #3f7f5f;">运算代码，获得一个</span><span style="color: #3f7f5f;">IReport</span><span style="color: #3f7f5f;">对象</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>CSReport csReport = </span><strong><span style="color: #7f0055;">new</span></strong><span style="color: black;"> CSReport(iReport); </span><span style="color: #3f7f5f;">// </span><span style="color: #3f7f5f;">构造</span><span style="color: #3f7f5f;">CSReport</span><span style="color: #3f7f5f;">控件</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>JFrame jf = </span><strong><span style="color: #7f0055;">new</span></strong><span style="color: black;"> JFrame(</span><span style="color: #2a00ff;">“</span><span style="color: #2a00ff;">润乾报表</span><span style="color: #2a00ff;">“</span><span style="color: black;">); </span><span style="color: #3f7f5f;">// </span><span style="color: #3f7f5f;">构造</span><span style="color: #3f7f5f;">JFrame</span><span style="color: #3f7f5f;">界面</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><strong><span style="color: #7f0055;">try</span></strong><span style="color: black;"> {</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>jf.getContentPane().add(csReport.getDisplayPane());</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><strong><span style="color: #7f0055;">catch</span></strong><span style="color: black;"> (Throwable e1) {</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="color: #3f7f5f;">// </span><strong><span style="color: #7f9fbf;">TODO</span></strong><span style="color: #3f7f5f;"> Auto-generated catch block</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>e1.printStackTrace();</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="color: #3f7f5f;">// </span><span style="color: #3f7f5f;">设置</span><span style="color: #3f7f5f;">JFrame</span><span style="color: #3f7f5f;">的相关属性并展现</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>jf.setSize(600, 400);</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>jf.setLocation(200, 100);</span></p> 
+   <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="text-decoration: underline;">jf.show()</span>;</span></p> 
+   <h1><span>需求实现的效果图：</span></h1> 
+   <p class="MsoNormal" style="text-indent: 21pt;"><span>在参数模板中的文本输入框中输入</span><span>table_id</span><span>为</span><span>1</span><span>，点击查询，弹出根据参数计算后的报表。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><img src="/wp-content/uploads/2011/08/34f57edc-7780-415c-893b-4a6adff4264e.jpg" alt="" width="624" height="158" /></span></p> 
+   <h1><span>实例总述</span></h1> 
+   <p class="MsoNormal" style="text-indent: 21pt;"><span>在</span><span>swing</span><span>中进行参数查询，首先通过控件构建出参数模板的样式，给输入控件添加监听，在事件触发时，将参数模板中的值取到，同时，也要获取到报表中所涉及的参数，将输入的参数值赋给对应的参数，计算报表，最终在面板中展现，附件中是完整的实例代码。</span></p> 
+  </div> 
+  <p></p>  
+ </body>
+</html>

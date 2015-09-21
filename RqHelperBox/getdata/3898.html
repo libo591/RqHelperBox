@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="Section1" style="layout-grid: 15.6pt none;"> 
+   <p class="MsoNormal" style="text-align: center;"><span>动态隐藏数据行（一）</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span>需求描述</span></strong></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>客户预想点击某行，某行数据，就自动隐藏。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span>需求实现</span></strong></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>1.</span><span>连接</span><span>demo</span><span>数据源，以</span><span>SQL</span><span>检索的方式创建数据集“</span><span>SELECT * FROM </span><span>订单</span><span> where ${macro1}</span><span>”。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>2.</span><span>定义参数</span><span>flag,</span><span>设置如下图所示。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><img src="/wp-content/uploads/2011/07/8d650b84-559b-4cf9-a6e8-95c8029c90b0.jpg" alt="" width="463" height="58" /></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>3.</span><span>定义一个动态宏，名为“</span><span>macro1</span><span>”，值表达式为：“</span><span>if(flag==null,”</span><span>订单</span><span>ID!=99999999″,”</span><span>订单</span><span>ID not in (“+flag+”)”)</span><span>”如下图所示。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><img src="/wp-content/uploads/2011/07/8c64d783-b321-4898-909f-7c20601aa435.jpg" alt="" width="512" height="68" /></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span>4.</span></strong><strong><span><a title="报表设计" href="http://www.runqian.com.cn/rqrpt/rqwebreport_1.htm">报表设计</a>如下图所示，我们在</span><span>A2</span></strong><strong><span>的超链接属性中设置表达式为</span><span>”</span></strong><span> <strong>“”/reportJsp/showReport.jsp?raq=/</strong></span><strong><span>动态隐藏数据行</span><span>.raq&amp;flag=”+value()+</span></strong></p> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span>if(flag==null,”&quot;,”,”)+flag”</span></strong><strong><span>。</span></strong></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><img src="/wp-content/uploads/2011/07/226f66d4-e4c3-48d3-a5b0-fcf033654d05.jpg" alt="" width="523" height="102" /></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span>5.</span></strong><strong><span>发布报表，指向要隐藏行的订单</span><span>ID</span></strong><strong><span>，我们在状态栏中可以看到订单</span><span>ID</span></strong><strong><span>作为一个标记参数传递过去了。</span></strong></p> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span><img src="/wp-content/uploads/2011/07/58316613-2e44-4a54-912b-52ee78b4fd93.jpg" alt="" width="556" height="243" /></span></strong></p> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span>6</span></strong><strong><span>．点击订单</span><span>ID=10248</span></strong><strong><span>的记录，页面刷新后显示如下图所示，订单</span><span>ID=10248</span></strong><strong><span>的记录已经被隐藏。</span></strong></p> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span><img src="/wp-content/uploads/2011/07/166ee753-f8f8-483f-b6ea-d6895c84609a.jpg" alt="" width="553" height="192" /></span></strong></p> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span>详细说明</span></strong></p> 
+   <p class="MsoNormal" style="text-align: left;"><strong><span>本例主要是通过超链接，传递参数作为标志预想隐藏的记录，拼接出动态宏的表达式，在数据集中将相应的订单</span><span>ID</span></strong><strong><span>做为过滤条件，进行数据过滤，这样选择过的订单</span><span>ID</span></strong><strong><span>就不会检索出来，也就有了动态隐藏行的效果。</span></strong></p> 
+  </div> 
+  <p></p>  
+ </body>
+</html>

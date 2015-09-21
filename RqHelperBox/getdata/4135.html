@@ -1,0 +1,30 @@
+<html>
+ <head></head> 
+ <body> 
+  <h1 style="text-indent: 21pt; margin-left: 84pt;"><span>润乾报表的返回按钮</span></h1> 
+  <p class="MsoNormal"><span>在报表中通过超链接连接到一张报表之后，比如通过“订单”表链接到“订单明细”表查看订单的详情之后需要返回到“订单”表。这个时候客户希望报表之上能有一个返回功能的按钮，通过点击这个按钮返回到上一个页面，而不是通过点击浏览器的回退按钮来实现。</span></p> 
+  <p class="MsoNormal"><span>实现这个功能用一个简单的</span><span>js</span><span>即可。下面一起来看一下具体步骤：</span></p> 
+  <p class="MsoNormal"><span>首先，新建两张报表：</span></p> 
+  <p class="MsoNormal"><span>订单</span><span>.raq</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/e48d22eb-20c9-4583-b61c-cbb7c09b80c3.jpg" alt="" width="445" height="77" /></span></p> 
+  <p class="MsoNormal"><span>并添加一个整数类型的参数：</span><span>arg1</span></p> 
+  <p class="MsoNormal"><span>D2</span><span>是一个带超链接的单元格，内容是：</span><span>‘./showReport.jsp?raq=/</span><span>订单明细</span><span>.raq&amp;arg1=’+A2</span></p> 
+  <p class="MsoNormal"><span>订单明细</span><span>.raq</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/6b18efe6-b5e6-4dfd-85ea-ae5ca01af172.jpg" alt="" width="426" height="99" /></span></p> 
+  <p class="MsoNormal"><span>给“订单明细</span><span>.raq</span><span>”也添加一个名为</span><span>arg1</span><span>的整数型参数。</span></p> 
+  <p class="MsoNormal"><span>A3</span><span>中的内容是：</span><span>=ds1.Select(</span><span>订单</span><span>ID,,</span><span>订单</span><span>ID==@arg1)</span><span>，这里是做一个判断和过滤，避免误查。</span></p> 
+  <p class="MsoNormal"><span>E1</span><span>和</span><span>F1</span><span>是一个</span><span>HTML</span><span>类型的格子，其中</span><span>E1</span><span>是一个按钮，</span><span>F1</span><span>是一些文字和符号。</span></p> 
+  <p class="MsoNormal"><span>E1</span><span>中的内容：</span></p> 
+  <p class="MsoNormal"><span>&lt;input type=”button” value=”</span><span>返回</span><span>” name=”</span><span>返回</span><span>” onclick=”window.history.back()”&gt;</span></p> 
+  <p class="MsoNormal"><span>F1</span><span>中的内容：</span></p> 
+  <p class="MsoNormal"><span>&lt;span onclick=”window.history.back()” style=”cursor:hand”&gt;&lt;&lt;</span><span>返回</span><span>&lt;/span&gt;</span><span>，并且对</span><span>F1</span><span>进行了加粗和前景色的设置。</span></p> 
+  <p class="MsoNormal"><span>在网页上浏览报表，效果如下：</span></p> 
+  <p class="MsoNormal"><span>先发布“订单</span><span>.raq</span><span>”</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/b1cccf81-f010-4a1c-a91b-450028710fa2.jpg" alt="" width="403" height="234" /></span></p> 
+  <p class="MsoNormal"><span>点击</span><span>10248</span><span>后的查看明细，跳转到“订单明细</span><span>.raq</span><span>”：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/d76e173e-0e6e-4d3a-8d10-7fcd38e507de.jpg" alt="" width="421" height="123" /></span></p> 
+  <p class="MsoNormal"><span>点击其中任意一个“返回”，均可返回到上一个页面。</span></p> 
+  <p class="MsoNormal"><span>关键字：返回按钮，报表回退。</span></p> 
+  <p></p>  
+ </body>
+</html>

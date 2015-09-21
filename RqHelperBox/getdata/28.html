@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">问题:</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">&nbsp;&nbsp; 润乾报表参数传入中文乱码问题</span><span lang="EN-US">,</span><span style="font-family: 宋体">不传入参数的时候一切正常</span><span lang="EN-US">,</span><span style="font-family: 宋体">但传入参数的时候参数出现乱码现象</span><span lang="EN-US">.<span id="more-28"></span></span></p> 
+  <p><span lang="EN-US"></span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">问题解决:</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">&nbsp;&nbsp; 经交流客户用的是</span><span lang="EN-US">tomcat5.0,</span><span style="font-family: 宋体">故修改润乾报表</span><span lang="EN-US">server.xml</span><span style="font-family: 宋体">文件</span><span lang="EN-US">.</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><span>&nbsp;</span>&lt;Connector port=”8080″</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>maxThreads=”150″ minSpareThreads=”25″ maxSpareThreads=”75″</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>enableLookups=”false” redirectPort=”8443″ acceptCount=”100″</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>debug=”0″ connectionTimeout=”20000″ </span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>disableUploadTimeout=”true” URIEncoding=”GBK”/&gt; </span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">修改之后仍然是原来的现象</span><span lang="EN-US">.</span><span style="font-family: 宋体">又查看起</span><span lang="EN-US">jsp</span><span style="font-family: 宋体">发现</span><span lang="EN-US">,</span><span style="font-family: 宋体">其直接在</span><span lang="EN-US">jsp</span><span style="font-family: 宋体">里调用</span><span lang="EN-US">/setReportParams?depId=” +depId+”&amp;depName=”+depName+”&amp;billYear=”+billYear;</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体">在润乾报表</span><span lang="EN-US">action</span><span style="font-family: 宋体">类里，做处理，然后，再</span><span lang="EN-US">action</span><span style="font-family: 宋体">类里在调用</span><span lang="EN-US">/setReportParams?depId=” +depId+”&amp;depName=”+depName+”&amp;billYear=”+billYear;</span><span style="font-family: 宋体">在调用这个方法之前，对这里参数作转码。</span></p>  
+ </body>
+</html>

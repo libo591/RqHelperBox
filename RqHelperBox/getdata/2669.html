@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在多张物理表中，往往都有一个或多个同名字段可以将这些不同的表关联起来。要实现多表关联有很多种方法，例如在sql语句里写类似于where a.id=b.id and a.id=c.id条件进行关联，也可以用API通过循环，动态拼出查询条件以实现多表关联，还可以通过动态宏接收参数并传入数据集做多表关联。下面就详细介绍一下如何通过动态宏实现多表关联。</p> 
+  <p>第一步：制作报表，如下图所示：</p> 
+  <p>&nbsp;<img title="59" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/59.jpg" alt="59" width="489" height="68" /></p> 
+  <p>第二步：定义数据类型为字符串组的参数，如下图所示：</p> 
+  <p>&nbsp;<img title="60" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/60.jpg" alt="60" width="554" height="92" /></p> 
+  <p>第三步：定义动态宏，如下图所示：</p> 
+  <p>&nbsp;<img title="611" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/611.jpg" alt="611" width="454" height="92" /></p> 
+  <p>macro1的值为：@tbName，用来接收通过普通参数传来的表名；</p> 
+  <p>macro2的值为：</p> 
+  <p>if(split(@tbName,”,”)[1]==null,””, if(split(@tbName,”,”)[2]==null,””,(split(@tbName,”,”)[2]!=null &amp;&amp; split(@tbName,”,”)[3]==null),”where “+split(@tbName,”,”)[1]+”.订单ID=”+split(@tbName,”,”)[2]+”.订单ID”, if((split(@tbName,”,”)[3]!=null &amp;&amp; split(@tbName,”,”)[4]==null),”where “+split(@tbName,”,”)[1]+”.订单ID=”+split(@tbName,”,”)[2]+”.订单ID and “+split(@tbName,”,”)[2]+”.订单ID=”+split(@tbName,”,”)[3]+”.订单ID”) ) )</p> 
+  <p>，用来判断传进来的表名的个数，通过表名.订单ID将多表进行关联。</p> 
+  <p>最后：定义数据集，如下图所示：</p> 
+  <p>&nbsp;<img title="621" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/621.jpg" alt="621" width="551" height="494" /></p> 
+  <p>按照以上几步就可以实现多表关联了。上面的例子是以最多三个表按照订单ID关联的例子，动态宏的写法比较复杂，如果更多表进行关联会更复杂，所以如果要关联的表比较多时还是采用API方式做会比较方便。</p> 
+  <p>需要注意的是：不管几个表关联，关联字段必须已知。</p>  
+ </body>
+</html>

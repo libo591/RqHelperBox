@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表软件是一个纯Java报表工具，只要是支持j2ee规范的webserver都可以用来部署润乾报表。目前，应用比较广泛的j2ee服务器有Tomcat,Weblogic,Webserver,Jboss等等。这其中由于Jboss遵循商业友好的LGPL授权分发，并且由开源社区开发，这使得Jboss广为流行。本文就介绍一下在Jboss服务器下如何部署润乾报表应用。</p> 
+  <p>这里以Jboss4.2版本为例，润乾报表应用以设计器下的demo应用为例。</p> 
+  <p><strong>第一步：先将demo应用拷贝出来，然后修改相关配置文件：</strong></p> 
+  <p>在reportConfig.xml中把JNDIPrefix节点的value修改成：java：</p> 
+  <p><span style="color: #0000ff;">&lt;config&gt;<br /> &lt;name&gt;JNDIPrefix&lt;/name&gt;<br /> &lt;value&gt;java:&lt;/value&gt;<br /> &lt;/config&gt;</span></p> 
+  <p>还需要把datasource节点的value修改成相应的数据源信息(这里以demo数据源为例,数据库为hsql,数据源名字为demo)：</p> 
+  <p><span style="color: #0000ff;">&lt;config&gt;<br /> &lt;name&gt;dataSource&lt;/name&gt;<br /> &lt;value&gt;demo,unknown,gbk&lt;/value&gt;<br /> &lt;/config&gt;</span></p> 
+  <p><strong>第二步：在Jboss中配置数据源相关信息文件：</strong></p> 
+  <p>jboss4.2\server\default\deploy\部署配置文件即demo-ds.xml，在这个文件中主要配置数据源相关信息：</p> 
+  <p>例如：</p> 
+  <p><span style="color: #0000ff;">&lt;?xml version=”1.0″ encoding=”UTF-8″?&gt;<br /> &lt;datasources&gt;<br /> &lt;local-tx-datasource&gt;<br /> &lt;jndi-name&gt;demo&lt;/jndi-name&gt;</span></p> 
+  <p>&lt;connection-url&gt;jdbc:hsqldb:hsql://localhost:9001/runqianDB&lt;/connection-url&gt;</p> 
+  <p>&lt;driver-class&gt;org.hsqldb.jdbcDriver&lt;/driver-class&gt;<br /> &lt;user-name&gt;sa&lt;/user-name&gt;<br /> &lt;password&gt;&lt;/password&gt;</p> 
+  <p>&lt;min-pool-size&gt;5&lt;/min-pool-size&gt;</p> 
+  <p>&lt;max-pool-size&gt;20&lt;/max-pool-size&gt;<br /> &lt;idle-timeout-minutes&gt;0&lt;/idle-timeout-minutes&gt;<br /> &lt;track-statements/&gt;<br /> &lt;prepared-statement-cache-size&gt;32&lt;/prepared-statement-cache-size&gt;</p> 
+  <p>&lt;/local-tx-datasource&gt;<br /> &lt;/datasources&gt;</p> 
+  <p><strong>第三步：把对应数据库的驱动放置到\jboss4.2\server\default\lib下。</strong></p> 
+  <p><strong>第四步：将应用打成war包，发布到\jboss4.2\server\default\deploy\目录下,如果发布的应用名字是demo的话,应用命名demo.war：</strong></p> 
+  <p>这样，在Jboss下部署润乾报表就完成了。启动服务器，就可以浏览应用了。</p>  
+ </body>
+</html>

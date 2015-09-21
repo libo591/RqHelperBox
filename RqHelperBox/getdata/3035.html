@@ -1,0 +1,50 @@
+<html>
+ <head></head> 
+ <body> 
+  <h2><span style="font-family: 宋体;">需求背景</span></h2> 
+  <p class="MsoNormal"><span><span>&nbsp;</span></span><span style="font-family: 宋体;">润乾报表会提供一些报表发布后的默认功能按钮，但是由于样式或位置的不同需求，客户往往希望自己定义这些功能按钮，如行式填报表的插入、添加、删除等按钮。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">实现这样的需求需要两步，首先要去掉原来默认提供的按钮，然后定义自己需要的按钮以及按钮样式。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">本文即以行式填报表为例，向大家展现如何去掉默认的功能按钮以及如何定义想要的功能按钮。</span></p> 
+  <h2><span style="font-family: 宋体;">实现步骤</span></h2> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">任意做一张行式填报表，使用设计器自带的</span><span>demo</span><span style="font-family: 宋体;">应用发布后的效果如下：</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><img class="alignnone size-full wp-image-6609" title="19" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/19.jpg" alt="19" width="554" height="179" /></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">下面我们来修改一下发布报表的</span><span>jsp</span><span style="font-family: 宋体;">，使其达到去掉默认功能按钮后自定义按钮的效果。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">首先我们去掉默认功能条，修改发布报表</span><span>jsp</span><span style="font-family: 宋体;">里</span><span> report:html </span><span style="font-family: 宋体;">标签中的</span><span>funcBarLocation</span><span style="font-family: 宋体;">标签：</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">原：</span><span>funcBarLocation=”top” </span><span style="font-family: 宋体;">修改为：</span><span>funcBarLocation=”&quot;</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">这个标签用于设置功能条的位置，包括上、下和上下均有，默认是在上面。所以如果我们需要更改按钮的样式或者想将按钮放到页面的其他位置时，就需要我们自己来定义了。</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;"><img class="alignnone size-full wp-image-6610" title="20" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/20.jpg" alt="20" width="554" height="30" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">将这个标签置空后，默认的功能按钮便不显示了。</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">接着我们来定义自己需要的按钮，本例是想只显示添加和提交按钮，并且需要将按钮放到报表的右下方。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">关于行式填报表的一些操作，润乾提供了相应的接口，列表如下：</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">插入：</span><span>_insertRow()</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">添加：</span><span>_appendRow()</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">删除：</span><span>_deleteRow()</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">提交：</span><span>_submitRowInput()</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">发布报表的</span><span>jsp</span><span style="font-family: 宋体;">修改如下：</span></p> 
+  <p class="MsoNormal"><span>&lt;table align=”center” width=”100%” height=”100%”&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;tr&gt;&lt;td&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;report:html name=”report1″ reportFileName=”&lt;%=report%&gt;”</span></p> 
+  <p class="MsoNormal"><span>funcBarLocation=”&quot;</span></p> 
+  <p class="MsoNormal"><span>needPageMark=”yes”</span></p> 
+  <p class="MsoNormal"><span>generateParamForm=”no”</span></p> 
+  <p class="MsoNormal"><span>params=”&lt;%=param.toString()%&gt;”</span></p> 
+  <p class="MsoNormal"><span>/&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;/td&gt;&lt;/tr&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;/table&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;table align=”right”&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;tr&gt;&lt;td&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;span style=”cursor:pointer;color:blue;” onclick=”_appendRow( report1 )”&gt;</span><span style="font-family: 宋体;">添加</span><span>&lt;/span&gt;&amp;nbsp;&lt;span style=”cursor:pointer;color:blue” onclick=”_submitRowInput( report1 )”&gt;</span><span style="font-family: 宋体;">提交</span><span>&lt;/span&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;/td&gt;&lt;/tr&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;/table&gt;</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">发布后的页面效果如下：</span></p> 
+  <p class="MsoNormal"> </p> 
+  <h2><span style="font-family: 宋体;"><img class="alignnone size-full wp-image-6611" title="21" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/21.jpg" alt="21" width="554" height="211" /></span></h2> 
+  <h2><span style="font-family: 宋体;">总结</span></h2> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">通过本例的实现我们很容发现其实一些我们想要的功能都可以通过查找相应润乾提供的接口实现，如果在文档教程中没有找到的话，大可以通过查看页面的源文件尝试。</span></p> 
+  <p><span style="font-family: 宋体; font-size: 10.5pt;">所谓条条大路通罗马，由此文观之，可见一斑。</span></p>  
+ </body>
+</html>

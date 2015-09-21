@@ -1,0 +1,9 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>一、问题描述</strong></p> 
+  <p>润乾报表为了保证精确显示，宽度给定的是一个绝对值，所以不管分辨率是多少，报表显示的宽度是固定的。但是，现在报表用户报表并不单纯作为一个报表工具使用，有时候也当作页面工具使用。这个时候为了页面显示的工整美观，报表用户就需要润乾报表能够自适应宽度，那就需要润乾报表的宽度不能是一个绝对值，而是一个相对值。</p> 
+  <p><strong>二、解决方法</strong></p> 
+  <p>报表解析为html后，其实就是一个table，所以如果能动态的将这个table的宽度改成一个百分数，那么就可以实现报表的宽度自适应了。具体请参考一下javascript：<br /> &lt;script language=”javascript”&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;myResize();<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function myResize() {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var tab1 = document.getElementById( “report1″);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tab1.style.width=”100%”;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &lt;/script&gt;</p>  
+ </body>
+</html>

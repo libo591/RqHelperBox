@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在制作统计图的过程中，会遇到由于统计数据值之间相差太小而引发的统计图中的统计值重叠问题。由于数值并不完全相等，所以重叠的数据还要全部显示出来，如果不处理数据就会出现如下图的效果：</p> 
+  <p>&nbsp;<img title="192" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/192.jpg" alt="192" width="491" height="447" /></p> 
+  <p>如图所示，全国的全国工业和电子制造业处的数据出现了重叠效果。下面就介绍一下如何处理统计值重叠的问题。</p> 
+  <p>打开统计图定义属性，在图形特性的选项卡中有“统计值起始值”和“统计值结束值”的两个属性，由于数据是从数据库中取的，它的最大值和最小值就不是一个固定的数字。润乾报表在这里巧妙的运用了MAX函数和MIN函数动态的获取统计值的最大和最小值。如图：</p> 
+  <p>&nbsp;<img title="213" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/213.jpg" alt="213" width="342" height="92" /></p> 
+  <p>设置统计值标签间隔可以拉开统计值之间的间隔。效果如下：</p> 
+  <p>&nbsp;<img title="232" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/232.jpg" alt="232" width="492" height="455" /></p>  
+ </body>
+</html>

@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在上一篇文章中，我们已经将整个报表应用成功的集成到了myEclipse平台下。现在来看看如何将一个最简单的报表发布到新工程中。首先来制作一张简单的润乾报表。如下图所示，一个四行四列的名为runqian的raq文件：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/08/zrclip-001p17a4dc63.png" alt="" width="331" height="132" /></p> 
+  <p>在工程跟目录WebRoot下面建立一个名为reportFile的文件夹，将制作好的raq文件拷贝到里面去。之后在WebRoot下面建立两个jsp文件。一个名为mc.jsp和myError.jsp内容如下：</p> 
+  <p>mc.jsp:<br /> &lt;%@ page contentType=”text/html;charset=GBK” %&gt;<br /> &lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report” %&gt;<br /> &lt;html&gt;<br /> &lt;body topmargin=0 leftmargin=0 rightmargin=0 bottomMargin=0&gt;<br /> &lt;table align=left&gt;<br /> &lt;tr&gt;&lt;td&gt;<br /> &lt;report:html name=”report1″<br /> srcType=”file”<br /> reportFileName=”runqian.raq”<br /> funcBarLocation=”top”<br /> exceptionPage=”/myError.jsp”<br /> /&gt;<br /> &lt;/td&gt;&lt;/tr&gt;<br /> &lt;/table&gt;<br /> &lt;/body&gt;<br /> &lt;/html&gt;<br /> myError.jsp:<br /> &lt;%@ page contentType=”text/html;charset=GBK” %&gt;<br /> &lt;html&gt;<br /> &lt;title&gt;报表异常信息&lt;/title&gt;<br /> &lt;body&gt;<br /> &lt;%<br /> Exception e = ( Exception ) request.getAttribute( “exception” );<br /> out.println( “&lt;div style=’color:red’&gt;” + e.getMessage() + “&lt;/div&gt;” );<br /> %&gt;<br /> &lt;/body&gt;<br /> &lt;/html&gt;</p> 
+  <p>分别建立好两个jsp之后,将授权文件拷贝到工程目录的classess文件夹下，在X:\apache-tomcat-6.0.20\webapps\runqian\WEB-INF\classes（以tomcat为例，X为按照目录）。注意更改授权文件名为runqianWindowServer.lic即可。工程发不到服务器中，可以在自己的服务器上运行报表。如下图所示即为自己的服务器运行的润乾报表啦：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/08/zrclip-002n1fb22de7.png" alt="" width="340" height="187" /></p> 
+  <p>报表的支持文件在不同的操作系统和开发环境下的部署都大同小异,大家可以以此为参考配置报表。</p>  
+ </body>
+</html>

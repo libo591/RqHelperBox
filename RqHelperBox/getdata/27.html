@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">问题</span><span lang="EN-US">:</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">&nbsp;&nbsp;润乾报表数据源设置为</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US">jdbc:mysql://localhost:3306/vote?useUnicode=true&amp;characterEncoding=GBK&amp;characterSetResults=GBK</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">时不能保存中文<span id="more-27"></span></span></p> 
+  <p style="margin: 0cm 0cm 0pt; tab-stops: 55.5pt" class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">问题解决:</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp; 检查<span style="font-family: 宋体">润乾报表</span>web.xml</span><span style="font-family: 宋体">后，发现客户有字符过滤的</span><span lang="EN-US">servlet ,</span><span style="font-family: 宋体">所以建议</span><span lang="EN-US"><span>&nbsp;</span></span><span style="font-family: 宋体">单独部署一个润乾的应用,</span><span style="font-family: 宋体">测试中文填报.</span><span style="font-family: 宋体">单独发布应用测试通过。</span><span style="font-family: 宋体">最后发现是</span><span lang="EN-US">tomcat</span><span style="font-family: 宋体">版本的问题，换个</span><span lang="EN-US">tomcat</span><span style="font-family: 宋体">问题解决。</span></p>  
+ </body>
+</html>

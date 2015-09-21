@@ -1,0 +1,54 @@
+/**
+ * 报表的读取,写入和导出(com.runqian.report4.util.ReportUtils)
+ */
+private static void reportReadWrite() {
+	//授权文件路径
+	String licPath = "F://Server2012-08-31V4.0Windows.lic";
+	//报表模板路径
+	String reportPath = "F:/dd.raq";
+	//导出文件夹
+	String exportFolder = "F:/00/";
+	//导出文件命名前缀
+	String exportNamePre = "reportexport_dd";
+	//报表组模板路径
+	String reportGroupPath = "F:/dd.rpt";
+	try {
+		//设置授权，如果为web应用，则在reportConfig.xml中配置即可
+		ExtCellSet.setLicenseFileName(licPath);
+		//读取报表模板，如果为raq则实际为ReportDefine对象，如果为rat则实际为ExtCellSet对象
+		IReport rd = ReportUtils.read(reportPath);
+		//读取报表组模板
+		ReportGroup reportGroup = ReportUtils.readReportGroup(reportGroupPath);
+		//构建运算环境和运算引擎
+		Context ctx = new Context();
+		Engine en = new Engine(rd,ctx);
+		//计算报表，得到计算结果（表达式都被解析，扩展格都被扩展等）
+		IReport ireport = en.calc();
+		//导出word文件，参数分别表示：导出文件绝对路径，计算后的报表对象
+		ReportUtils.exportToDOC(exportFolder+exportNamePre+".doc",ireport);
+		//导出excel2003文件，参数分别表示：导出文件绝对路径，计算后的报表对象，是否分页，导出比例100=100%（默认 75），是否导出公式（默认 false）
+		ReportUtils.exportToExcel(exportFolder+exportNamePre+".xls",ireport,true,75,false);
+		//导出excel2007文件，参数分别表示：导出文件绝对路径，计算后的报表对象，是否分页
+		ReportUtils.exportToExcel2007(exportFolder+exportNamePre+".xlsx", ireport, true);
+		//导出html文件，参数分别表示：导出文件绝对路径，计算后的报表对象，html文件的编码（默认 GBK），缩放比例1=100%
+		ReportUtils.exportToHTML(exportFolder+exportNamePre+".html", ireport,"GBK",1F);
+		//导出pdf文件，参数分别表示：导出文件绝对路径，计算后的报表对象，是否分页（默认 false），是否将文字以图形方式输出（默认 true）
+		ReportUtils.exportToPDF(exportFolder+exportNamePre+".pdf", ireport, false,true);
+		
+		FileOutputStream out = new FileOutputStream(exportFolder+exportNamePre+".txt");
+		//将报表导出为可在字符终端显示的文本格式(带表格线的)
+		//导出文件绝对路径，计算后的报表对象，是否分页（默认 false），横格线为空时是否占一行（默认 true）
+		ReportUtils.exportToText(out, ireport);
+		ReportUtils.exportToText(out, ireport,true);
+		//将报表导出为可在字符终端显示的文本格式(不带表格线的)
+		//导出文件绝对路径，计算后的报表对象，同行间数据分隔符，是否用单元格的显示值作为导出数据，不同行间数据分隔符
+		ReportUtils.exportToText(out, ireport," ",true,"\n");
+		out.close();
+		//保存报表模板
+		ReportUtils.write(exportFolder+exportNamePre+".raq", rd);
+		//保存报表组模板
+		ReportUtils.writeReportGroup(exportFolder+exportNamePre+".rpt", reportGroup);
+	} catch (Throwable e) {
+		e.printStackTrace();
+	}
+}

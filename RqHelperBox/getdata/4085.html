@@ -1,0 +1,51 @@
+<html>
+ <head></head> 
+ <body> 
+  <h1 style="text-indent: 21pt;"><span>改变分页浏览式报表的行的背景色</span></h1> 
+  <p class="MsoNormal"><span>有时候客户为了尽可能的避免对行数很多的报表出现误读现象，写</span><span>js</span><span>来实现一个功能：鼠标的焦点位于该行的时候，改变该行的背景色。但是有时候如果报表分页了之后，发现第二页的行的背景色不仅没有改变，还会报脚本错误。</span></p> 
+  <p class="MsoNormal"><span>下面我介绍一个比较通用的</span><span>js</span><span>，即在报表分页或者不分页的时候都能改变行的背景色。</span></p> 
+  <p class="MsoNormal"><span>Js</span><span>定义如下：</span></p> 
+  <p class="MsoNormal"><span>function changeColor(selColor){ </span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>var getColor = selColor;</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>var intColor = parseInt(getColor);</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>//</span><span>设置行背景色</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>var pn=report1_getCurrPage();</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>var n=(pn-1)*20;</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>var colLen = document.getElementById(“report1″).rows[intColor-n-1].cells.length;</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>for(var i=0;i&lt;colLen;i++){</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>document.getElementById(“report1″).rows[intColor-n-1].cells[i].style.backgroundColor=”pink”;</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span></span></span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>}</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp; </span>}</span></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>function changeColor1(selColor){</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>var getColor = selColor;</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>var intColor = parseInt(getColor);</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var pn=report1_getCurrPage();</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>var n=(pn-1)*20;</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>//</span><span>设置行背景色</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>var colLen = document.getElementById(“report1″).rows[intColor-1-n].cells.length;</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>for(var i=0;i&lt;colLen;i++){</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>document.getElementById(“report1″).rows[intColor-1-n].cells[i].style.backgroundColor=”white”;</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span>}</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp; </span>}</span></p> 
+  <p class="MsoNormal"><span>然后定义一张报表，如下图：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/fbfe238e-1766-4796-abaa-f6b5ece08920.jpg" alt="" width="395" height="60" /></span></p> 
+  <p class="MsoNormal"><span>然后设置报表“按行分页”，每页</span><span>20</span><span>行。</span></p> 
+  <p class="MsoNormal"><span>选中</span><span>A1</span><span>这一整行，在右边属性栏中找到“</span><span>HTML</span><span>事件”，在其表达式中写：</span></p> 
+  <p class="MsoNormal"><span>“onMouseMove=changeColor(“+row()+”) onMouseOut=changeColor1(“+row()+”)”</span></p> 
+  <p class="MsoNormal"><span>将行号传给</span><span>changeColor</span><span>（</span><span>selColor</span><span>）和</span><span>changeColor1</span><span>（</span><span>selColor</span><span>）。</span></p> 
+  <p class="MsoNormal"><span>浏览报表如下图：</span></p> 
+  <p class="MsoNormal"><span>第一页：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/f6504611-81a4-4f64-8ebe-9eee8fb54ce4.jpg" alt="" width="456" height="178" /></span></p> 
+  <p class="MsoNormal"><span>第二页：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/bc6780be-2540-499d-91cd-aecc82e5ac8e.jpg" alt="" width="550" height="173" /></span></p> 
+  <p class="MsoNormal"><span>第三页：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/2586f5a3-622b-4b4e-95b7-85a7bfdb3c44.jpg" alt="" width="474" height="139" /></span></p> 
+  <p class="MsoNormal"><span>随便将鼠标放到一行，则该行的背景色变成粉红色。这样的话就很难看错，出现误读数据的情况了。</span></p> 
+  <p class="MsoNormal"><span>注意：不要将</span><span>HTML</span><span>事件中的</span><span>onMouseMove</span><span>改成</span><span>onMouseOver</span><span>，因为报表的单元格在初始化的时候就已经有了一个</span><span class="htmlatr1"><span>onmouseover</span></span><span class="htmltag1"><span>=</span></span><span class="htmlval1"><span>”report1416542over()”</span></span><span class="htmlval1"><span>，</span></span><span class="htmlval1"><span>如果用</span></span><span>onMouseOver</span><span>则会冲突，导致某些行的背景色不能快速灵活的改变，而是要通过反复的改变鼠标焦点才能改变。</span></p> 
+  <p class="MsoNormal"><span>这个</span><span>js</span><span>方法对于不分页的报表也是有效果的：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/170b94c9-0f2a-41e9-9136-69470c7ca53a.jpg" alt="" width="376" height="204" /></span></p> 
+  <p></p>  
+ </body>
+</html>

@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="TEXT-ALIGN: left">问题:</p> 
+  <p style="TEXT-ALIGN: left">因为系统使用的润乾填报报表非常复杂（20行20列的交叉报表），需要校验的内容很多，</p> 
+  <p style="TEXT-ALIGN: left">如果填写到一半 了，临时有事，报表数据就无法保存，下次还要再次重新输入，</p> 
+  <p style="TEXT-ALIGN: left">怎么实现填报一部分时候也可以保存?</p> 
+  <p><br /> </p> 
+  <p style="TEXT-ALIGN: left">问题解决:</p> 
+  <p style="TEXT-ALIGN: left">这个可以采用润乾报表填报的强提交来实现,可以调用润乾报表关于填报表的数据提交</p> 
+  <p style="TEXT-ALIGN: left">的两个javascript 函数，_submitTable()与_submitReport(),这两个函数的共同点 是提交网页</p> 
+  <p style="TEXT-ALIGN: left">上的数据到数据库中，完成数据的入库操作；不同点是前者在提交数据到数据 库前会</p> 
+  <p style="TEXT-ALIGN: left">调用润乾报表的数据校验javascript 函数或表达式，同时也会调用由用户定义 的javascript</p> 
+  <p style="TEXT-ALIGN: left">数据校验函数，在通过合法性校验的情况下再对数据提交，而后者不会对 数据进行任何</p> 
+  <p style="TEXT-ALIGN: left">校验，只是原汁原味的把数据直接提交到数据库。通过这个方法就可以实 现:第一次可以</p> 
+  <p style="TEXT-ALIGN: left">强制提交有错误的报表,而第二次可以再打开修改以前提交错误的报表.</p>  
+ </body>
+</html>

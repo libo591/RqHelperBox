@@ -1,0 +1,35 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>客户在展现报表时常常要求将多张报表在一个页面中展示，此时可在页面上定义多个润乾的</span><span>tag</span><span>标签来显示，如：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>&lt;report:html name=”report1″ reportFileName=”22.raq”</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>funcBarLocation=”&quot; </span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>needPageMark=”no”</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>/&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>&lt;report:html name=”report2″ reportFileName=”22.raq”</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>funcBarLocation=”&quot; </span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>needPageMark=”no”</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>/&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>&lt;report:html name=”report3″ reportFileName=”22.raq”</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>funcBarLocation=”&quot; </span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>needPageMark=”no”</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>/&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>此种写法在大多数</span><span>web</span><span>服务器上都没问题，但是当部署在</span><span>resin</span><span>上时，会有一些特殊问题：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>问题一：三段标签引用的是同一个</span><span>raq</span><span>，访问页面时前台只展现一个报表，后台报错：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><img src="/wp-content/uploads/2011/08/0f6bf74a-d49b-4132-ad32-be25296a9401.jpg" alt="" width="554" height="197" /></span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>问题二：将第二段标签中引用的报表名称更改后，报表能正常展现，但页面样式上展现会出相关问题：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><img src="/wp-content/uploads/2011/08/d2be8b92-7c0a-40dc-a118-cd20b6cc20b7.jpg" alt="" width="554" height="491" /></span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>标签中设置为不需要工具条，不需要页码</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>funcBarLocation=”&quot; </span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>needPageMark=”no”</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>但是在页面展现时，只有第一个表能按照设置正常展现，后边的表并没有按照要求显示。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>这两个问题为在</span><span>resin</span><span>特有的问题，主要是</span><span>resin</span><span>服务器解析页面时出现的问题。润乾针对这种问题专门增加了项配置，在</span><span>reportConfig.xml</span><span>中增加</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;config&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>　　</span><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;name&gt;webServerType&lt;/name&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>　　</span><span>&lt;value&gt;resin&lt;/value&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp; </span>&lt;/config&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>这样，上述两个问题能圆满解决，正常展示。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><img src="/wp-content/uploads/2011/08/64414a3a-f86f-4714-9d48-ce8526b417f1.jpg" alt="" width="503" height="476" /></span></p> 
+  <p></p>  
+ </body>
+</html>

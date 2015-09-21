@@ -1,0 +1,28 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>需求背景：为了界面的友好性，我们会希望在调用<strong>报表</strong>的时候能够出现一个进度条，然后再<strong><a href="http://www.runqian.com.cn" target="_blank">展现报表</a></strong>，这样在用户等待的时候界面不至于空白，也使界面看起来交互性更好，下面就介绍一种进度条的实现方法。</p> 
+  <p>实现思路：有一种比较好的已经被封装成js控件的页面进度条叫做ShowProcessBar，在调用报表的时候先触发这个js，显示进度条，然后调用展现报表的jsp去展报表。</p> 
+  <p>实现方法：</p> 
+  <p>在一张静态的html中写一个按钮，点击这个按钮时先去调用进度条的js，然后再去调用展现<strong>报表设计</strong>的jsp文件去展现报表。</p> 
+  <p>Html文件的代码如下：</p> 
+  <p>&lt;HTML&gt;</p> 
+  <p>&lt;HEAD&gt;</p> 
+  <p>&lt;script language=”javascript” src=”ShowProcessBar.js”&gt;&lt;/script&gt;</p> 
+  <p>&lt;/HEAD&gt;</p> 
+  <p>&lt;BODY&gt;</p> 
+  <p>&lt;BR&gt;</p> 
+  <p>&lt;form action=”1.jsp”&gt;</p> 
+  <p>&lt;input type=”submit” value=”进度条” IsShowProcessBar=”True”&gt;</p> 
+  <p>&lt;/form&gt;</p> 
+  <p>&nbsp;</p> 
+  <p>&lt;/BODY&gt;</p> 
+  <p>&lt;/HTML&gt;&nbsp;</p> 
+  <p>上面的代码中IsShowProcessBar=”True”用来控制进度条的展现。</p> 
+  <p>点击按钮后先显示进度条然后调用1.jsp，这张jsp就是一张展现报表的普通的jsp，不需要特殊设置。</p> 
+  <p>将js控件，上面的静态html文件和1.jsp文件放到同一个文件夹下，这里都放到了jsp文件夹下。</p> 
+  <p>访问上面静态的html文件，可以看到如下进度条的效果：<a href="http://www.runqian.com.cn/archives/4285.html/e1" rel="attachment wp-att-4286"><img class="aligncenter size-full wp-image-4286" title="e1" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/e1.jpg" alt="" width="582" height="316" /></a></p> 
+  <p>进度条展现完后就会出现展现报表的页面，如下图所示：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/archives/4285.html/e2" rel="attachment wp-att-4287"><img class="aligncenter size-full wp-image-4287" title="e2" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/e2.jpg" alt="" width="579" height="330" /></a></p>  
+ </body>
+</html>

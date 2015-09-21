@@ -1,0 +1,30 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>最近，有些客户遇到润乾报表应用在linux系统下乱码的问题，检查后都发现是客户的linux系统默认编码设置的不正确造成的。这种原因造成乱码的现象一般都是程序里面写死了的中文字符能正常展现，但是从数据库中取出来的或者从程序中读出来的中文字符就会出现乱码。</p> 
+  <p>下面介绍一下由于linux系统编码设置不正确造成润乾报表应用乱码问题的解决办法。</p> 
+  <p><strong>第一步：检查linux的系统编码。</strong></p> 
+  <p>检查linux的系统编码，确定系统是否支持中文。在linux系统的终端中输入命令：locale，就会看到打印出的系统编码信息。如果打印出来的信息如下，则说明系统的编码不支持中文：</p> 
+  <p>LANG=en_US.UTF-8<br /> LC_CTYPE=”en_US.UTF-8″<br /> LC_NUMERIC=”en_US.UTF-8″<br /> LC_TIME=”en_US.UTF-8″<br /> LC_COLLATE=”en_US.UTF-8″<br /> LC_MONETARY=”en_US.UTF-8″<br /> LC_MESSAGES=”en_US.UTF-8″<br /> LC_PAPER=”en_US.UTF-8″<br /> LC_NAME=”en_US.UTF-8″<br /> LC_ADDRESS=”en_US.UTF-8″<br /> LC_TELEPHONE=”en_US.UTF-8″<br /> LC_MEASUREMENT=”en_US.UTF-8″<br /> LC_IDENTIFICATION=”en_US.UTF-8″</p> 
+  <p>支持中文的系统编码打印出来的信息应该如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/08/zrclip-017p13900708.png" alt="" width="554" height="409" /></p> 
+  <p><strong>第二步：修改系统默认编码设置。</strong></p> 
+  <p>如果发现系统编码不支持中文的话，那么就要修改系统编码，使其支持中文，这样润乾报表的中文在应用中才不会乱码。修改系统编码的代码如下：</p> 
+  <p>/etc/sysconfig/i18n<br /> 　　Controls the system font settings. The language variables are used in /etc/profile.d/lang.sh. An example i18n file:<br /> 　　LANG=”en_US.GB18030″<br /> 　　LANGUAGE=” en_US.GB18030: en_US.GB2312: en_US ”<br /> 　　SUPPORTED=” en_US.GB18030: en_US:en:en_US.UTF-8:en_US:en”<br /> 　　SYSFONT=”lat0-sun16″</p> 
+  <p>系统的默认字符集是英文，如果要把字符集设置成支持中文的，可以通过设置这个文件来改变系统的默认字符集。</p> 
+  <p>另外，也可在用户的环境变量或者用户的环境变量文件加入路径变量的声明：</p> 
+  <p>在系统的预处理文件中声明，这样对整个系统起作用：</p> 
+  <p>#vi /etc/profile</p> 
+  <p>在文件尾加入：</p> 
+  <p>LC_ALL=”zh_CN.GBK”<br /> export LANG=”zh_CN.GBK”</p> 
+  <p>在用户的预处理文件中声明，对单独的用户起作用：</p> 
+  <p>#vi /root/.bash_profile</p> 
+  <p>在文件尾加入：</p> 
+  <p>export LC_ALL=”zh_CN.GBK”<br /> export LANG=”zh_CN.GBK”</p> 
+  <p>以上配置重新启动服务器使更改生效。</p> 
+  <p><strong>第三步：查看修改过的系统默认编码。</strong></p> 
+  <p>通过以上步骤的操作然后重启电脑，再在终端中输入命令：locale，然后就会看到系统的字符集信息变成了如下内容：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/08/zrclip-018n72a4f877.png" alt="" width="554" height="409" /></p> 
+  <p>经过以上修改，由于系统默认编码不支持中文造成的乱码就可以顺利解决了。</p>  
+ </body>
+</html>

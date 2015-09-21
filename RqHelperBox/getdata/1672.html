@@ -1,0 +1,39 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>在报表中引入统计图可以让报表展现的数据更直观，但有的时候报表和统计图放在同一个页面上，会使整个页面拉的很长，需要通过设置滚动条才能完整的看到效果。下面介绍一种方法，利用单选按钮在同一个页面来动态切换显示统计图和报表。</p> 
+   <p>实现思路：</p> 
+   <p>制作两张类似的报表模板，一张用来只显示统计图，一张用来只显示报表数据，通过编写jsp来控制统计图和报表的显示切换。</p> 
+   <p>具体实现：</p> 
+   <p>首先设计一张普通的带有统计图的报表，报表名称为testing00.raq,报表模板如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-4rux1i0rc2v2c2.png" alt="报表模板.png" width="275" height="238" /></p> 
+   <p>其中需要说明的是C4单元格是统计每一地区订单数。</p> 
+   <p>统计图的设置如下图所示：</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-wcsx14g7pi.png" alt="统计图.png" width="259" height="242" /></p> 
+   <p>其中，分类轴定义为：=A3，系列名称为：=”订单数”，系列值为：=C4。</p> 
+   <p>下面设置统计图所在的行隐藏，即勾选属性中”隐藏行”选项，这样这张报表是显示报表不显示统计图，如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-1-ez9c81en0x.png" alt="行隐藏1.png" width="430" height="215" /></p> 
+   <p>然后将这张报表另存为testing.raq，将统计图以上各行选定，勾选属性中”隐藏行”选项，这样这张报表只展现统计图而不展现报表，如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-ez9c81en0x.png" alt="行隐藏2.png" width="430" height="197" /></p> 
+   <p>下面设计展现报表的jsp：</p> 
+   <p>1 展现报表jsp部分</p> 
+   <p>这部分是编写两个标签，用来控制两个报表的显示与否，标签处于&lt;tr&gt;中,id为”aaaa”, reportFileName=” testing.raq”，通过控制aaaa的属性来达到&lt;tr&gt;；同理第2段式用来控制报表testing00.raq的显示或隐藏的效果。</p> 
+   <p>&lt;tr id=”aaaa”&gt;<br /> &lt;td&gt;<br /> &lt;report:html name=”report1″<br /> srcType=”file”<br /> reportFileName=” <span style="color: #0000ff;">testing.raq</span>”<br /> funcBarLocation=”top”<br /> generateParamForm=”no”<br /> params=”&lt;%=param%&gt;”<br /> exceptionPage=”/reportJsp/myError2.jsp”<br /> /&gt;<br /> &lt;/td&gt;&lt;/tr&gt;<br /> &lt;tr id=”bbbb” style=”display:none”&gt;<br /> &lt;td&gt;<br /> &lt;report:html name=”report2″<br /> srcType=”file”<br /> reportFileName=”<span style="color: #0000ff;">testing00.raq</span>”<br /> funcBarLocation=”top”<br /> generateParamForm=”no”<br /> params=”&lt;%=param%&gt;”<br /> exceptionPage=”/reportJsp/myError2.jsp”<br /> /&gt;<br /> &lt;/td&gt;&lt;/tr&gt;</p> 
+   <p>从上面代码可以看出，两个报表分别处于两个&lt;tr&gt;之中，初始状态是”aaaa”这部分显示,”bbbb”这部分隐藏。</p> 
+   <p>2 设计两个供选择切换的按钮：</p> 
+   <p>设计两个单选按钮，一是图表的单选按钮,类型为radio,点击触发onclick事件show()；统计图的单选按钮设计方法类似。</p> 
+   <p>&lt;tr&gt;&lt;td&gt;<br /> &lt;input type=”radio” name=”sf” value=”1″ onclick=”Show();”&gt;<br /> 图表<br /> &lt;input type=”radio” name=”sf” value=”2″ onclick=”Show2();”&gt;<br /> 统计图<br /> &lt;/td&gt;&lt;/tr&gt;</p> 
+   <p>3 设计点击按钮后触发的JavaScript函数：</p> 
+   <p>通过触发JavaScript函数，设置&lt;tr&gt;中的style=”display:none”属性，就可以做到切换显示统计图或和报表数据。</p> 
+   <p>其中，JavaScript函数的写法如下：</p> 
+   <p>&lt;script&gt;<br /> &lt;!– 控制图表的显示与隐藏 –&gt;<br /> function Show(){<br /> if(aaaa.style.display==””){ //对id为”aaaa”的&lt;tr&gt;进行判断<br /> aaaa.style.display=’none’;} //如果aaaa处于显示中,那么改变状态,将其隐藏<br /> else<br /> aaaa.style.display=””; //反之,如果aaaa处于隐藏中,那么改变其状态,将其显示,并将bbbb隐藏.<br /> bbbb.style.display=’none’;<br /> }<br /> &lt;!– 控制统计图的显示与隐藏 –&gt;<br /> function Show2(){<br /> if(bbbb.style.display==””){ //对id为”bbbb”的&lt;tr&gt;进行判断<br /> bbbb.style.display=’none’;} //如果bbbb处于显示中,那么改变状态,将其隐藏<br /> else<br /> bbbb.style.display=”; //反之,如果bbbb处于隐藏中,那么改变其状态,将其显示,并将aaaa隐藏.<br /> aaaa.style.display=’none’;<br /> }<br /> &lt;/script&gt;</p> 
+   <p>Jsp设置完成后，看一下在web页面上的展现效果：</p> 
+   <p>当点击图表时，报表数据展现，统计图被隐藏：</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-4ruo45f.png" alt="报表.png" width="229" height="309" /></p> 
+   <p>当点击统计图时，报表数据被隐藏，展现统计图：</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-web-sk6e263p58p.png" alt="统计图web.png" width="249" height="195" /></p> 
+   <p>通过这样的方法，就可以使报表数据和统计图很清晰简洁的展现，避免了由于报表展现数据过多，导致统计图不能直观的展现的问题。通过这样的方法，我们还可以把几张相同类型或不同样式的报表，通过单选按钮的选择，展现在同一个jsp上，简单通过点击按钮就达到了报表切换显示的效果。</p> 
+  </div>  
+ </body>
+</html>

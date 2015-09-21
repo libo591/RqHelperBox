@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>预警条件就是设置一个界限，当数值超过界限就用鲜艳的颜色显示以起到预警的作用。在润乾帮助文档的初级教程中有相应的教程，在这里就不详细介绍了。下面给大家介绍如何巧用预警条件的设置方法实现对小于零的数据预警。</p> 
+  <p>第一步：制作内建数据集及报表，如图所示：</p> 
+  <p>&nbsp;<img title="721" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/721.jpg" alt="721" width="538" height="465" /></p> 
+  <p><img title="73" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/73.jpg" alt="73" width="403" height="71" />&nbsp;</p> 
+  <p>第二步：设置预警色，在前景色表达式里写：</p> 
+  <p>if(value()&lt;=0,-65485,-16777216)</p> 
+  <p>即当E2的值小于零显示为红色，否则为黑色。</p> 
+  <p>第三步：设置显示格式，如图所示：</p> 
+  <p>&nbsp;<img title="74" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/74.jpg" alt="74" width="316" height="84" /></p> 
+  <p>这样，结余为负值的数就为红色显示了。效果如图所示：</p> 
+  <p>&nbsp;<img title="75" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/75.jpg" alt="75" width="401" height="322" /></p> 
+  <p>如图所示，红色数字的值都是小于零的，与往常不同的是没有负号。这样就既起到了预警的作用，又不会因为负号而略显不雅。</p>  
+ </body>
+</html>

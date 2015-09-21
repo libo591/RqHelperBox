@@ -1,0 +1,88 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal" style="background: white;"><strong><span>需求背景</span></strong></p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/07/11.jpg"></a></p> 
+  <p class="MsoNormal" style="background: white;"><strong><span>&nbsp;</span></strong>&nbsp;<span>随着信息化的高度发展，地域统计图成为了一个重要需求，尽管集智数据平台内目前没有直接地域统计图，但其强大的集成第三方插件能力可以协助我们轻松解决。如</span><span>FusionMaps</span><span>插件，它提供了优秀的</span><span>Flash</span><span>统计图，集成至平台后，能轻松实现地域统计图。</span></p> 
+  <p class="MsoNormal" style="text-indent: 18pt; background: white;"><span>&nbsp;</span>&nbsp;</p> 
+  <p class="MsoNormal" style="text-indent: 17.7pt; background: white;"><strong><span>准备工作</span></strong></p> 
+  <p class="MsoNormal" style="text-indent: 18pt; background: white;"><span>1</span><span>：首先从官方网站下载</span><span>swf</span><span>文件</span><strong><span style="color: #291e40;">(Ready to use maps)</span></strong><span>，以及</span><span style="color: #291e40;">FusionMaps</span><span>.js</span><span>文件</span></p> 
+  <p class="MsoNormal" style="text-indent: 18pt; background: white;"><span>2</span><span>：准备</span><span>xml</span><span>文件，可参考</span><span><a href="javascript:void(0)">FusionMaps<span><span>介绍及常用功能</span></span></a></span><span>文章</span></p> 
+  <p class="MsoNormal" style="text-indent: 18pt; background: white;">&nbsp;</p> 
+  <p class="MsoNormal" style="background: white;"><strong><span>实施方式</span></strong></p> 
+  <p class="MsoNormal" style="background: white;"><strong></strong>&nbsp;</p> 
+  <p class="MsoNormal" style="text-indent: 18pt; background: white;"><span>1</span><span>：首先复制</span><span>swf</span><span>文件到应用（</span><span>reportmis</span><span>）下</span></p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/07/111.jpg"><img class="aligncenter size-medium wp-image-3997" title="11" src="http://www.runqian.com.cn/wp-content/uploads/2011/07/111-300x157.jpg" alt="" width="300" height="157" /></a></p> 
+  <p class="MsoNormal" style="text-indent: 18pt; background: white;"><span>2</span><span>：复制所需要的</span><span>js</span><span>到应用目录下</span></p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/07/22.jpg"></a><a href="http://www.runqian.com.cn/wp-content/uploads/2011/07/221.jpg"><img class="aligncenter size-medium wp-image-4000" title="22" src="http://www.runqian.com.cn/wp-content/uploads/2011/07/221-300x139.jpg" alt="" width="300" height="139" /></a></p> 
+  <p class="MsoNormal" style="background: white;">&nbsp;</p> 
+  <p class="MsoNormal" style="text-indent: 18pt; background: white;"><span>3</span><span>：创建</span><span>raq</span><span>文件</span><span>fc.raq</span><span>，集成中国地图</span></p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/07/33.jpg"><img class="aligncenter size-medium wp-image-3999" title="33" src="http://www.runqian.com.cn/wp-content/uploads/2011/07/33-300x165.jpg" alt="" width="300" height="165" /></a></p> 
+  <p class="MsoNormal" style="background: white;"><span>内容为：</span><span>&lt;div id=”mapdiv” align=”center”&gt; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; China map</span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/div&gt;</span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;script type=”text/javascript”&gt;</span></p> 
+  <p class="MsoNormal" style="background: white;"><span>// FCMap_China2.swf</span><span>为包含台湾在内的中国地图</span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; var map = new FusionMaps(“../FusionMap/FCMap_China2.swf”, “Map1Id”, “500″, “360″, “0″, “0″);</span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; map.setDataURL(“china.xml”);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; map.render(“mapdiv”);</span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/script&gt;</span></p> 
+  <p class="MsoNormal" style="background: white;">&nbsp;</p> 
+  <p class="MsoNormal" style="background: white;"><span>China.xml</span><span>内容为：</span></p> 
+  <p class="MsoNormal" style="background: white;">&nbsp;</p> 
+  <p class="MsoNormal" style="background: white;"><span>&lt;map showShadow=’1′ showBevel=’1′ showMarkerLabels=’1′ fillColor=’F0FAFF’ borderColor=’330000′ baseFont=’Verdana’ baseFontSize=’12′ markerBorderColor=’000000′ markerBgColor=’FF5904′ markerRadius=’6′ legendPosition=’bottom’ useHoverColor=’1′ showMarkerToolTip=’1′ showCanvasBorder=’0′ canvasBorderColor=’f1f1f1′ canvasBorderThickness=’2′ borderColor=’00324A’&nbsp; hoverColor=’C0D2F8′&gt; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp; &lt;entityDef&gt;</span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity internalId=’CN.BJ’ newId=’BJ’ sName=’</span><span>北京</span><span>‘ lName=’</span><span>中国北京</span><span>‘/&gt;&nbsp;&nbsp;&nbsp;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp; &lt;/entityDef&gt;</span></p> 
+  <p class="MsoNormal" style="background: white;">&nbsp;</p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp; &lt;data&gt;</span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’BJ’ displayValue=’</span><span>北京</span><span>‘ color=’FEFFFF’&nbsp; link=”n-../mis2/reportcenter/showReport1.jsp?raq=ordersinfo.raq&amp;city=</span><span>北京</span><span>“/&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.AH’ displayValue=’</span><span>安徽</span><span>‘ color=’EFFFFF’/&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.CQ’ displayValue=’</span><span>重庆</span><span>‘ color=’FFEFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.FJ’ displayValue=’</span><span>福建</span><span>‘ color=’FFFEFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.GS’ displayValue=’</span><span>甘肃</span><span>‘ color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.GD’ displayValue=’</span><span>广东</span><span>‘ color=’FFFFFF’ /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.GX’ displayValue=’</span><span>广西</span><span>‘ color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&lt;entity id=’CN.GZ’ displayValue=’</span><span>贵州</span><span>‘ color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.HA’ displayValue=’</span><span>海南</span><span>‘ color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.HB’ displayValue=’</span><span>河北</span><span>‘ color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.HE’ displayValue=’</span><span>河南</span><span>‘ color=’FFFFFF’ /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.HU’ displayValue=’</span><span>湖北</span><span>‘ color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.HL’ displayValue=’</span><span>黑龙江</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.HN’ displayValue=’</span><span>湖南</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.JS’ displayValue=’</span><span>江苏</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.JX’ displayValue=’</span><span>江西</span><span>‘&nbsp; color=’FFFFFF’ /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.JL’ displayValue=’</span><span>吉林</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.LN’ displayValue=’</span><span>辽宁</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.NM’ displayValue=’</span><span>内蒙古</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.NX’ displayValue=’</span><span>宁夏</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.QH’ displayValue=’</span><span>青海</span><span>‘&nbsp; color=’FFFFFF’ /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.SA’ displayValue=’</span><span>山西</span><span>‘ color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.SD’ displayValue=’</span><span>山东</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.SH’ displayValue=’</span><span>上海</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.SX’ displayValue=’</span><span>陕西</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.SC’ displayValue=’</span><span>四川</span><span>‘&nbsp; color=’FFFFFF’ /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.TJ’ displayValue=’</span><span>天津</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.XJ’ displayValue=’</span><span>新疆</span><span>‘&nbsp; color=’FFFFFF’ /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.XZ’ displayValue=’</span><span>西藏</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.YN’ displayValue=’</span><span>云南</span><span>‘ &nbsp;color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.ZJ’ displayValue=’</span><span>浙江</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.MA’ displayValue=’</span><span>澳门</span><span>‘ color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.HK’ displayValue=’</span><span>香港</span><span>‘ color=’FFFFFF’ /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;entity id=’CN.TA’ displayValue=’</span><span>台湾</span><span>‘&nbsp; color=’FFFFFF’&nbsp; /&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&lt;/data&gt;</span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&lt;/map&gt;&nbsp; </span></p> 
+  <p class="MsoNormal" style="text-indent: 18pt; background: white;"><span>4</span><span>：修改</span><span>showReport1.jsp</span><span>文件，引入</span><span>fusionmaps.js</span></p> 
+  <p class="MsoNormal" style="background: white;"><span>&lt;script type=”text/javascript” src=”&lt;%=request.getContextPath() %&gt;/js/FusionMaps.js”&gt;&lt;/script&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 18pt; background: white;"><span>5</span><span>：效果图</span></p> 
+  <p class="MsoNormal" style="text-align: left;">&nbsp;</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/07/44.jpg"><img class="aligncenter size-medium wp-image-4001" title="44" src="http://www.runqian.com.cn/wp-content/uploads/2011/07/44-300x141.jpg" alt="" width="300" height="141" /></a></p> 
+  <p class="MsoNormal" style="text-indent: 18pt; background: white;"><span>点击北京地区，新弹出一个页面，内容如下：</span></p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/07/55.jpg"><img class="aligncenter size-medium wp-image-4002" title="55" src="http://www.runqian.com.cn/wp-content/uploads/2011/07/55-300x143.jpg" alt="" width="300" height="143" /></a></p> 
+  <p class="MsoNormal" style="background: white;">&nbsp;</p> 
+  <p class="MsoNormal" style="background: white;"><strong><span>总结</span></strong></p> 
+  <p class="MsoNormal" style="background: white;"><strong></strong>&nbsp;</p> 
+  <p class="MsoNormal" style="background: white;"><span>整体来看，集智数据平台集成</span><span>Fusionmaps</span><span>非常简单。就本例来说，如果需要更加灵活的在统计图中显示地区的某些统计值，只需要在展示之前，后台修改</span><span>xml</span><span>灵活赋值即可。</span></p> 
+  <p></p>  
+ </body>
+</html>

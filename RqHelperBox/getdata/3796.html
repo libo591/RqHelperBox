@@ -1,0 +1,39 @@
+<html>
+ <head></head> 
+ <body> 
+  <h2>问题背景</h2> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 客户在模态窗口中发布填报表，当点击提交时，总会打开一个新页面提示提交成功。客户希望，在模态窗口中提交报表后能够在本窗口中弹出提示，并且在该模态窗口中刷新。</p> 
+  <h2>问题分析</h2> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 由于报表提交时会请求一个servlet处理，而后返回到该页面。而模态窗口并不是一个页面，可以将其理解为一个弹出窗口。所以当报表提交后，servlet返回页面时找不到对应的页面，所以会打开一个新窗口。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 针对模态窗口自身的特点，如果我们能够将其嵌套在框架中，如frame，提交以后应该就不会打开新窗口了，所以本文即尝试将模态窗口放到iframe中嵌套。</p> 
+  <h2>实现步骤</h2> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 第一步，准备任意填报表。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 第二步，准备打开模态窗口的jsp页面，如下：</p> 
+  <p>&lt;html&gt;</p> 
+  <p>&lt;body topmargin=0 leftmargin=0 rightmargin=0 bottomMargin=0 bgcolor=”pink”&gt;</p> 
+  <p>&lt;input type=”button” value=”模态窗口” onClick=”showModal(‘modelDialog.html’,700,600)”&gt;&lt;/input&gt;</p> 
+  <p>&lt;script language=”javascript”&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function showModal(urlstr,width,height){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var me;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; me=window;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x=(screen.availWidth-width)/2;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; y=(screen.availHeight-height)/2;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dWin=window.showModelessDialog(urlstr,me,’dialogWidth=’+width +’px;dialogHeight=’+height+’px;help:no;status:no;scroll:no;dialogLeft=’+x+’;dialogTop=’+y);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p> 
+  <p>&lt;/script&gt;</p> 
+  <p>&lt;/body&gt;</p> 
+  <p>&lt;/html&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 第三步，准备modelDialog.html，如下：</p> 
+  <p>&lt;html&gt;</p> 
+  <p>&lt;BODY&gt;</p> 
+  <p>&nbsp; &lt;iframe src=”showReport.jsp” width=”100%” height=”100%”&gt;</p> 
+  <p>&lt;/BODY&gt;</p> 
+  <p>&lt;/html&gt;</p> 
+  <p>将发布报表的jsp嵌套在ifame中。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 最后，准备发布报表的jsp，这里不再赘述。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 我们来看一下经过这样处理后的效果：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/07/QQ截图20110704141539.png"><img class="alignnone size-medium wp-image-3797" title="QQ截图20110704141539" src="http://www.runqian.com.cn/wp-content/uploads/2011/07/QQ截图20110704141539-300x176.png" alt="" width="300" height="176" /></a></p> 
+  <p>点击确定</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/07/QQ截图20110704141720.png"><img class="alignnone size-medium wp-image-3798" title="QQ截图20110704141720" src="http://www.runqian.com.cn/wp-content/uploads/2011/07/QQ截图20110704141720-300x139.png" alt="" width="300" height="139" /></a></p>  
+ </body>
+</html>

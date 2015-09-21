@@ -1,0 +1,52 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>IIS的http 500 内部服务器错误是经常碰到的错误之一，它的主要错误表现就是asp 程序不能浏览但html静态网页不受影响。另外当错误发生时，系统事件日志和安全事件日志都会有相应的记录。</p> 
+  <p><strong>解决办法：</strong></p> 
+  <p>导致http 500 内部错误的原因主要是由于iwam账号（在我的计算机即是iwam_myserver账号）的密码错误造成的。</p> 
+  <p>知道了问题产生的原因，解决起来就比较简单了，那就是人工同步iw am 账号在active directory、iis metabase 数据库和com+应用程序中的密码。</p> 
+  <p>具体操作分三步，均需要以管理员身份登录计算机以提供足够的操作权限（iwam 账号以iwam_myserver 为例）。</p> 
+  <p>解决办法：</p> 
+  <p>导致http 500 内部错误的原因主要是由于iwam账号（在我的计算机即是iwam_myserver账号）的密码错误造成的。</p> 
+  <p>知道了问题产生的原因，解决起来就比较简单了，那就是人工同步iw am 账号在active directory、iis metabase 数据库和com+应用程序中的密码。</p> 
+  <p>具体操作分三步,均需要以管理员身份登录计算机以提供足够的操作权限（iwam 账号以iwam_myserver 为例）。</p> 
+  <p><strong>（一）更改active directory 中iwam_myserver 账号的密码</strong></p> 
+  <p>因iwam 账号的密码由系统控制，随机产生，事先并不知道是什么，为完成下面两步的密码同步工作，必须将iwam 账号的密码设置为一个知道的值。</p> 
+  <p>1、选择”开始”-&gt;”程序”-&gt;” 管理工具”-&gt;”计算机管理”， “本地用户和组”。</p> 
+  <p>2、单击”user” ，选中右面的”iwam_myserver” ，右击选择”重设密码(t)…” ，在跳出的重设密码对话框中给iwam_myserver 设置新的密码，本例中设置成”aboutnt200 1″（没有引号的），确定，等待密码修改成功。</p> 
+  <p><strong>（二）同步iis metabase 中iwam_myserver 账号的密码</strong></p> 
+  <p>可能因为这项改动太敏感和重要，微软并没有为修改iis metabase 中iwam_m yserver 账号密码提供一个显式的用户接口，只随iis 提供了一个管理脚本adsutil.vbs， 这个脚本位于c:\inetpub\adminscripts 子目录下（位置可能会因安装iis 时设置的不同而有所变动）。</p> 
+  <p>adsutil.vbs 脚本功能强大，参数非常多且用法复杂，这里只提供使用这个脚本修改i wam_myserver 账号密码的方法：</p> 
+  <p>adsutil set w3svc/wamuserpass password</p> 
+  <p>“password”参数就是要设置的iwam 账号的新的密码。因此将iis metabase 中iwam_myserver 账号的密码修改为”aboutnt2001″的命令就是：</p> 
+  <p>c:\inetpub\adminscripts&gt;adsutil set w3svc/wamuserpass “aboutnt2001″</p> 
+  <p>修改成功后，系统会有如下提示：</p> 
+  <p>wamuserpass: (string) “aboutnt2001″</p> 
+  <p><strong>（三）同步com+应用程序所用的iwam_myserver 的密码</strong></p> 
+  <p>同步com+应用程序所用的iwam_myserver 的密码，有两种方式可以选择：一种是使用组件服务mmc 管理单元，另一种是使用iwam 账号同步脚本synciwam.vbs。</p> 
+  <p>1、使用组件服务mmc 管理单元</p> 
+  <p>（1）启动组件服务管理单元：选择”开始”-&gt;”运行”-&gt;”mmc” ，启动管理控制台，打开”添加/删除管理单元”对话框，将”组件服务”管理单元添加上。</p> 
+  <p>（2）找到”组件服务”-&gt;” 计算机”-&gt;” 我的电脑”-&gt;”com+ 应用程序”（此处如有问题见下边的注意）-&gt;”out-of-process pooled applications”，右击”out-of-process po oled applications”-&gt;”属性”。</p> 
+  <p>（3）切换到”out-of-process pooled applications”属性对话框的”标志”选项卡。”此应用程序在下列账户下运行”选择中”此用户”会被选中，用户名是”iwam_myserver” 。这些都是缺省的，不必改动。在下面的”密码”和”确认密码”文本框内输入正确的密码”abou tnt2001″，确定退出。</p> 
+  <p>（4）系统如果提示”应用程序被一个以上的外部产品创建，你确定要被这些产品支持吗？”时确定即可。</p> 
+  <p>（5）如果在iis 中将其它一些web 的”应用程序保护”设置为”高（独立的）”，那么这个web 所使用的com+应用程序的iwam 账号密码也需要同步。重复（1）-（4）步，同步其它相应out of process application 的iwam 账号密码</p> 
+  <p><strong>注意：</strong></p> 
+  <p>在第三步：同步com+应用程序所用的iwam_myserver 的密码时可能会有以下两个问题：</p> 
+  <p>（一）：在找到”组件服务”-&gt;”计算机”-&gt;”我的电脑”-&gt;”com+ 应用程序”时报错。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/1-0014.png" alt="1.png" width="442" height="137" /></p> 
+  <p><strong>解决办法:</strong></p> 
+  <p>1、首先进入组件服务，查看组件服务/计算机/我的电脑/COM+应用程序，结果报错”COM+ 无法与 Microsoft 分布式事务协调程序交谈”，无法查看里面的对象。</p> 
+  <p>2、进入事件查看器，发现msdtc 服务没有正常启动。</p> 
+  <p>3、删除注册表中的键： HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MSDTC HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC HKEY_CLASSES_ROOT\CID</p> 
+  <p>4、运行CMD，停止MSDTC 服务：net stop msdtc</p> 
+  <p>5、卸载MSDTC 服务：msdtc -uninstall</p> 
+  <p>6、重新安装MSDTC 服务：msdtc -install</p> 
+  <p>7、启动MSDTC 服务：net start msdtc。确认在事件查看器中msdtc 服务已经正常启动[这步很关键，如果没有，重新启动下电脑看看]。这里有个技巧，查看MSDTC 服务是否启动，执行net stop msdtc，提示正在停止和停止成功就对了，再msdtc – install 就可以了</p> 
+  <p>8、重新设置IIS 的IWAM 账号密码。[在计算机管理中的用户管理里]</p> 
+  <p>9、同步IIS metabase 中IWAM_MYSERVER 的密码，在CMD 中：c:\inetput\adminscripts&gt;adsutil set w3svc/wamuserpass “yourpassword”</p> 
+  <p>10、同步COM+应用程序所用的IWAM_MYSERVER 密码，在CMD 中c:\inetput\adminscripts&gt;cscript synciwam.vbs -v</p> 
+  <p>（二）按照上述方法解决了com+应用程序错误后，却发现com+中没有out-of-process pooled applications</p> 
+  <p><strong>解决办法：</strong></p> 
+  <p>开始菜单-&gt;运行-&gt;cmd 打开命令提示窗口输入cd %windir%/system32/inetsrv 切换到system32 下inetsrv 目录输入rundll32 wamreg.dll，CreateIISPackage 注意：必须准确键入”CreateIISPackage” 它区分大小写输入regsvr32 asptxn.dll 至此，该问题解决，如问题依旧，可以考虑重装IIS。</p>  
+ </body>
+</html>

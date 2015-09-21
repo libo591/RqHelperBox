@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表在一些统计报表中，经常会遇到用HTML标签美化报表的需求，润乾报表可以通过将单元格的数据类型改为HTML来满足这类需求。但是如果将HTML类型数据导出成Excel就出现如下图所示的问题：</p> 
+  <p>&nbsp;<img title="151" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/151.jpg" alt="151" width="553" height="380" /></p> 
+  <p>设置为HTML数据类型的单元格中的内容是以图片的形式呈现，如果想要修改导出的Excel中HTML数据类型单元格中的数据就成了问题。</p> 
+  <p>在润乾4.5版本中通过新增富文本数据类型对修改导出Excel的HTML数据类型单元格的问题进行了改进。富文本数据类型的格式主要采用类HTML的格式，在web端浏览时，按照Html语法由浏览器解析相应代码，因此，代码必须符合Html语法规则。富文本数据类型对导出的HTML数据进一步处理达到以文本类型数据导出的目的，这样就满足了部分HTML类型数据导出Excel后可修改的需求。操作便捷，如图：</p> 
+  <p>&nbsp;<img title="162" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/162.jpg" alt="162" width="508" height="317" /></p> 
+  <p>将设置为HTML数据类型的单元格改为富文本类型就可以了。这样不仅可以在web端浏览时看到想要的HTML标签的效果，导出为Excel后，还可文本形式修改该单元格。</p> 
+  <p>&nbsp;<img title="173" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/173.jpg" alt="173" width="554" height="355" /></p> 
+  <p>导出效果如下：</p> 
+  <p>&nbsp;<img title="183" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/183.jpg" alt="183" width="554" height="311" /></p> 
+  <p>注：富文本只支持字体相关属性的设置，不支持html图片。</p>  
+ </body>
+</html>

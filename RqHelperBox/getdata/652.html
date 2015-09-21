@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>随着B/S应用的普及，用户的需求也越来越先进，报表设计也被搬到了浏览器端。要求在浏览器端连接数据库，设计报表模板，并且远程把报表模板部署到服务器上，浏览自己设计的报表。</p> 
+  <p>远程设计报表面临许多困难，首先是数据库连接问题，浏览器端无法用jdbc或者odbc直连数据库，因为数据库不可能直接暴露给远程客户端，那样容易导致安全问题。因此必须有一个远程数据服务器，通过这个服务器接收远程客户端的数据访问请求，并把请求发送给数据库，同时向客户端返回数据库的处理结果。这个数据服务器不仅起到了请求转发的功能，还能对客户端的请求进行权限控制，避免数据库受到攻击。</p> 
+  <p>其次是服务器上的报表模板的访问权限问题。远程设计报表，必然要求客户端能访问服务器上的报表模板，能修改报表模板，保存报表模板等，可是服务器上的文件不能随便被修改，得有权限控制，因此必然要求有一个文件服务器，来控制哪些文件可以被哪些人修改、浏览、保存等。</p> 
+  <p>文件服务器除了控制报表模板的访问权限，还需要控制<span id="TheWorldHiLightStyleID" style="margin: 0px; background: #ffff00; float: none; color: #000000; padding: 0px;"></span>的访问权限，不同权限的人，能看到的<span id="TheWorldHiLightStyleID" style="margin: 0px; background: #ffff00; float: none; color: #000000; padding: 0px;"></span>的内容是不同的，下属不能看到领导专用的视图，因此要求文件服务器能够根据客户端的权限，自动屏蔽过滤某些内容。</p> 
+  <p>当然，远程设计的目的是为了让业务人员可以设计报表，开发人员就用不着远程设计了。因此远程设计最重要的功能是界面友好简单，业务人员拖拖拽拽即可设计报表，不需要复杂的操作，不需要手工输入公式等。因此，<span id="TheWorldHiLightStyleID" style="margin: 0px; background: #ffff00; float: none; color: #000000; padding: 0px;"></span>的支持是首要条件，其次考虑到报表的复杂性，<span id="TheWorldHiLightStyleID" style="margin: 0px; background: #ffff00; float: none; color: #000000; padding: 0px;"></span>要求支持很复杂的功能，比如要求自动生成参数，允许选择过滤条件，自动生成公式，自动生成显示格式、编码字段自动对应成汉字等等，最后还要考虑对复杂报表的支持能力，否则业务人员不能设计复杂报表，远程设计也就失去了意义。</p> 
+  <h2>润乾的实现步骤</h2> 
+  <ol> 
+   <li>部署远程设计服务器</li> 
+   <li>客户端下载并启动远程设计器</li> 
+   <li>登录远程服务器</li> 
+   <li>连接远程数据服务和文件服务器</li> 
+   <li>设计报表</li> 
+   <li>浏览报表、保存报表</li> 
+  </ol> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/02/remote-design.png" alt="remote_design.png" width="583" height="481" /></p>  
+ </body>
+</html>

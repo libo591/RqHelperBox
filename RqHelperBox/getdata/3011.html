@@ -1,0 +1,27 @@
+<html>
+ <head></head> 
+ <body> 
+  <h2>问题描述</h2> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 最近有客户遇到存储过程做数据集的报表发布后报错：产生数据工厂: com.runqian.report4.dataset.ProcDataSetFactory 失败错误来源：: 索引中丢失 IN 或 OUT 参数:: 1 错误来源：索引中丢失 IN 或 OUT 参数:: 1</p> 
+  <h2>问题分析</h2> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 出现这个问题的原因可以有如下几个：</p> 
+  <p>1、&nbsp; 存储过程本身就不正确</p> 
+  <p>2、&nbsp; 数据集输出参数位置不正确</p> 
+  <p>3、&nbsp; 数据库驱动有问题</p> 
+  <p>4、&nbsp; reportConfig.xml文件中数据库类型不正确</p> 
+  <h3>排查步骤</h3> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 遇到该问题，可以按照如下步骤排查：</p> 
+  <p>一、让客户在数据库端执行存储过程，若不能正常执行，则说明是问题1引起；</p> 
+  <p>二、查看报表存储过程数据集输出参数位置，需保证“输出参数”位置在第一位，如下图：</p> 
+  <p><img title="24" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/24.jpg" alt="24" width="554" height="248" /></p> 
+  <p>三、若在设计器中可以正常预览，但在自己的应用中报错，需将报表设计器下的数据库驱动拷贝到自身应用中，并将原来的驱动删除。该驱动位置在${设计器安装目录}\jdbc下：如D:\Program Files\reportHome\jdbc。</p> 
+  <p>四、情况同三，若更换驱动后仍未解决就需要检查应用中的reportConfig.xml文件，查看其中的数据源配置处数据库类型是否有误。如有的客户这样配置：</p> 
+  <p>&nbsp;&nbsp;&nbsp; &lt;config&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &lt;name&gt;dataSource&lt;/name&gt;</p> 
+  <p>&nbsp;&nbsp; &nbsp; &lt;value&gt;itacms,itacms,1,iso-8859-1,GBK,0&lt;/value&gt;</p> 
+  <p>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &lt;/config&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这显然是不正确的，所以需要将第二个itacms修改为oracle。关于这个选项的说明见下图：</p> 
+  <p><img title="25" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/25.jpg" alt="25" width="554" height="118" /></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 基本上通过如上排查方法即可解决该问题。</p>  
+ </body>
+</html>

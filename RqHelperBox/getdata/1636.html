@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>点击标题，列表自动从小到大或者从大到小排序是非常常见的需求，传统的报表单纯通过写sql和页面来实现，费时费力，润乾报表作为新一代的类excel智能WEB报表开发工具，在实现这种需求时可谓轻而易举。本文通过下面的小例子介绍一下。</p> 
+  <p>一：首先看一下效果图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-1-jf0b1.png" alt="图1.png" width="213" height="276" /></p> 
+  <p>点击”雇员ID”后，效果图如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-2-jf0b1.png" alt="图2.png" width="215" height="277" /></p> 
+  <p>从上面的两个图片中可以看出点击标题时，雇员ID从由小到大排序变为了从大到小排序！</p> 
+  <p>二：实现思路：<br /> 润乾报表中数据集函数可以传入参数，从而控制对某一字段的排序，通过宏和参数以及超链接的结合使用，可以动态为数据集函数传入不同的参数，实现了点击标题实现列表排序。</p> 
+  <p>三：实现步骤：<br /> 1：设计好报表模板后，设置报表的参数和宏。添加一个参数order，参数order的默认值为”true”。下图是报表模版及参数设置：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-3-jf0b1.png" alt="图3.png" width="552" height="412" /></p> 
+  <p>然后，定义两个宏，名称：macro1，macro2，设置类型：普通宏。宏macro1的值设置为”雇员ID”,宏macro2的值设置为”FALSE”,即在访问报表时的初始默认值。下图为报表模版和宏的设置：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-4-jf0b1.png" alt="图4.png" width="633" height="413" /></p> 
+  <p>2：利用宏和超链接实现方法解析<br /> 本例中运用润乾报表的数据集函数ds1.grout()来实现动态排序。<br /> 首先将雇员ID对应的A2单元格的表达式定义为：=ds1.group(类别ID,${macro2},,${macro1})。如下图。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-5-jf0b.png" alt="图5.png" width="530" height="361" /></p> 
+  <p>其中：${macro2}表示分组前记录的排序顺序，true为逆序，false为顺序；${macro1}表示分组前纪录的排序依据表达式，默认为雇员ID。所以只要能动态传入macro2以及macro1的值，就能控制类别ID的排序。</p> 
+  <p>接下来每次通过点击报表头单元格触发超链接来传递不同的宏值实现排序改变。我们在雇员ID报表头单元格设置超链接，定义A1单元格的超链接表达式为：”/reportJsp/showReport.jsp?raq=/点击雇员.raq&amp;macro1=雇员ID&amp;macro2=”+order+”&amp;order=”+if(order==”true”,”false”,”true”)。如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-4-jf0b2.png" alt="图4.png" width="765" height="435" /></p> 
+  <p>由表达式可以看出：超链接url中动态控制了macro2的值，macro2的值为报表定义的order参数（macro2=”+order+”），然后通过为参数动态赋值，进而为宏动态赋值，if(order==”true”,”false”,”true”)意思为：如果order为true，那么order赋值为false，否则order赋值为true。这样就实现了点击标题，动态控制排序方式的功能。</p> 
+  <p>用户在设计报表时，也可以设置根据某项属性的大小动态实现排序的方式，通过设置超链接，为A2单元格的ds1.group()函数动态传入宏值来控制。具体的实现，可以动手做一下。</p> 
+  <p>润乾报表作为新一代的企业级智能WEB报表工具，集成了参数、宏、函数等等，简单灵活的将宏和参数应用于报表设计中能大大提高报表设计的灵活度和方便性。</p>  
+ </body>
+</html>

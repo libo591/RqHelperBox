@@ -1,0 +1,25 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在使用润乾设计器制作报表过程中，很多用户想通过传参数判断与之对应的复选框的状态，从而实现自动勾选参数中内容的需求。</p> 
+  <p>具体方法：将报表所传参数设置为参数组，然后判断参数组中参数是否在单元格内，最后修改复选框的默认状态。</p> 
+  <p>详细过程为：</p> 
+  <p>第一步：制作一张报表；</p> 
+  <p>首先打开报表设计器，新建一张空白的网格式报表，报表的数据集sql如下：</p> 
+  <p>SELECT EMPLOYEE.EMPNAME FROM EMPLOYEE</p> 
+  <p>然后在单元格内选出该字段，如下图所示：</p> 
+  <p>&nbsp;<img title="95" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/95.jpg" alt="95" width="249" height="68" /></p> 
+  <p>并在A2单元格里添加一个复选框，设置其开值为1，关值为0，如图所示：</p> 
+  <p>&nbsp;<img title="96" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/96.jpg" alt="96" width="554" height="455" /></p> 
+  <p>预览效果如下:</p> 
+  <p>&nbsp;<img title="97" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/97.jpg" alt="97" width="554" height="52" /></p> 
+  <p>第二步：设置参数；</p> 
+  <p>为报表设置参数，类型为参数组</p> 
+  <p>&nbsp;<img title="98" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/98.jpg" alt="98" width="554" height="79" /></p> 
+  <p>第三步：设置复选框状态</p> 
+  <p>在A2单元格值表达式里写if判断：if(A1 in list(@arg1),1,0)</p> 
+  <p>预览效果：</p> 
+  <p>&nbsp;<img title="99" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/99.jpg" alt="99" width="554" height="78" /></p> 
+  <p><img title="100" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/100.jpg" alt="100" width="554" height="44" /></p>  
+ </body>
+</html>

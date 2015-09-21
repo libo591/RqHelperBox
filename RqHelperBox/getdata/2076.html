@@ -1,0 +1,25 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>1 应用中没有打印的Applet包</strong></p> 
+  <p>检查应用中根目录下是否有runqianReport4Applet.jar包；这里要注意的是：包runqianReport4Applet.jar是在应用的根目录下，很多客户容易将它放在了\WEB-INF\lib\下。</p> 
+  <p><strong>2 与report4.jar包不匹配</strong></p> 
+  <p>将最新的report4.jar包和runqianReport4Applet.jar包，在本地测试，打印正常，再将这两个包发给用户。</p> 
+  <p><strong>3 缺失相应的包</strong></p> 
+  <p>检查应用\WEB-INF\lib\目录下的润乾的jar，是否有barcode.jar，jai_code.jar，如果没有，将本地测试正常的这两个包发给用户。</p> 
+  <p><strong>4 应用中使用了代理</strong></p> 
+  <p>以上3种情况排除后，还报这个错，可能是应用中使用了代理；</p> 
+  <p>让用户直接ip+port访问应用，打印，看是否正常，能正常打印就是由使用代理引起的；</p> 
+  <p><strong>解决方法：</strong></p> 
+  <p>在应用\WEB-INF\下reportConfig.xml中的配置项：</p> 
+  <p>&lt;config&gt;<br /> &lt;name&gt;appUrlPrefix&lt;/name&gt;<br /> &lt;value&gt; http://192.168.0.132:8080/demo&lt;/value&gt;<br /> &lt;/config&gt;</p> 
+  <p>或</p> 
+  <p>&lt;config&gt;<br /> &lt;name&gt;appUrlPrefix&lt;/name&gt;<br /> &lt;value&gt; /APPMAP&lt;/value&gt;<br /> &lt;/config&gt;</p> 
+  <p>(注：http://192.168.0.132:8080/demo，根据具体应用做相应修改)</p> 
+  <p>在启动远程设计器时，也可能报这个错，这时参考文档《远程设计部署手册》</p> 
+  <p>常见的情况，需要做如下修改：</p> 
+  <p>1在designer.html文件里，删除</p> 
+  <p>&lt;object classid=”clsid:8AD9C840-044E-11D1-B3E9-00805F499D93″<br /> ……&gt;<br /> &lt;/object&gt;</p> 
+  <p>2在启动报表模板时报这个错，则在jnlp配置启动参数：&lt;argument&gt;/../../xx.raq&lt;/argument&gt;</p>  
+ </body>
+</html>

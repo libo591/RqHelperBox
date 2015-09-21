@@ -1,0 +1,30 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表中提供了多种数据源的连接配置，其中包括关系数据库（JDBC）、ODBC数据源和多维数据库。在部署报表应用的时候，以上提到的各种数据源的配置也不尽相同，本文介绍一下如何部署连接ODBC数据源的报表。</p> 
+  <p>本文中的例子选用的是润乾报表设计器中自带的ACCESS数据库文件（reportHome\database\northwind\Northwind_zh.mdb），WebServer采用的是Tomcat5.0。</p> 
+  <p><strong>第一步：建立ODBC数据源</strong></p> 
+  <p>在windows系统中的管理工具中打开ODBC数据源：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/11.png" alt="1.png" width="368" height="300" /></p> 
+  <p>添加一个新的ODBC数据源：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/21.png" alt="2.png" width="372" height="272" /></p> 
+  <p>输入ODBC数据源的名字demo2（自行给数据源命名，但要与润乾报表设计器中已存在的名字区分），并选择润乾报表设计器中自带的ACCESS数据库文件Northwind_zh.mdb：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/31.png" alt="3.png" width="469" height="292" /></p> 
+  <p>点击确定后，ODBC数据源创建完毕。</p> 
+  <p><strong>第二步：连接ODBC数据源设计报表模版</strong></p> 
+  <p>打开润乾报表设计器，新建一个ODBC数据源并配置此数据源信息（用户名密码同为sa）：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/41.png" alt="4.png" width="407" height="307" /></p> 
+  <p>连接此数据源，设计报表：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/51.png" alt="5.png" width="433" height="308" /></p> 
+  <p><strong>第三步：修改应用包中的相关配置文件</strong></p> 
+  <p>打开reportConfig.xml文件，找到dataSource，修改value的值：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/6.png" alt="6.png" width="298" height="322" /></p> 
+  <p>标准的写法是：数据源的名字，数据库类型，编码。</p> 
+  <p><strong>第四步：把数据源配置信息加入到Tomcat中的server.xml文件中</strong></p> 
+  <p>在&lt;host&gt;&lt;/host&gt;中加入：</p> 
+  <p>&lt;Context path=”/demo” docBase=”D:/demo” debug=”0″ privileged=”true”&gt;<br /> &lt;Resource name=”demo2″ auth=”Container” type=”javax.sql.DataSource” /&gt;<br /> &lt;ResourceParams name=”demo2″&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;username&lt;/name&gt;<br /> &lt;value&gt;sa&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt; password &lt;/name&gt;<br /> &lt;value&gt;sa&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;driverClassName&lt;/name&gt;<br /> &lt;value&gt;sun.jdbc.odbc.JdbcOdbcDriver&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;url&lt;/name&gt;<br /> &lt;value&gt;jdbc:odbc:demo2&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;/ResourceParams&gt;<br /> &lt;/Context&gt;</p> 
+  <p><strong>第五步：启动Tomcat服务器，浏览报表：</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/7.png" alt="7.png" width="430" height="435" /></p> 
+  <p>在部署的过程中特别需要注意的是数据源的名字在三个地方要统一，即webserver中的数据源配置、报表模版中连接的数据源、reportConfig中配置的数据源，其他地方和一般部署应用没有什么区别。润乾报表简单易行的部署方案可以快速的与实际项目应用结合起来，省去了不少调试的麻烦。</p>  
+ </body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <p><strong>需求描述</strong><br />润乾的下拉数据集可以绑定数据库数据，方便用户选择，避免手动输入可能引起的误差。<br />用下拉数据集来实现参数下拉表单，将查询条件传递给结果报表进行计算。有时查询条件可能不需要选择或者保持为空值，这时可以使用下拉数据集中的允许空值选项，如下图：<br />&nbsp;<img border="0" src="/wp-content/uploads/2011/06/69b43d97-fffc-46d4-9fb7-31da74ee60dc.jpg" /><br />这时原有的下拉列表就变为</p> 
+  <br /> 
+  <p><img border="0" src="/wp-content/uploads/2011/06/8ce2a1c5-488d-4974-bf8a-7e07b3d6d89d.jpg" /><br />&nbsp;<br />相比原来的选择项多空值选择，但是这样的空值选择可读性比较差，用户使用起来会觉得不明确。下面的例子演示如何为空值选择项添加显示值让其意义更加明确。<br /></p> 
+  <br /> 
+  <p><strong>报表实现</strong></p> 
+  <strong></strong> 
+  <br /> 
+  <p><br />1．&nbsp;参数表单：<br />下拉数据集对应的数据集：<br />Sql：select 类别ID,类别名称 from 类别<br />union <br />select 0,’未选择’ from 类别<br />sql查询结果：<br />&nbsp;<img border="0" src="/wp-content/uploads/2011/06/51ac3207-8e4b-4b4f-8002-1895e5e26707.jpg" /><br />该数据集的类别ID和类别名称分别作为下拉数据集的数据列和显示列。由上图看出在原来的数据库查询结果上添加了一条记录，如红色边框框起部分。该记录的类别ID:0用了代替”空值”选择项，类别名称：未选择代表显示值。<br />设计参数表单如下：<br />&nbsp; <img border="0" src="/wp-content/uploads/2011/06/3aa9919d-dd7e-4533-885f-07d05fe43d6d.jpg" /><br />其中B1的WEB属性的变量名为cid（和结果报表模板的参数对应），并且设置B1的编辑风格为下列数据集，设置如下：<br />&nbsp;<img border="0" src="/wp-content/uploads/2011/06/5f0477ff-a0f1-4f8c-aa53-2a543126b9aa.jpg" /><br /></p> 
+  <br /> 
+  <p>2.结果表单<br />接收从参数模板传递的参数并加工，返回给结果报表数据集执行查询返回符合条件的记录。<br />参数配置如下：<br />&nbsp;<img border="0" src="/wp-content/uploads/2011/06/376286ab-6db6-4b1a-90ac-bfc5dc9c8469.jpg" /><br />cid：为普通参数，从参数表单中接收相应参数cid。<br />cid1：为动态参数，表达式：if(cid==0,null,str(cid))，如果cid的值为0时，返回空，负责返回cid对应字符串。<br />（实际上参数表单中用一个区别于其他选择项的非空值代替了空值，如何用户选择空值，结果报表模板在参数处理时又将该选择的非空值恢复为空值null。）<br />数据集：<br />&nbsp;<img border="0" src="/wp-content/uploads/2011/06/a506fc69-c13f-401c-b1f5-7ef3236120ac.jpg" /></p> 
+  <br /> 
+  <p><img border="0" src="/wp-content/uploads/2011/06/44eaaf9d-99dc-499e-9d88-855001054cfe.jpg" /><br />&nbsp;<br />该数据集在cid1非空时，返回指定类别的产品记录；否则返回所有记录。<br />结果报表设计：<br />&nbsp;<img border="0" src="/wp-content/uploads/2011/06/af342dfb-93ce-4a35-8e9f-45b3b594cb5f.jpg" /></p> 
+  <br /> 
+  <p><br /><strong>报表实现效果</strong><br />&nbsp;<img border="0" src="/wp-content/uploads/2011/06/9fa3d48d-287c-48a6-89ae-43dacce1182b.jpg" /></p> 
+  <br /> 
+  <p>选择非空值时，结果如下：<br />&nbsp;<img border="0" src="/wp-content/uploads/2011/06/a7eeadf8-1094-4e0a-bce7-40c16e61cb3c.jpg" /><br />选择“未选择”时，结果如下<br />&nbsp;<img border="0" src="/wp-content/uploads/2011/06/6c4dbffd-f856-4eaf-b461-a3083588e239.jpg" /></p> 
+  <br /> 
+  <p>小结：<br />本例通过参数表单中修改下拉数据集的绑定数据集，添加代表空值的下拉数据项和显示值项；在结果报表中利用动态参数把代表空值的下拉数据项还原为空值null，传递给数据集进行sql查询。由此实现为下拉数据集空值添加中文描述。<br /></p> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

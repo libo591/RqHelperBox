@@ -1,0 +1,45 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <div class="Section1" style="LAYOUT-GRID: 15.6pt none"> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 21pt; TEXT-ALIGN: center" align="center"><span style="FONT-FAMILY: 宋体">不同行设置相同的特殊颜色</span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 21pt; TEXT-ALIGN: left" align="left"><span style="FONT-FAMILY: 宋体">润乾单元格默认的背景色为白色，通过设计器窗口中右侧单元格的属性窗口的下拉列表可以设置除默认颜色以外的十种颜色，在不同行中设置这几种基本颜色，是很容易实现的。</span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 21pt; TEXT-ALIGN: left" align="left"><span style="FONT-FAMILY: 宋体">因为润乾支持任一颜色，现在我们想给<a title="报表产品" href="http://www.runqian.com.cn/rqrptcenter/12_rqrptct_2.htm" target="_&lt;br /&gt;
+blank">报表</a> 头设置成一种特殊颜色，然后其他的数据行根据条件也设置成相同的背景颜色，我们该怎样操作呢？</span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 21pt; TEXT-ALIGN: left" align="left"><span>1.</span><span style="FONT-FAMILY: 宋体">为<a title="报表产品" href="http://www.runqian.com.cn/rqrptcenter/12_rqrptct_2.htm" target="_&lt;br /&gt;
+blank">报表</a> 头设置一种特殊颜色</span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 21pt; TEXT-ALIGN: left" align="left"><span style="FONT-FAMILY: 宋体">选中<a title="报表产品" href="http://www.runqian.com.cn/rqrptcenter/12_rqrptct_2.htm" target="_&lt;br /&gt;
+blank">报表</a> 头，通过双击背景颜色，在弹出的选择颜色对话框，我们通过</span><span>RGB</span><span style="FONT-FAMILY: 宋体">选项卡，设置一种特殊颜色，如下图所示。</span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 24pt; TEXT-ALIGN: center" align="center"><span style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体"><img height="260" src="/wp-content/uploads/2011/07/f7839c5b-e4c2-40ca-a295-6894d81d973e.jpg" width="235" /></span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 24pt; TEXT-ALIGN: left" align="left"><span style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体">2.</span><span style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体">设定数据区中第三行符合条件的扩展行与<a title="报表产品" href="http://www.runqian.com.cn/rqrptcenter/12_rqrptct_2.htm" target="_&lt;br /&gt;
+blank">报表</a> 头相同的背景颜色。</span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 24pt; TEXT-ALIGN: left" align="left"><span style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体">选中第三行，设置该行的背景色条件判断表达式为：</span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 24pt; TEXT-ALIGN: left" align="left"><span style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体">if(A3==”1.</span><span style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体">用人费用<span>“<span>&nbsp;&nbsp;&nbsp; </span>OR<span>&nbsp;&nbsp;&nbsp; </span>A3==”2.</span>功能费用<span>“<span>&nbsp;&nbsp; </span>OR<span>&nbsp;&nbsp; </span>A3==”3.</span>日常费用<span>“<span>&nbsp;&nbsp; </span>OR<span>&nbsp;&nbsp; </span>A3==”4.</span>折旧费用<span>” or A3==”</span>管理费用合计<span>“,<span style="COLOR: red">-3342592</span>,-1)</span></span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 21pt; TEXT-ALIGN: left" align="left"><span style="FONT-FAMILY: 宋体">表达式中红色的字体，就是和表头相同的背景颜色的属性值，通过双击“颜色输入”，就能弹出选择颜色的对话框，调好颜色后，就在刚才光标所在出出现一个颜色值。</span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 24pt; TEXT-ALIGN: left" align="left">&nbsp;</p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 24pt; TEXT-ALIGN: left" align="left"><span style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体"><img height="238" src="/wp-content/uploads/2011/07/f0be18dd-9056-4afd-af70-ab0002c6c1b9.jpg" width="445" /></span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 21pt; TEXT-ALIGN: left" align="left"><span>3.</span><span style="FONT-FAMILY: 宋体">预览设置后的报表，</span><span style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体">蓝色区域为符合条件的数据区，如下图所示，我们已经准确的将数据区和<a title="报表产品" href="http://www.runqian.com.cn/rqrptcenter/12_rqrptct_2.htm" target="_&lt;br /&gt;
+blank">报表</a> 头的颜色设置为相同的特殊颜色了。</span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 24pt; TEXT-ALIGN: left" align="left"><span style="FONT-SIZE: 12pt; FONT-FAMILY: 宋体"><img height="135" src="/wp-content/uploads/2011/07/e277d288-c263-4f77-9cc1-d9e2ef5cd97f.jpg" width="258" /></span></p> 
+   <br /> 
+   <p class="MsoNormal" style="TEXT-INDENT: 21pt; TEXT-ALIGN: left" align="left">&nbsp;</p> 
+  </div> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

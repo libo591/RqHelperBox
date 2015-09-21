@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了为单元格设置超链接属性的功能。润乾报表提供的超链接可分为常规超链接、超链接中引用单元格的值，超链接中触发js函数三种类型。前面的文章我们已经介绍过了前两种，这里将介绍如何在超链接中使用js函数。下面给出一个简单的例子。</p> 
+  <p>首先，新建一个报表，在E1中添加文字：触发js函数，为了看起来明显，设置字体颜色为蓝色，并为字体加上下划线，设置E1 <strong>超链接</strong> 属性的值为：javascript:tips()。其中tips()为待触发的js函数，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/cfjssj.png" alt="cfjssj.png" height="154" /></p> 
+  <p>然后，在发布报表的页面上，编写js函数tips()如下</p> 
+  <p><span style="color: #0000ff;">&lt;script launguage=”javascript”&gt;<br /> function tips(){<br /> alert(”被超链接触发的js弹出提示框！”);<br /> }<br /> &lt;/script&gt;</span></p> 
+  <p>或者，可以直接在该单元格的超链接属性的表达式中写javascript函数，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/biaodashi.png" alt="biaodashi.png" height="52" /></p> 
+  <p>此时就不用在发布报表的jsp页面上编写js函数了。</p> 
+  <p>最后，发布报表，当点击报表E1中文字 ：触发js函数，就会执行js函数，弹出提示框，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/cfjshsxs.png" alt="cfjshsxs.png" height="177" /></p> 
+  <p>这样就实现了在超链接中触发js函数。</p> 
+  <p>注意：润乾报表中提供利用单元格的超链接属性触发js函数的接口，至于使用什么样的js函数，需要用户根据需要自己定义。例如，用户可以编写一个js函数，完成弹出新窗口展现报表的功能，函数举例如下</p> 
+  <p><span style="color: #0000ff;">//在弹出新窗口中展现报表，并向该页面传递参数id的值<br /> function show_product(id){<br /> var strurl=’./chaolianjie.jsp?raq=test.raq&amp;arg1=’+id;<br /> window.open(strurl,”_blank”,” Width=650 ,Height=500,top=100,left=100″);<br /> }</span></p> 
+  <p>然后在报表触发单元格里写入如下超链接表达式，把A1的真实值传递到新窗口打开的报表展现页面。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zrclip-007p4f773086.png" alt="" height="51" /></p>  
+ </body>
+</html>

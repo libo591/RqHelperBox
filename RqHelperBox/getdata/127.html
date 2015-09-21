@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">在润乾参数表单中<span lang="EN-US" xml:lang="EN-US">,</span>如何改变参数值后，不点击查询按钮，结果报表提交数据库后,</span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">刷新的页面显示的参数值为改变后的参数值<span lang="EN-US" xml:lang="EN-US">. 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题解决<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">可以通过写<span lang="EN-US" xml:lang="EN-US">js</span>实现,在改变参数值时触发<span lang="EN-US" xml:lang="EN-US">onchange</span>事件,</span><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">获取更新后的参数值,</span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">然后拼接好新的<span lang="EN-US" xml:lang="EN-US">url,</span>赋值给<span lang="EN-US" xml:lang="EN-US">backAndRefresh</span></span><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">对象,<span lang="EN-US" xml:lang="EN-US">url</span>是形如<span lang="EN-US" xml:lang="EN-US"><a href="http://127.0.0.1:6001/demo/jsp/">http://127.0.0.1:6001/demo/jsp/</a></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">自动传参<span lang="EN-US" xml:lang="EN-US">.jsp?</span></span><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">params=”+newValue;</span><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">这样的,然后页面上通过<span lang="EN-US" xml:lang="EN-US">request</span>获取<span lang="EN-US" xml:lang="EN-US">params,</span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">并将获取的<span lang="EN-US" xml:lang="EN-US">params</span>赋值给标签属性中的<span lang="EN-US" xml:lang="EN-US">params</span>属性。<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><br /></p>  
+ </body>
+</html>

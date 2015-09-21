@@ -1,0 +1,35 @@
+<html>
+ <head></head> 
+ <body> 
+  <h6><span>背景问题：</span></h6> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>近日与到公司进行技术交流的集成商客户讨论问题时，客户提出了一个怎么利用润乾报表实现附件的上传、下载的需求，之前也利用润乾的演示平台演示过怎么上传、下载一张图片，相关的润乾手册也是写得非常详细，但是上传、下载一个非图片附件相关手册倒是没有详细介绍，这里就实际做一个简单的小例子介绍一下利用润乾强大的填报功能实现的任意文件类型的上传、下载功能。</span></p> 
+  <h6><span>解决方案：</span></h6> 
+  <p class="MsoNormal"><strong><span>1</span></strong><strong><span>、建立物理表，保存文件：</span></strong></p> 
+  <p class="MsoNormal"><span>首先本地使用</span><span>ORACLE</span><span>数据库建一个张物理表：</span></p> 
+  <p class="MsoNormal"><em><span style="color: red;">– Create table</span></em><span style="color: black;"><br /> <strong>create</strong> <strong>table</strong> <strong>BLOB</strong><br /> (<br /> <span></span>SYSID <strong>VARCHAR2</strong>(</span><span style="color: #0000f0;">100</span><span style="color: black;">),<br /> <span></span><strong>NAME</strong><span></span><strong>VARCHAR2</strong>(</span><span style="color: #0000f0;">100</span><span style="color: black;">),<br /> <span></span><strong>BLOB</strong><span></span><strong>BLOB</strong><br /> )<br /> <strong>tablespace</strong> USERS<br /> <span></span><strong>pctfree</strong> </span><span style="color: #0000f0;">10</span><span style="color: black;"><br /> <span></span><strong>initrans</strong> </span><span style="color: #0000f0;">1</span><span style="color: black;"><br /> <span></span><strong>maxtrans</strong> </span><span style="color: #0000f0;">255</span><span style="color: black;"><br /> <span></span><strong>storage</strong><br /> <span></span>(<br /> <span>&nbsp;&nbsp;&nbsp; </span><strong>initial</strong> </span><span style="color: #0000f0;">64</span><span style="color: black;">K<br /> <span>&nbsp;&nbsp;&nbsp; </span><strong>minextents</strong> </span><span style="color: #0000f0;">1</span><span style="color: black;"><br /> <span>&nbsp;&nbsp;&nbsp; </span><strong>maxextents</strong> <strong>unlimited</strong><br /> <span></span>);</span></p> 
+  <p class="MsoNormal"><span style="color: black;">【说明：】</span></p> 
+  <p class="MsoNormal"><span style="color: #0070c0;">SYSID</span><span style="color: #0070c0;">字段用于唯一标识主键，</span><span style="color: #0070c0;">NAME</span><span style="color: #0070c0;">字段存储附件名称，</span><span style="color: #0070c0;">BLOB</span><span style="color: #0070c0;">字段存储附件文件。</span><span style="color: red;">这里要注意：如果存储文件，请将存储该文件的字段设置为</span><span style="color: red;">BLOB</span><span style="color: red;">，否则本地报错，可以保存但查询出错。</span></p> 
+  <p class="MsoNormal"><strong><span>2</span></strong><strong><span>、使用润乾报表设计器新建填报报表模板，截图如下：</span></strong></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/f8c000f4-bd0d-4c3f-8217-21a2ec6f9263.jpg" alt="" width="384" height="80" /></span></p> 
+  <p class="MsoNormal"><strong><span>下面是具体填报数据设置：</span></strong></p> 
+  <p class="MsoNormal"><span>（</span><span>1</span><span>）</span><span>B2</span><span>：</span><span>=ds1.NAME<span></span></span><span>设置</span><span>B2</span><span>单元格可写，编辑风格选择“上载文件”，</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/cbe714d6-58c6-443d-b7d7-21d346b735fa.jpg" alt="" width="434" height="152" /></span></p> 
+  <p class="MsoNormal"><span>（</span><span>2</span><span>）点击编辑风格的“设置”按钮，进入上载文件属性设置，本例需要实现上传下载</span><span>*.doc</span><span>和</span><span>*.xls</span><span>文件，所以添加该两种类型文件后缀名，在“上下载权限”选择设置“上下载均可”选项，并且在“保存文件名的列名”设置“</span><span>name</span><span>”值。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="color: red;">该处表明，允许上传和下载文件，并且将上传的附件名称保存到对应的物理表中已经建立好存储其附件名称的“</span><span style="color: red;">NAME</span><span style="color: red;">”字段中。在</span><span style="color: red;">oracle</span><span style="color: red;">中不区分大小写。</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/99b2dfdd-808e-479f-8857-ae4c0e61f5c4.jpg" alt="" width="372" height="336" /></span></p> 
+  <p class="MsoNormal"><span>（</span><span>3</span><span>）在</span><span>B2</span><span>单元格填报属性，设置填报报表的更新属性，其中</span><span>B2</span><span>单元格设置显示<span style="color: red;">值</span></span><span style="color: red;">=ds1.NAME</span><span style="color: red;">，更新属性指定主键和存储附件的</span><span style="color: red;">BLOB</span><span style="color: red;">字段即可，不需要设置</span><span style="color: red;">name</span><span style="color: red;">字段，润乾后台会自动将附件名保存至</span><span style="color: red;">NAME</span><span style="color: red;">字段。</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/72f1fbed-c5c9-416f-a588-f9dd48257847.jpg" alt="" width="381" height="211" /></span></p> 
+  <p class="MsoNormal"><span>至此，一个可以上传、下载</span><span>*.doc</span><span>和</span><span>*.xls</span><span>文件功能的填报表表制作完成。</span></p> 
+  <p class="MsoNormal"><strong><span>3</span></strong><strong><span>、运行填报表截图如下：</span></strong></p> 
+  <p class="MsoNormal"><strong><span>（</span></strong><strong><span>1</span></strong><strong><span>）页面展现截图：</span></strong><strong></strong></p> 
+  <p class="MsoNormal"><strong><span><img src="/wp-content/uploads/2011/07/a7814b73-634d-4112-8bae-cca87fe3604d.jpg" alt="" width="349" height="100" /></span></strong></p> 
+  <p class="MsoNormal"><strong></strong>&nbsp;</p> 
+  <p><strong></strong></p> 
+  <p class="MsoNormal"><span></span></p> 
+  <p class="MsoNormal"><span>&nbsp;&nbsp;&nbsp; 此时，可以双击</span><span>B2</span><span>单元格继续上传下载文件操作了。</span></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p><strong>（2）数据库存储截图：</strong><br /> &nbsp;</p> 
+  <p class="MsoNormal"><strong><span><img src="/wp-content/uploads/2011/07/3535cbcd-e122-4a0c-a615-64dfba4c9765.jpg" alt="" width="408" height="80" /></span></strong><strong></strong></p> 
+  <p></p>  
+ </body>
+</html>

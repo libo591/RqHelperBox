@@ -1,0 +1,63 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal"><span>在报表设计好后，往往需要向报表中传递参数，参数是如何传递给报表的呢？标签发布的报表参数传递可以分为下面三种情况</span></p> 
+  <p><strong>缺省参数输入页面式</strong></p> 
+  <p style="text-justify: inter-ideograph; text-align: justify;">为了方便用户快速体验报表的功能，当用户的关注点不在于参数录入页面而在于报表时，润乾的<span>tag</span>标签提供了<span>generateParamForm</span>属性，只要置为<span>yes</span>就可以自动生成参数录入表单，方便用户快速体验报表。</p> 
+  <pre style="text-justify: inter-ideograph; text-align: justify; margin-left: 36pt;"><span>&lt;report:html name=&quot;report1&quot;</span></pre> 
+  <pre style="text-justify: inter-ideograph; text-align: justify; margin-left: 36pt;"><span>......</span></pre> 
+  <pre style="text-justify: inter-ideograph; text-align: justify; margin-left: 36pt;"><span>generateParamForm=&quot;yes&quot;</span></pre> 
+  <pre style="text-justify: inter-ideograph; text-align: justify; margin-left: 36pt;"><span>......</span></pre> 
+  <pre style="margin-left: 36pt;"><span>/&gt;</span></pre> 
+  <pre style="margin-left: 36pt;">报表设计如下</pre> 
+  <pre style="margin-left: 36pt;"><span><img src="/wp-content/uploads/2011/08/f15746e4-d4e2-4534-8f65-1d34f4f70cfe.jpg" alt="" width="538" height="166" /></span></pre> 
+  <pre style="margin-left: 36pt;">描述内容为自动生成参数表单输入框的介绍内容，发布报表的<span>jsp</span>代码如下</pre> 
+  <pre style="margin-left: 36pt;"><span>&lt;table align=left&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span>&lt;tr&gt;&lt;td&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;report:html </span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>name=&quot;report1&quot;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>reportFileName=&quot;report_0.raq&quot;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>generateParamForm=&quot;yes&quot;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>/&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span>&lt;/td&gt;&lt;/tr&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span>&lt;/table&gt;</span></pre> 
+  <pre style="margin-left: 36pt;">页面展现效果如下：</pre> 
+  <pre style="margin-left: 36pt;"><span><img src="/wp-content/uploads/2011/08/f0104488-7687-46c7-96b4-c0b08e893393.jpg" alt="" width="272" height="374" /></span></pre> 
+  <p><strong>参数模板式</strong><br /> 用润乾报表设计的参数模板，需要利用参数模板的<span>tag</span>进行发布，其自动与结果页面的报表关联。因此，比较简单的做法是把参数模板<span>tag</span>和结果报表<span>tag</span>写到一个页面里。如下所示：</p> 
+  <pre style="margin-left: 36pt;"><span>&lt;report:param name=&quot;form1&quot; paramFileName=&quot;test_arg.raq&quot; /&gt; //</span>参数模板<span>tag</span></pre> 
+  <pre style="margin-left: 36pt;"><span>&lt;report:html name=&quot;report1&quot; //</span>结果报表<span>tag</span></pre> 
+  <pre style="margin-left: 36pt;"><span>srcType=&quot;file&quot;</span></pre> 
+  <pre style="margin-left: 36pt;"><span>reportFileName=&quot;test.raq&quot;</span></pre> 
+  <pre style="margin-left: 36pt;"><span>generateParamForm=&quot;no&quot;</span></pre> 
+  <pre style="margin-left: 36pt;"><span>/&gt;</span></pre> 
+  <pre><em>注意：以上两种方式都没有接收参数拼成串的代码。这是因为参数表单也是报表，用户在输入完参数并点击“查询”后，报表系统把参数存放在了参数缓存池中，查询报表根据参数池<span>ID</span>从参数池中取参数值，所以不需要写代码手动拼参数串了。</em></pre> 
+  <p><strong>自定义参数输入式</strong><br /> 如果用户自己定义参数输入页面，那么集成流程包括：设计参数页面<span>——</span>〉在接收页面中写代码接收参数<span>——</span>〉在接收页面里把参数拼成串传给<span>tag</span></p> 
+  <pre style="margin-left: 36pt;"><span>//</span>用户自定义的参数输入页面</pre> 
+  <pre style="margin-left: 36pt;"><span>&lt;form method=get name=&quot;form1&quot; id=&quot;form1&quot; action=&quot;&lt;%=request.getContextPath()%&gt;/jsp/test.jsp&quot;&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span> &lt;table&gt;&lt;tr style=&quot; &quot;&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span>&lt;td&gt;</span>部门<span>ID&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;text&quot; id=&quot;deptid&quot; name=&quot;deptid&quot; /&gt;&lt;/td&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span>&lt;td&gt;&amp;nbsp;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;input type=&quot;submit&quot; value=&quot;</span>提交<span>&quot; /&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span>&lt;/td&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span> &lt;/tr&gt;&lt;/table&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span>&lt;/form&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span>&lt;table align=left&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span>&lt;tr&gt;&lt;td&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;%//</span>接收参数代码</pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>StringBuffer param=new StringBuffer();</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span></span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span>Enumeration paramNames = request.getParameterNames();</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span>if(paramNames!=null){</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>while(paramNames.hasMoreElements()){</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String paramName = (String) paramNames.nextElement();</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String paramValue=request.getParameter(paramName);</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(paramValue!=null){</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span>把参数拼成<span>name=value;name2=value2;.....</span>的形式</pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span></span>param.append(paramName).append(&quot;=&quot;).append(paramValue).append(&quot;;&quot;);</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span>}</span></pre> 
+  <pre style="margin-left: 36pt; tab-stops: 45.8pt 91.6pt 131.25pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;"><span><span></span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>%&gt;</span></pre> 
+  <pre style="margin-left: 36pt;"><span><span></span>&lt;/td&gt;&lt;/tr</span></pre>  
+ </body>
+</html>

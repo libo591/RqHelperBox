@@ -1,0 +1,36 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在很多时候用户希望能够动态的查询表中的数据列，这种效果可以通过宏来实现。</p> 
+  <p>那么，可不可以在动态显示列的同时也动态的查询表呢？</p> 
+  <p>下面我们就来看一下如何同时动态控制表和列的显示。</p> 
+  <p>第一步：</p> 
+  <p>用复杂SQL新建数据集ds1：select ${macro1} from ${tablename}</p> 
+  <p>第二步：</p> 
+  <p>设计表，如下图：</p> 
+  <p>&nbsp;<img title="184" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/184.jpg" alt="184" width="300" height="132" /></p> 
+  <p>该报表相当于在B1中根据数据集ds1的列数进行横向扩展，在A3中根据数据集的行数进行纵向扩展，然后在B2和B3中动态获取列名和列对象，算出列值，这种用法可以实现动态列报表。</p> 
+  <p>第三步：</p> 
+  <p>配置参数和宏</p> 
+  <p>&nbsp;<img title="193" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/193.jpg" alt="193" width="554" height="102" /></p> 
+  <p>其中arg1的数据类型为字符串组。</p> 
+  <p>&nbsp;<img title="202" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/202.jpg" alt="202" width="459" height="118" /></p> 
+  <p>其中macro1的值为：if(str(arg1)==null,”*”,arg1 ),即若参数arg1为空时，查询出表中所有列，否则查询参数传过来的列。</p> 
+  <p>tablename的值为:@arg2，即表名是有arg2来传递的。</p> 
+  <p>注意：两个宏的类型都是动态宏。</p> 
+  <p>第四步：</p> 
+  <p>设计参数模版</p> 
+  <p>&nbsp;<img title="273" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/273.jpg" alt="273" width="343" height="131" /></p> 
+  <p>在参数模版中建立一个内建数据集：</p> 
+  <p>&nbsp;<img title="223" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/223.jpg" alt="223" width="554" height="103" /></p> 
+  <p>&nbsp;<img title="233" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/233.jpg" alt="233" width="333" height="232" /></p> 
+  <p>在内建数据集中，需要将表名，以及表所包含的列名都收录进来，工作量比较大。这里以类别表和产品表为例。</p> 
+  <p>第五步：</p> 
+  <p>实现表和列之间的动态关联，设置B1,B2的编辑风格为“下拉数据集”，如下图：</p> 
+  <p>&nbsp;<img title="242" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/242.jpg" alt="242" width="455" height="448" /></p> 
+  <p>&nbsp;<img title="253" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/253.jpg" alt="253" width="459" height="458" /></p> 
+  <p>注意图中红线标注的部分，数据列和显示列都是tablename和cloumnname。这是为什么呢？因为数据列中的值是要传到SQL语句中去的，这就要求这个值必须是真实值，不能是代码值。否则后台执行的SQL语句会是这样：select 11,12,13 from 1，这明显是有问题的！</p> 
+  <p>通过以上步骤，然后在浏览器中浏览报表，效果如下图：</p> 
+  <p>&nbsp;<img title="263" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/263.jpg" alt="263" width="554" height="259" /></p>  
+ </body>
+</html>

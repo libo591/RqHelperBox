@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>需求背景<br />报表中使用select函数取数时，需要根据两个字段升序排列。如从雇员表（employee）中取数，并按照学历（degree）和性别（sex）字段升序排列。</p> 
+  <p>分析<br />报表数据集函数ds.select()函数说明中的一个例子：</p> 
+  <p>例4：ds1.select( name, true, sex==’1′, id )</p> 
+  <p>从数据源ds1中选取性别为男性的name字段列的值并按id字段降序排列</p> 
+  <p>但是我们发现这种写法只能根据一个字段的排序方式排列，如何实现根据多个字段的排序方式排序呢？下面我们来看一下实现方法。</p> 
+  <p>实现<br /> 方法一：使用select函数</p> 
+  <p> 使用select函数实现上述需求，A2单元格：=ds1.select(empid,false,,degree+sex)<br /> <img src="http://www.runqian.com.cn/wp-content/uploads/2012/04/r13.png" alt="" title="r1" class="alignnone size-full wp-image-4190" /></p> 
+  <p>结果如下：<br /> <img src="http://www.runqian.com.cn/wp-content/uploads/2012/04/r2.png" alt="" title="r2" width="485" height="193" class="alignnone size-full wp-image-4192" /><br /> 先按照学历升序4到5，再按照性别升序1到2。</p> 
+  <p>方法二：使用selectEx函数</p> 
+  <p> 我们查看selectEx的函数说明可以发现该函数正是为实现上述需求定义的。我们看一下具体实现：<br /> <img src="http://www.runqian.com.cn/wp-content/uploads/2012/04/r3.png" alt="" title="r3" width="538" height="135" class="alignnone size-full wp-image-4193" /></p> 
+  <p>结果如下：<br /> <img src="http://www.runqian.com.cn/wp-content/uploads/2012/04/r4.png" alt="" title="r4" width="493" height="198" class="alignnone size-full wp-image-4194" /></p> 
+  <p>先按照学历升序4到5，再按照性别升序1到2，结果同第一种实现方式。</p> 
+  <p>比较<br />实现上述需求的两种方法不相伯仲，下面我们来比较一下不同需求下的这两种方法。</p> 
+  <p>1、结果要求按照多个不同类型的字段排序方式进行排序，如结果按照degree、sex、birthday升序排列。这时我们再使用第一种方法时会报错：</p> 
+  <p><img src="http://www.runqian.com.cn/wp-content/uploads/2012/04/r5.png" alt="" title="r5" width="409" height="87" class="alignnone size-full wp-image-4195" /></p> 
+  <p>而使用selectEx函数则可以实现，如：=ds1.selectEx(empid,,”degree;sex;birthday,false”)，所以这种情况下建议使用selectEx函数实现。</p> 
+  <p>2、结果需要根据某些字段升序，某些字段降序展现，如结果按照degree升序、sex降序、birthday升序排列。这时我们发现使用select函数无法实现，以为其只能指定一种排序方式。使用selectEx则可以实现，如：=ds1.selectEx(empid,,”degree,false;sex,true;birthday,false”)即可。所以这种情况下也建议使用selectEx函数实现。</p>  
+ </body>
+</html>

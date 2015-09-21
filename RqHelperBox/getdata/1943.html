@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表中，当统计报表统计的指标非常多，在页面上展现的时候，整个报表会很长，通常需要通过设置滚动条拖拽来查看整个报表。当这时不分页导出excel后，查看excel，报表被导出到一个sheet中。此时就遇到将多指标的报表，导出excel时每一个指标导出到一个sheet中的需求。</p> 
+  <p>分析整个导出过程可以发现，导出excel后的报表样式与页面上的报表样式保持一致，但有的时候这种一致反而不适应某些需求，润乾API能做到页面展现和导出excel样式不同。本文就来介绍这种需求的实现。</p> 
+  <p>第一步：写一个java类读取报表模版</p> 
+  <p>package com.runqian.test;</p> 
+  <p>import com.runqian.report4.model.ReportDefine;<br /> import com.runqian.report4.model.engine.ExtCellSet;<br /> import com.runqian.report4.usermodel.Context;<br /> import com.runqian.report4.usermodel.Engine;<br /> import com.runqian.report4.usermodel.IColCell;<br /> import com.runqian.report4.usermodel.IReport;<br /> import com.runqian.report4.util.ReportUtils;<br /> import com.runqian.report4.util.ReportUtils2;</p> 
+  <p>public class TestExcelSaveTo {<br /> public static void main(String[] args) throws Throwable{<br /> //设置授权<br /> ExtCellSet.setLicenseFileName(”C:/Program Files/reportHome/webapps/demo/WEB-INF/classes/runqianWindowServer.lic”);<br /> //设置报表路径<br /> String reportFile = “C:/Program Files/reportHome/webapps/demo/reportFiles/abc.raq”;<br /> ReportDefine rd = null;<br /> try{<br /> 读取报表模版<br /> rd = (ReportDefine)ReportUtils.read(reportFile);<br /> }<br /> catch (Exception e){<br /> e.printStackTrace();<br /> }</p> 
+  <p>第二步：设置报表列后分页属性</p> 
+  <p>//取得报表总列数<br /> int colnum = rd.getColCount();<br /> System.out.println(colnum);<br /> //循环设置每列的列侯分页属性<br /> for(int i = 0; i&lt;colnum ; i++){<br /> IColCell colCell = rd.getColCell((short)(i + 1));<br /> colCell.setBreakPage(true);<br /> }<br /> //设置报表上下文路径<br /> Context cxt = new Context();<br /> //加载报表引擎<br /> Engine engine = new Engine(rd, cxt);<br /> //计算报表<br /> IReport ir = engine.calc();<br /> //将报表以分页的形式导出成excel<br /> ReportUtils.exportToExcel(”C:/Program Files/reportHome/webapps/demo/reportFiles/abc.xls”, ir, true);<br /> }<br /> }</p> 
+  <p>效果如下：</p> 
+  <p>初始报表模版：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/142.png" alt="1.png" width="500" height="162" /></p> 
+  <p>页面展现效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/229.png" alt="2.png" width="437" height="309" /></p> 
+  <p>这时，在导出excel时调用我们刚才写的方法后，导出的excel效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/327.png" alt="3.png" width="405" height="252" /></p> 
+  <p>从图中可以看到，每一个指标被放到了一个sheet中，查看起来清晰明了。</p> 
+  <p>通过这种办法还可以用API来实现导出excel的行后分页等等需求，大致实现思路是一样的，用读取报表后生成的IReport对象进行导出、打印等功能，即不影响页面的展现效果，又可以满足多种的导出打印需求，简单易行。</p>  
+ </body>
+</html>

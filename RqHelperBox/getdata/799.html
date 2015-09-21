@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>问题描述：通过api动态修改了填报模板的数据源，通过标签发布之后，在页面填报提交的时候报错：找不到数据源。</p> 
+  <p>原因分析：经过分析发现通过api只是动态的修改了模板的数据源名称，并没有对应修改更新属性中的数据源，这样模板中的数据源跟更新属性的数据源是,不一致的，所以造成了在填报提交的时候报错：找不到数据源。</p> 
+  <p>解决方法：对应动态修改的模板中的数据源，动态修改更新属性的数据源。</p> 
+  <p>程序原理：通过填报属性取得更新属性中的对应关系，进而修改更新属性的数据源。</p> 
+  <p>相关的例子如下：<br /> ReportDefine rd = (ReportDefine)ReportUtils.read(raq);<br /> INormalCell cell = rd.getCell(2, (short)1);</p> 
+  <p>//取得填报属性<br /> InputProperty ip = cell.getInputProperty();<br /> ArrayList al = ip.getUpdateList();<br /> UpdateProperty up = (UpdateProperty)al.get(0);<br /> // 获取对应关系<br /> Object relations = up.getRelation();<br /> if(relations instanceof com.runqian.report4.usermodel.input.TableRelations){<br /> TableRelations trs = (TableRelations)relations;<br /> System.out.println(trs.getDataSourceName());</p> 
+  <p>//设置更新属性数据源<br /> trs.setDataSourceName(”northwind”);<br /> up.setRelation(trs);<br /> ArrayList ups = new ArrayList(1);<br /> ups.add(up);<br /> ip.setUpdateList(ups);<br /> cell.setInputProperty(ip);</p>  
+ </body>
+</html>

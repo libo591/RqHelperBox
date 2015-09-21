@@ -1,0 +1,6 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>有时候报表用户会采用filter对http请求进行转码，这样可以保证中文被正确的传递。但是由于报表用户可能不是使用gbk作为编码方式，因此在使用润乾报表的一些功能的时候可能会出问题。比如OLAP和即时报表，这些都会传一些中文参数。如果报表用户使用了自己的filter对http请求转码，可能会造成润乾报表得不到正确的参数，这时可建议报表用户先关掉filter的设置，如果这样可以解决问题的话，再修改filter的作用范围即可。附：filter是在web.xml中设置的，一个标准的filter设置格式如下：<br /> &nbsp;&lt;filter&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;filter-name&gt;过滤器名称&lt;/filter-name&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;filter-class&gt;过滤器类名&lt;/filter-class&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;init-param&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;param-name&gt;过滤器参数1&lt;/param-name&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;param-value&gt;参数值1&lt;/param-value&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;/init-param&gt;<br /> &nbsp; &lt;/filter&gt;<br /> &nbsp;<br /> &nbsp; &lt;filter-mapping&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;filter-name&gt;过滤器名称&lt;/filter-name&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;url-pattern&gt;/*&lt;/url-pattern&gt;<br /> &nbsp; &lt;/filter-mapping&gt;其中蓝色部分就是作用范围。”/*”表示全部路径。</p>  
+ </body>
+</html>

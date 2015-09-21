@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>显示或打印报表的时候，经常会遇到这样的问题：报表中的字段比较少，而记录数却较多，这个报表会显得细长，看这样的报表时需要将滚动条拖来拖去，浪费时间，观察或查找数据繁琐，且打印时浪费纸张。润乾报表有方法能够将记录比较多的字段分成多列或多行显示，以达到数据集中显示的效果，同时也实现了节约纸张的目的。</p> 
+  <p>本文介绍润乾报表中如何实现上述需求。</p> 
+  <p>本文以显示中国32个省份、自治区、直辖市为例进行详细说明，步骤如下：</p> 
+  <p><strong>第一步</strong>：新建报表，内建数据集ds1，字段如图一所示</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/141.png" alt="1.png" width="456" height="128" /></p> 
+  <p>数据如图二所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/228.png" alt="2.png" width="452" height="338" /></p> 
+  <p><strong>第二步</strong>：设置报表单元格表达式及外观如图三所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/326.png" alt="3.png" width="553" height="226" /></p> 
+  <p>A1单元格表达式为：=int(ds1.count()/3)+1，表达式中的”3″为省份名称显示的列数，</p> 
+  <p>B4单元格表达式为：=to(1,A1)，表达式中的”A1″为要扩展出记录的行数，</p> 
+  <p>C3单元格表达式为：=to(0,2)，此表达式为为省份名称显示的列数，即3列，请注意此处to()函数的第一个参数是 “0″，这样可以方便后面的的处理。</p> 
+  <p>C4单元格表达式为： =ds1.select(name,false,#1==B4+C3*A1)，最后一个参数表达式代表与”B4+C3*A1″相等的ds1中id字段的值，即此表达式显示的与id对应的name值。</p> 
+  <p><strong>第三步</strong>：保存后发布，效果如图四所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/420.png" alt="4.png" width="464" height="289" /></p> 
+  <p>本文是将省份名称分成三列显示，还可以根据实际需要分成多列显示，设置显示的列数在图三的C3单元格设置，并修改A1单元格中的相关数值。将对应的单元格设置为横向扩展或纵向扩展，即可达到想要的效果。</p>  
+ </body>
+</html>

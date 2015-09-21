@@ -1,0 +1,6 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>当发布包中存在自定义类，在从一个操作系统发布到另一个操作系统时有的时候会出现自定义的那个类无法识别的问题，例如：<br /> java.lang.LinkageError: LinkageError while defining class: test.reportServletFilter<br /> Could not be defined due to: (test/reportServletFilter) constant pool index out of range at offset=2338<br /> This is often caused by having a class defined at multiple locations within the classloader hierarchy. Other potential causes<br /> include compiling against an older or newer version of the class that has an incompatible method signature.<br /> <br />本例中的问题：windows操作系统下发布到websphere没有问题，发布到linux操作系统的websphere出现如上报错信息。<br /> 主要原因是有两种：一种是编译自定义类的jdk与服务器的jdk不一致，也就是说两种操作系统下的服务器中的jdk版本不一致，另一种是由于自定义的类在服务器中存在重复定义。<br /> 第一种问题可以对.java文件在相应的jdk下重新编译。<br /> 第二种问题可以修改自定义类的名字来解决。</p>  
+ </body>
+</html>

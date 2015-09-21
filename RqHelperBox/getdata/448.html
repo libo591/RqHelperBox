@@ -1,0 +1,8 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在设计器里打开某一个报表，那么报表的标题栏上就会显示当前报表的路径，那么如何取得这个路径？或者修改了文件名，如何使报表标题栏的路径也相应变化？</p> 
+  <p>获取方式：Object rpt = handler.processMessage(”getFileName”, null);</p> 
+  <p>重置方式：handler.processMessage(”changeFileName”, curreportPath);</p>  
+ </body>
+</html>

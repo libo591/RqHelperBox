@@ -1,0 +1,87 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="Section1" style="layout-grid: 15.6pt none;"> 
+   <h1 style="text-align: center;"><span>报表中使用</span><span>fckEditor</span></h1> 
+   <h2><span>需求分析：</span></h2> 
+   <p class="MsoNormal" style="text-align: left; text-indent: 21pt;"><span>客户想在报表展示的时候可以实时的对输入文本的样式进行控制，润乾中提供了多种填报编辑风格，并不能实现客户该需求，但润乾支持自定义控件，我们还可以考虑通过已有的</span><span>fckEditor</span><span>组件来实现该需求。</span></p> 
+   <h2><span>需求实现：</span></h2> 
+   <p class="MsoNormal" style="text-align: left; text-indent: 17.85pt; margin-left: 0cm;"><span><span>1.<span style="font: 7pt 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span>设计报表，将</span><span>C10</span><span>单元格数据类型设置为</span><span>HTML</span><span>，单元格中内容为“</span><span>&lt;textarea id=”content” name=”content” style=”WIDTH: 100%; HEIGHT: 400px”&gt;&lt;/textarea&gt;</span><span>”，详细设置如下图所示：</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><img src="/wp-content/uploads/2011/09/79bea7fd-eadf-4777-ac39-fc23e8cbdd16.jpg" alt="" width="369" height="266" /></span></p> 
+   <p class="MsoNormal" style="text-align: left; text-indent: 21pt;"><span>2</span><span>．在工程中加上</span><span>fck</span><span>组件，把</span><span>WebContent</span><span>下除了</span><span>web-inf</span><span>文件夹之外全部拷到你工程的</span><span>root</span><span>下。</span></p> 
+   <p class="MsoNormal" style="text-align: left; text-indent: 21pt;"><span>3.</span><span>在工程中的</span><span>web.xml</span><span>中加入以下的配置信息。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&lt;servlet&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;servlet-name&gt;Connector&lt;/servlet-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;servlet-class&gt;com.fredck.FCKeditor.connector.ConnectorServlet&lt;/servlet-class&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;baseDir&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;/UserFiles/&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;debug&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;true&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/servlet&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;">&nbsp;</p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;servlet&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;servlet-name&gt;SimpleUploader&lt;/servlet-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;servlet-class&gt;com.fredck.FCKeditor.uploader.SimpleUploaderServlet&lt;/servlet-class&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;baseDir&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;/UserFiles/&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;debug&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;true&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;enabled&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;true&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;AllowedExtensionsFile&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;DeniedExtensionsFile&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;AllowedExtensionsImage&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;jpg|gif|jpeg|png|bmp&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;DeniedExtensionsImage&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;AllowedExtensionsFlash&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;swf|fla&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-name&gt;DeniedExtensionsFlash&lt;/param-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;param-value&gt;&lt;/param-value&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/init-param&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/servlet&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span></span>&lt;servlet-mapping&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp; </span>&lt;servlet-name&gt;Connector&lt;/servlet-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp; </span>&lt;url-pattern&gt;/editor/filemanager/browser/default/connectors/jsp/connector&lt;/url-pattern&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span></span>&lt;/servlet-mapping&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span></span></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span></span>&lt;servlet-mapping&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp; </span>&lt;servlet-name&gt;SimpleUploader&lt;/servlet-name&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp; </span>&lt;url-pattern&gt;/editor/filemanager/upload/simpleuploader&lt;/url-pattern&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><span></span>&lt;/servlet-mapping&gt;</span></p> 
+   <p class="MsoNormal" style="text-align: left; text-indent: 21pt;"><span>4.</span><span>在应用中导入包，在发布报表的</span><span>JSP</span><span>中引入组件所使用的</span><span>JS</span><span>。</span></p> 
+   <p class="MsoNormal" style="text-align: left; text-indent: 21pt;"><span>5.</span><span>发布应用访问报表，我们能看到可编辑输入字体样式的ＦＣＫ组件就成功的与报表结合了。</span></p> 
+   <p class="MsoNormal" style="text-align: center;"><span><img src="/wp-content/uploads/2011/09/835dac7a-7b2b-4507-83f8-5827a956bd99.jpg" alt="" width="343" height="284" /></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>当你编辑完该单元格中的内容后，可以点击左侧的上三角将其收起，方便我们查看输入的内容。</span></p> 
+   <p class="MsoNormal" style="text-align: center;"><span><img src="/wp-content/uploads/2011/09/a8388538-6909-498f-80ea-47a487af4d2d.jpg" alt="" width="349" height="300" /></span></p> 
+   <h2><span>需求总结：</span></h2> 
+   <p class="MsoNormal" style="text-align: left; text-indent: 21pt;"><span>本例只是在报表中引入</span><span>FCK</span><span>组件，而在实际应用中对于这种可输入的报表我们最终都是以入库为目的的，但是按照我们通常设置单元格更新属性的方式获得的只是单元格的内容，并不带有相应的样式，所以为了我们的ＦＣＫ有着实际的意义，我们需要采取其他方式入库，关于入库方式会在后续的文档中介绍。</span></p> 
+  </div> 
+  <p></p>  
+ </body>
+</html>

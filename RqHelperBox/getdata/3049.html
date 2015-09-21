@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">我们在使用填报表的时候常常在</span><span>jsp</span><span style="font-family: 宋体;">里通过</span><span>documen.getElementById()</span><span style="font-family: 宋体;">获取某个单元格的值或显示值，但是我们采用同样的方法获取浏览式报表值时，却无法正常获取。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">查看源文件我们发现，浏览式报表单元格</span><span>ID</span><span style="font-family: 宋体;">未生成，那么如何生成单元格</span><span>ID</span><span style="font-family: 宋体;">使得在</span><span>js</span><span style="font-family: 宋体;">中正常获取使用呢？润乾报表提供的</span><span>generateCellId</span><span style="font-family: 宋体;">标签可以解决这个问题。</span></p> 
+  <h2><span style="font-family: 宋体;">实现</span></h2> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体;">第一步，制作一张浏览式报表，如下图：</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;"><img class="alignnone size-full wp-image-6578" title="8" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/8.jpg" alt="8" width="535" height="165" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">我们要在</span><span>js</span><span style="font-family: 宋体;">中获取订单总数，即：</span><span>B2</span><span style="font-family: 宋体;">单元格的值；</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">我们首先查看一下页面源文件，如下：</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;"><img class="alignnone size-full wp-image-6582" title="91" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/91.jpg" alt="91" width="554" height="206" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">我们发现，单元格</span><span>ID</span><span style="font-family: 宋体;">未生成。</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">第二步，在发布报表的</span><span>jsp</span><span style="font-family: 宋体;">中增加</span><span>generateCellId=”yes”</span><span style="font-family: 宋体;">后，发布报表并查看页面源文件：</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;"><img class="alignnone size-full wp-image-6583" title="101" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/101.jpg" alt="101" width="554" height="159" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">我们看到单元格的</span><span>id</span><span style="font-family: 宋体;">已生成，其中</span><span>ID</span><span style="font-family: 宋体;">为</span><span>report1_B2</span><span style="font-family: 宋体;">的单元格就是我们需要的。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">在</span><span>js</span><span style="font-family: 宋体;">中加入：</span></p> 
+  <p class="MsoNormal"><span>var total = document.getElementById(“report1_B2″).innerText;</span></p> 
+  <p class="MsoNormal"><span>alert(“total=”+total);</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">页面效果如下：</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><img class="alignnone size-full wp-image-6584" title="111" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/111.jpg" alt="111" width="554" height="212" /></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">我们看到，总的订单条数可以正确获取了。</span></p>  
+ </body>
+</html>

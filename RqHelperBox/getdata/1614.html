@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表可以通过SQL检索和复杂SQL生成数据集。当SQL中需要传入多个参数时，要在设计器中通过 <strong>配置-参数</strong> 定义相应的参数，然后再把SQL中需要参数的地方替换成<strong>?</strong>，最后还要在SQL编辑器中添加对应<strong>?</strong>的参数。这样当SQL中有多少个问号，我们就需要添加多少个参数。当SQL中用到的参数比较少时，操作起来还比较方便。但当业务比较复杂，需要往SQL中传入多个重复的参数时，就需要在SQL编辑器的 <strong>参数</strong>标签页中反复多次添加多个重复参数。此时，工作量是相当大的。本文将给出一种巧用动态宏实现往SQL中传递参数的方法，该方法会大大减少重复添加相同参数的工作量，下面简单介绍一下该方法。</p> 
+  <p>例如，需要往SQL中重复传递两个参数，开始时间和结束时间。</p> 
+  <p>首先，在报表中分别定义两个参数，arg1，arg2，其中arg1代表开始时间、arg2代表结束时间，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/1-0020.png" alt="1.png" width="503" height="102" /></p> 
+  <p>然后，定义两个宏，<strong>名称：macro1，macro2</strong>，设置<strong>类型：动态宏</strong>，设置如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/xn-7iq863a5a-0001.png" alt="定义宏.png" width="323" height="100" /></p> 
+  <p>然后，在SQL中需要参数的地方引用宏macro1和macro2，不需要设置数据集中的参数，即可实现传递参数的功能，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/2-0020.png" alt="2.png" width="615" height="318" /></p> 
+  <p>这样就实现了使用动态宏传递参数到SQL中，而不需要在SQL编辑器的参数标签页反复添加重复的参数了。</p> 
+  <p>动态宏传递参数到SQL中，减少了用户制作报表时不必要的重复繁琐的工作，为用户设计和制作复杂报表带来了很大的方便。</p>  
+ </body>
+</html>

@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了各类导出为外部文件以及打印的标签，这些标签是在发布报表的jsp文件中引用的，每种标签也提供了多种定义方式，如：printLabel是定义打印按钮的外观的标签，设置的方式有HTML元素和文字，如下所示。本文以打印按钮和直接打印按钮的外观设置为例来介绍润乾报表中这些标签的定义方法，其他的标签可仿效这两种标签的定义方法进行定义。</p> 
+  <p><strong>1 打印按钮的外观定义</strong></p> 
+  <p>打印按钮的外观可用html元素来设置，也可直接设为文字。</p> 
+  <p>1） 文字：<span style="color: #0000ff;">printLabel=”打印”</span> ；如下图例子所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/1.gif" alt="1.gif" width="483" height="183" /></p> 
+  <p>2） HTML元素：<span style="color: #0000ff;">printLabel=” &lt;input type=button value=’打印’ &gt;”</span> ；如下图例子所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/2.gif" alt="2.gif" width="479" height="187" /></p> 
+  <p>3）设置图片：将打印按钮定义为自己的图片也是HTML元素的方式，但这时需要先取得当前应用的路径，然后在动态的拼出标签外观图片所在路径，如下面的代码所示。</p> 
+  <p><span style="color: #0000ff;">&lt;% String appmap = request.getContextPath();<br /> String printImage = “&lt;img src=’” + appmap + “/images/print.gif’ border=no &gt;”;<br /> %&gt;</span></p> 
+  <p>然后标签定义如下：</p> 
+  <p><span style="color: #0000ff;">printLabel=”&lt;%=printImage %&gt;”</span></p> 
+  <p>效果如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/3.gif" alt="3.gif" width="476" height="188" /></p> 
+  <p><strong>2 直接打印按钮外观定义</strong></p> 
+  <p>然而直接打印标签的外观定义比较特殊，润乾报表中定义的是只能使用设置图片方式，设置方式是直接写图片在应用中的路径，如下定义所示</p> 
+  <p><span style="color: #0000ff;">needDirectPrint=”yes”</span> //显示直接打印按钮</p> 
+  <p><span style="color: #0000ff;">directPrintImgLabel=”/images/redlight.png”</span> //定义直接打印按钮的图片路径</p> 
+  <p>这样定义以后，报表展现页面就会显示直接打印图标为自定义的图片，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/4.gif" alt="4.gif" width="478" height="183" /></p>  
+ </body>
+</html>

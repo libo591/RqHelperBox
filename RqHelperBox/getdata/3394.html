@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>一些客户在做报表的时候，根据需求要把报表单元格中的中英文内容设置成不同的字体，而在同一个单元格中如果中英文字体同时存在，将英文设置成英文字体后，中文字体就会显示成乱码。为了使报表能够达到这样的需求，我们就需要用html的数据类型实现，下面就用一个实例来说明如何在同一个单元格中对中英文设置不同的字体。</p> 
+  <p><strong>第一步：新建报表</strong></p> 
+  <p>新建一张普通的报表，报表的样式如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-024p5eeedf8a.png" alt="" width="517" height="358" /></p> 
+  <p>E1单元格既包含英文也包含中文，如果把E1中的”BI001″字体设置成Arial，此时预览报表，”管道施工”就变成乱码，如下图:</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-025n1ab202ad.png" alt="" width="519" height="364" /></p> 
+  <p>客户想在E1单元格中把中英文设置成各自的字体，这时就需要通过html数据类型实现。</p> 
+  <p><strong>第二步：设置html数据类型</strong></p> 
+  <p>右键单击E1单元格，选择数据类型，在数据类型中选择html，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-026p7a1aac30.png" alt="" width="461" height="329" /></p> 
+  <p>通过html将”BI001″设置成英文的Arial字体，”管道施工”设置成华文楷体，预览报表，这时中文不再显示乱码了，效果如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-027p78e3116c.png" alt="" width="531" height="342" /></p> 
+  <p>这样就实现了在同一个单元格中对中英文设置不同的字体。</p>  
+ </body>
+</html>

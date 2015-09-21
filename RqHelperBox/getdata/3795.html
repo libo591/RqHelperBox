@@ -1,0 +1,104 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <div style="LAYOUT-GRID: 15.6pt none" class="Section1"> 
+   <br /> 
+   <p style="TEXT-ALIGN: center" class="MsoNormal" align="center"><b><span style="FONT-FAMILY: 宋体; FONT-SIZE: 22pt">润乾报表动态指定输出的打印机</span></b></p> 
+   <br /> 
+   <p style="TEXT-ALIGN: center" class="MsoNormal" align="center"><b></b></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">一些客户在使用润乾报表打印功能时，可能需要根据报表纸张的大小，动态的选择输出到哪个打印机，因为不同打印机使用的纸张大小可能是不一样的。而每次在打印预览时手动的选择打印机，不能完全满足需求，因为打印报表的使用者可能对哪些打印机对应什么纸张并不是十分清楚，所以使用起来不是十分的方便。</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">润乾报表在标签中给客户提供了指向所需打印机的接口，客户可以根据自己的需要，动态的给报表指定输出的打印机，也就是给指定打印机的标签传参数，下面就对这个功能做一个介绍。</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">功能介绍：</span></p> 
+   <br /> 
+   <p class="MsoPlainText"><span style="FONT-FAMILY: 宋体">润乾的</span><span>report:html</span><span style="FONT-FAMILY: 宋体">标签中有一个属性：</span></p> 
+   <br /> 
+   <p class="MsoPlainText"><span>printerName<span>&nbsp;&nbsp;&nbsp; </span></span><span style="FONT-FAMILY: 宋体">指定打印本报表的打印机名称，没有指定或没有找到指定的，则使用默认打印机</span></p> 
+   <br /> 
+   <p class="MsoPlainText">&nbsp;</p> 
+   <br /> 
+   <p class="MsoPlainText"><span style="FONT-FAMILY: 宋体">如果</span><span>savePrintSetup=”yes”</span><span style="FONT-FAMILY: 宋体">时，也就是要保存客户端的打印设置时，将优先使用用户以前保存的打印机名称</span></p> 
+   <br /> 
+   <p class="MsoPlainText">&nbsp;</p> 
+   <br /> 
+   <p class="MsoPlainText"><span style="FONT-FAMILY: 宋体">标签里指定了打印机，最终用户在浏览器中打印时，仍然可以手动选择打印机</span></p> 
+   <br /> 
+   <p class="MsoPlainText">&nbsp;</p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">实现步骤：</span></p> 
+   <br /> 
+   <p class="MsoNormal">&nbsp;</p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">首先，在</span><span>jsp</span><span style="FONT-FAMILY: 宋体">中获取报表的纸张类型。</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">获取纸张类型的代码如下：</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>request.setCharacterEncoding( “GBK” );</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String report = request.getParameter( “raq” );</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String reportFileHome=Context.getInitCtx().getMainDir();</span></p> 
+   <br /> 
+   <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String raq = application.getRealPath(reportFileHome)+File.separator+report;</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span>ReportDefine rd =(ReportDefine)ReportUtils.read(raq);<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">读取</span><span>raq</span><span style="FONT-FAMILY: 宋体">文件</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><b><span>Short </span></b><span><span>&nbsp;</span>i = rd.getPrintSetup().getPaper();</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal">&nbsp;</p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">根据返回</span><span>i</span><span style="FONT-FAMILY: 宋体">的值指定打印机的代码如下：</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String <span>&nbsp;</span><span style="COLOR: red">printer</span> = <b>null</b>;</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>if</b>( i==9){</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="COLOR: red">printer</span> = “Printer1″;</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<b>else</b>{</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="COLOR: red">printer</span> = “Printer2″;</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">上面的代码判断，如果</span><span>i</span><span style="FONT-FAMILY: 宋体">的值为</span><span>9</span><span style="FONT-FAMILY: 宋体">，即纸张类型为</span><span>A4</span><span style="FONT-FAMILY: 宋体">的时候，指定打印机名字为</span><span>Printer1</span><span style="FONT-FAMILY: 宋体">，否则指定打印机的名字为</span><span>Printer2</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">把打印机的名称传给标签，具体做法如下：</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span>&lt;table align=center&gt;</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;tr&gt;&lt;td&gt;</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;report:html name=”report1″ reportFileName=”&lt;%=report%&gt;”</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>funcBarLocation=”&quot;</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>needPageMark=”yes”</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>generateParamForm=”no”</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>params=”&lt;%=param.toString()%&gt;”</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>printerName =”&lt;%=<span style="COLOR: red"> printer</span> %&gt;”</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>width=”-1″</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>exceptionPage=”/reportJsp/myError2.jsp”</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>/&gt;</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/td&gt;&lt;/tr&gt;</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span>&lt;/table&gt;</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal">&nbsp;</p> 
+   <br /> 
+   <p style="TEXT-INDENT: 20.25pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">这样在</span><span>jsp</span><span style="FONT-FAMILY: 宋体">中经过上面的设置就可以实现根据报表的纸张类型动态的输出报表到指定的打印机了。</span></p> 
+  </div> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>需求背景：</p> 
+  <p>用户生成的报表样式比较固定是较常见的网格式报表，但是要求可以选择报表的数据来源（数据表），并可以选择需要展现哪些列。根据用户选择结果生成报表查询结果。</p> 
+  <p>实现思路：<br /> 1.&nbsp;利用宏可控制数据集的取数sql，实现同一数据集可根据参数输入不同得到不同的数据表检索结果。<br /> 2.&nbsp;利用datasetName.field( stringExp )及datasetName.fieldName( intExp )实现动态列报表。</p> 
+  <p>实现步骤：<br /> 1．&nbsp;参数、宏、数据集配置：<br /> 参数说明：</p> 
+  <p>&nbsp;<br /> Table：用户选择的数据库表或视图名称（字符串）<br /> Columns：用户选择的需要在结果报表中展现的字段对应的字段序号（整数组）<br /> 宏说明：</p> 
+  <p><a href="http://www.runqian.com.cn/archives/4203.html/a2-2" rel="attachment wp-att-4209"><img class="aligncenter size-full wp-image-4209" title="a2" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a2.jpg" alt="" width="464" height="127" /></a><br /> &nbsp;<br /> Sql：根据参数table动态生成宏，”select * from “+ @table<br /> 数据集说明：<br /> 数据集ds1，数据集sql语法：${sql}，直接利用宏运算结果作为数据集。<br /> 2．&nbsp;报表模板设计</p> 
+  <p><a href="http://www.runqian.com.cn/archives/4203.html/a3" rel="attachment wp-att-4210"><img class="aligncenter size-full wp-image-4210" title="a3" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a3.jpg" alt="" width="274" height="138" /></a><br /> &nbsp;<br /> B2：=columns，根据接收到的字段序号组结果，横向扩展出若干个格子<br /> B3：= ds1.fieldname(B2)，根据列号取数据集的列名<br /> B4：=ds1.field(B3)，获得数据集当前行或者当前组中第一行中，指定列的数据<br /> A4单元格为数据集结果的行号，不显示，只是作为主格。<br /> 3．&nbsp;参数模板设计<br /> 数据集说明：<br /> &nbsp;<a href="http://www.runqian.com.cn/archives/4203.html/a4" rel="attachment wp-att-4211"><img class="aligncenter size-full wp-image-4211" title="a4" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a4.jpg" alt="" width="565" height="244" /></a></p> 
+  <p><a href="http://www.runqian.com.cn/archives/4203.html/a5" rel="attachment wp-att-4212"><img class="aligncenter size-full wp-image-4212" title="a5" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a5.jpg" alt="" width="430" height="415" /></a><br /> &nbsp;<br /> 该数据集为下拉数据集的数据源，存放数据库表和字段及字段序号的对应关系。</p> 
+  <p><a href="http://www.runqian.com.cn/archives/4203.html/a6" rel="attachment wp-att-4213"><img class="aligncenter size-full wp-image-4213" title="a6" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a6.jpg" alt="" width="493" height="104" /></a><br /> &nbsp;<br /> 其中C2单元格变量名为table，编辑方式为下拉数据集：</p> 
+  <p><a href="http://www.runqian.com.cn/archives/4203.html/a7" rel="attachment wp-att-4214"><img class="aligncenter size-full wp-image-4214" title="a7" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a7.jpg" alt="" width="472" height="294" /></a><br /> &nbsp;<br /> E2单元格变量名为columns，编辑方式为下拉数据集</p> 
+  <p><a href="http://www.runqian.com.cn/archives/4203.html/a8" rel="attachment wp-att-4215"><img class="aligncenter size-full wp-image-4215" title="a8" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a8.jpg" alt="" width="482" height="387" /></a><br /> &nbsp;<br /> 该单元格实现了和B2单元格的动态过滤，并支持多选功能。</p> 
+  <p>实现效果:</p> 
+  <p><a href="http://www.runqian.com.cn/archives/4203.html/a9" rel="attachment wp-att-4216"><img class="aligncenter size-full wp-image-4216" title="a9" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a9.jpg" alt="" width="558" height="286" /></a><br /> &nbsp;<br /> 用户可以通过选择数据库表及表中相应的字段生成自定义的网格式报表。</p>  
+ </body>
+</html>

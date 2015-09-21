@@ -1,0 +1,99 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体"><strong><font style="COLOR: #333399">问题描述：</font></strong></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">在武钢遇到树形数据问题，其数据结构模型可简单描述为</span><span>ID</span><span style="FONT-FAMILY: 宋体">，</span><span style="FONT-FAMILY: 'simsun','serif'">FARTHERID</span><span style="FONT-FAMILY: 宋体">，</span><span style="FONT-FAMILY: 'simsun','serif'">NAME</span><span style="FONT-FAMILY: 宋体">，测试数据如下图：</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/06/5cec9660-2220-43e0-ad77-8481bb930f66.jpg" width="241" height="214" /></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">希望在报表中得到的展示效果为：</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/06/7052ab71-bde7-4e2a-8339-36bc71f0f6e0.jpg" width="373" height="172" /></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体"><strong><font style="COLOR: #333399">解决方法：</font></strong></span></p> 
+  <br /> 
+  <p class="MsoNormal"><font style="COLOR: #0000ff">1<span style="FONT-FAMILY: 宋体; COLOR: #0000ff">）数据量较小的情况：</span></font></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">如果数据量比较小，可以在报表的层次上进行处理，如下图所示：</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/06/0ca9b9b8-fa8e-48d3-a293-f2d0b0104516.jpg" width="501" height="84" /></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>A2</span><span style="FONT-FAMILY: 宋体">单元格表达式：</span><span>=ds1.Group(ID,false,fartherid==0)</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>A2</span><span style="FONT-FAMILY: 宋体">单元格显示值表达式：</span><span>=ds1.select1(NAME,ID==VALUE())</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>B2</span><span style="FONT-FAMILY: 宋体">单元格表达式：</span><span>=ds1.Group(ID,false,fartherid==A2,,,,true)</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>B2</span><span style="FONT-FAMILY: 宋体">单元格显示值表达式：</span><span>ds1.select1(NAME,ID==VALUE(),TRUE)</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>C2</span><span style="FONT-FAMILY: 宋体">单元格表达式：</span><span>=ds1.Group(ID,false,fartherid==B2,,,,true)</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>C2</span><span style="FONT-FAMILY: 宋体">单元格显示值表达式：</span><span>ds1.select1(NAME,ID==VALUE(),TRUE)</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">需要注意的时，</span><span>B2,C2</span><span style="FONT-FAMILY: 宋体">单元格表达式都是从</span><span>root</span><span style="FONT-FAMILY: 宋体">数据集表达式提取数据。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>B2,C2</span><span style="FONT-FAMILY: 宋体">单元格也可以用</span><span>query</span><span style="FONT-FAMILY: 宋体">函数来替代</span><span>group</span><span style="FONT-FAMILY: 宋体">函数，效果是一样的。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><font style="COLOR: #0000ff">2<span style="FONT-FAMILY: 宋体; COLOR: #0000ff">）数据量较大的情况</span></font></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">如果数据量比较大，当可能多达几十万条数据的时候，通过</span><span>group</span><span style="FONT-FAMILY: 宋体">函数或者</span><span>query</span><span style="FONT-FAMILY: 宋体">函数会很大的影响性能，因为每个单元格都要遍历几十万条数据，然后进行过滤。就武钢具体问题来说，报表展示需要几分钟，甚至会报内存溢出，所以这种情况下，最好在数据库</span><span>sql</span><span style="FONT-FAMILY: 宋体">的层次上做初步的处理。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">此数据结构数据的</span><span>sql</span><span style="FONT-FAMILY: 宋体">：</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; COLOR: blue; FONT-SIZE: 10pt">with</span><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt"> <span style="COLOR: teal">tree_select</span><span style="COLOR: blue"> </span><span style="COLOR: gray">(</span><span style="COLOR: teal">id</span><span style="COLOR: gray">,</span> <span style="COLOR: blue">level</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">country</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">province</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">city</span><span style="COLOR: gray">)</span></span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; COLOR: blue; FONT-SIZE: 10pt">as</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; COLOR: gray; FONT-SIZE: 10pt">(</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt"><span>&nbsp; </span><span style="COLOR: blue">select</span> <span style="COLOR: teal">id</span><span style="COLOR: gray">,</span> 1 <span style="COLOR: blue">as</span> <span style="COLOR: blue">level</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">name</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">country</span><span style="COLOR: gray">,</span> <span style="COLOR: fuchsia">cast</span><span style="COLOR: gray">(</span><span style="COLOR: red">‘ ‘</span> <span style="COLOR: blue">as</span> <span style="COLOR: blue">varchar</span><span style="COLOR: gray">(</span>50<span style="COLOR: gray">))</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">province</span><span style="COLOR: gray">,</span> <span style="COLOR: fuchsia">cast</span><span style="COLOR: gray">(</span><span style="COLOR: red">‘ ‘</span> <span style="COLOR: blue">as</span> <span style="COLOR: blue">varchar</span><span style="COLOR: gray">(</span>50<span style="COLOR: gray">))</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">city</span><span>&nbsp; </span></span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt"><span>&nbsp; </span><span style="COLOR: blue">from</span> <span style="COLOR: teal">test_tree</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">tree1</span> <span style="COLOR: blue">where</span> <span style="COLOR: teal">fartherid</span> <span style="COLOR: gray">=</span>0</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt"><span>&nbsp; </span><span style="COLOR: blue">union</span> <span style="COLOR: gray">all</span></span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt"><span>&nbsp; </span><span style="COLOR: blue">select</span> <span style="COLOR: teal">tree2</span><span style="COLOR: gray">.</span><span style="COLOR: teal">id</span><span style="COLOR: gray">,</span> 2 <span style="COLOR: blue">as</span> <span style="COLOR: blue">level</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">select1</span><span style="COLOR: gray">.</span><span style="COLOR: teal">country</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">country</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">name</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">province</span><span style="COLOR: gray">,</span> <span style="COLOR: fuchsia">cast</span><span style="COLOR: gray">(</span><span style="COLOR: red">‘ ‘</span> <span style="COLOR: blue">as</span> <span style="COLOR: blue">varchar</span><span style="COLOR: gray">(</span>50<span style="COLOR: gray">))</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">city</span><span>&nbsp; </span></span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt"><span>&nbsp; </span><span style="COLOR: blue">from</span> <span style="COLOR: teal">test_tree</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">tree2</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">tree_select</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">select1</span> <span style="COLOR: blue">where</span> <span style="COLOR: teal">tree2</span><span style="COLOR: gray">.</span><span style="COLOR: teal">fartherid</span> <span style="COLOR: gray">=</span> <span style="COLOR: teal">select1</span><span style="COLOR: gray">.</span><span style="COLOR: teal">id</span> <span style="COLOR: gray">and</span> <span style="COLOR: teal">select1</span><span style="COLOR: gray">.</span><span style="COLOR: blue">level</span> <span style="COLOR: gray">=</span> 1</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt"><span>&nbsp; </span><span style="COLOR: blue">union</span> <span style="COLOR: gray">all</span></span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt"><span>&nbsp; </span><span style="COLOR: blue">select</span> <span style="COLOR: teal">tree3</span><span style="COLOR: gray">.</span><span style="COLOR: teal">id</span><span style="COLOR: gray">,</span> 3 <span style="COLOR: blue">as</span> <span style="COLOR: blue">level</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">select2</span><span style="COLOR: gray">.</span><span style="COLOR: teal">country</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">country</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">select2</span><span style="COLOR: gray">.</span><span style="COLOR: teal">province</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">province</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">name</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">city</span><span>&nbsp; </span></span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt"><span>&nbsp; </span><span style="COLOR: blue">from</span> <span style="COLOR: teal">test_tree</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">tree3</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">tree_select</span> <span style="COLOR: blue">as</span> <span style="COLOR: teal">select2</span> <span style="COLOR: blue">where</span> <span style="COLOR: teal">tree3</span><span style="COLOR: gray">.</span><span style="COLOR: teal">fartherid</span> <span style="COLOR: gray">=</span> <span style="COLOR: teal">select2</span><span style="COLOR: gray">.</span><span style="COLOR: teal">id</span> <span style="COLOR: gray">and</span> <span style="COLOR: teal">select2</span><span style="COLOR: gray">.</span><span style="COLOR: blue">level</span> <span style="COLOR: gray">=</span> 2</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style="FONT-FAMILY: 'Courier New'; COLOR: gray; FONT-SIZE: 10pt">)</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 'Courier New'; COLOR: blue; FONT-SIZE: 10pt">select</span><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt"> <span style="COLOR: teal">country</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">province</span><span style="COLOR: gray">,</span> <span style="COLOR: teal">city</span> <span style="COLOR: blue">from</span> <span style="COLOR: teal">tree_select</span> <span style="COLOR: blue">where</span> <span style="COLOR: blue">level</span> <span style="COLOR: gray">=</span>3</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10pt">注意：此</span><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt">sql</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10pt">采用递归的思路，使用的特定条件，一是知道</span><span style="FONT-FAMILY: 'Courier New'; FONT-SIZE: 10pt">fartherid</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10pt">，二是要知道有几层。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10pt">执行后的结果集：</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/06/4568791a-a865-4280-8c31-590badaaa4a1.jpg" width="239" height="140" /></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">润乾报表在此结果集的基础做分组报表，如下图：</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/06/c31407a9-903a-4c90-a2e1-4a6d9e8f60a2.jpg" width="476" height="82" /></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>A2</span><span style="FONT-FAMILY: 宋体">单元格表达式：</span><span>=ds1.Group(country,false)</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>B2</span><span style="FONT-FAMILY: 宋体">单元格表达式：</span><span>=ds1.Group(province,false)</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>C2</span><span style="FONT-FAMILY: 宋体">单元格表达式：</span><span>=ds1.Group(city,false)</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">此时计算展示数据，性能效率将有很大的提升。</span></p> 
+  <br /> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">为了进一步提升效率，可以创建一个中间表，在报表并发量，运算量少的时候定时执行上面</span><span>sql</span><span style="FONT-FAMILY: 宋体">，将查询得到的结果集保存到中间表，报表从中间表中提取数据，进行分组运算即可。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><strong><font style="COLOR: #333399"><span style="FONT-FAMILY: 宋体; COLOR: #333399">总结</span>:</font></strong></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">对于大数据量树形结构的数据，将所有运算都放到报表中执行，效率比较低，尽量将数据运算在数据库的层次上完成，报表只起到展示作用或者说尽量少一些业务运算，将大大提过报表的性能。</span></p> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

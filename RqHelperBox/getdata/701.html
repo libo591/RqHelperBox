@@ -1,0 +1,10 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了很多的打印参数可供选择。例如：页边距设置(左边距、右边距、上边距、下边距)、纸张方向设置(纵向或横向)、纸张类型设置、纸张大小设置等等，为报表的精确打印提供了技术保障。</p> 
+  <p>有些情况下，客户想实现保存客户端打印的设置，不再重复每次都设置打印的边距，润乾报表也可以做到。</p> 
+  <p>考虑到每台客户端电脑一般都会固定连接一个打印机，所以这个功能设计的时候是按照不同报表去保存不同的打印设置的。也就是说，如果用户甲先访问报表A，保存了打印设置之后，用户乙又访问报表A，看到的就是用户甲先保存的打印设置。在实际的项目中，报表的开发程序员如果要实现按照不同用户保存不同的打印设置，要调用润乾报表的api，结合项目的用户信息自行编写代码来保存打印设置，具体的api调用请参考相关的用户手册。</p> 
+  <p>解决办法:<br /> 在web.xml文件中添加servlet<br /> &lt;servlet&gt;<br /> &lt;servlet-name&gt;com.runqian.report4.usermodel.PrintSetupServlet&lt;/servlet-name&gt;<br /> &lt;servlet-class&gt;com.runqian.report4.usermodel.PrintSetupServlet&lt;/servlet-class&gt;<br /> &lt;/servlet&gt;</p> 
+  <p>&lt;servlet-mapping&gt;<br /> &lt;servlet-name&gt;com.runqian.report4.usermodel.PrintSetupServlet&lt;/servlet-name&gt;<br /> &lt;url-pattern&gt;/servlet/PrintSetupServlet&lt;/url-pattern&gt;<br /> &lt;/servlet-mapping&gt;<br /> 在jsp的report:html标签中加上savePrintSetup=”yes”<br /> 这样在服务器端就会自动生成一个clientPrintSetup.properties的配置文件用于保存客户端每次打印设置的信息供下次打印时调用。</p>  
+ </body>
+</html>

@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在填报表中用户可以通过右键单击单元格，在弹出的菜单中选择填报属性，在编辑风格下拉菜单中选择“下拉数据集”，并设置下拉数据表的显示列和数据列如下图所示。</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/4-1.jpg"><img class="alignnone size-full wp-image-2382" title="4-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/4-1.jpg" alt="" width="343" height="101" /></a></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 通常设定的显示列和数据是对应关系，就能达到下拉数据集列表的一一对应。</p> 
+  <p>但是在下面的这种情况下，就会出现问题，</p> 
+  <p>报表的数据集中的数据如图2所示：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/4-2.jpg"><img class="alignnone size-full wp-image-2383" title="4-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/4-2.jpg" alt="" width="549" height="149" /></a></p> 
+  <p>下拉数据集中设置成：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/4-3.jpg"><img class="alignnone size-full wp-image-2384" title="4-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/4-3.jpg" alt="" width="343" height="101" /></a></p> 
+  <p>在页面中的下拉数据集中只显示了一条数据：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/4-4.jpg"><img class="alignnone size-full wp-image-2385" title="4-4" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/4-4.jpg" alt="" width="548" height="277" /></a></p> 
+  <p>出现这种现象的原因是因为显示列中的数据值不唯一。</p> 
+  <p>将下拉数据集中的数据列设置成唯一的字段，如下图所示。</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/4-5.jpg"><img class="alignnone size-full wp-image-2386" title="4-5" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/4-5.jpg" alt="" width="346" height="101" /></a></p> 
+  <p>这样在预览时下拉数据集中的显示列与数据集中的数据就能一一对应起来了。</p> 
+  <p>另外，使用下拉数据集还需注意一下几点：</p> 
+  <p>下拉数据集的显示列值不能包含英文逗号和分号。因为显示列值对应着下拉数据集的选择项，下拉数据集的不同选择项之间在系统内部是以英文逗号或分号间隔的，如果某一显示列值包含了逗号或分号，那么系统在处理时就会把逗号或分号前后拆成两个选择项。</p>  
+ </body>
+</html>

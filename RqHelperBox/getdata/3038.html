@@ -1,0 +1,37 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="font-family: 宋体;">内存溢出作为软件使用过程中极其不希望看到的难题，一直困扰着软件开发与使用者。当然在报表应用的使用过程中，如果配置或使用不当也会出现内存溢出的问题。出现内存溢出的问题我们要敢于面对，要通过适当的排查方法和相应的解决步骤一步一步找到问题出现的原因并最终解决掉该问题。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">本文对使用报表过程中出现内存溢出问题进行简单地分析，给出一些建议性的排查步骤和解决方法。</span></p> 
+  <h2><span style="font-family: 宋体;">排查步骤与解决办法</span></h2> 
+  <h3><span></span><span style="font-family: 宋体;">定位问题</span></h3> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">首先我们要判断出现的问题是否是由于内存溢出引起的，典型的后台信息是带有</span><span>Out Of Memory</span><span style="font-family: 宋体;">字样，但是也不排除其他内存溢出的提示，如</span><span>tomcat</span><span style="font-family: 宋体;">内存溢出可出现三种提示信息：</span><span>Java heap space</span><span style="font-family: 宋体;">、</span><span>PermGen space</span><span style="font-family: 宋体;">和</span><span>unable to create new native thread</span><span style="font-family: 宋体;">。而有时线程死锁也会导致应用挂掉。所以我们看到具体出错信息如果判断不出是何种问题，最好上网查询确认一下。</span></p> 
+  <h3><span></span><span style="font-family: 宋体;">判断是否与报表有关</span></h3> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">一般来说，任何应用都可能出现内存溢出，所以当我们确定出现了内存溢出，接下来要做的就是划分区域，判断内存溢出是哪部分引起的。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体;">一般报表应用与客户自己应用相结合的系统出现内存溢出的问题，需要判断该问题是否是由报表引起的？具体方法是单独部署报表应用并执行原操作，看是否会出现内存溢出。若此步骤问题重现，则按照如下步骤进行；否则，可能说明与报表无关，当然也可以按照下面的步骤继续进行排查。</span></p> 
+  <h3><span></span><span style="font-family: 宋体;">查找问题出现的共性</span></h3> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">一般内存溢出不会只出现一次，这就要求我们记录每次出项问题的共性。如：是否访问某张特定报表时出现？是否访问量达到一定程度时出现？是否访问一些大数据量报表时出现？</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">下面给出在如下情况下的建议设置：</span></p> 
+  <h4><span>3.1 </span><span style="font-family: 宋体;">访问某个特定报表时</span></h4> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">若我们发现，内存溢出每次均出现在访问系统中某张报表时（一般后台信息也有体现），这时我们就需要拿这张报表看看了，主要查看报表设计是否合理、表达式以及</span><span>sql</span><span style="font-family: 宋体;">语句是否性能极其低下、报表计算是否非常复杂等。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">若检查中发现如上问题，需要做如下一步或几步更改：</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>A、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">理顺报表设计逻辑，重新设计报表</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>B、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">替换性能低下的表达式，如嵌套多层</span><span>if</span><span style="font-family: 宋体;">时可以使用</span><span>case</span><span style="font-family: 宋体;">替代</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>C、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">更改性能低下的</span><span>sql</span><span style="font-family: 宋体;">语句</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>D、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">报表中如果做了大量的统计、排名等，尽量将其整合到</span><span>sql</span><span style="font-family: 宋体;">中，即简化报表运算</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>E、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">使用存储过程做数据集，并是使用</span><span>order by</span><span style="font-family: 宋体;">排序（与报表展现数据顺序相同）</span></p> 
+  <h4><span>3.2 </span><span style="font-family: 宋体;">访问某个或某些大数据量报表时</span></h4> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">若发现内存溢出均发生在访问某个或某些大数据量报表后出现（可能需要查看后台信息多次确认）。这种情况可以尝试如下解决办法</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>A、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">增大</span><span>jvm</span><span style="font-family: 宋体;">，即从内存支持上扩充。不同的应用服务器设置方法不同，但是一定要注意并不是</span><span>jvm</span><span style="font-family: 宋体;">设置越大越好，一般不超过物理内存的</span><span>30%</span><span style="font-family: 宋体;">（建议）。</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>B、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">配置</span><span>reportConfig.xml</span><span style="font-family: 宋体;">文件。对于数据量大的情况，润乾提供了“数据量大的配置方案”详见《润乾报表</span> <span style="font-family: 宋体;">在</span><span>J2EE</span><span style="font-family: 宋体;">下的部署》。一般要减小</span><span>maxConcurrentForReport</span><span style="font-family: 宋体;">和</span><span>maxCellNum</span><span style="font-family: 宋体;">、增大</span><span>cachedReportTimeout</span><span style="font-family: 宋体;">和</span><span>maxWaitTimeForReport</span><span style="font-family: 宋体;">。</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>C、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">增大物理内存。这个办法可以作为终极解决方案了。</span></p> 
+  <h4><span>3.3 </span><span style="font-family: 宋体;">访问量增加到一定范围时</span></h4> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">若访问量达到一定程度就出现内存溢出的情况，可以尝试如下解决办法</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>A、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">增大</span><span>JVM</span><span style="font-family: 宋体;">或物理内存</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>B、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">增大数据库允许最大连接数</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>C、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">增大应用服务器连接池最大连接数</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>D、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">配置</span><span>reportConfig.xml</span><span style="font-family: 宋体;">文件。对于访问量高的情况，润乾提供了“访问量高的配置方案</span><span style="font-family: 宋体;">”详见《润乾报表</span> <span style="font-family: 宋体;">在</span><span>J2EE</span><span style="font-family: 宋体;">下的部署》。一般要增大</span><span>maxConcurrentForReport</span><span style="font-family: 宋体;">和</span><span>maxCellNum</span><span style="font-family: 宋体;">、减小</span><span>cachedReportTimeout</span><span style="font-family: 宋体;">和</span><span>maxWaitTimeForReport</span><span style="font-family: 宋体;">。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">另外，需要<span style="color: red;">注意：配置数据库允许的最大连接数和应用服务器的连接池个数时，必须大于</span></span><span style="color: red;"> </span><span style="font-family: 宋体; color: red;">报表的并发数</span><span style="color: red;">+</span><span style="font-family: 宋体; color: red;">报表的等待数</span><span style="font-family: 宋体;">。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 10.5pt;">对于各种应用服务器下出现内存溢出的情况，我将在后续的总结中继续呈现，敬请期待。</span></p>  
+ </body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="Section1" style="layout-grid: 15.6pt none;"> 
+   <p class="MsoNormal" style="text-align: left;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>在做一张考勤表的时候会涉及到很多的日期以及星期几，每个月的天数不一样，每个日期又需要一一的对应星期几。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><img src="/wp-content/uploads/2011/08/c7ddf954-7d06-4169-b94f-b690f02d3e8a.jpg" alt="" width="615" height="427" /></span></p> 
+   <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp; </span></span><span>报表要实现上图所示的样子。思路是：客户输入一个日期参数，根据这个日期在考勤表中列出该月所有的考勤信息。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&nbsp;&nbsp;&nbsp;要判断输入的这个日期所在月有几天，如果我们自己来写表达式计算，会很复杂，首先需要判断年份是闰年还是平年，然后再判断月份，客户的表达式：<span>B3:=case(month(@arg1),1,”31″,2,”29″,3,”31″,4,”30″,5,”31″,6,”30″,7,”31″,8,”31″,9,”30″,10,”31″,11,”30″,12,”31″)</span>。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>B4:=if(year(@arg1)%4!=0&amp;&amp;year(@arg1)==2,to(1,int(B3)-1),to(1,int(B3)))</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&nbsp;&nbsp; 润乾提供了一个日期时间函数<span>daysInMonth()</span>。就能取到当月的天数。</span><span>用润乾提供的函数直接写上<span>B4</span>：<span>=to(1</span>，<span>daysInMonth(@arg1))</span>就能准确简单的实现上面两行代码的作用。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&nbsp;&nbsp; 然后下面一行客户希望对应每个号数一个星期几。再对应出星期几之前需要确定用<span>to</span>扩展出来的号数的确切日期。这里用<span>relDate()</span>和<span>monthbegin( <span>&nbsp;</span>)</span>函数就可以实现。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&nbsp;&nbsp; B5</span><span>表达式为：<span>=relDate(monthbegin(@arg1),B4-1)</span></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&nbsp;&nbsp; 下面就根据具体的日期得出对应的星期，一般首先想到的就是把号数除以<span>7</span>取余，然后根据得到的余数用一个<span>map</span>函数来对应的显示出星期几。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&nbsp;&nbsp; 而使用润乾提供的函数：<span>dayName()</span>就能直接实现。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&nbsp;&nbsp;&nbsp;B6</span><span>表达式为：<span>=dayName(B5)</span></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&nbsp; 这样这张报表的表头部分日期、星期也就扩展好了。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><img style="text-align: center; margin: 0px auto; display: block;" src="/wp-content/uploads/2011/08/fb74510e-aff7-413b-ad40-e14f30ec24c5.jpg" alt="" width="300" height="102" /></span></p> 
+   <p class="MsoNormal" style="text-align: center;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>报表设计界面图</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span><img style="text-align: center; margin: 0px auto; display: block;" src="/wp-content/uploads/2011/08/fb819716-b83e-48a6-a950-32fbbf204084.jpg" alt="" width="612" height="93" /></span></p> 
+   <p class="MsoNormal" style="text-align: center;"><span>预览后的局部图</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&nbsp;&nbsp; 然后根据日期取出对应的考勤信息就容易得多了。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>&nbsp;&nbsp; 润乾提供的很多函数都能在做报表时帮我很大的忙，这些函数既简单又使用，巧妙的运用这些函数不但可以节省我们做报表的时间，而且能优化报表提高报表的性能。</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>报表用到的几个日期时间函数介绍：</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>函数：<span>daysInMonth(dateExp)</span></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>说明：获得指定日期所在月的天数</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>参数说明：<span>dateExp<span>&nbsp;&nbsp; </span></span>日期或标准日期格式的字符串</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>返回值：整数</span></p> 
+   <p class="MsoNormal" style="text-align: left;">&nbsp;</p> 
+   <p class="MsoNormal" style="text-align: left;"><span>函数：<span>relDate(dateExp, nExp)</span></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>说明：从给定的日期型数据中，算出相差<span>n</span>天后的新的日期数据</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>参数说明：<span>dateExp<span>&nbsp;&nbsp; </span></span>日期或标准日期格式的字符串<span>nExp </span>整数表达式，需要求得<span>nExp</span>天后的新日期</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>返回值：整数</span></p> 
+   <p class="MsoNormal" style="text-align: left;">&nbsp;</p> 
+   <p class="MsoNormal" style="text-align: left;"><span>函数：<span>monthbegin( dateExp )</span></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>说明：取得指定日期所在月的月首</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>参数说明：<span>dateExp<span></span></span>日期或标准日期格式的字符串</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>返回值：日期时间</span></p> 
+   <p class="MsoNormal" style="text-align: left;">&nbsp;</p> 
+   <p class="MsoNormal" style="text-align: left;"><span>函数：<span>dayName(dateExp)</span></span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>说明：从日期型数据中获得该日的星期名称</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>参数说明：<span>dateExp<span>&nbsp;&nbsp; </span></span>日期或标准日期格式的字符串</span></p> 
+   <p class="MsoNormal" style="text-align: left;"><span>返回值：字符型</span></p> 
+   <p class="MsoNormal" style="text-align: left;">&nbsp;</p> 
+  </div> 
+  <p></p>  
+ </body>
+</html>

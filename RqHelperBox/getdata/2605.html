@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表的统计图有一个功能是“仅用前几条数据记录来画统计图”，这个适用于数据量很大，用全部数据画统计图反而影响统计图的可读性的情况下，这个功能有一个弊端就是使用前几条数据不是按数据集中前几条数据取数，而是它自动排序，取出最大的几条数据用来画图。有时数据差别比较小的时候，就很难看出变化。本文简单介绍一下如何使用数据集中前几条数据去画统计图。</p> 
+  <p>第一步：制作报表，如图所示；</p> 
+  <p>&nbsp;<img title="146" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/146.jpg" alt="146" width="553" height="258" /></p> 
+  <p>A1单元格用top函数获取数据集中前几条数据。</p> 
+  <p>A2单元格用select函数在过滤条件那里用取反的形式获得除了前几条数据以外的数据，ds1.select(province_id,false,province_id !(in A1{}));</p> 
+  <p>第二步：画统计图，如图所示：</p> 
+  <p>&nbsp;<img title="147" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/147.jpg" alt="147" width="554" height="482" /></p> 
+  <p><img title="1471" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1471.jpg" alt="1471" width="554" height="482" /></p> 
+  <p>分别将取出的前几条数据和取反后的数据添加为两个分类轴，设置两个不同的系列。</p> 
+  <p>预览结果如下：</p> 
+  <p>&nbsp;<img title="149" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/149.jpg" alt="149" width="554" height="209" /></p> 
+  <p>根据上面两步，就做出“仅用前几条统计数据来画统计图”的效果了。</p>  
+ </body>
+</html>

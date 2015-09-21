@@ -1,0 +1,6 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在导出txt文件的时候，可以通过textDataSeparator设置分隔符。但是在这里不能使用转义字符，例如：<br /> &lt;report:html name=”report1″<br /> &nbsp; reportFileName=”…”<br /> &nbsp; funcBarLocation=”top”<br /> &nbsp; needSaveAsText=”yes”<br /> &nbsp; textDataSeparator=”\n”<br /> /&gt;<br /> 这样导出的txt文件中包含的都是字符串”\n”，而不是期望的回车符。<br /> 要使用转义字符作数据分隔符，可以这样实现：<br /> &lt;%<br /> &nbsp; String sep = “\n”;<br /> %&gt;<br /> &lt;report:html name=”report1″<br /> &nbsp; reportFileName=”…”<br /> &nbsp; funcBarLocation=”top”<br /> &nbsp; needSaveAsText=”yes”<br /> &nbsp; textDataSeparator=”&lt;%=sep %&gt;”<br /> /&gt;</p>  
+ </body>
+</html>

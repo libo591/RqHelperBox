@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">在润乾的统计图中，为了方便用户进行钻取操作，提供了图形超链接，可以传递当前点击的图形的分类值与系列值。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">在遇到的客户需求中，遇到过这样一个问题：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">目前默认的超链接弹出是网页，如何来弹出一个窗口（无浏览器菜单栏工具条和地址栏）呢？</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">实现的方法：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">1、在统计图中设置图形超链接调用一个javaScript函数，并传递参数</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">2、在javaScript函数中获取到参数值，并打开一个无无浏览器菜单栏工具条和地址栏的窗口。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">第一步，在统计图中设置超链接属性，传递分类值：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="http://www.runqian.com.cn/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=259cdc5f-9ca5-4eab-8cba-fae290eb3aec" border="0" alt="" /><br /> </span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">第二步：编写javaScript函数：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&lt;script language=”javascript”&gt;<br /> function show(param){<br /> var pp1 = param<br /> var urlstr=’../jsp/enum_font.jsp?pp1=’+pp1;</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">window.open(urlstr,”_blank”,”menubar=no,status=no,scrollbars=no,toolbar=no,location=no,resizeable=yes,width=600,height=260″);<br /> }</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&lt;/script&gt;</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">其中，menubar=no,status=no,scrollbars=no,toolbar=no,location=no,resizeable=yes,width=600,height=260控制弹出窗口是否带工具栏菜单栏并指定了弹出窗口的大小。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="http://www.runqian.com.cn/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=0c6d5036-137d-473f-8e3e-d72fc720cf18" border="0" alt="" /><br /> </span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">如果想要传递单元格的值，那么超链接里的写法为：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">=”javascript:show(\’”+A3+”\’,\’”+’@category’+”\’)” </span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">浏览后的效果为：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="http://www.runqian.com.cn/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=639973b6-5e73-4856-b809-e917c44eba39" border="0" alt="" /><br /> </span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">需要注意的是：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">1、如果直接在超链接里调用js函数，可以不用加“”，例如：javascript:show(</span><a href="mailto:'@category'"><span style="font-size: 12pt;">‘@category’</span></a><span style="font-size: 12pt;">)</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">2、如果需要带单元格，就需要加=号和“”，并注意字符转义</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">3、在ie6中可以做到弹出的窗口无地址栏，但在ie7以上的版本中做不到，因为ie7以上的版本增强了安全性，无法不显示地址栏，但地址栏尽管显示可是是不可写的状态。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">4、需要弹出窗口时，需要设置ie选项卡的查看设置：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="http://www.runqian.com.cn/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=89b13cae-fa48-46f5-8c03-6e09fe5aff1c" border="0" alt="" /><br /> </span></p>  
+ </body>
+</html>

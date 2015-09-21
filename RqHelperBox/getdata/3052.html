@@ -1,0 +1,37 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span><span><span style="font-family: 宋体;">润乾报表对单选按钮和复选框的导出和打印提供了良好的支持。其中单选按钮是作为</span> </span></span><span><span><span style="font-family: 宋体;">⊙</span> </span></span><span><span><span style="font-family: 宋体;">和</span> </span></span><span><span><span style="font-family: 宋体;">○</span> </span></span><span><span><span style="font-family: 宋体;">符号导出；复选框是作为</span> <span>[</span></span></span><span><span><span style="font-family: 宋体;">√</span><span></span></span></span><span><span><span style="font-family: 宋体;">和</span> <span>[<span> </span></span></span></span><span><span><span style="font-family: 宋体;">符号导出的。下面我们看一下具体实现以及实现过程中的一些注意事项。</span></span></span></p> 
+  <h2><span><span><span style="font-family: 宋体;">实现</span></span></span></h2> 
+  <p class="MsoNormal"><span><span><span><span>&nbsp;</span></span></span></span><span><span><span style="font-family: 宋体;">首先，我们新建一张报表，其中复选框的开关值设为</span><span>1</span></span></span><span><span><span style="font-family: 宋体;">、</span><span>0</span></span></span><span><span><span style="font-family: 宋体;">，单选按钮的代码值为</span><span>1</span></span></span><span><span><span style="font-family: 宋体;">、</span><span>2</span></span></span><span><span><span style="font-family: 宋体;">，详细见下图：</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><img class="alignnone size-full wp-image-6567" title="1" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1.jpg" alt="1" width="554" height="216" /></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span>8</span></span></span></p> 
+  <p class="MsoNormal"><span>&nbsp;</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span><span><strong>&nbsp;</strong></span></span></p> 
+  <p class="MsoNormal"><span><span><strong><span style="font-family: 宋体; color: red;">注意：</span></strong></span></span><span><span><span style="font-family: 宋体; color: red;">由于字符在不同字体下显示的效果不同，需要将单选按钮和复选框所在单元格字体设为宋体。</span></span></span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span><span><span style="font-family: 宋体;">内建数据集数据如下：</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span style="font-family: 宋体;"><span><span><strong><span style="font-family: 宋体; color: red;"><img class="alignnone size-full wp-image-6568" title="2" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/2.jpg" alt="2" width="399" height="200" /></span></strong></span></span></span></span></span></p> 
+  <p class="MsoNormal"><span>&nbsp;</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span><span>&nbsp;</span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>&nbsp;</span></span></span></span><span><span><span style="font-family: 宋体;">接着，我们在页面上发布报表，效果如下：</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span><span><span><span><img class="alignnone size-full wp-image-6569" title="3" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/3.jpg" alt="3" width="554" height="272" /></span></span></span></span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>&nbsp;</span></span></span></span><span><span><span style="font-family: 宋体;">最后我们分别进行导入和打印操作，并查看其效果</span></span></span></p> 
+  <p class="MsoNormal"><span><span><strong><span></span></strong></span></span><span><span><strong><span style="font-family: 宋体;">导出到</span><span>Excel</span></strong></span></span><span><span><strong><span style="font-family: 宋体;">：</span></strong></span></span></p> 
+  <p class="MsoNormal"><span>&nbsp;</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span><span><strong><span><img class="alignnone size-full wp-image-6572" title="41" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/41.jpg" alt="41" width="430" height="232" /></span></strong></span></span></p> 
+  <p class="MsoNormal"><span><span><strong><span></span></strong></span></span><span><span><strong><span style="font-family: 宋体;">导出到</span><span>word</span></strong></span></span><span><span><strong><span style="font-family: 宋体;">：</span></strong></span></span></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p class="MsoNormal"><span><span><strong><span><img class="alignnone size-full wp-image-6573" title="5" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/5.jpg" alt="5" width="554" height="259" /></span></strong></span></span></p> 
+  <p class="MsoNormal"><span><span><strong><span></span></strong></span></span><span><span><strong><span style="font-family: 宋体;">导出到</span><span>PDF</span></strong></span></span><span><span><strong><span style="font-family: 宋体;">：</span></strong></span></span></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p class="MsoNormal"><span><span><strong><span><img class="alignnone size-full wp-image-6574" title="6" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/6.jpg" alt="6" width="532" height="330" /></span></strong></span></span></p> 
+  <p class="MsoNormal"><span><span><strong><span></span></strong></span></span><span><span><strong><span style="font-family: 宋体;">打印：</span></strong></span></span></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p class="MsoNormal"><img class="alignnone size-full wp-image-6575" title="7" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/7.jpg" alt="7" width="553" height="278" /></p> 
+  <p class="MsoNormal"><span><span><span>注：12月以后的report4.jar包均可实现该功能。</span></span></span></p>  
+ </body>
+</html>

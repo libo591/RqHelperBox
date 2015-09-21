@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>报表自由分栏的需求在开发中非常普遍，分栏显示后不仅能够节约资源，用尽量少的地方显示尽可能多的信息，而且更加整齐美观。本文就给大家介绍一下如何在子表中实现分栏显示的效果。</p> 
+  <p>首先制作一张子报表；</p> 
+  <p>&nbsp;<img title="241" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/241.jpg" alt="241" width="393" height="91" /></p> 
+  <p>第二步：设置分栏效果；</p> 
+  <p>在第一行插入一行，用to函数设置分栏数，在第一列插入一列，设置换行。如图所示：</p> 
+  <p>&nbsp;<img title="252" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/252.jpg" alt="252" width="554" height="107" /></p> 
+  <p>第三步：制作一张主表，将子表设置为引入式；</p> 
+  <p>&nbsp;<img title="262" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/262.jpg" alt="262" width="487" height="330" /></p> 
+  <p>引入式和嵌入式报表的区别：引入式的特点是母报表单元格根据子报表的行数列数，双向同时扩展，子报表有几行几列，母报表中就扩展出几行几列，子报表占用母报表的空白行列，格线严格对齐。引入式的子报表扩展后，和母报表形成了一个统一的二维矩形单元格，因此子报表的源格不保留，此时母报表不能访问子报表的值；嵌入式是将整个子表压缩或拉伸后嵌入到主表的单元格中，嵌入式的子报表扩展后，是个独立的报表，因此子表源格一直保留着，母报表可以访问子报表的值。</p> 
+  <p>因此在这一步将引入方式设置为嵌入式，在不改变单元格大小的情况下，子报表被压缩的很小，无法正常显示。</p> 
+  <p>在完成了以上操作后，在IE中浏览子表分栏的效果如下：</p> 
+  <p>&nbsp;<img title="272" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/272.jpg" alt="272" width="554" height="262" /></p> 
+  <p>这样，就轻松实现了子表分栏的需求。</p>  
+ </body>
+</html>

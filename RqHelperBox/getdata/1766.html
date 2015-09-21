@@ -1,0 +1,55 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在实际的应用中，经常会有数据从excel导入系统数据库或者数据从系统中导入到excel，这两种业务操作润乾报表可以轻易地实现，但普通的导出数据大多都是导出到一个单独的excel中，还有一种客户经常使用的数据处理方式，是将多个报表的运算结果导入到同一个excel的多个sheet中。下面讲述润乾报表如何实现这一业务。</p> 
+  <p><strong>一：实现思路</strong></p> 
+  <p>先读取多个报表，分别计算多个报表，然后把多个结果添加到导出列表，最后实现导出到excel的多个sheet中。</p> 
+  <p><strong>二：实现步骤（以两个报表为例）</strong></p> 
+  <p>1：首先制作两个报表one.raq和two.raq，如下图：</p> 
+  <p>One.raq</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/110.png" alt="1.png" width="435" height="85" /></p> 
+  <p>Two.raq</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/29.png" alt="2.png" width="322" height="81" /></p> 
+  <p>2：利用润乾提供的方法读入两个报表，读入计算并导出，代码如下：</p> 
+  <p>&lt;%@ page contentType=”text/html;charset=GBK” %&gt;</p> 
+  <p>&lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report” %&gt;</p> 
+  <p>&lt;%@ page import=”com.runqian.report4.model.ReportDefine”%&gt;</p> 
+  <p>&lt;%@ page import=”com.runqian.report4.model.engine.ExtCellSet”%&gt;</p> 
+  <p>&lt;%@ page import=”com.runqian.report4.usermodel.Context”%&gt;</p> 
+  <p>&lt;%@ page import=”com.runqian.report4.usermodel.Engine”%&gt;</p> 
+  <p>&lt;%@ page import=”com.runqian.report4.usermodel.IReport”%&gt;</p> 
+  <p>&lt;%@ page import=”com.runqian.report4.util.ReportUtils”%&gt;</p> 
+  <p>&lt;%@ page import=”com.runqian.report4.usermodel.PageBuilder”%&gt;</p> 
+  <p>&lt;%@ page import=”com.runqian.report4.view.excel.ExcelReport”%&gt;</p> 
+  <p>&lt;html&gt;</p> 
+  <p>&lt;body topmargin=0 leftmargin=0 rightmargin=0 bottomMargin=0&gt;</p> 
+  <p>&lt;%</p> 
+  <p>//创建context对象，设置报表的路径</p> 
+  <p>Context ctx = new Context();</p> 
+  <p>String path = “D:/Program Files/reportHome/webapps/demo/reportFiles/one.raq”;</p> 
+  <p>//读入报表</p> 
+  <p>ReportDefine rd = (ReportDefine) ReportUtils.read(path);</p> 
+  <p>Engine engine = new Engine(rd, ctx);</p> 
+  <p>//计算报表</p> 
+  <p>IReport report = engine.calc();</p> 
+  <p>Context ctx1 = new Context();</p> 
+  <p>String path1 = “D:/Program Files/reportHome/webapps/demo/reportFiles/two.raq”;</p> 
+  <p>ReportDefine rd1 = (ReportDefine) ReportUtils.read(path1);</p> 
+  <p>Engine engine1 = new Engine(rd1, ctx1);</p> 
+  <p>IReport report1 = engine1.calc();</p> 
+  <p>ExcelReport er = new ExcelReport();</p> 
+  <p>//导出的excel文件命名为moreSheetInExcel.xls，包括两个sheet，一个为one，另一个为two，保存在D盘下</p> 
+  <p>er.export(”one”, report);</p> 
+  <p>er.export(”two”, report1);</p> 
+  <p>er.saveTo(”D:/moreSheetInExcel.xls”); //输出到指定文件</p> 
+  <p>out.print(”导出成功!”);</p> 
+  <p>%&gt;</p> 
+  <p>&lt;/body&gt;</p> 
+  <p>&lt;/html&gt;</p> 
+  <p><strong>三：运行此jsp，执行其中的代码</strong></p> 
+  <p>当页面中出现导出成功时，就说明两个报表已经成功导入到了moreSheetInExcel.xsl，并分别存储在one sheet和twosheet中，效果如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/xn-excel3-9m7i9kt0x95gvqp1kh88ay28af3jda2825ez63dfa6011b.png" alt="xn-excel3-9m7i9kt0x95gvqp1kh88ay28af3jda2825ez63dfa6011b.png" width="504" height="505" /></p> 
+  <p><strong>总结：</strong></p> 
+  <p>本文只是实现这一需求，具体项目中可以统一写一个方法类，动态传入要导出的报表名字，并且动态设置保存路径。</p>  
+ </body>
+</html>

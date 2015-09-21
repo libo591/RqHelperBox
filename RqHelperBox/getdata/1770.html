@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>我们在web报表的制作过程中，常常需要把某一字段记录集中显示，如下图中的各个地区的城市，集中显示在一个单元格中。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/111.png" alt="1.png" width="402" height="255" /></p> 
+  <p>在润乾报表中，这样的需求可以通过str()函数实现，下面是实现方法：</p> 
+  <p><strong>第一步：</strong>新建报表，设置数据集ds1，SQL语句如下：</p> 
+  <p>SELECT 订单.货主地区,订单.货主城市,订单.运货商,订单.运货费,订单.订购日期,订单.发货日期,订单.到货日期 FROM 订单</p> 
+  <p><strong>第二步：</strong>设置单元格表达式及报表样式，如图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/210.png" alt="2.png" width="436" height="161" /></p> 
+  <p>设置A4表达式为：=A3+” 地区城市有”；</p> 
+  <p>设置B4表达式为：=str(ds1.dselect(货主城市))</p> 
+  <p>我们使用str()函数进行货主城市的拼接，默认使用”,”作为分隔符，如图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/37.png" alt="3.png" width="402" height="163" /></p> 
+  <p>在这里我们可以使用rplc()函数进行分隔符的替换，具体函数的用法可以查看函数说明。本文中使用”-”分隔，设置B4表达式为：=rplc(str(ds1.dselect(货主城市)),”,”,”-”)即可。</p> 
+  <p><strong>第三步：</strong>保存后发布，就可以出现本文开始的效果。</p> 
+  <p>润乾报表内置了很多函数供用户选择使用，这些看似简单的函数，通过合理的使用往往可以解决很多复杂的需求，文中介绍的仅仅是润乾函数体系中的两个简单函数，更多实用方便的函数还在等着大家去使用。</p>  
+ </body>
+</html>

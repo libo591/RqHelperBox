@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="Section1" style="layout-grid: 15.6pt none;"> 
+   <h1 style="text-align: center;">js<span>函数调用直接打印功能</span></h1> 
+   <p class="MsoNormal" style="text-indent: 18pt;"><span>润乾报表的直接打印功能之前是通过页面上的</span><span>object</span><span>实现的，客户如果想自己写按钮调用直接打印就不是十分方便，只能用润乾的标签自己生成的直接打印按钮，对客户来说可能使用起来限制比较多。现在润乾报表增加了</span><span>js</span><span>方式调用直接打印功能，客户可以通过自己定义按钮或者超链接来调用直接打印功能了。下面就对如何用</span><span>js</span><span>调用直接打印功能做一个介绍。</span></p> 
+   <p class="MsoNormal" style="text-indent: 18pt;">&nbsp;</p> 
+   <p class="MsoNormal" style="text-indent: 12pt;"><span>js</span><span>调用直接打印功能的实现是：</span><span>用</span><span>html</span><span>标签发布报表时，页面上会生成一个</span><span>js</span><span>函数叫</span><span>“</span><span>报表</span><span>name_directPrint()”</span><span>，调用此</span><span>js</span><span>函数，可以实现报表的直接打印。</span></p> 
+   <p class="MsoNormal"><span>下面就做一个例子实现润乾报表通过</span><span>js</span><span>调用直接打印功能。</span></p> 
+   <p class="MsoNormal">&nbsp;</p> 
+   <p class="MsoNormal" style="text-indent: 12pt;"><span>在</span><span>jsp</span><span>中增加一个超链接，写法如下：</span></p> 
+   <p class="MsoNormal"><span>&lt;a href=”javascript:report1_directPrint()”&gt;</span><span>直接打印</span><span>&lt;/a&gt;&lt;/td&gt;</span></p> 
+   <p class="MsoNormal"><span>其中</span><span>report1</span><span>的名字要与</span><span>report</span><span>：</span><span>html</span><span>标签的那么标签值相同。</span></p> 
+   <p class="MsoNormal">&nbsp;</p> 
+   <p class="MsoNormal"><span>用这张</span><span>jsp</span><span>发布报表，可以看到页面上出现了直接打印的超链接。具体效果如图：</span></p> 
+   <p class="MsoNormal">&nbsp;</p> 
+   <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/f622ffa0-e3a8-430e-b1a4-67b768448ab5.jpg" alt="" width="519" height="214" /></span></p> 
+   <p class="MsoNormal">&nbsp;</p> 
+   <p class="MsoNormal"><span>此时查看页面源码会发现页面上生成了一个</span><span>report1_directPrint()</span><span>的</span><span>js</span><span>函数，具体效果如下图所示：</span></p> 
+   <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/cf092233-9a83-4d00-9bc9-2ebb09623962.jpg" alt="" width="554" height="75" /></span></p> 
+   <p class="MsoNormal">&nbsp;</p> 
+   <p class="MsoNormal"><span>点击直接打印的按钮，就可以看到直接打印的效果了，如下图所示：</span></p> 
+   <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/882b2365-72aa-4f96-ab72-02f1344e87ba.jpg" alt="" width="554" height="202" /></span></p> 
+   <p class="MsoNormal">&nbsp;</p> 
+   <p class="MsoNormal"><span>这样通过</span><span>js</span><span>调用直接打印的需求就实现了。</span></p> 
+  </div> 
+  <p></p>  
+ </body>
+</html>

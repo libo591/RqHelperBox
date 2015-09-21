@@ -1,0 +1,31 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供的参数模板例子通常都是分两张报表做的（如参数报表.raq和参数报表_arg.raq），参数输入模板为一张报表，查询展现结果为另一张报表，然后通过展现报表的jsp文件把这两个报表放在同一个jsp页面中展现。但是有时需要在同一个报表模板里实现这两张报表的功能，如何实现呢？本文就来介绍一下润乾报表中是如何实现这个功能的。</p> 
+  <p><strong>1、思路介绍</strong></p> 
+  <p>在报表中创建一个超链接按钮，点击按钮触发onClick()事件，在onClick()事件中定义页面跳转的url，并且把参数和参数值添加到url中，通过onClick()事件实现页面的调转。</p> 
+  <p>2、<strong>操作步骤</strong></p> 
+  <p>本例中使用润乾报表自带的demo数据源。</p> 
+  <p>第1步，创建一个数据集ds2，用于查询表单中的下拉数据集，数据集中选择的内容将被作为参数传递。</p> 
+  <p><strong>sql语句：SELECT 订单.订单ID FROM 订单</strong></p> 
+  <p>第2步，新建一个填报表，在A1单元格中输入<strong>选择订单ID</strong>，创建一个查询连接，把C1单元格的数据类型设为html，输入<strong>&lt;a href=’#’&gt;查询&lt;/a&gt;</strong>，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/11-0002.png" alt="11.png" width="341" height="114" /></p> 
+  <p>第3步，设置B1单元格可写，并且为它设置的下拉数据集。</p> 
+  <p>勾选B1单元格填报属性中的 <strong>是否可写</strong>，并且设置它的下拉数据集为刚才新建的数据集ds2，显示列为 <strong>订单ID</strong> ，数据列也为 <strong>订单ID</strong>，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/2-0017.png" alt="2.png" width="723" height="205" /></p> 
+  <p>第4步，新建一个参数用于接收B1单元格选择的订单ID，新建参数 <strong>dingdan</strong>，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/3-0007.png" alt="3.png" width="501" height="106" /></p> 
+  <p>第5步，新建一个数据集ds1，用于根据订单ID查询订单详细信息</p> 
+  <p><strong>sql语句：SELECT 订单.订单ID,订单.货主名称,订单.运货商,订单.货主地区 FROM 订单 WHERE 订单.订单ID =?</strong></p> 
+  <p>在SQL编辑器中增加一个参数 <strong>dingdan</strong>，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/5-0001.png" alt="5.png" width="350" height="38" /></p> 
+  <p>第6步，修改报表设计，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/4-0006.png" alt="4.png" width="277" height="101" /></p> 
+  <p>这样，报表已经做完了。</p> 
+  <p>第7步，给单元格C1增加onClick()事件，在onClick事件中先取B1单元格的显示值，然后定义页面跳转的url。修改showReport.jsp，增加如下javascript代码</p> 
+  <p><span style="color: #0000ff;">&lt;script language=”javascript”&gt;<br /> //给C1单元格定义onClick事件<br /> document.getElementById(”report1_C1″).onclick=function()<br /> {<br /> //用document中提供的方法取B1单元格的显示值<br /> var value=document.getElementById(”report1_B1″).innerText;<br /> //定义页面跳转的url，并且把参数和参数值添加到url中<br /> window.location=”showReport.jsp?raq=baobiao.raq&amp;dingdan=”+value;<br /> }<br /> &lt;/script&gt;</span></p> 
+  <p>最后，在网页中查看报表，选择订单ID为10523，点击 <strong>查询</strong>，效果如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/6-0001.png" alt="6.png" width="237" height="81" /></p> 
+  <p>这样就实现了在同一张报表中同时使用参数模板和查询结果模板的功能。</p>  
+ </body>
+</html>

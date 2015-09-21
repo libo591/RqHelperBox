@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>如何把多个数据库中的数据表放到一张报表里展示是一个报表使用过程中常见的问题。润乾报表是通过多源这个概念实现这一功能的。多源：是指报表的数据来源于多个物理数据表（或类似数据体），甚至是多个物理数据库。</p> 
+  <p>下面就给大家以tomcat为例介绍一下如何使用多源这个功能点。</p> 
+  <p>首先是要确定使用的授权包含这个功能点。在润乾报表设计中查看授权相关信息的multi dataSets的值，如果为true就是支持，如果为false就是不支持。</p> 
+  <p>&nbsp;<img title="72" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/72.jpg" alt="72" width="406" height="309" /></p> 
+  <p>其次是配置reportConfig.xml；</p> 
+  <p>&nbsp;<img title="82" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/82.jpg" alt="82" width="554" height="111" /></p> 
+  <p>再次是配置连接池；</p> 
+  <p>&nbsp;<img title="93" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/93.jpg" alt="93" width="543" height="317" /></p> 
+  <p>就像这样，tomcat5及以下版本配置一个以应用名命名的xml文件，tomcat5.5及以上版本配置server.xml，在配置文件中有几个数据源，就配置几个&lt;Resource&gt;节点。</p> 
+  <p>最后就是怎么把多个数据库中的数据在一张报表中使用了。在配置好了以上两个配置文件之后，在设计器中保证有一个数据源处于连接的状态，设计报表。</p> 
+  <p>设计好报表之后在web端浏览报表，多个数据库中的数据表中的数据就展现在了同一张报表中了。</p>  
+ </body>
+</html>

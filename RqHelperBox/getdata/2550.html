@@ -1,0 +1,25 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表的统计图中，我们可以通过设置“图中显示数据”来控制统计图中显示数值，百分比或者标题。</p> 
+  <p>有时候客户有这样一种需求：既显示百分比，同时还将其本身的数值显示出来。</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/23-1.jpg"><img class="alignnone size-medium wp-image-2551" title="23-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/23-1-300x160.jpg" alt="" width="300" height="160" /></a></p> 
+  <p>这样既可以看到华北地区运货费的值，又可以看到其运货费所占的比重。</p> 
+  <p>下面我们一起来探讨一下如何实现这种效果。</p> 
+  <p>首先设计报表，如下图：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/23-2.jpg"><img class="alignnone size-medium wp-image-2552" title="23-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/23-2-300x203.jpg" alt="" width="300" height="203" /></a></p> 
+  <p>这里着重讲一下A3,D2,E2单元格中写法的意思：</p> 
+  <p>A3:=sum(C2{}),计算出所有地区运货费的和。</p> 
+  <p>D2：=C2/A3，计算该地区的运货费所占比重。</p> 
+  <p>E2：=round(C2,1)+”占比“+str(D2,”#.##%”)，将C2和D2单元格中的值拼起来。</p> 
+  <p>Round(C2,1)：对C2中的值进行四舍五入运算，并保留一位小数。</p> 
+  <p>str(D2,”#.##%”)：将D2中的数值转换成字符串类型，保留两位小数，并在其值的后面加上“%”，以达到xx%的效果。</p> 
+  <p>接下来，设计统计图的属性：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/23-3.jpg"><img class="alignnone size-medium wp-image-2553" title="23-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/23-3-300x209.jpg" alt="" width="300" height="209" /></a></p> 
+  <p>然后切换到“图形特性”页，设置“图中显示数据”为“无”，如下图：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/23-4.jpg"><img class="alignnone size-medium wp-image-2554" title="23-4" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/23-4-300x190.jpg" alt="" width="300" height="190" /></a></p> 
+  <p>最后保存报表，在IE中浏览，如下图：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/23-5.jpg"><img class="alignnone size-medium wp-image-2555" title="23-5" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/23-5-300x281.jpg" alt="" width="300" height="281" /></a></p> 
+  <p>如果不想将E列显示的话，可以将其隐藏起来。这样的话页面将更加美观。</p>  
+ </body>
+</html>

@@ -1,0 +1,13 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>很多刚刚接触润乾报表的客户在使用过程中，会遇到一个比较头疼的问题，就是如何将制作好的报表继承到自己的开发环境中。下面以myEclipse为例，搭建一个简单的集成润乾报表的开发环境。</p> 
+  <p>首先，打开myEclipse，创建一个名为runqian的web工程。如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/08/zrclip-006p6ef79e6d.png" alt="" width="663" height="420" /></p> 
+  <p>建立好工程的雏形之后，就可以将润乾的支持文件和配置文件等拷贝到我们的工程中来。关于支持的jar包和大堆的配置文件，在不熟悉具体每个jar包功能和配置文件作用的时候，我们可以先从润乾提供给我们的demo文件入手来配置我们自己的工程。</p> 
+  <p>先打开设计器的安装目录：X:\Program Files\reportHome\webapps\demo\WEB-INF\lib（X为安装目录）。这个目录下包含了项目中所有可能用到的报表的支持文件。将其全部拷贝到工程中，放在WebRoot/WEB-INF/lib下。这样就成功的将所有的支持文件都导入到工程中了。如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/08/zrclip-008n2e9f16ee.png" alt="" width="404" height="495" /></p> 
+  <p>当我们在Referenced Libraries下看到拷贝到lib下的jar文件时，就说明支撑文件已经导入成功，可以开始下一步工作—书写配置文件。关于配置文件可以使用相同的办法，依然从已经配置好的工程中拷贝，配置文件在X:\Program Files\reportHome\webapps\demo \WEB-INF（X为安装目录）。如下图所示将所有的配置文件拷贝到WEB-INF下：<img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/08/zrclip-009n717c2276.png" alt="" width="577" height="321" /></p> 
+  <p>这样就完成了整个开发环境的搭建，在myEclipse平台下成功的集成了报表。</p>  
+ </body>
+</html>

@@ -1,0 +1,65 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">在润乾报表中,Javascript函数都用在哪些地方?</span></p> 
+  <p style="line-height: 1.5;"> </p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">1.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">填报表中的校验规则</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">2.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">填报表中的自动计算</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">3.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">填报表中的自定义输入控件</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">4.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">单元格中的超链接</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">5.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">页面中的润乾内置</span><span style="font-family: 宋体; font-size: 12pt;">Javascript</span><span style="font-family: 宋体; font-size: 12pt;">函数</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">6.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">个性化的页面处理需求</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">本文主要介绍了后三点的用法.</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">超链接</span></span></p> 
+  <div> 
+   <span style="font-size: 12pt;">&nbsp;</span> 
+  </div> 
+  <div> 
+   <span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"></span></span> 
+  </div> 
+  <p><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"></span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">报表在网页上展现时，经常用到超链接属性</span>,<span style="font-family: 宋体; font-size: 12pt;">用来触发执行某段</span>javascript<span style="font-family: 宋体; font-size: 12pt;">代码</span>,<span style="font-family: 宋体; font-size: 12pt;">完成相应功能和业务逻辑等</span>.</span></p> 
+  <p>&nbsp;</p> 
+  <p></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span><span style="font-family: 宋体; font-size: 12pt;">超链接的定义界面如下图所示：</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span><span style="font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=7f62ee7e-d8df-4f90-b708-79e3983f6c1a" alt="" width="343" height="383" /></span></span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">从图上可以看出，超链接的属性也可以定义属性值或者表达式，充分利用超链接的表达式，可以实现单元格值的灵活运用。</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">举例1：常规超链接</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">常规的超链接不引用单元格的值，因此可以直接在超链接的属性值里写入url，如下图所示：</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span><span style="font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=4512058f-cb5c-4af8-a064-c02de7b75479" alt="" width="455" height="83" /></span></span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">举例2：引用单元格的值</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">如果需要在超链接中引用单元格的值，则需要利用超链接表达式，动态生成一个超链接，如下图所示</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span><span style="font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=a3dff9f1-904a-45d7-b6b0-d92a22e2ec1e" alt="" width="396" height="83" /></span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">如果要引用显示值的话</span>,<span style="font-family: 宋体; font-size: 12pt;">就需要用到</span>disp()<span style="font-family: 宋体; font-size: 12pt;">函数</span>:</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span><span style="font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=97194e24-6e45-4910-a3b9-c571bfb8f69f" alt="" width="375" height="71" /></span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">举例</span>3<span style="font-family: 宋体; font-size: 12pt;">：执行</span>javascript<span style="font-family: 宋体; font-size: 12pt;">函数</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span><span style="font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=936f8cde-d225-4413-aa06-6f5ec270b3b2" alt="" width="381" height="75" /></span></span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">通过表达式生成javascript函数</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span><span style="font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=ad44006f-88d8-41f8-8354-8d5f3d8d63a9" alt="" width="554" height="65" /></span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">需要注意的是</span>:</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">执行javascript函数的超链接里，如果函数的参数里用到引号等字符型的变量，此时需要用单引号。</span></p> 
+  <h2><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">润乾内置</span>Javascript<span style="font-family: 宋体; font-size: 12pt;">函数</span></span></h2> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">报表里提供了基本的功能函数</span>,<span style="font-family: 宋体; font-size: 12pt;">方便页面中直接调用或者进行封装</span>,<span style="font-family: 宋体; font-size: 12pt;">组合来完成一些复杂的业务逻辑</span>.</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">基本功能函数有</span>:</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_save() //<span style="font-family: 宋体; font-size: 12pt;">保存</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_submitTable() //<span style="font-family: 宋体; font-size: 12pt;">提交</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_submitReport() //<span style="font-family: 宋体; font-size: 12pt;">提交</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_getCurrPage() //<span style="font-family: 宋体; font-size: 12pt;">当前页</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_getTotalPage()<span style="font-family: 宋体; font-size: 12pt;">　</span> //<span style="font-family: 宋体; font-size: 12pt;">总页数</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_getTotalPage()//<span style="font-family: 宋体; font-size: 12pt;">翻到最后一页</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_toPage( )<span style="font-family: 宋体; font-size: 12pt;">　</span> //<span style="font-family: 宋体; font-size: 12pt;">翻页</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">高级功能函数有</span>:</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_print() //<span style="font-family: 宋体; font-size: 12pt;">打印</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_saveAsExcel() //<span style="font-family: 宋体; font-size: 12pt;">导出</span>excel</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_saveAsWord() //<span style="font-family: 宋体; font-size: 12pt;">导出</span>word</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_saveAsPdf() //<span style="font-family: 宋体; font-size: 12pt;">导出</span>pdf</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;">_saveAsText () //<span style="font-family: 宋体; font-size: 12pt;">导出</span>text</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">通用函数</span>:</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span><span style="font-size: 12pt;">switchCase</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">这些函数直接可以在</span>jsp<span style="font-family: 宋体; font-size: 12pt;">页面中使用</span>,<span style="font-family: 宋体; font-size: 12pt;">用报表的标签中的</span>name<span style="font-family: 宋体; font-size: 12pt;">调用</span>.<span style="font-family: 宋体; font-size: 12pt;">例如</span>report_print()</span></p> 
+  <h2><span><span style="font-family: 宋体; font-size: 12pt;">个性化的页面处理需求</span></span></h2> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">报表中的内置功能有些时候并不能完全满足客户的需要</span>,<span style="font-family: 宋体; font-size: 12pt;">这就需要客户根据自己的业务逻辑来编写一些代码来丰富整个应用</span>.<span style="font-family: 宋体; font-size: 12pt;">这其中以</span>Javascript<span style="font-family: 宋体; font-size: 12pt;">函数的需求最为普遍</span>.</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">例如</span>,<span style="font-family: 宋体; font-size: 12pt;">折叠报表</span>.</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">有些时候报表的数据分为多个层级</span>,<span style="font-family: 宋体; font-size: 12pt;">每个层级的数据很多</span>.<span style="font-family: 宋体; font-size: 12pt;">客户想在最开始展现的时候</span>,<span style="font-family: 宋体; font-size: 12pt;">只显示第一个层级</span>,<span style="font-family: 宋体; font-size: 12pt;">然后通过点击父级来展开子级</span>.<span style="font-family: 宋体; font-size: 12pt;">这就需要设计一个类似树形结构的报表</span>.<span style="font-family: 宋体; font-size: 12pt;">此例子在官网和</span>blog<span style="font-family: 宋体; font-size: 12pt;">上都有详细介绍</span></span></p>  
+ </body>
+</html>

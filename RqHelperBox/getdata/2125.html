@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>一些客户希望动态合并单元格，合并的规则是浏览每一行的数据，如果同一行相邻两个单元格的值相同，那么就将这两个单元合并到一起。</p> 
+  <p>这个需求可以通过API来实现，实现思路：先将报表计算出一个IReport对象，然后浏览每个单元格的值，将这个值跟后面单元格的值比较，如果两个值相同，那么就构造一个Area对象，把这两个单元格合并到一起。</p> 
+  <p>下面就做一个简单的例子，实现将报表同一行相邻的值相同的单元格动态的合并到一起，并把报表放到JFrame里面展现。</p> 
+  <p>第一步：新建报表。</p> 
+  <p>为便于理解，报表没有连接数据源也没有构造数据集，只是将一些数字写到报表模板里，报表的样式如下图所示：</p> 
+  <p>第二步：编写API代码，实现报表的读入、计算，合并单元格并展现</p> 
+  <p>API代码如下：</p> 
+  <p>package com.zhengzhong.practise;</p> 
+  <p>import javax.swing.JFrame;<br /> import com.runqian.report4.model.ReportDefine;<br /> import com.runqian.report4.model.engine.ExtCellSet;<br /> import com.runqian.report4.usermodel.Area;<br /> import com.runqian.report4.usermodel.CSReport;<br /> import com.runqian.report4.usermodel.Context;<br /> import com.runqian.report4.usermodel.Engine;<br /> import com.runqian.report4.usermodel.INormalCell;<br /> import com.runqian.report4.usermodel.IReport;<br /> import com.runqian.report4.util.ReportUtils;<br /> public class MergeReport {<br /> /**<br /> * @param args<br /> * @throws Exception<br /> */<br /> public IReport caculate(String raq) throws Exception{<br /> ReportDefine rd = (ReportDefine)ReportUtils.read(raq);<br /> ExtCellSet.setLicenseFileName(”D:/安装文件/润乾安装/License4.0[64100621100826_640000]/技术应用中心专用授权Server2010-12-31V4.0Windows.lic”);<br /> Context cxt = new Context();<br /> Engine engine = new Engine(rd,cxt);<br /> IReport ir = engine.calc();<br /> //int j =ir.getRowCount();<br /> for(int i =1;i&lt;=ir.getRowCount();i++){<br /> for(int j =1;j 
+   <ir.getcolcount() ;="" j++){<br="" /> INormalCell cell1 = ir.getCell(i, (short)j);<br /> INormalCell cell2 = ir.getCell(i, (short)(j+1));<br /> //System.out.println(”cell1================”+cell1.getValue().toString());<br /> //System.out.println(”cell2================”+cell2.getValue().toString());<br /> if(cell1.getValue().toString() == cell2.getValue().toString()||cell1.getValue().toString().equals(cell2.getValue().toString())){<br /> Area area=new Area(i,(short)j,i,(short)(j+1));<br /> ReportUtils.mergeReport(ir, area);<br /> }<br /> }<br /> }<br /> return ir;<br /> }<br /> public static void main(String[] args) throws Throwable {<br /> // TODO Auto-generated method stub<br /> MergeReport mr =new MergeReport();<br /> IReport ir = mr.caculate(”F:/mergeReport.raq”);<br /> CSReport csr = new CSReport(ir);<br /> JFrame frame = new JFrame();<br /> frame.getContentPane().add(csr.getDisplayPane()); //设置JFrame的相关属性并展现<br /> frame.setSize(600, 400);<br /> frame.setLocation(200, 100);<br /> frame.setVisible(true);<br /> }<br /> }</p> 
+  <p>上面代码中的caculate(String raq)作用是读进来需要计算的报表，配置报表引擎，计算出一个IReport对象，然后按行遍历IReport对象的单元格。</p> 
+  <p>以下代码用来判断两个连续的单元格的值是否相等，如果相等就构造一个关于这两个单元格的Area对象，再用 ReportUtils.mergeReport()方法将这个对象设置好。最后这个caculate(String raq)方法返回一个设置好的IReport对象。</p> 
+  <p>INormalCell cell1 = ir.getCell(i, (short)j);<br /> INormalCell cell2 = ir.getCell(i, (short)(j+1));<br /> if(cell1.getValue().toString() == cell2.getValue().toString()||cell1.getValue().toString().equals(cell2.getValue().toString())){<br /> Area area=new Area(i,(short)j,i,(short)(j+1));<br /> ReportUtils.mergeReport(ir, area);<br /> }</p> 
+  <p>main(String[] args)的作用是调用上面的calculate方法,返回一个IReport对象，然后把这个IReport对象放到JFrame中展示。</p> 
+  <p>第三步：编辑执行上面的API代码，查看效果。</p> 
+  <p>在Myeclipse中运行上面的代码就可以看到如下图的效果：</p> 
+  <p>这样，动态的将报表同一行连续两个值相同的单元格合并到一起，并把报表放到JFrame里面展现的需求就实现了。</p>  
+ </body>
+</html>

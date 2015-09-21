@@ -1,0 +1,27 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>用户在使用润乾报表时，经常遇到希望删除某一条数据的需求，润乾报表的行式填报中有插入、追加、删除行的功能，但对于普通报表，就需要另想办法了。下面主要介绍下如何在报表中删除一条数据，这里的报表没有特殊的要求，既可以是普通浏览式报表，也可以是填报表。</p> 
+  <p><strong>一：实现思路</strong></p> 
+  <p>通过在报表后面添加一个删除的超链接，超链接中调用一个js方法，同时传递删除数据所用到的参数以及删除后页面重定向的链接地址。Js方法中调用一个jsp，jsp中实现接受参数，执行sql语句，最后重定向到指定页面。</p> 
+  <p><strong>二：实现步骤</strong></p> 
+  <p>1：创建报表模板，设置超链接</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/19.png" alt="1.png" width="545" height="275" /></p> 
+  <p>数据源使用润乾自带的demo</p> 
+  <p>数据集为：SELECT 产品.产品ID,产品.产品名称,产品.单价,产品.单位数量,产品.库存量 FROM 产品</p> 
+  <p>超链接表达式为：”javascript:delData_jade(’showReportDJ.jsp?raq=/deleteusejs/deleteusejs.raq’,’产品’,’产品ID’,’”+A2+”‘)”</p> 
+  <p>注意：删除一个产品只需要table名称、字段名称、产品ID即可，产品ID即为A2单元格中数据。</p> 
+  <p>2：定义JavaScript</p> 
+  <p>function delData_jade(refreshUrl,table,column,value)<br /> {<br /> if( table==null || table==” ){<br /> alert(”删除数据表为空，请联系数据管理员”);<br /> return false;<br /> }<br /> if( refreshUrl==null || refreshUrl==” ){<br /> alert(”刷新url为空，请联系系统管理员”);<br /> return false;<br /> }<br /> if( confirm(’确认删除吗？’) ){<br /> window.location.href = “deleteusejs.jsp?refreshUrl=”+refreshUrl+”&amp;table=”+table+”&amp;column=”+column+”&amp;value=”+value;<br /> }<br /> }</p> 
+  <p>JavaScript中调用deleteusejs.jsp，同时传递参数给jsp。</p> 
+  <p>3：定义jsp</p> 
+  <p>&lt;%@ page contentType=”text/html;charset=gb2312″ %&gt;<br /> &lt;%@ page import=”java.io.*”%&gt;<br /> &lt;%@ page import=”java.net.*”%&gt;<br /> &lt;%@ page import=”java.util.*”%&gt;<br /> &lt;%@ page import=”javax.servlet.*”%&gt;<br /> &lt;%@ page import=”javax.servlet.http.*”%&gt;<br /> &lt;%@ page import=”javax.naming.*,java.sql.*” %&gt;<br /> &lt;%@ page import=”com.runqian.report4.usermodel.*”%&gt;<br /> &lt;%</p> 
+  <p>//获取各参数值<br /> String tableName1=request.getParameter(”table”);<br /> String colmn1=request.getParameter(”column”);<br /> String value1=request.getParameter(”value”);</p> 
+  <p>String refreshUrl = request.getParameter(”refreshUrl”);</p> 
+  <p>Connection con = null;<br /> Statement stmt = null;<br /> try{<br /> //获取context对象<br /> com.runqian.report4.usermodel.Context ct = new com.runqian.report4.usermodel.Context();<br /> con = ct.getConnectionFactory( ct.getDefDataSourceName() ).getConnection();<br /> stmt = con.createStatement();<br /> if(tableName1!=null&amp;&amp;colmn1!=null&amp;&amp;value1!=null&amp;&amp;tableName1!=””&amp;&amp;colmn1!=””&amp;&amp;value1!=””){<br /> //定义删除sql语句<br /> String sql=”delete from “+tableName1+” where “+colmn1+”=’”+value1+”‘”;<br /> //执行sql语句<br /> stmt.executeUpdate(sql);<br /> }<br /> //提交<br /> con.commit();<br /> //重定向url<br /> response.sendRedirect(refreshUrl);<br /> }catch(Exception e){<br /> e.printStackTrace();<br /> }finally{<br /> //关闭流<br /> if( stmt != null ) stmt.close();<br /> if( con != null ) con.close();<br /> }<br /> %&gt;</p> 
+  <p><strong>三：执行效果。</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/28.png" alt="2.png" width="437" height="302" /></p> 
+  <p><strong>四：总结</strong></p> 
+  <p>利用此种做法不仅可实现删除功能，也可以实现添加数据，更新数据的功能。</p>  
+ </body>
+</html>

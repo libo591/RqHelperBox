@@ -1,0 +1,23 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>需求描述：根据访问的url传递的参数不同，动态控制一个下拉数据集的可使用性，如传过来的参数值为0时，下拉数据集不可写，但是下拉数据集所在的单元格显示参数值的内容，也就是0；而传过来的参数为1-10时，下拉数据集可用，可选择下拉数据集里的内容。本文介绍在润乾报表中如何实现上述需求。</p> 
+  <p>第一步：新建一张简单的填报表。</p> 
+  <p>新建一张填报表，报表的样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/1-0004.png" alt="1.png" width="487" height="44" /></p> 
+  <p>报表中不需要数据集，在F1单元格中写入=ids，然后定义一个参数，参数命名为ids，类型为字符串，形式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/2-0004.png" alt="2.png" width="554" height="108" /></p> 
+  <p>第二步：设置可写表达式和下拉列表框的样式。</p> 
+  <p>选择F1单元格，右键选择单元格的填报属性，在填报表的可写属性中写入：if ( value()== “0″,true,false)，然后设置这个单元格的编辑风格为下拉列表框，下拉列表框的数据和内容的样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/3-0003.png" alt="3.png" width="504" height="289" /></p> 
+  <p>然后在F1单元格的显示值表达式中写入如下内容：map(list(”0″,”570″,”571″,”572″,”573″,”574″,”575″,”576″,”577″,”578″,”579″,”580″),list(”省中心”,”衢州”,”杭州”,”湖州”,”嘉兴”,”宁波”,”绍兴”,”台州”,”温州”,”丽水”,”金华”,”舟山”))，这个map（）和list（）函数的作用是把这个单元格里的数据转换成对应的名称。</p> 
+  <p>第三步：发布这个报表并传递参数。</p> 
+  <p>用设计器中自带的tomcat发布这个报表，然后在IE浏览器中输入如下的url：</p> 
+  <p>http://127.0.0.1:6001/demo/reportJsp/showReport.jsp?raq=/merchantreport_arg.raq&amp;ids=0，就会得到如下的页面。在页面中可看到，商户所属地区的内容被写入省中心，而省中心所在的位置为下拉数据集，点击这个下拉数据集可以选择需要的内容：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/4-0002.png" alt="4.png" width="552" height="226" /></p> 
+  <p>而如果我输入的url为：http://127.0.0.1:6001/demo/reportJsp/showReport.jsp?raq=/merchantreport_arg.raq&amp;ids=571的时候，就会看到如下的页面，商户所属地区的内容被写死，单元格失去可写属性，没有下拉数据集的效果，单元格的内容为数据571所对应的名称：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/5-0002.png" alt="5.png" width="550" height="104" /></p> 
+  <p>同理，当输入的url后面的参数为除了0以外的不同值的时候，商户所属地区的内容还会被写入参数对应的不同的值，而且都将会被写死，没有下拉数据集或者可写的效果，只有按事先设置好的传递的参数为0的时候这个内容才是可写的，并且有下拉数据集的效果。</p> 
+  <p>这样，完成以上几个步骤，根据访问的url传递的参数不同，动态控制一个下拉数据集的可使用性的目的就达到了。</p>  
+ </body>
+</html>

@@ -1,0 +1,59 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>条形码是一种信息代码，用特殊的图形来表示数字、字母信息和某些符号。它是由一组宽度、反射率不同的条和空按一定的编码规则组合起来，用以表示一个完整数据的符号。在报表中插入条形码是很常见的。润乾报表提供了在报表中插入条形码的功能，用户可以通过修改属性设置条形码，也可以自定义条形码。下面就简单介绍一下润乾报表中条形码的使用。</p> 
+  <p><strong>一、在润乾报表中插入条形码</strong></p> 
+  <p>选中需要设为条形码的单元格，点击 <strong>属性-条形码</strong> ，或者 <strong>右键菜单-条形码</strong>，将弹出条形码属性设置界面，在该界面中可根据需要设置合适的条形码属性，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/xn-92tw1p3oog5gj4p.png" alt="设置条形码.png" height="321" /></p> 
+  <p>设置好条形码的属性后，点击【确定】按钮，就可在选中的单元格中插入条形码。</p> 
+  <p><strong>二、条形码属性说明</strong></p> 
+  <p>1、<strong>类型</strong></p> 
+  <p>条形码的码制类型，有Code39码、Code128码制和Custom共三种：</p> 
+  <p>(1) Code 39 : Code39是一种可供使用者双向扫描的分布式条形码，支持英文数字表达，最大优点是码数没有强制的限定，可用大写英文字母码，检验码可以忽略不计，长度是可变化的，通常用”*”号作为起始、终止符。目前Code39常用于工业、图书、以及票证自动化管理上。</p> 
+  <p>Code 39码如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zrclip-001n7da3bd7f.png" alt="" height="36" /></p> 
+  <p>(2) Code 128: 表示高密度数据, 字符串可变长，符号内含校验码。有三种不同版本: A, B, and C 。字符集A：包括所有大写字母、数字字符、标点字符、控制字符（ASCII值为00-95的字符）以及7个特殊字符。字符集B：包括所有大写字母、数字字符、标点字符、小写字母字符（ASCII值为32-127的字符）以及7个特殊字符。字符集C：包括100个数字（00-99）以及3个特殊字符。在用字符集C时，用一个符号字符表示2位数字。终止字符都是：Stop。Code 128常用于工业、仓库、零售批发。</p> 
+  <p>Code 128码如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zrclip-002p30a5c697.png" alt="" height="44" /></p> 
+  <p>(3) Custom：用户自定义的条形码。</p> 
+  <p>2、 <strong>字体</strong></p> 
+  <p>条码符号的字符注的字体类型，有Helvetica、OCR-B和Arial共三种：</p> 
+  <p>(1) Helvetica是一种广泛使用的西文无衬线字体，被大量使用在标志、电视、新闻标题以及无数的商标。 如3M、AGFA（爱克发）、BASF、美国航空、American Apparel、BMW、Crate &amp; Barrel、德国汉莎航空公司、Fendi、Knoll、英特尔、无印良品、雀巢、松下、Parmalat、SAAB（Helvetica 83 粗体）、三星、Staples、Target、Texaco等数百间主要企业的标志都是使用Helvetica字体。</p> 
+  <p>(2) OCR-B是一种数字字体，这种数字字体一般用在商品的条形码上。OCRB 字符集的大部分与 ECMA-11标准中的字符是完全相同的。OCR-B 的大小规格选择:Size I 用于打字机和打印机;Size III 用于收银机和会计设备;Size IV 用于信用卡刷卡设备。</p> 
+  <p>(3) Arial是一套随同多套微软应用软件所分发的无衬线体TrueType字型。Arial是Helvetica字体的复制品，是一种sans serif字体。</p> 
+  <p>3、 <strong>高度</strong></p> 
+  <p>条码符号的高度。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zrclip-007n5ca432e2.png" alt="" height="72" /></p> 
+  <p>4、 <strong>字大小</strong></p> 
+  <p>条码符号的字符注的字大小。</p> 
+  <p>5、 <strong>旋转角度</strong></p> 
+  <p>条码符号的旋转角度</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zrclip-006n658c64f9.png" alt="" height="106" /></p> 
+  <p>6、 <strong>模块宽度</strong></p> 
+  <p>条码符号的宽度。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zrclip-004pfc79d23.png" alt="" height="78" /></p> 
+  <p>7、<strong>字符</strong></p> 
+  <p>设置条码符号的字符注位于条码符号的底端，还是不显示字符注。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zrclip-005p2c57148e.png" alt="" height="73" /></p> 
+  <p>8、 <strong>静区</strong></p> 
+  <p>静区是没有任何印刷符或条形码信息，它通常是白的，位于条形码符号的两侧，用于提示阅读器即扫描器准备扫描条形码符号。在此可设置静区的大小。</p> 
+  <p>9、 <strong>检查码模式</strong></p> 
+  <p>设置检查码的模式：自动、忽略、增加、检查。</p> 
+  <p>10、<strong>显示检查码</strong></p> 
+  <p>是否显示检查码。</p> 
+  <p>11、<strong>显示起停区</strong></p> 
+  <p>是否显示起停区。</p> 
+  <p>12、 <strong>宽度系数</strong></p> 
+  <p>条形码符号的宽度系数。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zrclip-003p4881259e.png" alt="" height="77" /></p> 
+  <p>13、<strong>字符间隙</strong></p> 
+  <p>一个条码符号有若干条形码字符组成，字符间隙即为相邻条形码字符之间的间隙。</p> 
+  <p>14、 <strong>短条高度</strong></p> 
+  <p>在条形码符号中，短条的高度。</p> 
+  <p>15、 <strong>数值</strong></p> 
+  <p>条形码所表示的数据。这个属性是条形码的核心，如果没有数值，该条形码就没有存在的意义了。<strong>数值</strong> 属性可以是常数、单元格、参数或者含单元格、参数的表达式。如果数值为单元格、参数或者含单元格、参数的表达式时，务必在数值前加等号。如：=A2。</p> 
+  <p>16、 <strong>图片格式</strong></p> 
+  <p>条形码就是一个图片，在此可设置图片的格式：JPG/GIF/PNG。JPG格式的图形边缘比较模糊。GIF格式的图形边缘比较尖锐，仅支持256色。PNG格式的图形边缘效果界于JPG和GIF之间是比较理想的一种。</p> 
+  <p>润乾报表提供的条形码功能，方便了用户在报表中灵活的设计自己需要的条形码。</p>  
+ </body>
+</html>

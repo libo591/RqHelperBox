@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>背景说明</p> 
+  <p>报表的数据大部分来自数据库，正常情况下润乾报表都能自动处理，但是也会有特殊情况，例如通过中间键连接数据库而非直连，通过业务程序算出的数据传递给报表进行展现等等，在这种情况下客户需要自定义数据集。</p> 
+  <p>下面通过一个简单的例子介绍如何自定义数据集。</p> 
+  <p>应用举例</p> 
+  <p>1：新建一个类文件，在类文件中写如下代码：</p> 
+  <p>package test;<br /> import java.sql.Connection;<br /> import java.util.Iterator;<br /> import java.util.Map;<br /> import com.runqian.report4.dataset.DataSet;<br /> import com.runqian.report4.dataset.IDataSetFactory;<br /> import com.runqian.report4.dataset.Row;<br /> import com.runqian.report4.usermodel.Context;<br /> import com.runqian.report4.usermodel.CustomDataSetConfig;<br /> import com.runqian.report4.usermodel.DataSetConfig;<br /> public class MyDataSet implements IDataSetFactory {<br /> public DataSet createDataSet(Context ctx, DataSetConfig dsc, boolean isinput) {<br /> System.out.println(”aa”);<br /> //获取系统数据源<br /> String datasourceName = dsc.getDataSourceName();<br /> if( datasourceName==null || “”.equals(datasourceName) )<br /> //判断用户是否对数据集设置了数据源名，如果没有，则直接读取系统默认的数据源<br /> datasourceName = ctx.getDefDataSourceName();<br /> Connection con;<br /> try {<br /> con = ctx.getConnectionFactory( datasourceName ).getConnection();<br /> System.out.println( “得到的数据源是:”+con );<br /> con.close();<br /> } catch (Exception ex) {<br /> ex.printStackTrace();<br /> }<br /> //取得参数列表并分别取得它的参数名与值,宏与之类似<br /> Map map = ctx.getParamMap(false);<br /> if( map != null ){<br /> Iterator it = map.keySet().iterator();<br /> while( it.hasNext() ){<br /> //分别取得参数<br /> String key = it.next().toString();<br /> String value = map.get(key).toString();<br /> System.out.println(”报表传入的参数”+key+”的值是:”+value);<br /> }<br /> }<br /> //读取定义数据集时定义的传入参数<br /> CustomDataSetConfig cdsc = (CustomDataSetConfig)dsc;<br /> String[] args = cdsc.getArgNames();<br /> String[] vals = cdsc.getArgValue();<br /> if( args != null ){<br /> for( int i=0; i 
+   <args.length; i++="" ){<br="" /> String key = args[i];<br /> String value = vals[i];<br /> System.out.println(”定义数据集时传入参数”+key+”的值是:”+value);<br /> }<br /> }<br /> //读取同一报表中已算出的数据集<br /> //DataSet ds = ctx.getDataSet(”ds1″);<br /> //System.out.println(”数据集ds1共有 “+ds.getColCount()+” 列字段”);<br /> //构造一个数据集<br /> DataSet ds2 = new DataSet(”ds2″);<br /> String[] filds = dataset[0];<br /> for(int i=0; i &lt; filds.length; i ++){<br /> ds2.addCol( filds[i] );//设置数据集的字段<br /> System.out.println(”设置数据集的字段:”+filds[i]);<br /> }<br /> //设置数据集中的数据<br /> for(int i = 1; i &lt; dataset.length; i ++ ){<br /> String[] datas = dataset[i];<br /> Row rr = ds2.addRow();<br /> for(int j = 0; j &lt; datas.length; j ++){<br /> rr.setData(j+1,datas[j]);<br /> System.out.println(”设置数据集的数据第”+i+”行 第”+j+”列的值:”+datas[j]);<br /> }<br /> }<br /> return ds2;<br /> }<br /> //定义一个二维数组作为本自定义数据集的来源<br /> String [][] dataset = {<br /> {”id”,”name”,”zhi”},<br /> {”1″,”a”,”100″},<br /> {”2″,”b”,”200″},<br /> {”3″,”c”,”300″}<br /> };<br /> }</p> 
+  <p>2：将类文件拷贝到相应文件下</p> 
+  <p>在设计器中使用自定义类应把编译后的.class文件放在designer\classes\自定义类所在的包名下面。比如 MyDataSet.java在test包中，那么就应该把编译后的MyDataSet.class文件放在设计器安装路径\ reportHome\designer\classes\test包中，如果classes下面不包含test包，用户要新建。</p> 
+  <p>在服务器中运行使用自定义类的报表文件时应把自定义类编译后的.class文件放在reportHome\webapps\WEB-INF \classes\自定义类所在的包名下面。比如MyDataSet.java在test包中，那么就应该把编译后的MyDataSet.class文件放在设计器安装路径\reportHome\webapps\WEB-INF\classes\test包中，如果classes下面不包含test包，用户需要新建。</p> 
+  <p>3：新建一张报表，如下图</p> 
+  <p>4：报表中设置自定义数据集，如下图</p> 
+  <p>5：点击预览，浏览效果图</p> 
+  <p>自定义数据集就完成了。 </p>  
+ </body>
+</html>

@@ -1,0 +1,25 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>一、<strong>任务背景</strong></p> 
+  <p>实际的业务中，多个输入页面之间往往存在业务联系，比如员工的信息输入，可能包括基本信息输入、教育经历、工作经历、家庭成员等多个输入页面，这些输入页面之间的关联条件就是员工id。</p> 
+  <p>为了方便输入，用户往往提出把多个输入页面摆在一起进行输入，比较方便直观。</p> 
+  <p><strong>二、面临困难</strong></p> 
+  <p>乍一听这个功能没有什么难度，可是仔细分析，却发现有不少隐含的需求。</p> 
+  <p>首先，如何保证多张输入表之间的数据库事务的一致性。用户想不到这一点，程序员要帮用户想到。否则如上例，当员工基本信息没有保存成功，但是教育经历却给保存成功的时候，用户就该找你茬了。</p> 
+  <p>其次，表间合法性检查，既然多个表在一个界面上，有些必要的表间合法性检查就躲不过去了，举例来说，员工基本信息表里录入的出生日期为1980年，工作经历表里录入的工作起始日期是1995年，这一看就是非法使用童工，显然不合理。</p> 
+  <p>接着就是打印和导出了，既然摆在了一个页面里，打印和导出就必然要求一起打印一起导出，导出到word\pdf等还好说点，拼在一起就行了，导出excel就有不同的讲究了，分页方式导出的，一个报表有多页，一页一个sheet，每一页如何命名？不分页导出的，一个报表一个sheet等等。</p> 
+  <p>最后就是参数的共享问题了，这些有着数据联系的报表，往往存在相同或类似的参数，因此，参数模板输入的参数，要求能够传递到每一个报表。</p> 
+  <p>上述的这些，还仅仅是用户的需求，对程序员来说，程序员也希望套表能在一个界面上设计，统一定义，而不是分别定义报表模板，又吭哧吭哧写一大堆程序把它们串起来。因此，建议使用润乾报表的报表组，它提供了简单统一的定义界面，实现了上述的全部功能，操作步骤如下：</p> 
+  <p><strong>三、实现步骤</strong></p> 
+  <p>1、 根据业务需要设计好多个填报表<br /> 2、 新建一个报表组，把多个填报表串起来<br /> 3、 在报表组里定义这些填报表的表间合法性检查、参数等，并在报表组里对这些填报表进行统一的维护</p> 
+  <p><strong>四、效果演示</strong></p> 
+  <p>设计界面：Sheet1：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2008/09/taobiao0.png" title="taobiao0"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/09/taobiao0.png" alt="taobiao0" /></a></p> 
+  <p>设计界面：Sheet2：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2008/09/taobiao1.png" title="taobiao1"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/09/taobiao1.png" alt="taobiao1" /></a></p> 
+  <p>浏览界面：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2008/09/taobiao2.png" title="taobiao2"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/09/taobiao2.png" alt="taobiao2" /></a></p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2008/09/taobiao3.png" title="taobiao3"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/09/taobiao3.png" alt="taobiao3" /></a></p>  
+ </body>
+</html>

@@ -1,0 +1,13 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在报表设计的时候，每张报表都有一个打印设置，但是这个设置可能与客户端电脑的打印机配置不相匹配(如设计的是A3纸，可是客户端打印机只支持A4纸)；或者不同的报表需要用不同的打印机来打印(如发票打印机打印套打式报表等)。这样每次打印之前都要设置打印页面是一件很繁琐的事情。润乾报表可以在客户端保存打印设置。因此需要将客户端的打印设置保存到服务器上，以便下次再打印这张报表时，可以从服务器读出打印设置，从而不需要再次设置。</p> 
+  <p>保存时的主键是根据以下生成的： 客户端电脑名+客户端电脑网卡IP+报表名</p> 
+  <p>下面就详细介绍一下如何报错打印设置。</p> 
+  <p>方法一：在jsp里添加保存打印设置的标签。以润乾的showReport.jsp为例，保存打印设置的标签用法为：</p> 
+  <p>&nbsp;<img title="57" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/57.jpg" alt="57" width="467" height="87" /></p> 
+  <p>方法二：在web.xml里加如下配置：</p> 
+  <p>&nbsp;<img title="58" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/58.jpg" alt="58" width="516" height="195" /></p> 
+  <p>红色字体部分“/servlet/PrintSetupServlet”是servlet的映射路径，不可更改。com.runqian.report4.usermodel.PrintSetupServlet是润乾提供的一个缺省servlet实现，可以被替换。如果你所需要的打印设置保存方式与缺省的形式不同，比如你想保存到数据库中，那么你可以自己写一个servlet来替换，同时修改前面介绍的servlet的配置，将类名换成你的，但是映射名不能更改。</p>  
+ </body>
+</html>

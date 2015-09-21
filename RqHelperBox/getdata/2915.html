@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <h2>需求背景</h2> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 有客户提出这样的需求，有个消防设施表(内建数据集 ds1 )，有个消防设施更换记录表(内建数据集 ds2 )，这两个表是一对多的关系(一个消防设施对应多个更换记录)，通过更换记录表的 设施ID 关联。</p> 
+  <p>要实现的报表如图，也就是循环输出消防设施的同时，横着输出它的更换记录(注意：一个设施可以有三次更换记录，不足三次的空着，不用考虑多于三次的情况)</p> 
+  <p><img title="291" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/291.jpg" alt="291" width="553" height="107" /></p> 
+  <h2>需求分析</h2> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 上述需求可以概括为：报表中将数据库中一对多的两个表数据输出在同一行中。由于客户已经指定了两个数据集，所以我们需要在此基础上进行实现。由于一个设施ID最多对应三条更换记录，所以我们可以将所有更改记录列举出来，没有该记录的显示为空即可。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 于是，我们想到了润乾报表函数中诸如ds.select以及split等扩展函数都是可以带下标的，我们只需要将下标写到第三个即可。</p> 
+  <h2>实现步骤</h2> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 首先设计报表，如图：</p> 
+  <p><img title="301" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/301.jpg" alt="301" width="554" height="111" /></p> 
+  <p>我们在I4中写入表达式：=ds2.select(更换日期,,设施ID==C4)[1]，希望通过select函数的下标解决该问题，但是预览时发现报错：</p> 
+  <p><img title="311" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/311.jpg" alt="311" width="408" height="116" /></p> 
+  <p>初步分析不允许这样使用是由于select函数机制以及条件中写入的C4为扩展格导致。我们必须改变实现方式。</p> 
+  <p>将I4表达式改为：=list(ds2.select(更换日期,,设施ID==C4))[1]</p> 
+  <p>J5表达式：=list(ds2.select(更换日期,,设施ID==C4))[2]</p> 
+  <p>K5表达式：=list(ds2.select(更换日期,,设施ID==C4))[3]</p> 
+  <p>预览效果如图：</p> 
+  <p><img title="321" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/321.jpg" alt="321" width="554" height="91" /></p> 
+  <p>成功实现该需求。</p>  
+ </body>
+</html>

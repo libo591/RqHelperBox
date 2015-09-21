@@ -1,0 +1,27 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>各大报表工具都有参数机制，但是支持宏的却少之又少。宏有着参数所不具备的灵活性，可以应对很多参数无法解决的局面。</p> 
+   <p>如下图，是虚拟的一个数据集，现在要做一张带统计图的报表，要根据输入的参数（这个参数是行号或列号），得到该行或该列的数据，然后生成一个统计图。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/06/11.jpg" alt="1.jpg" height="162" /></p> 
+   <p>比如：输入”行5″，就要得到”5，52，53，54，55″这5个数据做为系列值生成统计图，系列名称为对应的”列1，列2，列3，列4，列5″。输入”列5″，也类似，得到用”5，25，35，45，55″这5个数据生成统计图。</p> 
+   <p>这种情况下，不可能简单通过参数去获得某行或某列的数据。表面上看，似乎是无法得到数据去生成统计图的。这时，动态宏就发挥它的重要作用了。</p> 
+   <p>下面开始宏的制作，以及统计图的生成：</p> 
+   <p>1 先定义一个参数：arg1</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/06/21.jpg" alt="2.jpg" height="103" /></p> 
+   <p>arg1：输入行号或列号，参数值1-5分别对应行1-行5，6-10分别对应列1-列5</p> 
+   <p>2 定义两个动态宏：macro1 macro2</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/06/31.jpg" alt="3.jpg" height="96" /></p> 
+   <p>macro1：显示系列名称，宏值：case(arg1,list(”1″,”2″,”3″,”4″,”5″),”B1:F1″,”A2:A6″)，即输入参数为行号时系列取列1-列5，输入参数为列号时系列值取行1-行5</p> 
+   <p>macro2：显示系列值，宏值：case(arg1,list(”1″),”B2:F2″,list(”2″),”B3:F3″,list(”3″),”B4:F4″,list(”4″),”B5:F5″,list(”5″),”B6:F6″,list(”6″),”B2:B6″,list(”7″),”C2:C6″,list(”8″),”D2:D6″,list(”9″),”E2:E6″,list(”10″),”F2:F6″)，即输入不同的行号或列号时取得对应的值</p> 
+   <p>3 生成统计图：</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/06/4.jpg" alt="4.jpg" height="305" /></p> 
+   <p>设计器中的效果：</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/06/5.jpg" alt="5.jpg" height="453" /></p> 
+   <p>现在可以输入参数，预览看一下效果。输入9（即列4），就可以看到”列4″所在列的数据生成的统计图了。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/06/6.jpg" alt="6.jpg" height="398" /></p> 
+   <p>由这个简单的例子，可以体现出宏的作用的强大，看似很难得到数据的报表，通过使用动态宏，也可以轻松实现！<br /> <span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

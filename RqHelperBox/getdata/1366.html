@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>润乾报表是纯java的，不仅本身具有很强大丰富的功能，同时还在不同层面上提供了丰富的java接口。这里主要说说业务系统中常用的一个功能–导出excel。</p> 
+   <p>本文给出四种常用的通过API接口来实现导出excel的方法：其中方法1和方法2是通过类com.runqian.report4.util.ReportUtils来实现的，方法3和方法4是通过类com.runqian.report4.view.excel.ExcelReport来实现的。具体如下：</p> 
+   <p><strong>(1) 通过输出流FileOutputStream来导出excel</strong></p> 
+   <p>FileOutputStream fos = new FileOutputStream( “C:\\Temp\\test.xls” );<br /> ReportUtils.exportToExcel(fos,iReport,false); //默认以不分页的方式导出excel<br /> fos.flush();<br /> fos.close();</p> 
+   <p><strong>(2) 通过File形式导出excel</strong></p> 
+   <p>String excelFile =”C:\\Temp\\test.xls”;<br /> ReportUtils.exportToExcel(excelFile,iReport,false); //默认以不分页的方式导出excel</p> 
+   <p><strong>(3) 通过输出流FileOutputStream来导出excel</strong></p> 
+   <p>ExcelReport eReport = new ExcelReport();<br /> eReport.export(iReport);<br /> FileOutputStream fos = new FileOutputStream( “C:\\Temp\\test.xls” );<br /> eReport.saveTo(fos);<br /> fos.flush();<br /> fos.close();</p> 
+   <p><strong>(4) 通过File形式导出excel</strong></p> 
+   <p>ExcelReport eReport = new ExcelReport();<br /> eReport.export(iReport);<br /> String excelFile =”C:\\Temp\\test.xls”;<br /> eReport.saveTo(excelFile);<br /> <span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

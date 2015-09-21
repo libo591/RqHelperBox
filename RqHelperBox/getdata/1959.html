@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>有些客户的公司没有使用office系列的软件，而是使用wps系列的软件，他们在使用快逸报表的过程中遇到导出为外部word的需求时，就需要把对应的导出word扩展名为doc的文档变成导出扩展名为wps的文档。</p> 
+  <p>本文介绍在快逸报表中实现导出扩展名为wps文档的两种方法，第一种是利用API直接写出导扩展名为.wps的方法，第二种是在导出保存的时候修改扩展名。</p> 
+  <p>方法一：利用API导出扩展名为.wps的文本文档。</p> 
+  <p>首先要写一个发布报表的JSP，在JSP中调用API，导出扩展名为.wps的文件，在JSP中要用到如下的方法来实现：</p> 
+  <p>Context cxt=new Context();<br /> String reportPath=”D \\reportHome\\webapps\\demo\\reportFiles\\1.raq”;<br /> IReport rd = (ReportDefine)ReportUtils.read(reportPath);<br /> Engine enging = new Engine( rd, cxt);<br /> IReport iReport = enging.calc();<br /> String license = “D:\ reportHome\\webapps\\demo\\WEB-INF\\classes\\内部测试专用服务器2009-12-31V4.0Windows.lic”;<br /> ExtCellSet.setLicenseFileName(license);<br /> ReportUtils.exportToDOC(”D:/test2.wps”, iReport);</p> 
+  <p>这段导出代码与导出word文件的写法是一样的，只不过是在ReportUtils.exportToDOC(”D:/test2.wps”, iReport);处把要生成的文件的扩展名改成了.wps。JSP的具体样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/1-0003.png" alt="1.png" width="591" height="366" /></p> 
+  <p>用这个JSP来发布一张普通的报表，在web页面上点击导出word的按钮，这时会弹出对话框，可以注意到此时弹出的对话框提示保存的文件扩展名就直接是.wps的，这样直接保存就可以了。如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/2-0003.png" alt="2.png" width="410" height="328" /></p> 
+  <p>方法二：导出保存时手动修改后缀名。</p> 
+  <p>这种方法不需要自己写JSP，只需要用润乾自带的JSP来发布报表。然后同样点击导出word文件的按钮，此时提示保存的文件的扩展名为.doc，具体的样式如下面两幅图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/3-0002.png" alt="3.png" width="332" height="273" /></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/4-0001.png" alt="4.png" width="462" height="321" /></p> 
+  <p>如果没有预装office则会提示是未知类型的文件，选择保存文件，然后在保存的时候直接将扩展名写成.wps，然后保存即可。保存好的文件样式如下图所示，同样可以用wps打开。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/5-0001.png" alt="5.png" width="553" height="340" /></p>  
+ </body>
+</html>

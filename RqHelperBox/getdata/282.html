@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font color="#ff0000">任务背景</font></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 数据录入时的缺省值是最常见的现象，新增加的记录往往某些字段不需要或者不允许用户输入，因此需要给出缺省值。有些缺省值是为了方便用户，减少用户输入而设定；有些缺省值是不允许用户输入的，比如当前用户、角色等。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 流水号是缺省值的一种特例，一般的缺省值往往不存在数据递增或递减，而流水号必须存在数据的递增或递减。简单的流水号如序号，1、2、3、4等如此不断递增1，复杂的流水号递增/递减规律就不好说了，视业务的复杂度而定。</p> 
+  <p><font color="#ff0000">面临困难</font></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 对于不需要增删行的输入界面来说，流水号/缺省值比较容易解决，可以在服务器生成填报表的时候把流水号/缺省值生成好并传输到客户端。但是对于需要增删行的填报表来说，流水号/缺省值就比较难处理了，比较麻烦的是流水号。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 众所周知，流水号之所以被称为流水号，其最大的一个特点是不能重复，但是在B/S模式下，在并发访问的情况下，在客户端增删行的情况下，每个客户端增删行时是不用和服务器交互的，否则每增删行一次就交互一次，性能太低了。于是如何保证每个客户端独立计算的流水号不重号，是个比较麻烦的问题。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 润乾报表提供了比较周全的流水号/缺省值机制，每个客户端可以通过表达式动态计算流水号初值，并通过灵活的递增递减规则，实现完善的流水号机制。</p> 
+  <p><font color="#ff0000">实现步骤</font></p> 
+  <p>1、设计一张行式填报表<br /> 2、定义流水号初值表达式以及递增递减规则<br /> 3、展现发布</p> 
+  <p><font color="#ff0000">效果演示</font></p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/08/lsh1.png" title="lsh1.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/08/lsh1.png" alt="lsh1.png" /></a></p>  
+ </body>
+</html>

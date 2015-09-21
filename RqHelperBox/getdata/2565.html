@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表中可以通过to()函数来补足空行。如我想每页展示8行数据，就可以这么写：=to(1,8-ds1.count()%8)。</p> 
+  <p>可是，有时候会出现这么一种情况：数据条数刚好为8条的时候，那么，报表会扩展出16行。如下设计报表：</p> 
+  <p>&nbsp;<img title="512" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/512.jpg" alt="512" width="355" height="125" /></p> 
+  <p>其中，ds1数据集中刚好是8条数据，预览如下图：</p> 
+  <p>&nbsp;<img title="522" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/522.jpg" alt="522" width="326" height="425" /></p> 
+  <p>这样的话不仅报表样式不太美观。</p> 
+  <p>那么，如何来将这多余的8行去掉呢？</p> 
+  <p>我们可以使用隐藏行的办法来实现。以上图中的报表为例，选中A3行，然后在右边属性栏中找到“隐藏行”，在其表达式中写：if(ds1.count()%8==0,true,false)，这句话的意思是：当数据集中的数据条数刚好能被8整除的时候，将扩展出来的空白行隐藏掉。</p> 
+  <p>进行以上设置之后，预览如下图：</p> 
+  <p>&nbsp;<img title="531" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/531.jpg" alt="531" width="333" height="261" /></p>  
+ </body>
+</html>

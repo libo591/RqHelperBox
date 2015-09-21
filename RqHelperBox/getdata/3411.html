@@ -1,0 +1,28 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>有客户有这样的需求，需要将汇总单元格设置在扩展单元格的右侧，我们来看一个简单的例子：</p> 
+  <p><strong>第一步：新建数据集，打开博计报表设计器，新建内建数据集如下：</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-006n6f7aed2d.png" alt="" width="509" height="399" /></p> 
+  <p><strong>第二步：设计报表，如下：</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-007n67b6d035.png" alt="" width="554" height="90" /></p> 
+  <p><strong>第三步：保存预览，效果如下：</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-008n71d2ae26.png" alt="" width="525" height="448" /></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-009n270101a9.png" alt="" width="523" height="463" /></p> 
+  <p>可以看出利用隐藏列并不能获得较好的效果，可以利用count(ds1.select(公司名称,城市==B4))表达式解决。</p> 
+  <p>count()</p> 
+  <p>函数说明：</p> 
+  <p>对可扩展单元格或集合表达式进行计数</p> 
+  <p>语法：</p> 
+  <p>count(expression)</p> 
+  <p>参数说明：</p> 
+  <p>expression 需要被计数的单元格或表达式，一般为可扩展单元格或集合表达式</p> 
+  <p>返回值：</p> 
+  <p>整数</p> 
+  <p>示例：</p> 
+  <p>例1：count(A1:A10) 统计A1至A10之间有几个单元格</p> 
+  <p>例2：count(arg1) 其中arg1是参数组，统计arg1中有几个数据</p> 
+  <p>例3：count(B1{}) 表示求得当前主格扩展区域内所有扩展后的B1单元格的个数</p> 
+  <p>例4：count(B1{`0}{}) 表示求得根坐标下所有扩展后的B1单元格的个数</p>  
+ </body>
+</html>

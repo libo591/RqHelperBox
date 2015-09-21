@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>建议在分页标签使用过程中需要注意一下几点：</p> 
+  <p>(1) 用到分页标签时计算报表分多少页是根据属性totalCountExp（总行数）和pageCount（每页的行数）来决定的，即：totalCountExp/pageCount</p> 
+  <p>(2) 分页标签属性startRowParamName（起始行参数名）和endRowParamName（结束行参数名）如果要赋变量值，直接设置变量名即可，即：</p> 
+  <p>startRowParamName=”beginrow”</p> 
+  <p>endRowParamName=”endrow”</p> 
+  <p>其中beginrow和endrow是报表中定义的起始行和结束行的参数</p> 
+  <p>(3) 分页标签中的起始行和结束行是针对当前所要计算的报表而言的，这与普通报表中的起始行和结束行取数据库中的一块数据是截然不同的，分页标签每次计算下一页报表之前会自动将起始行和结束行的当前的参数值分别加上每页显示的行数pageCount，然后再分别赋值给下一页数据集中用到的的的起始行和结束行参数再进行计算的</p> 
+  <p>(4) 报表中定义的beginrow(起始行参数)和endrow(结束行参数)是不需要在jsp中传参的，起始行默认从数据集中的第一行开始取数，如果想取表中一块儿数据的话不能和普通的报表设指数据集的起始行和结束行来实现，建议只能从标签属性totalCountExp上做文章了</p> 
+  <p>即：totalCountExp=”query(’SELECT count(*) FROM public.dept’)”</p> 
+  <p>在query执行的sql中加过滤条件来实现。</p>  
+ </body>
+</html>

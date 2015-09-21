@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>问题描述：报表web端展示时，点打印按钮提示打印次数。</p> 
+  <p>问题思路：在润乾提供的打印的方法之前写一个方法，每次调用打印方法之前，先执行这个方法进行一个数量的累加运算。但是润乾的打印的方法是封装起来的，所以只能在发布报表的jsp里写JavaScript定义一个变量，让这个变量做自增运算，然后弹出一个messageBox用来与用户交互，提示报表已经打印过几次。</p> 
+  <p>实现步骤：（以润乾发布报表的showReport.jsp为例）</p> 
+  <p>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;a href=”#” onClick=” report1_print();return false;”&gt;&lt;%=printImage%&gt;&lt;/a&gt;改为：</p> 
+  <p>&lt;a href=”#” onClick=” print();return false;”&gt;&lt;%=printImage%&gt;&lt;/a&gt;将onclick事件调用的方法名改为自己写的方法名。</p> 
+  <p>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在table标签里写如下代码：</p> 
+  <p>&lt;script language=javascript&gt;</p> 
+  <p>var j=0;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function print() { 己的函数</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; j=j+1;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alert(”已经打印“+j+”次“);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; report1_print();&nbsp; //调用润乾的打印</p> 
+  <p>}</p> 
+  <p>&lt;/script&gt;</p> 
+  <p>注：由于打印、导出等功能超链接都写在toolbar.jsp里，showReport.jsp引用了toolbar.jsp，所以以上代码写在toolbar.jsp里即可。</p>  
+ </body>
+</html>

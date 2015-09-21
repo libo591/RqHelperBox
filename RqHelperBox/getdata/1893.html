@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>◆ 背景说明</p> 
+  <p>由于润乾报表中的换行符是固定的，但是WINDOWS下的记事本不支持该换行符。所以在将报表导为Text时，部分字符就会显示成■。为了避免这种情况的发生，润乾在tag中定义了textDataLineBreak属性，让用户在导出Text时自定义windows记事本所支持的换行符，从而确保每个字符都能正常显示。</p> 
+  <p>◆ 示例代码</p> 
+  <p>&lt;report:html name=”report1″</p> 
+  <p>……</p> 
+  <p>textDataLineBreak=”\r\n”</p> 
+  <p>/&gt;</p> 
+  <p>◆ 应用举例</p> 
+  <p>新建一张空表，在A1单元格中写入=to(1,4)，纵向扩展，在页面展示时能够正确换行，但在导出到TXT后，WINDOWS下的记事本打开文件，展现为：1■2■3■4，都在一行，无法正确换行。</p> 
+  <p>这时在引用报表的jsp页面的标签中加入标签textDataLineBreak=”\r\n”；</p> 
+  <p>&lt;report:html name=”report1″</p> 
+  <p>……</p> 
+  <p>textDataLineBreak=”\r\n”</p> 
+  <p>/&gt;</p> 
+  <p>再导出到txt，用WINDOWS下的记事本打开文件，就能正确换行了，展现为：</p> 
+  <p>1</p> 
+  <p>2</p> 
+  <p>3</p> 
+  <p>4<br /> 总结：有了标签 textDataLineBreak后，用户的编辑器就能很好的识别换行符了。</p>  
+ </body>
+</html>

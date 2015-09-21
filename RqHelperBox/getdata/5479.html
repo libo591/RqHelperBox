@@ -1,0 +1,41 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">在润乾的行式填报表中允许用户删除页面端数据，从而点击保存后能将数据库中对应的数据删除，在默认情况下，删除按钮位于报表的上方或下方，如果页面数据过多，删除时要一次一次来点太不方便，如果数据前方能生成复选框，先用鼠标选中需要删除数据的复选框，最后点击一次删除能将选择的数据都删除，这样能大大提高工作效率，下面介绍下行式报表批量删除数据的使用。</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">先通过设计器设计一行行式填报表并设置对应的更新设置，注意，因为要生成复选框，所以第一列要空出一列，并将填报的编辑风格设置成复选框，如图：</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt"><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_004n35629c0f.png" height="223" width="562" /></span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">这样，报表展现后每条明细数据的前方就会生成对应的复选框供用户选择。</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">在页面上自己定义按钮，并且点击时实现相关功能：</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">&lt;div noWrap style=”font-family:</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">宋体</span><span style="FONT-SIZE: 12pt">;font-size:13px;color:;”&gt;</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">全选</span><span style="FONT-SIZE: 12pt">:&lt;INPUT type=”checkbox”</span> onclick=”selcheck()”&gt;&amp;nbsp;</p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">&lt;span style=”cursor:pointer” onclick=”_insertRow( report1 )”&gt;</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">插入</span><span style="FONT-SIZE: 12pt">&lt;/span&gt;&amp;nbsp;</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">&lt;span style=”cursor:pointer” onclick=”_appendRow( report1 )”&gt;</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">添加</span><span style="FONT-SIZE: 12pt">&lt;/span&gt;&amp;nbsp;</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">&lt;span style=”cursor:pointer” onclick=” deleteRows()”&gt;</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">删除勾选</span><span style="FONT-SIZE: 12pt">&lt;/span&gt;&amp;nbsp;</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">&lt;span style=”cursor:pointer” onclick=”_submitRowInput( report1 )”&gt;</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">提交</span><span style="FONT-SIZE: 12pt">&lt;/span&gt;</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">&lt;/div&gt;</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">这里主要介绍下全选以及多条删除的操作。</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">全选点击时调用了</span><span style="FONT-SIZE: 12pt">selcheck</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">（）函数，所以要在当前</span><span style="FONT-SIZE: 12pt">jsp</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">中定义该</span><span style="FONT-SIZE: 12pt">js</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">函数，如下：</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">function selcheck() {</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">var objs = report1.getElementsByTagName(“input”);</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">for(var i=0; i&lt;objs.length; i++) {</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">if(objs[i].type.toLowerCase() == “checkbox” )</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">objs[i].checked =event.srcElement.checked;</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">}</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">}</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">会根据相应的名称实现全选的功能。</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"> </p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">删除勾选调用</span><span style="FONT-SIZE: 12pt">js</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">函数</span><span style="FONT-SIZE: 12pt">deleteRows()</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">，在</span><span style="FONT-SIZE: 12pt">jsp</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">中定义该</span><span style="FONT-SIZE: 12pt">js</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">函数：</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">function deleteRows(){</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">var report = document.getElementById(‘report1′);</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">for(var i=report.rows.length-1;i&gt;0;i–){</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">var row = report.rows[i];</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">if(!row.all.tags(“input”)[0].checked) continue;</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">var cell = row.cells[1];</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">report.currCell = cell;</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">_deleteRow(report);</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">}</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt">}</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 12pt">这样页面上就会展现相应按钮，并能够实现批量删除功能：如图：</span></p> 
+  <p style="TEXT-INDENT: 24pt" class="MsoNormal"><span style="FONT-SIZE: 12pt"><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_005p4cbe3154.png" height="427" width="396" /></span></p>  
+ </body>
+</html>

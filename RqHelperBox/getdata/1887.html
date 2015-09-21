@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>需求背景：客户在使用润乾报表的时候，为了使导出Excel、PDF、导入Excel、上下载文件等对话框和总体风格一致，都修改了report4包中的静态页面。现在每次更换jar包都需要重新拆包，把里面的静态页面取出来进行修改。特此希望能把这静态页面从jar包中分离出来。</p> 
+  <p>介绍功能点：报表中的导出Excel、PDF、导入Excel、上下载文件等对话框都改成用JS写的弹出对话框，这样在不同版本的浏览器里外观和尺寸大小都一致了，不影响原来改过界面的用户的使用。用户自定义静态页面可以单独放在一个jar包里或classes目录里，静态页面的类路径要求为/report4/statichtml。</p> 
+  <p>功能点使用方法：在web-inf\lib里有一个report4StaticHtml.jar，用户修改这里面的html页面就可以修改导出Excel、PDF、导入Excel、上下载文件等对话框的界面了。</p> 
+  <p>下面以修改导出Excel文件对话框为例说明修改方法：</p> 
+  <p>首先解压jar，找到需要修改的文件，修改文件，然后重新打包。</p> 
+  <p>原来的静态页面文件路径</p> 
+  <p>&nbsp;</p> 
+  <p><span style="font-family: Arial;"><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/1-0027.png" alt="1.png" width="388" height="277" />现在静态页面文件路径</span></p> 
+  <p>&nbsp;</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/2-0025.png" alt="2.png" width="388" height="277" />例如要把”是否导出公式”功能去掉，打开excelPageStyle.html，去掉21行-23行内容即可（&lt;tr&gt;&lt;td colspan=2 style=”padding-top:10px;font-size:14px;color:forestgreen;”&gt;</p> 
+  <p>&lt;INPUT type=checkbox id=extFormula onclick=”if( this.checked ) formula=1;else formula=0;”&gt;&amp;nbsp;&lt;script language=javascript&gt;document.write( _excel_JJ );&lt;/script&gt;</p> 
+  <p>&lt;/td&gt;&lt;/tr&gt;）</p> 
+  <p>然后上图中的四个文件重新打成report4StaticHtml.jar包，放到WEB-INF/lib下。</p>  
+ </body>
+</html>

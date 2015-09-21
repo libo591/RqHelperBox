@@ -1,0 +1,27 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>多值查询需求是非常普遍的。润乾报表可以通过参数表单中使用下拉数据集或者下拉列表框方式实现多值查询，下面就简单介绍一个参数表单中使用下拉数据集实现多值查询的例子。</p> 
+  <p>例子介绍：本例中设计了一个带参数的多值查询报表。其中，参数表单中使用下拉数据集。报表根据选择的多个查询条件显示满足条件的数据。不选择参数时，报表展现出来的数据为空。</p> 
+  <p>下面分参数表单制作和主报表制作两个部分来介绍。</p> 
+  <p><strong>1、制作参数表单</strong></p> 
+  <p>第一步：新建一个参数表单如下，设置B1的属性 <strong>变量名：arg1</strong> ，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/xn-4krtj918bd56a.png" alt="参数表单.png" width="296" height="112" /></p> 
+  <p>第二步：鼠标右键 <strong>填报属性，编辑风格</strong> 选下拉数据集，<strong>常规</strong> 标签页中点 <strong>设置</strong> 按钮，弹出下拉数据表对话框，设置 <strong>数据集</strong>、<strong>显示列</strong>、<strong>数据列</strong>，勾选 <strong>允许多选</strong> 和 <strong>增强控件</strong>，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/xn-7gty1g.png" alt="属性.png" width="524" height="318" /></p> 
+  <p><strong>2、设计主报表</strong></p> 
+  <p>第一步：设计主报表，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/xn-tiqp11cvs1a.png" alt="主报表.png" width="256" height="70" /></p> 
+  <p>第二步：为主报表定义一个参数，其中数据类型一定要选择 <strong>数值组</strong> 如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/xn-8nr642b-0001.png" alt="参数.png" width="509" height="39" /></p> 
+  <p>第三步：更改数据集的语法，如下</p> 
+  <p><strong>SELECT 订单.订单ID,订单.运货商,订单.货主地址 FROM 订单 WHERE 订单.订单ID in (?)</strong></p> 
+  <p>其中(?)代表使用的参数，在数据集的 <strong>参数</strong> 标签页中的对应设置如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/xn-sql-8u3e812f.png" alt="sql参数.png" width="349" height="36" /></p> 
+  <p>注意：因为我们使用的参数是 <strong>数值组</strong> 类型的，所以要特别注意，数据集的语法中一定要使用 in。</p> 
+  <p>这样带参数模板的多值查询报表就制作好了。</p> 
+  <p>在网页中查看报表，就可以看到效果，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/xn-fcvt5c-0001.png" alt="效果.png" width="580" height="250" /></p> 
+  <p>这样，就利用参数表单中使用下拉数据集实现了多值查询的功能。</p>  
+ </body>
+</html>

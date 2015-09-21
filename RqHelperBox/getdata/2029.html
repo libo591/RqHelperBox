@@ -1,0 +1,25 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>普通的行式填报表利用润乾自带的删除按钮只可以单行删除数据，但是有很多web报表用户的业务需要批量的删除，本文就来介绍一下如果利用JS函数来实现行式填报表的批量删除功能。</p> 
+  <p>实现思路：</p> 
+  <p>1.要批量删除,首先要批量选择,那么就要编写一个批量选择的按钮（这里我们以全选按钮为例）。</p> 
+  <p>2.利用润乾自带的行删除函数，结合全选按钮，来达到批量删除的目的。</p> 
+  <p>报表设计如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/1-0050.png" alt="1.png" width="294" height="72" /></p> 
+  <p>其中：A2单元格需要在填报属性中把编辑风格设置为复选框，关值为0，开值为1。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/2-0046.png" alt="2.png" width="406" height="329" /></p> 
+  <p><strong>第一步：编写批量删除的js函数：</strong></p> 
+  <p>原理：遍历选中行，将选中行依次赋值给currCell，调用行式填报的_deleteRow(report)，依次删除，实现批量删除效果。</p> 
+  <p>批量删除的js代码如下：</p> 
+  <p>function deleteRows(){<br /> var report = document.getElementById(’report1′);<br /> for(var i=report.rows.length-1;i&gt;0;i-){<br /> var row = report.rows[i];<br /> if(!row.all.tags(”input”)[0].checked) continue;<br /> var cell = row.cells[1];<br /> report.currCell = cell;<br /> _deleteRow(report);<br /> }<br /> }</p> 
+  <p><strong>第二步：增加全选的chekbox按钮：</strong></p> 
+  <p>全选按钮调用的js函数代码如下：</p> 
+  <p>function selcheck() {<br /> var objs = report1.getElementsByTagName(”input”);<br /> for(var i=0; i&lt;objs.length; i++) {<br /> if(objs[i].type.toLowerCase() == “checkbox” )<br /> objs[i].checked =event.srcElement.checked;<br /> }<br /> }</p> 
+  <p><strong>第三步：页面按钮代码设置如下：</strong></p> 
+  <p>&lt;table&gt;<br /> &lt;tr&gt;<br /> &lt;td style=”background-color:”&gt;<br /> &lt;div noWrap style=”font-family:宋体;font-size:13px;color:;”&gt;<br /> 全选:&lt;INPUT type=”checkbox” onclick=”selcheck()”&gt;<br /> &lt;span style=”cursor:pointer” onclick=”_insertRow( report1 )”&gt;插入&lt;/span&gt;<br /> &lt;span style=”cursor:pointer” onclick=”_appendRow( report1 )”&gt;添加&lt;/span&gt;<br /> &lt;span style=”cursor:pointer” onclick=”deleteRows()”&gt;删除勾选&lt;/span&gt;<br /> &lt;span style=”cursor:pointer” onclick=”_submitRowInput( report1 )”&gt;提交&lt;/span&gt;<br /> &lt;/div&gt;<br /> &lt;/td&gt;<br /> &lt;/tr&gt;<br /> &lt;/table&gt;</p> 
+  <p>增加了全选框后的行式填报表效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/3-0039.png" alt="3.png" width="284" height="339" /></p> 
+  <p>经过增加全选按钮后，页面显得很简洁，并且再也不用点一行删除一行了，结合润乾自带的内置JS函数，配合一些自定义的函数，可以实现丰富多样的业务功能。</p>  
+ </body>
+</html>

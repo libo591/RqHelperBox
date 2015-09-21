@@ -1,0 +1,6 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>问题描述：<br /> </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在报表主目录下再分目录存放报表（例如：reportFiles目录下有AA目录AA下有BB目录）调用批量打印找不到文件，报表参数格式串为：{/cfm/frm/custTable.raq(CONS_NO=6440101)}{/cfm/frm/custTable.raq(CONS_NO=03510001)}.只有当在reportConfig里把报表存放的主目录设为报表存放的当前目录才不报错，但是为了维护的方便在报表主目录下是要对报表进行分类的。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 错误信息：报表日志里没有报错，java控制台的错误信息为：<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; java.io.FileNotFoundException: http://localhost:8080/sgpms/reportServlet?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; action=1&amp;fileName=/cfm/frm/custTable.raq&amp;srcType=file&para;mString=CONS_NO%3D6440101<br /> <strong>解决办法：</strong><br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 检查web.xml文件发现，reportServlet没有配置，这样就导致了http://localhost:8080/sgpms/reportServlet?action=1&amp;fileName=/cfm/frm/custTable.raq&amp;srcType=file&para;mString=CONS_NO%这个url找不到。</p>  
+ </body>
+</html>

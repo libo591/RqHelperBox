@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>业务背景：</p> 
+  <p>用户需要按照区域统计销售报表，但<strong>报表</strong>展现时要求在页面端选择相应的分组字段、展现栏目以及条件，<strong>报表设计</strong>按照用户页面端的页面选择进行动态生成，如下图：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/archives/4260.html/a1-12" rel="attachment wp-att-4264"><img class="aligncenter size-full wp-image-4264" title="a1" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a111.jpg" alt="" width="519" height="490" /></a></p> 
+  <p>展现结果：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/archives/4260.html/a2-7" rel="attachment wp-att-4265"><img class="aligncenter size-full wp-image-4265" title="a2" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a25.jpg" alt="" width="493" height="249" /></a></p> 
+  <p>&nbsp;</p> 
+  <p>要求：</p> 
+  <p>行分组控制<a href="http://www.runqian.com.cn" target="_blank">报表</a>前几列的分组字段，条件控制数据的展现，选择栏目控制数据的展现列，下面介绍下报表实现过程。</p> 
+  <p>&nbsp;</p> 
+  <p>此<strong>报表</strong>主要可以分成两步来做，第一步：定义选择条件面板：</p> 
+  <p>此面板可由用户自己定义，这样能更好的控制页面端的展现效果以及做一些弹出页面选择，点击查询时只需要将用户在页面端选择的内容按照要求传递给润乾的相关参数即可，此选择页面也可以由润乾的参数表单来做，可以使用填报属性中编辑风格中的复选框、下拉框等实现用户的页面选择，然后在点击查询时通过js函数获得页面选择，然后拼成串传递给润乾报表，此处注意：如果使用润乾的参数表达，通过js获得单元格值时要用</p> 
+  <p>form1.gg2.value这种形式，form1为tab标签中指定的名称，gg2是单元格中的变量名。</p> 
+  <p>通过js将所选择拼成条件串然后通过url传递给报表展现页面，如：</p> 
+  <p>showReport.jsp?raq=jdb.raq&amp;”+hangfenzu+”&amp;macro1=”+tiaojian+”&amp;rq=”+form1.rq2.value</p> 
+  <p>接下来就是<strong>报表制作</strong>：</p> 
+  <p>首先制作一张比较全的分组<strong>报表</strong>，将用户所要用到的字段全部拿出来，然后通过润乾的参数对其进行控制。</p> 
+  <p>参数分成三种：</p> 
+  <p>一：接收行分组参数，接收页面端传过来的参数，判断如果参数值为1，则展现分组，否则将表达式设为空，表达式：=if(dq==”1″,ds1.Group(dq,false),”&quot;)</p> 
+  <p>二：接收条件参数，润乾报表数据集中支持宏的使用，可以通过对宏的赋值动态改变取数语句，数据集中写法：SELECT *&nbsp; FROM jdb where ${macro1}</p> 
+  <p>三：栏目控制，可将客户在前端页面选择的栏目放到一个数组内，将该数组传递给润乾的字符串组，然后判断如果当前列在字符串组内则该列展现，否则隐藏。</p> 
+  <p>这样就能达到通过页面端选择动态展现报表的需求。</p>  
+ </body>
+</html>

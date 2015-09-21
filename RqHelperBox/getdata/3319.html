@@ -1,0 +1,33 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">大数据量的报表在页面加载的时候时常会遇到这样一个问题：在报表正在生成html页面的时候，由于报表正在取数计算，这时候页面是空白的，如何来增加类似加载进度条的功能呢？</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">下面我们来介绍一下。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">整个过程都在jsp用利用Javascript来完成，与报表模版无关，这样更加方便客户调试。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">首先我们要编写一下页面中Javascript的方法：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">var s1 = setInterval(“loading.innerText+=’.'”, 500);<br /> var s2 = setInterval(“loading.innerText = ””, 8000);</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">设定两个超时对象,s1是超时500毫秒,s2是8000毫秒</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">然后设置一个层,这个在超时的这段时间内显示在页面中,也就是说,在给报表计算的这段时间内,页面上只显示这个层.</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">document.writeln(“&lt;div id=\”loadingDiv\” style=\”z-index:50000;position:absolute;left:expression((this.parentElement.offsetWidth-this.offsetWidth)\/2);top:expression((document.body.clientHeight-this.style.pixelHeight)\/3+document.body.scrollTop);\”&gt;”);<br /> document.writeln(” &lt;table border=\”1\” width=\”260\” cellspacing=\”0\” cellpadding=\”4\” style=\”border-collapse: collapse;FILTER: Alpha(opacity=95)\” bgcolor=\”#ffffff\”&gt;”);<br /> document.writeln(” &lt;tr&gt;”);<br /> document.writeln(” &lt;td bgcolor=\”#2D2D2D\”&gt;”);<br /> document.writeln(” &lt;table width=\”100%\” border=\”0\” cellspacing=\”0\” cellpadding=\”0\”&gt;”);<br /> document.writeln(” &lt;tr&gt;”);<br /> document.writeln(” &lt;td style=\”font-size:12px;color:#ffffff\”&gt;”);<br /> document.writeln(” 页面正在加载,请稍候…&lt;\/td&gt;”);<br /> document.writeln(” &lt;td width=\”1\”&gt;”);<br /> document.writeln(” &lt;span title=关闭 style=\”CURSOR: hand;color:white;font-size:12px;font-weight:bold;margin-right:4px;\” onClick=\”document.all.loadingDiv.style.display=\’none\’\”&gt;&times;&lt;\/span&gt; &lt;\/td&gt;”);<br /> document.writeln(” &lt;\/tr&gt;”);<br /> document.writeln(” &lt;\/table&gt;”);<br /> document.writeln(” &lt;\/td&gt;”);<br /> document.writeln(” &lt;\/tr&gt;”);<br /> document.writeln(” &lt;tr&gt;”);<br /> document.writeln(” &lt;td&gt;”);<br /> document.writeln(” &lt;table width=\”100%\” border=\”0\” cellspacing=\”0\” cellpadding=\”0\”&gt;”);<br /> document.writeln(” &lt;tr&gt;”);<br /> document.writeln(” &lt;td width=\”35\” align=\”center\”&gt;”);<br /> document.writeln(” &lt;img src=\”load.gif\”&gt; &lt;\/td&gt;”);<br /> document.writeln(” &lt;\/tr&gt;”);<br /> document.writeln(” &lt;\/table&gt;&lt;\/td&gt;”);<br /> document.writeln(” &lt;\/tr&gt;”);<br /> document.writeln(” &lt;\/table&gt;”);<br /> document.writeln(“&lt;\/div&gt;”)<br /> document.writeln(“&lt;SCRIPT LANGUAGE=\”javascript\”&gt; “);<br /> document.writeln(“&lt;!– Hide “);<br /> document.writeln(“function killErrors() { “);<br /> document.writeln(“return true; “);<br /> document.writeln(“} “);<br /> document.writeln(“window.onerror = killErrors; “);<br /> document.writeln(“\/\/ –&gt; “);<br /> document.writeln(“&lt;\/SCRIPT&gt;”);</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">这个层中主要就是显示了一个动态的gif图片.</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">接着,我们在window.onload()方法中先清除掉两个超时对象,再清楚掉”页面加载请稍后”这个层.</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">function window.onload()<br /> {<br /> clearInterval(s1);//清除掉超时对象<br /> clearInterval(s2);<br /> loadingDiv.removeNode(true);//清除掉加载层</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">}</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">然后在展现我们的报表标签:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"> </p> 
+  <div style="text-align: left; line-height: 1.5;"> 
+   <span style="font-size: 12pt;">&lt;table align=center&gt;<br /> &lt;tr&gt;&lt;td&gt;<br /> &lt;report:html name=”report1″ reportFileName=”loading.raq.raq”<br /> needSaveAsWord=”yes”<br /> needSaveAsPdf=”yes”<br /> needSaveAsExcel=”yes”</span> 
+  </div> 
+  <p><span style="font-size: 12pt;">wordLabel=”&lt;%=wordImage%&gt;”<br /> pdfLabel=”&lt;%=pdfImage%&gt;”<br /> submit=”&lt;%=submitImage%&gt;”<br /> excelLabel=”&lt;%=excelImage%&gt;”<br /> /&gt;<br /> &lt;/td&gt;&lt;/tr&gt;<br /> &lt;/table&gt;</span></p> 
+  <p></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">我们来看一下页面效果:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">在加载的时候:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"> </p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6508" title="m_11_16_2" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/m_11_16_2.jpg" alt="m_11_16_2" width="682" height="381" /></span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">然后报表展现:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"> </p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6509" title="m_11_16_3" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/m_11_16_3.jpg" alt="m_11_16_3" width="785" height="450" /></span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">通过这样的设置,更加完善了报表展现方式,并且提高了在使用中的客户体验度.</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&nbsp;</span></p>  
+ </body>
+</html>

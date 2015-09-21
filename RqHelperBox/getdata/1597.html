@@ -1,0 +1,33 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了内置的spit函数，split函数可将字符串按分割符分割成多个子串。在报表设计中灵活应用此函数，可以满足制作报表过程中的多种需求。下面我们就介绍一下split函数及其特殊用法。</p> 
+  <p><strong>1、split函数的普通用法</strong></p> 
+  <p><strong>函数说明</strong>：将字符串按分割符分割成多个子串</p> 
+  <p><strong>语法</strong>：split( srcExp,sepExp{,boolExp})</p> 
+  <p><strong>参数说明</strong>：</p> 
+  <p>srcExp 待分割的字符串表达式</p> 
+  <p>sepExp 分隔符表达式</p> 
+  <p>boolExp bool型，是否解析引号、括号里的分隔符，为true时解析，为false时不解析，缺省为false</p> 
+  <p><strong>返回值</strong>：分割后的字符串列表</p> 
+  <p>示例：</p> 
+  <p>例1：=split(”ab;cd;ef;tg;tt”,”;”) 返回数组：[&quot;ab&quot;,&quot;cd&quot;,&quot;ef&quot;,&quot;tg&quot;,&quot;tt&quot;]</p> 
+  <p>例2：=split(”ab;c’d;e’f;tg;tt”,”;”,false) 返回数组：[&quot;ab&quot;,&quot;c'd;e'f&quot;,&quot;tg&quot;,&quot;tt&quot;]　不解析引号里的分隔符</p> 
+  <p>例3：=split(”ab;c[d;e]f;tg;tt”,”;”,false) 返回数组：[&quot;ab&quot;,&quot;c[d;e]f”,”tg”,”tt”]　不解析括号里的分隔符</p> 
+  <p>例4：=split(”ab;c’d;e’f;tg;tt”,”;”,true) 返回数组：[&quot;ab&quot;,&quot;c'd&quot;,&quot;e'f&quot;,&quot;tg&quot;,&quot;tt&quot;]　解析引号里的分隔符</p> 
+  <p>例5：=split(”ab;c[d;e]f;tg;tt”,”;”,true) 返回数组：[&quot;ab&quot;,&quot;c[d&quot;,&quot;e]f”,”tg”,”tt”]　解析括号里的分隔符</p> 
+  <p><strong>2、函数的特殊用法</strong></p> 
+  <p>数据库中有些数据是以这样的形式存储的，如：郓城/山东/中国、郓城|山东|中国，或者是用别的符号来分隔的字符串组。如果我们想取得某个分割符号前的数据就可以用split函数来实现，例如：</p> 
+  <p>split(”郓城/山东/中国”,”/”)[1]，取第一个斜线前的值，返回值：郓城；</p> 
+  <p>split(”郓城/山东/中国”,”/”)[2]，取第二个斜线前的值，返回值：山东；</p> 
+  <p>split(”郓城/山东/中国”,”/”)[3]，取”中国”两个汉字。</p> 
+  <p>说明：大家知道split函数是对字符串按照某种规律进行分组，返回一个数组，split函数后面加个中括号就可以取到数组中的值。大家注意这个数组的下标是从1开始的不是从0开始的，如果要取数组中第一个元素，就在中括号”[]“中写’1′；要取第二个元素，就在中括号”[]“中写’2′；要取第三个元素，就在中括号中”[]“中写’3′，以此类推。</p> 
+  <p><strong>3、split函数在报表设计器中的使用</strong></p> 
+  <p>在A1中引用split 函数，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/7.png" alt="7.png" width="253" height="46" /></p> 
+  <p>预览，可见函数运用效果，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/8.png" alt="8.png" width="215" height="51" /></p> 
+  <p>这样就完成了在报表设计使用split函数。</p> 
+  <p>灵活运用润乾报表中的内置函数，可以为报表制作带来很大的方便。</p>  
+ </body>
+</html>

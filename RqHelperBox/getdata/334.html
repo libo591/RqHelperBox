@@ -1,0 +1,10 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>一、问题描述</strong></p> 
+  <p>报表用户设计的报表在设计器中预览正常，用润乾自带jsp发布的时候报表展现也正常，就是报表用户自己写的jsp发布时就开始报了一个js错误，查看报表用户的jsp代码也没有发现什么问题，最终对比一下客户jsp的编码是utf-8，客户改成charset=GBK就可以了。可是报表用户并不想修改jsp编码。</p> 
+  <p><strong>二、解决方法</strong></p> 
+  <p>将配置reportconfig.xml中加上：</p> 
+  <p>&lt;config&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt;jspCharset&lt;/name&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;value&gt;utf-8&lt;/value&gt;<br /> &lt;/config&gt;</p>  
+ </body>
+</html>

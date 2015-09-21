@@ -1,0 +1,35 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了非常全面的图形功能，饼形图，柱状图，折线图等等，这些图形在web报表中都有很广泛的应用，润乾报表提供了轻松便捷的设计方法来使用每一种统计图。有时一组数据可以通过多种统计图展示，并且每种统计图展示的分析角度是不同的，若一个web报表能够引用统计图展示数据，并且实现不同统计图之间的切换展现，将提高报表的使用价值，也可能减少web报表开发者的报表设计工作。本文就这一需求描述润乾报表如何实现这样的设计。</p> 
+  <p>第一步，准备数据与统计图</p> 
+  <p>本例连接的是demo数据源。ds1：SELECT EMPLOYEE.EMPID,DEGREE.NAME,TITLE.TITLENAME FROM EMPLOYEE,DEGREE,TITLE<br /> WHERE TITLE.ID = EMPLOYEE.TITLE and EMPLOYEE.DEGREE = DEGREE.ID</p> 
+  <p>然后设计报表：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/15.png" alt="1.png" width="298" height="148" /></p> 
+  <p>A2：=ds1.group(TITLENAME,false)</p> 
+  <p>B2：=ds1.count()</p> 
+  <p>在A3，A4，A5插入统计图，</p> 
+  <p>A3：饼形图，分类轴为=A2，系列名称=”员工数”，系列值=B2，标题=A2+B2+”人”</p> 
+  <p>A4：柱状图，分类轴为=A2，系列名称=”员工数”，系列值=B2，标题=A2+B2+”人”</p> 
+  <p>A5：折线图，分类轴为=A2，系列名称=”员工数”，系列值=B2，标题=A2+B2+”人”</p> 
+  <p>将统计图调节到适当的高度，以便显示的时候能完全显示出统计图信息。</p> 
+  <p>第二步，为报表加入参数来控制显示统计图的类型</p> 
+  <p>为报表加入一个参数，本例中命名为type，类型为数值，默认值为1。</p> 
+  <p>然后在各统计图所在行的隐藏属性中接受该参数，通过表达式判断该行是否隐藏，下面是统计图所在各行的判断表达式：</p> 
+  <p>选择A3单元格，在隐藏行的表达式里写if(@type==1,false,true)</p> 
+  <p>选择A4单元格，在隐藏行的表达式里写if(@type==2,false,true)</p> 
+  <p>选择A5单元格，在隐藏行的表达式里写if(@type==3,false,true)</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/24.png" alt="2.png" width="236" height="90" /></p> 
+  <p>第三步，设计参数模板</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/33.png" alt="3.png" width="320" height="55" /></p> 
+  <p>选择C2，定义填报属性，编辑风格是下拉列表框，然后设计列表框</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/42.png" alt="4.png" width="210" height="80" /></p> 
+  <p>这样报表就设计完毕，发布预览报表，参数值默认为1，所以默认显示为饼形图。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/51.png" alt="5.png" width="283" height="228" /></p> 
+  <p>选择柱状图的展示效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/6.png" alt="6.png" width="350" height="280" /></p> 
+  <p>选择折线图的展示效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/7.png" alt="7.png" width="296" height="252" /></p> 
+  <p>这样，通过动态隐藏行列的方法就实现了统计图之间的切换的功能，满足了不同浏览者的需求。</p>  
+ </body>
+</html>

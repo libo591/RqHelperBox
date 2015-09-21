@@ -1,0 +1,25 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表服务器提供了多种数据集类型供用户使用，有SQL检索、存储过程、复杂SQL 、Text文件、XML文件、内建数据、<span id="TheWorldHiLightStyleID" style="margin: 0px; background: #ffff00; float: none; color: #000000; padding: 0px;">层</span>视图、EssBase和自定义等数据集类型。</p> 
+  <p>本文介绍一下数据集类型为XML文件的报表制作方法。</p> 
+  <p>一、介绍XML文件的写法</p> 
+  <p>首先看下面这个XML文件例子。</p> 
+  <p>&lt;?xml version=”1.0″ encoding=”GBK”?&gt;<br /> &lt;ROWS&gt;<br /> &lt;COLNAME&gt;&lt;!–列定义，字段名称–&gt;<br /> &lt;col&gt;id&lt;/col&gt;<br /> &lt;col&gt;name&lt;/col&gt;<br /> &lt;col&gt;sex&lt;/col&gt;<br /> &lt;col&gt;born&lt;/col&gt;<br /> &lt;col&gt;city&lt;/col&gt;<br /> &lt;/COLNAME&gt;<br /> &lt;COLTYPE&gt;&lt;!–数据类型定义–&gt;<br /> &lt;col&gt;4&lt;/col&gt;&lt;!–数据类型的定义采用java.sql.Types里的标准定义–&gt;<br /> &lt;col&gt;1&lt;/col&gt;<br /> &lt;col&gt;4&lt;/col&gt;<br /> &lt;col&gt;91&lt;/col&gt;<br /> &lt;col&gt;1&lt;/col&gt;<br /> &lt;/COLTYPE&gt;<br /> &lt;ROW&gt;&lt;!–第一条数据–&gt;<br /> &lt;col&gt;1&lt;/col&gt;<br /> &lt;col&gt;李明&lt;/col&gt;<br /> &lt;col&gt;2&lt;/col&gt;<br /> &lt;col&gt;1985-07-18&lt;/col&gt;<br /> &lt;col&gt;北京&lt;/col&gt;<br /> &lt;/ROW&gt;<br /> &lt;ROW&gt;&lt;!–第二条数据–&gt;<br /> &lt;col&gt;2&lt;/col&gt;<br /> &lt;col&gt;王明&lt;/col&gt;<br /> &lt;col&gt;2&lt;/col&gt;<br /> &lt;col&gt;1985-08-28&lt;/col&gt;<br /> &lt;col&gt;南京&lt;/col&gt;<br /> &lt;/ROW&gt;<br /> &lt;/ROWS&gt;</p> 
+  <p>XML文件格式说明：</p> 
+  <p>根节点为ROWS，根节点下第一个节点为列名定义，第二个节点为列的数据类型定义，第三个节点开始是数据。</p> 
+  <p>列名和列的数据类型都可以不定义，如果省略列名定义，那么表达式里引用列时用ds.#n的方式，n代表列号；如果省略列数据类型定义，那么数据类型全部默认为字符型。（数据类型的定义采用java.sql.Types里的标准定义。）</p> 
+  <p>一行数据为一个ROW节点定义。</p> 
+  <p>二、将制作好的xml文件设置成数据集</p> 
+  <p>数据集设置窗口选择”增加”，然后在数据集类型窗口选择”XML文件”，弹出XML数据集对话框，如下图。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-1-jf0b3.png" alt="图1.png" width="557" height="507" /></p> 
+  <p>在XML数据集对话框的页面上，点击右边的”选择”按钮，选择xml文件。用户也可以直接输入XML文件名，可以是绝对路径名，也可以是相对路径名。如果是相对路径，设计器中相对于”配置/选项”中的应用资源路径，WEB发布时，相对于web.xml中配置的ReportFileHome属性中的路径。</p> 
+  <p>三、使用设置好的xml数据集设计报表</p> 
+  <p>接下来以下面这个报表模板为例，来演示XML数据集设计的报表，如图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-3-jf0b3.png" alt="图3.png" width="424" height="98" /></p> 
+  <p>各单元格的表达式为：<br /> A2：=ds1.select(ID)；<br /> B2：=ds1.name；<br /> C2：=ds1.sex；<br /> D2：=ds1.born；<br /> E2：=ds1.city；</p> 
+  <p>报表的浏览效果如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-2-jf0b3.png" alt="图2.png" width="357" height="70" /></p> 
+  <p>当数据源是符合规定格式的XML文件时，就可用本文介绍的方法来建立xml类型的数据集并制作报表。</p>  
+ </body>
+</html>

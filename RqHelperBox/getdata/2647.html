@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>由于统计图以其直观的展现方式，自然赢得了不少人的青睐。也就是因为它的直观性，美观性等种种优点，使得人们在用它的同时希望它能满足自己所有需求，所以我们报表的统计图也在不断改进，以求满足用户的绝大多数需求。</p> 
+  <p>润乾报表中，统计图的大小跟所在单元格大小是密切相关的。在报表设计时，统计图被设置在单元格里，单元格的大小决定了报表的大小。统计图的宽度由所在单元格的宽度决定。根据分类轴轴的数据量，动态的扩展单元格就能动态地改变统计图的宽度。下面简单介绍一下如何控制统计图的大小。</p> 
+  <p>在某个单元格中，用to函数让单元格自动扩展，当统计图单元格和该单元格在同一列，那么统计图单元格始终与该单元格宽度相同。根据主子格和扩展模型，如果统计图单元格和该单元格具有相同的主格，当该单元格扩展时，统计图单元格并不扩展，而是与该单元格扩展后区域的宽度保持一致。所以想要让统计图显示多大，就扩展多少个单元格。</p> 
+  <p>第一步，准备报表，如图所示：</p> 
+  <p>&nbsp;<img title="78" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/78.jpg" alt="78" width="398" height="318" /></p> 
+  <p>按照以上所说的原理，将报表略做修改，如图所示：</p> 
+  <p>&nbsp;<img title="79" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/79.jpg" alt="79" width="400" height="304" /></p> 
+  <p>预览效果如下：</p> 
+  <p>&nbsp;<img title="80" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/80.jpg" alt="80" width="565" height="110" /></p> 
+  <p><img title="811" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/811.jpg" alt="811" width="215" height="274" />&nbsp;</p> 
+  <p><img title="821" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/821.jpg" alt="821" width="564" height="126" />&nbsp;</p> 
+  <p><img title="83" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/83.jpg" alt="83" width="426" height="546" />&nbsp;</p> 
+  <p>如图所示，传的参数越大，扩展的单元格越多，统计图就越大。当然参数不能输入特别大的数字，否则在页面展示时会报“请加大纸张宽度，以使报表能显示在一页中！”的错误。</p>  
+ </body>
+</html>

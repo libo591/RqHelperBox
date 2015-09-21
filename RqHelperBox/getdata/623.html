@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><a class="alinks_links" title="润乾报表" onclick="return alinks_click(this);" rel="external" href="http://www.runqian.com.cn/">润乾报表</a>的用户提出这样的需求：点击页面上按钮后台自动计算报表组并导出excel。这样的需求可以用api实现。</p> 
+  <h3>解决方案</h3> 
+  <p>将如下代码加入报表展示的jsp文件中，假设报表组文件是reportFiles/tianbaoraq/4.rpg。</p> 
+  <p>&lt;%</p> 
+  <p>//报表文件相对路径<br /> String reportFile=application.getRealPath(“/reportFiles/tianbaoraq/4.rpg”);</p> 
+  <p>//新建一个 HashMap对象存放参数,map可以存放空参数。传递参数时名称要保证和报表组用到的参数名一致。<br /> HashMap map=new HashMap();<br /> Enumeration paramNames = request.getParameterNames();<br /> if(paramNames!=null){<br /> while(paramNames.hasMoreElements()){<br /> String paramName = (String) paramNames.nextElement();<br /> String paramValue=request.getParameter(paramName);</p> 
+  <p>//把参数名和参数值分别加入到hashmap的key和value里<br /> map.put(paramName,paramValue);<br /> }<br /> }</p> 
+  <p>//读取报表组文件<br /> ReportGroup rg = ReportGroup.read(reportFile);</p> 
+  <p>//报表组参数元数据<br /> ParamMetaData rg_pmd=rg.getParamMetaData();</p> 
+  <p>//设置报表组参数<br /> if(rg_pmd !=null){<br /> int rg_pmdNum = rg_pmd.getParamCount();<br /> String rg_paramName=”&quot;;<br /> for(int j=0; j&lt;rg_pmdNum;j++){<br /> rg_paramName=rg_pmd.getParam(j).getParamName();<br /> for (Iterator it=map.keySet().iterator();it.hasNext();){</p> 
+  <p>//遍历hashmap，将对应的参数写入报表组对象<br /> String key= (String)it.next();<br /> if(rg_paramName.equals(key)) {<br /> rg_pmd.getParam(j).setValue((String)map.get(key));}<br /> }<br /> }<br /> }</p> 
+  <p>//获取上下文<br /> Context context = new Context();</p> 
+  <p>//计算报表组<br /> GroupEngine gEngine = new GroupEngine(rg, context);</p> 
+  <p>//获取子报表数量<br /> int num=rg.getItemCount();</p> 
+  <p>//新建excelReport对象<br /> ExcelReport er=new ExcelReport();</p> 
+  <p>//循环分别计算子报表<br /> for(int i=0;i&lt;num;i++){<br /> IReport r = gEngine.get(i);</p> 
+  <p>//生成子表的excel对象<br /> er.export( “a”+i,r);<br /> }<br /> try{</p> 
+  <p>//将多个子表的excel对象导入到一同个excel文件里。文件名拼上当前时间</p> 
+  <p>Date currentTime = new Date();</p> 
+  <p>//格式化日期<br /> SimpleDateFormat formatter = new SimpleDateFormat(“yyyyMMddhhmmss”);<br /> String dateString = formatter.format(currentTime);<br /> er.saveTo(“c:/work/name”+dateString+”.xls”);<br /> }catch(Exception e){<br /> e.printStackTrace();<br /> }<br /> %&gt;</p> 
+  <p>&lt;script&gt;<br /> alert(“导出完成。”);<br /> &lt;/script&gt;</p>  
+ </body>
+</html>

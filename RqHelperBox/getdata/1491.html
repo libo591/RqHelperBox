@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了为单元格设置超链接属性的功能。润乾报表提供的超链接可分为常规超链接、超链接中引用单元格的值，超链接中触发js函数三种类型。当超链接字符串需要根据单元格或者参数值动态生成时，很多情况下需要引用单元格的值。这里就介绍一下，如何在超链接中引用单元格的值，包括引用单元格的真实值和显示值。</p> 
+  <p>例子说明：制作一个报表，报表标题：报表，报表中A2格展现的字段有真实值和显示值。点击：真实值链接，超链接会引用A2的真实值，展现报表文件trueValue.raq，即展现客户信息表。当点击显示值连接，超链接会引用A2的显示值，展现报表dispValue.raq，即展现雇员信息表。</p> 
+  <p>首先，准备两个报表trueValue.raq 和dispValue.raq，作为超链接引用单元格真实值和显示值后分别展现的报表文件，报表设计如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/sjbb.png" alt="sjbb.png" height="134" /></p> 
+  <p>然后，新建一个报表，先创建一个内建数据集ds1，数据集中的数据如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zsjj.png" alt="zsjj.png" height="138" /></p> 
+  <p>设置A4的内容：显示值，B4的内容：真实值；设置A4、B4的属性，<strong>显示</strong>-<strong>前景色</strong>：蓝色，<strong>字体</strong>：加下划线，设计好后，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/xn-z-kf2d4c.png" alt="z设计.png" height="138" /></p> 
+  <p>设置A2的值和显示值，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zsj-xszsx.png" alt="zsj_xszsx.png" height="216" /></p> 
+  <p>设置A4的超链接属性，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/sza4.png" alt="sza4.png" height="203" /></p> 
+  <p>设置B4的超链接属性，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/szb4.png" alt="szb4.png" height="198" /></p> 
+  <p>最后，发布报表，点击链接：显示值，则在超链接中引用的是A2的显示值dispValue.raq，会展现报表dispValue.raq，即展现雇员信息表；点击链接：真实值，则在超链接中引用的是A2的真实值trueValue.raq，会展现报表trueValue.raq，即展现客户信息表。如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zxg.png" alt="zxg.png" height="334" /></p> 
+  <p>这样就实现了在超链接中引用单元格的真实值或显示值。后面的文章我们还会介绍如何在超链接中触发js函数。</p>  
+ </body>
+</html>

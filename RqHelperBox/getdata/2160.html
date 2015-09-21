@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>客户希望在报表计算之前修改报表数据集的sql语句，然后在计算报表的时候让报表的数据集执行这个新的sql语句，从而实现客户自己的业务逻辑。下面就用一个例子实现上面的需求。</p> 
+  <p>实现思路：可以直接在jsp中解决，用API读入报表模板，再得到数据集的sql语句，让客户根据自己的需要对sql进行修改，然后再让报表重新读取这个数据集，然后计算报表，最后用bean的方式发布。</p> 
+  <p><strong>第一步，制作一张报表，连接demo数据源。</strong></p> 
+  <p>首先制作一张连接demo数据源的报表，报表的数据集ds1的sql为：SELECT 订单.订单ID,订单.货主名称,订单.货主国家,订单.货主地区 FROM 订单，报表的样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-016n7b00e646.png" alt="" width="576" height="413" /></p> 
+  <p>将这个报表保存为test.raq。</p> 
+  <p><strong>第二步，编写jsp，实现修改报表sql和发布报表。</strong></p> 
+  <p>修改报表数据集sql的API和内容的注释如下：</p> 
+  <p>String report = request.getParameter(”report”);<br /> System.out.println(”取得的报表名是：”+report);<br /> //传入报表为空的情况下，赋于默认报表。<br /> if(report==null) report = “test.raq”;<br /> String path = application.getRealPath(”/reportFiles/”+report);<br /> System.out.println(”获取的报表路径：”+path);<br /> //从报表文件中构造一个报表定义对象<br /> ReportDefine rd = (ReportDefine)ReportUtils.read(path);<br /> DataSetMetaData dsmd = rd.getDataSetMetaData(); //获得报表定义中的数据集元对象<br /> SQLDataSetConfig sdsc = (SQLDataSetConfig)dsmd.getDataSetConfig(”ds1″); //取到需要修改的数据集对象<br /> String sql =sdsc.getSQL(); //取得数据集对象中的SQL<br /> System.out.println(”报表对象的SQL：”+sql);<br /> //修改sql<br /> sql= sql + “where CAST(订单.订单ID AS INTEGER) &lt;=10260″<br /> System.out.println(”加上参数的SQL：”+sql);<br /> //将修改后的SQL设置到数据集对象中<br /> sdsc.setSQL( sql );<br /> dsmd.setDataSetConfig(sdsc);<br /> rd.setDataSetMetaData(dsmd);</p> 
+  <p>用如上的代码可以实现修改报表数据集的sql，修改好sql后可以用如下的方式计算报表，然后采用bean的方式发布：</p> 
+  <p>Context ctx = new Context（）;<br /> Engine engine = new Engine(rd,ctx);<br /> IReport ireport = Engine. calc ();</p> 
+  <p>这样报表就计算好了，然后用bean的方式发布报表，jsp的内容如下：</p> 
+  <p>&lt;%@ page contentType=”text/html;charset=GBK”%&gt;<br /> &lt;%@page import=”com.zhengzhong.practise.ConnectDemo”%&gt;<br /> &lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.model.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.usermodel.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.util.*”%&gt;<br /> &lt;%@ page import=”java.util.*”%&gt;<br /> &lt;html&gt;<br /> &lt;body topmargin=0 leftmargin=0 rightmargin=0 bottomMargin=0&gt;<br /> &lt;%<br /> String report = request.getParameter(”report”);<br /> System.out.println(”取得的报表名是：”+report);<br /> //传入报表为空的情况下，赋于默认报表。<br /> if(report==null) report = “test.raq”;<br /> String path = application.getRealPath(”/reportFiles/”+report);<br /> System.out.println(”获取的报表路径：”+path);<br /> //从报表文件中构造一个报表定义对象<br /> ReportDefine rd = (ReportDefine)ReportUtils.read(path);<br /> DataSetMetaData dsmd = rd.getDataSetMetaData(); //获得报表定义中的数据集元对象<br /> SQLDataSetConfig sdsc = (SQLDataSetConfig)dsmd.getDataSetConfig(”ds1″); //取到需要修改的数据集对象<br /> String sql =sdsc.getSQL(); //取得数据集对象中的SQL<br /> System.out.println(”报表对象的SQL：”+sql);<br /> //修改sql<br /> sql= sql + “where CAST(订单.订单ID AS INTEGER) &lt;=10260″ ;<br /> System.out.println(”加上参数的SQL：”+sql);<br /> //将修改后的SQL设置到数据集对象中<br /> sdsc.setSQL( sql );<br /> dsmd.setDataSetConfig(sdsc);<br /> rd.setDataSetMetaData(dsmd);<br /> Context ctx = new Context（）;<br /> IReport ireport = Engine. calc ();<br /> %&gt;<br /> &lt;table align=left&gt;<br /> &lt;tr&gt;&lt;td&gt;<br /> &lt;!– 发布报表的tag标签，与struts标签使用类似，其中name为必填项，reportFileName与beanName根据发布的报表源类型选择性填写一个 –&gt;<br /> &lt;!– 这里主要讲解了报表源为bean的使用，并在exceptionPage属性里指定了发生错误时，展现错误信息的页面 –&gt;<br /> &lt;report:html name=”report1″<br /> srcType=”defineBean”<br /> beanName=”ireport”<br /> funcBarLocation=”top”<br /> exceptionPage=”/jsp/myError.jsp”<br /> /&gt;<br /> &lt;/td&gt;&lt;/tr&gt;<br /> &lt;/table&gt;<br /> &lt;/body&gt;<br /> &lt;/html&gt;</p> 
+  <p><strong>第三步：发布报表。</strong></p> 
+  <p>用上面编写的jsp发布报表，在浏览器中浏览就可以看到下面的效果，数据被按照自己设定的方式过滤了，也就是设置的过滤条件起作用了。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-017p6a65b00d.png" alt="" width="551" height="548" /></p> 
+  <p>这样，用<span>API</span> <span style="font-family: 宋体;">实现修改数据集</span> <span>sql</span> <span style="font-family: 宋体;">的功能就实现了。</span></p>  
+ </body>
+</html>

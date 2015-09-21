@@ -1,0 +1,31 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>对于用户输入的信息进行合法性校验，以避免错误或者非法数据入库，在开发报表过程中是非常常见的需求。润乾报表在设计器中提供校验这一功能点，使得检验数据合法性的工作不再复杂，只需在校验窗口的表达式中写好校验逻辑，出错提示中写好一旦出现不合法数据弹出的提示性语言即可完成复杂的校验工作。但是如果遇到复杂点的业务逻辑就要写JS去实现了。下面就以判断日期大小为例简单介绍一下如何调用JS校验数据的合法性。</p> 
+  <p>第一步：制作一张填报表，如下图所示：</p> 
+  <p>&nbsp;<img title="63" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/63.jpg" alt="63" width="553" height="93" /></p> 
+  <p>第二步：在发布报表的Jsp里写Js判断雇佣日期必须大于出生日期，否则出现友好性提示。</p> 
+  <p>&lt;script language=”javaScript”&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function test(cellOne,cellTwo){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var year1 = cellOne.substr(0,4);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var year2 = cellTwo.substr(0,4);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var month1 = cellOne.substr(5,2);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var month2 = cellTwo.substr(5,2);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var day1 = cellOne.substr(8,2);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var day2 = cellTwo.substr(8,2);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var temp1 = year1+”/”+month1+”/”+day1;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var temp2 = year2+”/”+month2+”/”+day2;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var date1 = new Date(temp1);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var date2 = new Date(temp2);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(date1.getTime()&lt;date2.getTime()){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }else{</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return true;} &nbsp;}</p> 
+  <p>&lt;/script&gt;</p> 
+  <p>第三步：在F5单元格中调用JS实现校验的效果。如图所示：</p> 
+  <p>&nbsp;<img title="64" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/64.jpg" alt="64" width="553" height="325" /></p> 
+  <p>预览效果如下：</p> 
+  <p>&nbsp;<img title="65" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/65.jpg" alt="65" width="554" height="271" /></p> 
+  <p>通过以上步骤就可以验证出来日期的大小并给出友好性提示。如果不写JS直接判断日期大小是有问题，只有在JS中将单元格中传的date类型的数据转成特定格式的日期类型才能进行大小的比较。</p>  
+ </body>
+</html>

@@ -1,0 +1,34 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>润乾报表为用户设计提供了多种多样的统计图类型，供用户通过图形直观形象的展现数据分布状况，其中尤以柱形图和堆积图应用广泛。柱形图和堆积图的单个柱体宽度是根据单元格的宽窄和图形的数量进行拉伸显示的，发布到web页面以后，如果根据参数模板查询出结果展现图形的话，会根据数据的不同，图像有宽有窄，显示效果不一致且缺乏美观。本文就来介绍一下如何利用单元格的属性动态控制统计图图形效果。</p> 
+   <p>思路分析：统计图的图形宽度是根据单元格宽窄和数据多少进行改变的，数据量的多少不能硬性规定，所以需要设置单元格宽窄来解决问题。</p> 
+   <p>首先设计如下图所示的报表模板，保存为堆积柱形图.raq。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-1-z94b86l94cj18c.png" alt="报表模板1.png" width="156" height="201" /></p> 
+   <p>这个报表连接的是润乾自带的demo数据源，报表模板的数据集配置为选择EMPLOYEE、DEGREE和TITLE三个表，添加EMPLOYEE.EMPID,DEGREE.NAME,TITLE.TITLENAME三个字段。这个报表的检索条件如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-5nq180dc4am61c.png" alt="检索条件.png" width="338" height="103" /></p> 
+   <p>其中A2单元格的表达式为：=ds1.group(TITLENAME,false)，B2单元格的表达式为：=ds1.group(NAME,false)，C2单元格的表达式为：=ds1.count()。A3单元格为堆积图，单击A3单元格右键，选择统计图，下图是具体配置。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-1-jf0bq5ae60h.png" alt="堆积图1.png" width="242" height="203" /></p> 
+   <p>统计图类型选择堆积柱形图，分类轴定义等于A2，即以TITLENAME（职称）分类；系列名称等于B2，是学历名称；系列值等于C2，为不同职称下各学历的职员数。</p> 
+   <p>下图为图形特性配置页面。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-jf0bq5ae60h.png" alt="堆积图2.png" width="359" height="86" /></p> 
+   <p>将统计图表题定为”公司员工数堆积柱形图”，将横轴标题定为”员工职称”，将纵轴标题定为”员工数”。</p> 
+   <p>为报表添加一个参数模板命名为：堆积柱形图_arg.raq，为该模板添加一个数据集ds1，sql语句为：SELECT TITLE.TITLENAME FROM TITLE，然后在C2单元格中设置编辑风格为下拉数据集，并勾选”允许多选”，变量名设为base，如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-8nr642bgpb95d1.png" alt="参数模板.png" width="355" height="219" /></p> 
+   <p>在堆积柱形图.raq报表中添加一个参数，参数名为base，参数类型为字符串组。修改数据集，在数据集添加查询过滤条件的sql语句，结果为：SELECT EMPLOYEE.EMPID,DEGREE.NAME,TITLE.TITLENAME FROM EMPLOYEE,DEGREE,TITLE WHERE TITLE.ID = EMPLOYEE.TITLE and EMPLOYEE.DEGREE = DEGREE.ID and TITLE.TITLENAME in (?),在数据集中添加一个参数，参数名称为base，参数类型同样为字符串组。</p> 
+   <p>此时报表的预览效果如下图。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-1-in1d571b1.png" alt="预览1.png" width="300" height="204" /></p> 
+   <p>下图为分类轴选择了两个分类的预览图。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-in1d571b1.png" alt="预览2.png" width="270" height="245" /></p> 
+   <p>由上面两预览图对比可以看出，第二个图分类变少后，图形明显变粗了。</p> 
+   <p>下面对报表模板做一些修改，使统计图图形效果一致。</p> 
+   <p>修改报表如下图：A1B1C1单元格为报表表头，A2B2单元格为报表数据的分组函数，C2单元格使用count函数对数据进行统计，A4单元格为统计图，在第四行后添加一行空白行，在A5单元格加入=count(A2{})的表达式, 这里A5就计算出了需要展现的分类数。选中ABC三列，在列属性-&gt;宽度的表达式中加入A5*10+20。这里的表达式需要自行调试，因为根据数据的不同需要的列宽也不一样，需要用户自行设置。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-z94b86l94cj18c.png" alt="报表模板2.png" width="297" height="196" /></p> 
+   <p>预览修改完成后的效果图，下图为选择两个分类后的预览图。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-3-in1d571b.png" alt="预览3.png" width="199" height="209" /></p> 
+   <p>可见图形宽度与全部数据时图形宽度是一致的。</p> 
+   <p>这样就可以实现根据数列的多少来动态增减列宽，从而达到统计图图形的一致与美观的效果。此方法同样适用于横向的统计图，如堆积条形图等。只需把列宽的设定改成对行高的设定即可。</p> 
+  </div>  
+ </body>
+</html>

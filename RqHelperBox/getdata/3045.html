@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="font-family: 宋体;">固定表头在日常的报表使用中常常被使用，润乾提供的</span><span>needScroll</span><span style="font-family: 宋体;">标签很好地支持了这个功能，但是我们有的时候希望记录条数过多时，既能固定表头又能够分页。这时我们该如何设置呢？</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;</span></span><span style="font-family: 宋体;">别着急，现在润乾报表很好地支持了这个功能，只需要增加一个</span><span>needPagedScroll</span><span style="font-family: 宋体;">即可。下面我们来看一下具体实现。</span></p> 
+  <h2><span style="font-family: 宋体;">实现</span></h2> 
+  <p class="MsoNormal"><span>&nbsp;</span><span style="font-family: 宋体;">首先我们设计一个报表，并设置好上表头和左表头，如下图：</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><img class="alignnone size-full wp-image-6587" title="12" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/12.jpg" alt="12" width="468" height="155" /></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">接着在发布报表的</span><span>jsp</span><span style="font-family: 宋体;">中增加如下标签：</span></p> 
+  <p class="MsoNormal"><span>needPagedScroll=”yes”</span></p> 
+  <p class="MsoNormal"><span>needScroll=”yes”</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">这两个标签都是需要添加的。</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">最后我们看一下页面的效果：</span></p> 
+  <p class="MsoNormal"><strong></strong></p> 
+  <p><img class="alignnone size-full wp-image-6588" title="13" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/13.jpg" alt="13" width="554" height="404" /></p>  
+ </body>
+</html>

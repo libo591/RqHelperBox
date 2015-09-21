@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">在润乾报表中，我们提供了多种多样的填报编辑风格，其中下拉数据集是较为常见的一种。在下拉数据集中，我们可单独设置数据列和显示列，这样在传递的时候传递的是数据列，而在页面中显示的是显示列。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6549" title="9" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/9.gif" alt="9" width="660" height="482" /><br /> 这样，在传递的时候就传递的是数据列（真实值）了。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">但有在有一些情况下，我们需要传递显示列的值，那要如何做呢？</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">这里我们就用到了动态参数的概念。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">动态参数是一个表达式（不用等号开头），报表运算时先解析该表达式，然后将表达式计算出的结果作为参数值传给报表进行运算，用动态参数的时候要注意参数的数据类型。动态参数适用于需要动态解析表达式的场合。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">我们无需修改参数模版，只需在主报表中增加一个动态参数：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6550" title="10" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/10.gif" alt="10" width="784" height="578" /><br /> 其实，整个过程就是，参数模版中的下拉数据集还是传递的数据列（真实值），我们在主报表接收参数时，做一个转换，用query来查询出数据列的显示值即可。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"> </p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6551" title="111" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/111.gif" alt="111" width="492" height="244" /></span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">点击查询后，我们可以看到，显示值被动态参数转换后，传递到了主报表中。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><img class="alignnone size-full wp-image-6552" title="12" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/12.gif" alt="12" width="534" height="269" /></p>  
+ </body>
+</html>

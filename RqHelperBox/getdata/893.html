@@ -1,0 +1,13 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>问题描述：每次更新报表后，部署到服务器都要重新启动服务器才能生效，如果不重启服务器，显示的结果都为原来的样式，很影响应用开发效率。</p> 
+   <p>问题解答：理论上不更新xml配置文件是不需要重新启动服务器的，报表没有即时更新是系统缓存造成的影响。</p> 
+   <p>建议在部署项目时，将reportConfig.xml的配置文件中的</p> 
+   <p>&lt;config&gt;<br /> &lt;name&gt;alwaysReloadDefine&lt;/name&gt;<br /> &lt;value&gt;yes&lt;/value&gt;<br /> &lt;/config&gt;</p> 
+   <p>节点值<span style="宋体;">设为</span>yes，则不享受性能管理提供的缓存功能，每次展现报表都需要重新计算。可以在应用开发测试阶段设为yes，以免报表定义改动以后,网页访问报表不能及时刷新。</p> 
+   <p><span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

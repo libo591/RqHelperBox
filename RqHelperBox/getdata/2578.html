@@ -1,0 +1,30 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>有些时候客户想给单元格中的数据加上单位，让数据显示成如：12kg,50吨，30元等样式。如下图</p> 
+  <p>&nbsp;<img title="284" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/284.jpg" alt="284" width="285" height="141" /></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图1</p> 
+  <p>给数据加上单位有两种比较简单的方法：</p> 
+  <p>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在单元格中加上单位</p> 
+  <p>第一步：</p> 
+  <p>新建一张报表，并配置数据集</p> 
+  <p>ELECT 订单明细.产品ID,订单明细.单价,订单明细.折扣,订单明细.数量 FROM 订单明细</p> 
+  <p>第二步：</p> 
+  <p>在设计器中设计报表，如下图：</p> 
+  <p>&nbsp;<img title="294" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/294.jpg" alt="294" width="382" height="81" /></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图2</p> 
+  <p>这样设置了之后，预览就会达到图1的效果。</p> 
+  <p>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在SQL语句中给字段名加上单位</p> 
+  <p>第一步：新建报表，配置数据集</p> 
+  <p>以图2为例，将数据即改成：</p> 
+  <p>SELECT 订单明细.产品ID,订单明细.单价 || ‘元‘ as 单价,订单明细.折扣,订单明细.数量 || ‘个‘ as 数量 FROM 订单明细</p> 
+  <p>注意：一定要给字段一个别名，然后在单元格中通过别名来取数据。</p> 
+  <p>第二步：设计报表</p> 
+  <p>在设计报表的时候就毋须加单位了，直接取数即可，如下图：</p> 
+  <p>&nbsp;<img title="305" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/305.jpg" alt="305" width="373" height="83" /></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 第三步：</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 预览，如下图</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img title="316" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/316.jpg" alt="316" width="285" height="141" /></p> 
+  <p>在给数据加单位的时候有一点需要说明：如果像以上设置，给数据加上单元格之后，给单元格设置显示格式就无效了。</p>  
+ </body>
+</html>

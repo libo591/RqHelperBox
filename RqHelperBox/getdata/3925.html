@@ -1,0 +1,38 @@
+<html>
+ <head></head> 
+ <body> 
+  <h1><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>在报表中使用三目运算</span></h1> 
+  <p class="MsoNormal"><span>在填<a href="http://www.runqian.com.cn/rqrptcenter/12_rqrptct_2.htm">报表</a>中，有时候需要对报表中的数据进行一些加减乘除的运算，然后将得到的值显示在某个单元格中。另外，对于一些特殊情况，可能就需要判断并惊醒计算了，如</span><span>A1</span><span>和</span><span>B1</span><span>是两个单元格，当</span><span>A1/B1</span><span>的时候，由于</span><span>B1</span><span>是分母，那么</span><span>B1</span><span>是不能为零的。因为在单元格中用一个非零的自然数除以零的时候，该单元格的内容就会显示成：</span><span>Infinity</span><span>。那么这个时候就需控制单元格的显示值了，即当分母为零的时候，让单元格的内容显示成零或者直接显示成空。</span></p> 
+  <p class="MsoNormal"><span>这个时候就需要用到三目运算了。下面举例说明一下：</span></p> 
+  <p class="MsoNormal"><span>新建一张普通的填报表：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/f4a76ed9-2221-42a4-8bc2-58e86b71400f.jpg" alt="" width="271" height="64" /></span></p> 
+  <p class="MsoNormal"><span>其中</span><span>B1</span><span>是可写的，并且</span><span>C1</span><span>的自动计算表达式为：</span><span>${B1}==null || ${B1}==0? 0 :${A1}/${B1}</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/e6897a0c-e9c4-4ab0-9e70-ad5d55632374.jpg" alt="" width="554" height="115" /></span></p> 
+  <p class="MsoNormal"><span>这样写的目的是为了判断当</span><span>B1</span><span>中的值为零的时候，</span><span>C1</span><span>中的值就直接显示为零，不进行计算。因为在除法运算中分母为零是不合理的。</span></p> 
+  <p class="MsoNormal"><span>页面预览效果如下：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/52dc122f-7844-4911-8c0f-2e928556c32d.jpg" alt="" width="487" height="173" /></span></p> 
+  <p class="MsoNormal"><span>在初始化页面的时候就将自动计算的表达式解析，并将计算出来的值显示在了网页上。当改变</span><span>B1</span><span>中的值的时候，依然可以自动计算，如将</span><span>10</span><span>改成</span><span>0</span><span>：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/4e5aa228-d27f-4c17-94d8-da0f3566a0ea.jpg" alt="" width="466" height="160" /></span></p> 
+  <p class="MsoNormal"><span>一般情况下，当</span><span>B1</span><span>的值为</span><span>0</span><span>的时候，</span><span>11/0</span><span>在页面上应该显示成：</span><span>Infinity</span><span>。但是由于在自动计算中通过三目表达式进行了一个判断，所以当</span><span>B1</span><span>为</span><span>0</span><span>的时候，</span><span>C1</span><span>中显示的是</span><span>0.</span></p> 
+  <p class="MsoNormal"><span>扩展：</span></p> 
+  <p class="MsoNormal"><span>在行式填报表中，有时候客户希望在初始化报表的时候就触发自动计算（注意：行式填报表在初始化的时候并不触发自动计算的表达式，需要在页面上改变单元格值之后才触发），并且，在页面上修改值之后也马上进行自动计算。实现这种效果，可进行如下设置：</span><span><br /> </span><span>举例说明一下，首先设计一张报表：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/27cf5a2a-8a19-46ec-a7c4-7c737935131a.jpg" alt="" width="256" height="123" /></span></p> 
+  <p class="MsoNormal"><span>注意：由于无法使用</span><span>$,{}</span><span>等符号，那么就没办法对扩展出来的单元格进行自动计算。只能单独去设置自动计算。</span></p> 
+  <p class="MsoNormal"><span>A1-A4</span><span>有初始值，并且是不可填写的，</span><span>B1-B4</span><span>有初始值，并且是可写的，</span><span>C1-C4</span><span>是可写的，并且设置了自动计算表达式，分别是：</span></p> 
+  <p class="MsoNormal"><span>C1:B1==null || B1==0 ? 0:A1/B1</span></p> 
+  <p class="MsoNormal"><span>C2:B2==null || B2==0 ? 0:A2/B2</span></p> 
+  <p class="MsoNormal"><span>C3:B3==null || B3==0 ? 0:A3/B3</span></p> 
+  <p class="MsoNormal"><span>C4:B4==null || B4==0 ? 0:A4/B4</span></p> 
+  <p class="MsoNormal"><span>另外，分别设置</span><span>C1-C4</span><span>的显示值的表达式为：</span></p> 
+  <p class="MsoNormal"><span>C1: if(B1==null || B1==0,”0″,A1/B1)</span></p> 
+  <p class="MsoNormal"><span>C2: if(B2==null || B2==0,”0″,A2/B2)</span></p> 
+  <p class="MsoNormal"><span>C3: if(B3==null || B3==0,”0″,A3/B3)</span></p> 
+  <p class="MsoNormal"><span>C4: if(B4==null || B4==0,”0″,A4/B4)</span></p> 
+  <p class="MsoNormal"><span>在网页上浏览效果如下：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/726907a5-70d8-4685-9051-0573c45a365c.jpg" alt="" width="554" height="139" /></span></p> 
+  <p class="MsoNormal"><span>说明：如果在</span><span>C1-C4</span><span>中不写：</span><span>A1/B1</span><span>之类的表达式，那么报表在初始化的时候就不会计算</span><span>A1/B1</span><span>了。报表初始化的时候，</span><span>C</span><span>列中计算的是单元格中的</span><span>”=A1/B1”,</span><span>当改变网页上的值之后，计算的是自动计算中的“</span><span>A1/B1</span><span>”</span><span>.</span></p> 
+  <p><span><br style="page-break-before: always;" /></span></p> 
+  <p class="MsoNormal" style="text-align: left;">&nbsp;</p> 
+  <p></p>  
+ </body>
+</html>

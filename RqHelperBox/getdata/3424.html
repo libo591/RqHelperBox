@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在报表设计的时候，每张报表都有一个打印设置，但是这个设置可能与客户端电脑的打印机配置不相匹配(如设计的是A3纸，可是客户端打印机只支持A4纸)；或者不同的报表需要用不同的打印机来打印(如发票打印机打印套打式报表等)。这样客户端用户在打印这些报表时每次都需要更改打印设置，用起来比较烦琐，因此需要将客户端的打印设置保存到服务器上，以便下次再打印这张报表时，可以从服务器读出打印设置，从而不需要再次设置。保存时的主键是根据以下生成的：客户端电脑名+客户端电脑网卡IP+报表名。写到clientPrintSetup.properties，这个文件里，保存在服务器上的用户主目录(user.home)中。</p> 
+  <p>一般都是固定电脑，固定的打印机，这样一次设置成功之后，每次打印的时候都按照这个偏移量进行打印，不用重新调整了。</p> 
+  <p>要实现上述功能首先要在web.xml中配置保存打印设置的类。</p> 
+  <p>&lt;servlet&gt;</p> 
+  <p>&lt;servlet-name&gt;com.runqian.report4.usermodel.PrintSetupServlet&lt;/servlet-name&gt;</p> 
+  <p>&lt;servlet-class&gt;com.runqian.report4.usermodel.PrintSetupServlet&lt;/servlet-class&gt;</p> 
+  <p>&lt;/servlet&gt;</p> 
+  <p>&lt;servlet-mapping&gt;</p> 
+  <p>&lt;servlet-name&gt;com.runqian.report4.usermodel.PrintSetupServlet&lt;/servlet-name&gt;</p> 
+  <p>&lt;url-pattern&gt;/servlet/PrintSetupServlet&lt;/url-pattern&gt;</p> 
+  <p>&lt;/servlet-mapping&gt;</p> 
+  <p>同时在发布报表的tag里属性设置</p> 
+  <p>生成一个需要保存打印设置的报表，在tag标签中需增加一个属性设置，如下：</p> 
+  <p>&lt;report:html …… savePrintSetup=”yes” …… /&gt;</p> 
+  <p>这样就可以保存客户端的打印设置了。</p> 
+  <p>至于客户向自定义保存打印设置，可以参考 部署教程里 “在客户端保存打印设置”这一节的详细介绍。</p>  
+ </body>
+</html>

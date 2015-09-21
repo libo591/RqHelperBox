@@ -1,0 +1,39 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>需求背景</strong></p> 
+  <p>在参数输入界面（如图示）</p> 
+  <p>1、 选择需要在最终统计表中显示的字段；</p> 
+  <p>2、 选择需要汇总的城市；</p> 
+  <p>3、 选择汇总方式</p> 
+  <p><img style="width: 259px; height: 79px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/zrclip-023p2920bcac.png" alt="" width="514" height="131" /></p> 
+  <p><strong>分析</strong></p> 
+  <p>需求中动态显示字段的实现可以通过隐藏列的方式实现，如果显示数据量比较大的时候可以考虑宏的方式实现，在这里采用隐藏列的方法。</p> 
+  <p>由于汇总城市的选择是单选的，因此采用报表提供的单选按钮完成。</p> 
+  <p>汇总方式可以通过参数控制行隐藏实现。<br /> <strong>详细步骤</strong></p> 
+  <p><strong>制作参数报表</strong></p> 
+  <p>1、选择字段</p> 
+  <p><img style="width: 320px; height: 255px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/zrclip-025p199ef98e.png" alt="" width="556" height="447" /></p> 
+  <p>2、汇总城市</p> 
+  <p>参考选择字段的方式，设置填报属性</p> 
+  <p><img style="width: 355px; height: 91px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/zrclip-027n4cd11eec.png" alt="" width="534" height="118" /></p> 
+  <p>3、 汇总方式</p> 
+  <p>下图中两个单元格类型设置为HTML</p> 
+  <p><img style="width: 372px; height: 104px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/zrclip-028n187a7a72.png" alt="" width="554" height="143" /></p> 
+  <p><strong>制作主表</strong></p> 
+  <p>接下来进行主表的主要部分设计</p> 
+  <p><img style="width: 380px; height: 96px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/zrclip-029pdc5ec8c.png" alt="" width="552" height="111" /></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">其中：</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt; text-indent: -18pt;"><span><span>①</span></span> <span style="font-family: 宋体;">处为设置该列的隐藏属性，在隐藏列中输入表达式：</span> <span>if(like(@cols,”*1*”),false,true</span> <span style="font-family: 宋体;">）。请注意此处的写法。由于</span> <span>cols</span> <span style="font-family: 宋体;">参数传递过来的是类似”</span> <span>1,2,3,4</span> <span style="font-family: 宋体;">“这样的串，所以此处采用上述表达式控制。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体;">另外，</span> <span>C</span> <span style="font-family: 宋体;">、</span> <span>F</span> <span style="font-family: 宋体;">、</span> <span>I</span> <span style="font-family: 宋体;">列的表达式分别为：</span> <span>if(like(@cols,”*2*”),false,true)</span> <span style="font-family: 宋体;">、</span> <span>if(like(@cols,”*3*”),false,true)</span> <span style="font-family: 宋体;">、</span> <span>if(like(@cols,”*4*”),false,true)</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt; text-indent: -18pt;"><span><span>②</span></span> <span style="font-family: 宋体;">处表达式为：</span><span style="font-family: 宋体;">if(@sumType==”1″,”北京小计:”,@sumType==”2″,”上海小计:”,”小计:”)</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt; text-indent: -18pt;"><span><span>③</span></span> <span style="font-family: 宋体;">处设置隐藏行，以区别不同的汇总方式。在隐藏行中设置表达式：</span> <span>if(@flag==”1″,true,false)</span></p> 
+  <p><strong>JSP文件</strong></p> 
+  <p>下面是发布该报表的jsp中的部分关键代码</p> 
+  <p><span style="color: #0000ff;">request.setCharacterEncoding( “GBK” );<br /> String report = request.getParameter( “raq” );<br /> String reportFileHome=Context.getInitCtx().getMainDir();<br /> StringBuffer param=new StringBuffer();<br /> String flag = request.getParameter(”flag”);<br /> //保证报表名称的完整性<br /> int iTmp = 0;<br /> if( (iTmp = report.lastIndexOf(”.raq”)) &lt;= 0 ){<br /> report = report + “.raq”;<br /> iTmp = 0;<br /> }</span></p> 
+  <p>Enumeration paramNames = request.getParameterNames();<br /> if(paramNames!=null){<br /> while(paramNames.hasMoreElements()){<br /> String paramName = (String) paramNames.nextElement();<br /> String paramValue=request.getParameter(paramName);<br /> if(paramValue!=null){<br /> //把参数拼成name=value;name2=value2;…..的形式<br /> param.append(paramName).append(”=”).append(paramValue).append(”;”);<br /> }<br /> }<br /> }</p> 
+  <p>&lt;script language=”javascript”&gt;<br /> function sumCode(flag){<br /> //alert(”调用成功！”);<br /> var cols = document.getElementById(”report1_C2″).value;<br /> alert(”选择字段=====”+cols);<br /> var sumType = document.getElementById(”report1_C4″).value;<br /> alert(”汇总方式====”+sumType);<br /> var url=”showReport.jsp?raq=/helishiDemo.raq&amp;flag=”+flag;<br /> url = url+”&amp;cols=”+cols;<br /> url = url+”&amp;sumType=”+sumType;<br /> window.open(url);<br /> }<br /> &lt;/script&gt;</p> 
+  <p><span style="color: #000000;"><strong>总结</strong></span></p> 
+  <p>使用报表参数的传递，以及各种隐藏方式的运用，可以实现诸多需求的报表。当然，这些都是在不断使用并熟悉报表工具的基础上进行的。</p>  
+ </body>
+</html>

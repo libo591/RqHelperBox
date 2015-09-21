@@ -1,0 +1,210 @@
+<html>
+ <head></head> 
+ <body> 
+  <p> </p> 
+  <p><span style="COLOR: windowtext; ">报表制作完成后，不仅能够实现展现及打印的功能，还能够根据用户的不同需求，以不同的形式导出。润乾为用户提供的导出方式有</span><span style=" COLOR: windowtext; ">Excel</span><span style="COLOR: windowtext; ">，</span><span style=" COLOR: windowtext; ">Word</span><span style="COLOR: windowtext; ">，</span><span style=" COLOR: windowtext; ">PDF</span><span style="COLOR: windowtext; ">，</span><span style=" COLOR: windowtext; ">Text</span><span style="COLOR: windowtext; ">，</span><span style=" COLOR: windowtext; ">Xml</span><span style="COLOR: windowtext; ">，方便了用户的使用。可是在实际需求中用到的文件不仅仅限于这五种格式，如果需要到处其他格式的怎么办呢？润乾也提供了丰富的</span><span style=" COLOR: windowtext; ">api</span><span style="COLOR: windowtext; ">来实现一些特殊的需求，比如导出</span><span style=" COLOR: windowtext; ">dbf</span><span style="COLOR: windowtext; ">文件。</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="LINE-HEIGHT: 14.25pt; MARGIN: 0cm 0cm 7.5pt" class="tgt"><span>考虑到</span><span style="">dbf</span><span>文件是一种数据库文件，每一行都有相同的字段数，所以只要求能将行列矩阵式的报表（不存在合并行合并列）导出。在有些情况下</span><span style=" COLOR: #2b2b2b; ">DBF</span><span style="COLOR: #2b2b2b; ">文件会更合适的。</span></p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal"><span style=" COLOR: #2b2b2b">JavaDBF</span><span style=" COLOR: #2b2b2b">是</span><span style=" COLOR: #2b2b2b">Java</span><span style=" COLOR: #2b2b2b">的阅读和写入</span><span style=" COLOR: #2b2b2b">dbf</span><span style=" COLOR: #2b2b2b">文件的</span><span style="">开源的接口</span><span style=" COLOR: #2b2b2b">。下面将介绍下如何将</span><span style=" COLOR: #2b2b2b">JavaDBF</span><span style=" COLOR: #2b2b2b">与润乾的</span><span style=" COLOR: #2b2b2b">API</span><span style=" COLOR: #2b2b2b">结合来实现此问题。</span></p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal"><span style=" COLOR: #2b2b2b">首先准备一张行列矩阵式的报表如下图。</span></p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal"><span style=" COLOR: #2b2b2b"><img src="/wp-content/uploads/2011/08/aa843445-db49-4f0d-9e22-40746db7b045.jpg" width="554" height="100" /></span></p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal"><span style=" COLOR: #2b2b2b">浏览数据：</span></p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal"><span style=" COLOR: #2b2b2b"><img src="/wp-content/uploads/2011/08/ccbe38b9-c7b5-48a3-8c31-3b17bbf7d448.jpg" width="554" height="286" /></span></p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal"><span style=" COLOR: #2b2b2b">接下来需要调用润乾的</span><span style=" COLOR: #2b2b2b">API</span><span style=" COLOR: #2b2b2b">将包括表头在内的单元格的数据读取出来，再通过</span><span style=" COLOR: #2b2b2b">javaDBF</span><span style=" COLOR: #2b2b2b">的写入接口写入到</span><span style=" COLOR: #2b2b2b">.dbf</span><span style=" COLOR: #2b2b2b">文件中</span><span style=" COLOR: #2b2b2b">:</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Context cxt = </span><b><span style=" COLOR: #7f0055; ">new</span></b><span style=" COLOR: black; "> Context(); </span><span style=" COLOR: #3f7f5f; ">// </span><span style=" COLOR: #3f7f5f; ">构建报表引擎计算环境</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=" COLOR: #3f7f5f; ">// …………………….. //</span><span style=" COLOR: #3f7f5f; ">其它辅助代码，例如往报表引擎传递参数和宏，传递数据库连接参数等，见后面的介绍</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ReportDefine rd = </span><b><span style=" COLOR: #7f0055; ">null</span></b><span style=" COLOR: black; ">;</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span style=" COLOR: #7f0055; ">try</span></b><span style=" COLOR: black; "> {</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>rd = (ReportDefine) ReportUtils.<i>read</i>(</span><span style=" COLOR: #2a00ff; ">“e:/dbf.raq”</span><span style=" COLOR: black; ">);</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span style=" COLOR: #7f0055; ">catch</span></b><span style=" COLOR: black; "> (Exception e) {</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=" COLOR: #3f7f5f; ">// </span><b><span style=" COLOR: #7f9fbf; ">TODO</span></b><span style=" COLOR: #3f7f5f; "> Auto-generated catch block</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>e.printStackTrace();</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Engine engine = </span><b><span style=" COLOR: #7f0055; ">new</span></b><span style=" COLOR: black; "> Engine(rd, cxt); </span><span style=" COLOR: #3f7f5f; ">// </span><span style=" COLOR: #3f7f5f; ">构造报表引擎</span></p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>IReport iReport = engine.calc(); </span><span style=" COLOR: #3f7f5f; ">// </span><span style=" COLOR: #3f7f5f; ">运算报表</span></p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p></p> 
+  <p></p> 
+  <p class="MsoNormal"><span style=" COLOR: #2b2b2b">此时通过润乾</span><span style=" COLOR: #2b2b2b">api</span><span style=" COLOR: #2b2b2b">计算出来的</span><span style=" COLOR: #2b2b2b">iReport</span><span style=" COLOR: #2b2b2b">对象已经是一个包含了计算后的所有单元格数据的对象</span><span style=" COLOR: #2b2b2b">.</span><span style=" COLOR: #2b2b2b">下面调用</span><span style=" COLOR: #2b2b2b">com.linuxense.javadbf</span><span style=" COLOR: #2b2b2b">中的</span><span style=" COLOR: #2b2b2b">DBFField</span><span style=" COLOR: #2b2b2b">和</span><span style=" COLOR: #2b2b2b">DBFWriter</span><span style=" COLOR: #2b2b2b">类来进行</span><span style=" COLOR: #2b2b2b">dbf</span><span style=" COLOR: #2b2b2b">文件的设定以及写入</span><span style=" COLOR: #2b2b2b">:</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 42pt" class="MsoNormal" align="left"><span style=" COLOR: black; ">DBFField fields[] = </span><b><span style=" COLOR: #7f0055; ">new</span></b><span style=" COLOR: black; "> DBFField[3];</span><span style=" COLOR: #3f7f5f; ">//</span><span style=" COLOR: #3f7f5f; ">首先定义一个</span><span style=" COLOR: #3f7f5f; ">3</span><span style=" COLOR: #3f7f5f; ">列的域</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=" COLOR: #3f7f5f; ">//</span><span style=" COLOR: #3f7f5f; ">逐列设定其属性</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[0] = </span><b><span style=" COLOR: #7f0055; ">new</span></b><span style=" COLOR: black; "> DBFField();</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[0].setFieldName(iReport.getCell(1, (</span><b><span style=" COLOR: #7f0055; ">short</span></b><span style=" COLOR: black; ">) 1).getValue()</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>.toString());</span><span style=" COLOR: #3f7f5f; ">//</span><span style=" COLOR: #3f7f5f; ">调用润乾的</span><span style=" COLOR: #3f7f5f; ">api</span><span style=" COLOR: #3f7f5f; ">读取表头位置的数据将其设置成列名</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[0].setDataType(DBFField.</span><i><span style=" COLOR: #0000c0; ">FIELD_TYPE_C</span></i><span style=" COLOR: black; ">);</span><span style=" COLOR: #3f7f5f; ">//</span><span style=" COLOR: #3f7f5f; ">设置其类型</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[0].setFieldLength(10);</span><span style=" COLOR: #3f7f5f; ">//</span><span style=" COLOR: #3f7f5f; ">设置其长度</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left">&nbsp;</p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[1] = </span><b><span style=" COLOR: #7f0055; ">new</span></b><span style=" COLOR: black; "> DBFField();</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[1].setFieldName(iReport.getCell(1, (</span><b><span style=" COLOR: #7f0055; ">short</span></b><span style=" COLOR: black; ">) 2).getValue()</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>.toString());</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[1].setDataType(DBFField.</span><i><span style=" COLOR: #0000c0; ">FIELD_TYPE_C</span></i><span style=" COLOR: black; ">);</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[1].setFieldLength(20);</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left">&nbsp;</p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[2] = </span><b><span style=" COLOR: #7f0055; ">new</span></b><span style=" COLOR: black; "> DBFField();</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[2].setFieldName(iReport.getCell(1, (</span><b><span style=" COLOR: #7f0055; ">short</span></b><span style=" COLOR: black; ">) 3).getValue()</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>.toString());</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[2].setDataType(DBFField.</span><i><span style=" COLOR: #0000c0; ">FIELD_TYPE_N</span></i><span style=" COLOR: black; ">);</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fields[2].setFieldLength(12);</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 21pt; MARGIN-LEFT: 21pt" class="MsoNormal" align="left"><span style=" COLOR: black; ">fields[2].setDecimalCount(2);</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; ">设定完</span><span style=" COLOR: black; ">dbf</span><span style=" COLOR: black; ">文件的表头类型后，开始将</span><span style=" COLOR: black; ">iReport</span><span style=" COLOR: black; ">对象中的数据根据定义好的规则写入：</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp; </span>DBFWriter writer = </span><b><span style=" COLOR: #7f0055; ">new</span></b><span style=" COLOR: black; "> DBFWriter();</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>writer.setFields(fields);</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=" COLOR: #3f7f5f; ">//</span><span style=" COLOR: #3f7f5f; ">便利已算好的</span><span style=" COLOR: #3f7f5f; ">iReport</span><span style=" COLOR: #3f7f5f; ">对象</span><span style=" COLOR: #3f7f5f; ">(</span><span style=" COLOR: #3f7f5f; ">由于第一行表头之前已经插入过，故从第二行开始</span><span style=" COLOR: #3f7f5f; ">)</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span style=" COLOR: #7f0055; ">for</span></b><span style=" COLOR: black; "> (</span><b><span style=" COLOR: #7f0055; ">int</span></b><span style=" COLOR: black; "> i = 2; i &lt;= iReport.getRowCount(); i++) {</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Object rowData[] = </span><b><span style=" COLOR: #7f0055; ">new</span></b><span style=" COLOR: black; "> Object[3];</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span style=" COLOR: #7f0055; ">for</span></b><span style=" COLOR: black; "> (</span><b><span style=" COLOR: #7f0055; ">int</span></b><span style=" COLOR: black; "> j = 1; j &lt;= iReport.getColCount(); j++) {</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=" COLOR: #3f7f5f; ">//</span><span style=" COLOR: #3f7f5f; ">获取每个单元格的值</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left; MARGIN-LEFT: 84pt" class="MsoNormal" align="left"><span style=" COLOR: black; ">INormalCell iCell = iReport.getCell(i, (</span><b><span style=" COLOR: #7f0055; ">short</span></b><span style=" COLOR: black; ">) j);</span><span style=" "> </span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style=" COLOR: #3f7f5f; ">//</span><span style=" COLOR: #3f7f5f; ">根据不同列的判断将</span><span style=" COLOR: #3f7f5f; ">string</span><span style=" COLOR: #3f7f5f; ">和</span><span style=" COLOR: #3f7f5f; ">double</span><span style=" COLOR: #3f7f5f; ">类型分别写入不同</span><span style=" COLOR: #3f7f5f; ">dbf</span><span style=" COLOR: #3f7f5f; ">列中</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>rowData[j - 1] = j != 3 ? iCell.getValue() : Double</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>.<i>parseDouble</i>(iCell.getValue().toString());</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>writer.addRecord(rowData);</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left">&nbsp;</p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; ">最后将其写入</span><span style=" COLOR: black; ">dbf</span><span style=" COLOR: black; ">文件中：</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>FileOutputStream fos = </span><b><span style=" COLOR: #7f0055; ">new</span></b><span style=" COLOR: black; "> FileOutputStream(</span><span style=" COLOR: #2a00ff; ">“e://dbfTest.dbf”</span><span style=" COLOR: black; ">);</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>writer.write(fos);</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; "><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fos.close();</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left">&nbsp;</p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: black; ">使用数据库导入该</span><span style=" COLOR: black; ">dbf</span><span style=" COLOR: black; ">文件测试，成功导入到数据库中：</span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: #2b2b2b"><img src="/wp-content/uploads/2011/08/c1608b01-15c8-4878-8c7b-78ef21820899.jpg" width="472" height="354" /></span></p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: #2b2b2b"></span>&nbsp;</p> 
+  <p></p> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left" class="MsoNormal" align="left"><span style=" COLOR: #2b2b2b">附件中提供了简单例子以及javaDBF的jar</span></p> 
+  <p></p> 
+  <p> </p>  
+ </body>
+</html>

@@ -1,0 +1,28 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>普通的行式填报表只可以单行删除数据，但是有很多web报表的业务需要批量删除，下面就通过一个简单的例子来介绍一下在润乾报表中如何实现行式填报表中的批量删除。</p> 
+  <p><strong>1、实现思路</strong></p> 
+  <p>首先，在原有行式填报报表基础上增加可以多选和全选的checkbox。</p> 
+  <p>然后，编写可以实现多选和全选后同时批量删除的JavaScript并插入到发布报表的jsp中。</p> 
+  <p>最后， 在toolbar中添加新功能的按钮。</p> 
+  <p><strong>2、实现步骤</strong></p> 
+  <p>第1步，新建一张行式填报表，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/3-0008.png" alt="3.png" width="461" height="70" /></p> 
+  <p>第2步，设置A2单元格的 <strong>填报属性-编辑风格</strong> 为<strong>复选框</strong>，关值为<strong>0</strong>，开值为<strong>1</strong>，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/2-0018.png" alt="2.png" width="466" height="231" /></p> 
+  <p>A列的复选框在报表发布后将作为每行前的选择框使用。</p> 
+  <p>第3步，增加全选和多选的Chekbox，在展现报表的jsp中加入如下代码</p> 
+  <p><span style="color: #0000ff;">&lt;script language=”javascript”&gt;<br /> function selcheck() {<br /> var objs = report1.getElementsByTagName(”input”);//得到所有复选框<br /> for(var i=0; i&lt;objs.length; i++) {//遍历这个所有复选框结果集,对每个复选框进行操作<br /> if(objs[i].type.toLowerCase() == “checkbox” )<br /> objs[i].checked =event.srcElement.checked;//如果类型为” checkbox”,则对该复选框进行勾选<br /> }<br /> }<br /> &lt;/script&gt;</span></p> 
+  <p>第4步，在展现报表的jsp中增加批量删除的JavaScript</p> 
+  <p>由于页面上的全选操作使用JavaScript来实现的，所以需要编写批量删除的JavaScript代码。</p> 
+  <p>原理：遍历选中行，将选中行依次赋值给润乾报表的内置函数currCell，调用行式填报的_deleteRow(report)，依次删除，实现批量删除效果。</p> 
+  <p>在展现报表的jsp中加入代码如下</p> 
+  <p><span style="color: #0000ff;">&lt;script language=”javascript”&gt;<br /> function deleteRows(){ //创建删除函数<br /> var report = document.getElementById(’report1′); //根据报表ID取得报表<br /> for(var i=report.rows.length-1;i&gt;0;i-){//循环报表行数<br /> var row = report.rows[i];//逐行取得每行的值<br /> if(!row.all.tags(”input”)[0].checked)<br /> continue;//判断如果该行填报属性中的值为0则不作操作,也就是上文提到的复选框关值<br /> var cell = row.cells[1];//将值为1的单元格赋值给一个变量<br /> report.currCell = cell; //设定这个变量为取选中单元格<br /> _deleteRow(report);//对该单元格所在行进行删除<br /> }<br /> }<br /> &lt;/script&gt;</span></p> 
+  <p>第5步，设置toolbar按钮，在展现报表的jsp的&lt;body&gt;中加入设置全选、删除等按钮，代码如下</p> 
+  <p><span style="color: #0000ff;">&lt;table&gt;<br /> &lt;tr&gt;<br /> &lt;td style=”background-color:”&gt;<br /> &lt;div noWrap style=”font-family:宋体;font-size:13px;color:;”&gt;<br /> &lt;!–以下按钮均是通过onclick事件来触发需要自己编写的函数以及快逸内置的函数–&gt;<br /> 全选:&lt;INPUT type=”checkbox” onclick=”selcheck()”&gt;<br /> &lt;span style=”cursor:pointer” onclick=”_insertRow( report1 )”&gt;插入&lt;/span&gt;<br /> &lt;span style=”cursor:pointer” onclick=”_appendRow( report1 )”&gt;添加&lt;/span&gt;<br /> &lt;span style=”cursor:pointer” onclick=”deleteRows()”&gt;删除勾选&lt;/span&gt;<br /> &lt;span style=”cursor:pointer” onclick=”_submitRowInput( report1 )”&gt;提交&lt;/span&gt;<br /> &lt;/div&gt;<br /> &lt;/td&gt;<br /> &lt;/tr&gt;<br /> &lt;/table&gt;</span></p> 
+  <p>至此，多选功能是制作好了。在网页中查看效果，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/1-0019.png" alt="1.png" width="417" height="302" /></p> 
+  <p>这样，就实现了在行式填报表中增加全选/多选的checkbox了。该功能大大方便了web报表用户进行批量删除的操作。</p>  
+ </body>
+</html>

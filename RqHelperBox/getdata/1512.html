@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>当同一报表被连续多次重复访问时，服务器的运算消耗将会增加，报表展现所需的时间也会增长。如果能够把第一次算出的报表缓存下来，再次访问时直接从缓存中读取，则可以减轻服务器的负担，从而缩短用户的等待时间。润乾报表提供了缓存的机制，可通过设置reportConfig.xml中的缓存参数控制缓存的使用，实现实时报表。</p> 
+  <p>在reportConfig.xml中提供了缓存参数，详细说明如下</p> 
+  <p><span style="color: #0000ff;">alwaysReloadDefine：</span> 是否每次都重新读取报表定义，如设为yes，表示关闭缓存功能，设为no，表示开启缓存功能。</p> 
+  <p><span style="color: #0000ff;">cachedParamsTimeout：</span> 表示提交给报表的参数在缓存中保存的时间，以分钟为单位。如果不设此参数，缺省值是120分。</p> 
+  <p><span style="color: #0000ff;">cachedReportDir：</span> 表示报表缓存的文件夹，（在unix系统中，用户应对此文件夹有写的权限，并根据报表的数量和访问量的大小以及缓存超时的时间，分配一个合理的空间大小）。如果不设此参数或设置错误，则采用JDK默认的临时文件夹。</p> 
+  <p><span style="color: #0000ff;">cachedIdPrefix：</span> 表示报表缓存的前缀。只有在集群环境中并且多台服务器共享一个报表缓存目录时才需要设置。</p> 
+  <p><span style="color: #0000ff;">cachedReportTimeout：</span> 表示报表缓存保存的时间，以分钟为单位。如果不设此参数，缺省值是120分。此值应根据实际内存大小、缓存文件夹空间大小来调节，一般在1－3小时之间。</p> 
+  <p>当且仅当reportConfig.xml里的alwayReloadDefine属性设置为no时，才能开启报表缓存功能，它在计算时，在指定的时间内，报表定义文件仅加载一次，报表仅运算一次。其它操作都从缓存中提取，如翻页等等。</p> 
+  <p>在reportConfig.xml中设置的缓存对所有的应用都起作用。当reportConfig.xml里的alwayReloadDefine属性设置为no时，应用中的所有报表都会有缓存功能。我们还可以通过&lt;report:html &gt;标签设置单个报表是否有缓存功能。</p> 
+  <p>tag标签中的属性说明如下：</p> 
+  <p><span style="color: #0000ff;"><span style="color: #0000ff;"><span style="color: #0000ff;">useCache</span>：</span></span> 控制是否启用缓存。当且仅当reportConfig.xml里的alwayReloadDefine属性设置为no时，useCache的设置才起作用。当useCache为no时，即使alwayReloadDefine属性是no，由此标签发布的报表，也不会开启缓存功能。</p> 
+  <p><span style="color: #0000ff;">timeout：</span>从缓存系统中取多少分钟内产生的报表，如果没有此时间内的，则产生一个新报表。当且仅当reportConfig.xml里的alwayReloadDefine属性设置为no时，timeout的设置才起作用。如果cachedReportTimeout中设置了超时时间和标签中的timeout不一致，以timeout的设置为主。</p> 
+  <p>标签使用举例如下：</p> 
+  <p>&lt;report:html name=”report1″<br /> reportFileName=”test.raq”<br /> useCache=”yes”<br /> timeout=”30″<br /> /&gt;</p> 
+  <p>润乾报表提供的通过配置reportConfig.xml中的缓存参数来灵活控制缓存使用的功能，大大减少了数据量比较大时频繁访问报表给服务器带来的压力，实现了实时报表，也增强了用户的体验。</p>  
+ </body>
+</html>

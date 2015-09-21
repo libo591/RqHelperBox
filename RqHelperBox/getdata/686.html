@@ -1,0 +1,10 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表不仅是一个强大的报表工具，也提供了强大的数据填报功能。web填报常常遇到的问题，润乾报表都可以解决：单选按钮、下拉列表、自动计算、自动生成流水号、实时数据合法性检查、多选批量操作等等。</p> 
+  <p>在用户填报完成点击”提交”的时候，系统可以弹出一个”确认”的提示框，那么是否可以定制这个提示框呢？</p> 
+  <p>解决办法：</p> 
+  <p>比如：想在提示框中添加”取消”等。</p> 
+  <p>设置标签：promptAfterSave=”no”<br /> 然后自己写js实现提交按钮和弹出对话框，例如：<br /> &lt;input type=”submit” name=”Submit2″ value=”提交” onclick=”firm()” /&gt;<br /> function firm()<br /> {<br /> //利用对话框返回的值 （true 或者 false）<br /> if(confirm(“是否保存”))<br /> {<br /> //如果是true ，则调用_submitTable( report1 )<br /> _submitTable( report1 );<br /> return true;<br /> }<br /> else<br /> {<br /> //否则则取消<br /> //alert(“你按了取消，那就是返回false”);<br /> return false;<br /> }<br /> }<br /> &lt;/script&gt;</p>  
+ </body>
+</html>

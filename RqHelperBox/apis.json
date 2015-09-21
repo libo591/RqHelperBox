@@ -1,0 +1,7 @@
+{"API专题":[
+ {"title":"报表工具类","date":"","desc":"报表的读取,写入和导出(com.runqian.report4.util.ReportUtils)","content":"api_1.rqapi"},
+ {"title":"报表模板","date":"","desc":"创建空白报表模板，并进行单元格属性和表达式的设置","content":"api_2.rqapi"},
+ {"title":"参数和宏","date":"","desc":"与报表参数和宏相关的API","content":"api_3.rqapi"},
+ {"title":"数据集","date":"","desc":"与报表数据源数据集相关的API","content":"api_4.rqapi"},
+ {"title":"EXCEL导入","date":"","desc":"excel导入","content":"api_5.rqapi"}
+  ]}

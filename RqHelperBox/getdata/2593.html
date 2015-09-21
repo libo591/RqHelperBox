@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>Switchcase函数的功能是：在不同的匹配值下计算出不同表达式的结果。此函数的用法在教程中有详细的讲解。</p> 
+  <p>本文就用一个实际的客户需求来更形象的展示一下switchcase函数的巧妙用法：客户希望在1个下拉框中选择1个季度，会出现该季度下相应的月份，即选择“二季度”则显示“4月”，“5月”，“6月”</p> 
+  <p>如图：</p> 
+  <p>&nbsp;<img title="163" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/163.jpg" alt="163" width="554" height="290" /></p> 
+  <p>下面我们看一下，如何用switchcase函数来巧妙实现这一需求：</p> 
+  <p>第一步：设计一张填报表，如下图：</p> 
+  <p>&nbsp;<img title="214" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/214.jpg" alt="214" width="554" height="264" /></p> 
+  <p>其中，E1单元格的编辑风格为“下拉列表框”：</p> 
+  <p>&nbsp;<img title="315" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/315.jpg" alt="315" width="554" height="344" /></p> 
+  <p>这里解释一下“代码值”和“显示值”的含义：</p> 
+  <p>代码值：存在数据库中的实际值</p> 
+  <p>显示值：显示在页面上的值，在数据库表中并不存在</p> 
+  <p>第二步：</p> 
+  <p>定义D4,E4,F4单元格的编辑风格和自动计算表达式，以D4为例：</p> 
+  <p>右击D4单元格，点击“填报属性”，将“是否可写”勾选上，然后在“自动计算”中写入：=switchCase(E1,”1″,”1月”,”2″,”4月”,”3″,”7月”,”4″,”10月”,”&quot;)。意思是：当E1单元格中的显示值为1时，显示1月”；为2时，显示“4月”，以此类推，默认为空。</p> 
+  <p>&nbsp;<img title="410" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/410.jpg" alt="410" width="507" height="211" /></p> 
+  <p>这里我们看到，switchCase函数中取的是E1单元格中的“代码值”，而非“显示值”。这点非常值得注意！如果取“显示值“的话是没有效果的，看不到动态改变。</p> 
+  <p>在E4和F4中将“是否可写“勾选上，“自动计算”的表达式分别为：</p> 
+  <p>=switchCase(E1,”1″,”2月”,”2″,”5月”,”3″,”8月”,”4″,”11月”,”&quot;)</p> 
+  <p>=switchCase(E1,”1″,”3月”,”2″,”6月”,”3″,”9月”,”4″,”12月”,”&quot;)</p> 
+  <p>这样就可以实现动态选择不同季度，出现该季度下相应的月份。</p>  
+ </body>
+</html>

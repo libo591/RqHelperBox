@@ -1,0 +1,36 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>单元格”下划线”功能是针对单元格”下边框”的不足而开发的新功能，边框线的使用很普遍，也很方便，可是有些时候也有它的不足，比如下文说到的两个例子，这样的不足就需要用到”下划线”新功能。</p> 
+  <p><span style="color: #0000ff;">一、通过问题理解功能点</span></p> 
+  <p><em>问题背景一：合并单元格下边框问题</em></p> 
+  <p>合并单元格是一个常用功能，可以很方便的设计想要得表格样式，但是遇到有边框线的单元格时会遇到一些麻烦，如下图，只设置了A1单元格的下边框：</p> 
+  <p>&nbsp;</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/1-0024.png" alt="1.png" width="436" height="200" />但是把A2，B2，C2三个单元格合并后却出现了下面的效果：A1的边框线被扩展到了B1，C1上，这显然不是想要的结果。</p> 
+  <p>&nbsp;</p> 
+  <p><em><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/2-0022.png" alt="2.png" width="430" height="148" />问题背景二：按纸张大小分页打印问题</em></p> 
+  <p>报表按照纸张大小分页，而且在第一页的最后一行设置下边线，在打印的时候，第二页的最上一行必然会出现多余的上边线，大多数情况下，是不需要这条上边线的。由于纸张大小的不同，打印时具体在哪一行进行分页也是不可预知的，所以就不能采用插入新的一行的办法来解决。</p> 
+  <p>例如，要打印下面这张报表，对于第一页打印正常，与想要的结果一致。</p> 
+  <p class="MsoNormal" style="text-indent: 21pt;">&nbsp;</p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/3-0018.png" alt="3.png" width="373" height="119" /></span></p> 
+  <p>但打印到第二页的时候，就会出现下图的效果，与实际想要的效果多一条上边线。</p> 
+  <p>&nbsp;</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/4-0018.png" alt="4.png" width="374" height="276" />以上两个问题都是因为报表单元格”下边框”功能的局限性造成的，于是设计了另一种模型来弥补”下边框线”的不足，它就是”单元格下划线”。</p> 
+  <p><span style="color: #0000ff;">二、功能使用方法</span></p> 
+  <p>首先选中需要设置边框的单元格，点击 属性-边框设置 ，或者 右键菜单-边框设置，将弹出边框设置界面，如下图所示：</p> 
+  <p>&nbsp;</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/7-0007.png" alt="7.png" width="317" height="196" />通过该界面选择一种单元格下划线风格，设置完成后，点击【确定】即可。</p> 
+  <p>注意：在设置了单元的下划线风格后，单元格下边框按钮将失去作用。</p> 
+  <p><span style="color: #0000ff;">三、使用新功能后问题的解决情况</span></p> 
+  <p><em>合并单元格下边框问题</em></p> 
+  <p>对于合并格边线的问题，对A1设置下划线风格，那么它的下划线就只作用在A1单元格内，不会将合并格的整条边都设上边框。如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/8-0004.png" alt="8.png" width="222" height="69" />预览效果：<img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/9-0002.png" alt="9.png" width="215" height="58" /></p> 
+  <p><em>按照纸张大小分页打印问题</em></p> 
+  <p>对于打印时出现多余上边线的问题，设置下图中A9,B9,C9,D9,E9,F9的单元格下划线风格。</p> 
+  <p><span></span></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/10-0002.png" alt="10.png" width="374" height="118" />打印时如下图，不会出现多余的上边线。</p> 
+  <p>&nbsp;</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/11-0002.png" alt="11.png" width="436" height="194" />到此问题全部解决，希望这个新功能给您的设计带来更多的便利。</p> 
+  <p>附注：详细功能点信息请参照教程：润乾报表用户手册/操作指南/属性/边框设置/单元格下划线。</p>  
+ </body>
+</html>

@@ -1,0 +1,9 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font color="red">问题描述</font>:</p> 
+  <p>报表中的合并单元格、尺寸调整方式、对齐、自动换行、子报表等都会用到相关的图形包。当图形包缺失或图形环境没有启动一般会报错：Can’t connect to X11 window server using ‘:0.0′ as the value of the DISPLAY variable.原因是用到了图形处理，java程序会去寻找linux上的图形界面是否启动。</p> 
+  <p><font color="red">解决方法</font>：</p> 
+  <p>在java 启动时加选项java -Djava.awt.headless=true <br /> 例如:如果服务器是tomcat,在/usr/local/tomcat/bin/catalina.sh中修改:<br /> JAVA_OPTS=-Djava.awt.headless=true<br /> echo “Using CATALINA_BASE: $CATALINA_BASE”<br /> echo “Using CATALINA_HOME: $CATALINA_HOME”<br /> echo “Using CATALINA_TMPDIR: $CATALINA_TMPDIR”<br /> echo “Using RUNJAVA: $_RUNJAVA”<br /> echo “Using JAVA_OPTS: $JAVA_OPTS”</p>  
+ </body>
+</html>

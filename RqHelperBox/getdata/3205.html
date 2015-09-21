@@ -1,0 +1,100 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">在润乾报表中,Javascript函数都用在哪些地方?</span></p> 
+  <p style="line-height: 1.5;"> </p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">1.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">填报表中的校验规则</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">2.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">填报表中的自动计算</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">3.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">填报表中的自定义输入控件</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">4.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">单元格中的超链接</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">5.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">页面中的润乾内置</span><span style="font-family: 宋体; font-size: 12pt;">Javascript</span><span style="font-family: 宋体; font-size: 12pt;">函数</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">6.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">个性化的页面处理需求</span></span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">本篇文章介绍着重介绍前三点,在&lt;润乾报表中Javascript函数使用总结(下)&gt;中将介绍后三点.</span></p> 
+  <p style="line-height: 1.5;"> </p> 
+  <h2><span style="font-family: 宋体; font-size: 12pt;">校验</span></h2> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">在填报表中</span><span style="font-family: 宋体; font-size: 12pt;">,</span><span style="font-family: 宋体; font-size: 12pt;">经常需要对页面填报的数据进行校验</span><span style="font-family: 宋体; font-size: 12pt;">,</span><span style="font-family: 宋体; font-size: 12pt;">来保证入库的数据都是符合规则且正确的</span><span style="font-family: 宋体; font-size: 12pt;">.</span><span style="font-family: 宋体; font-size: 12pt;">在校验规则中我们规定使用</span><span style="font-family: 宋体; font-size: 12pt;">Javascript</span><span style="font-family: 宋体; font-size: 12pt;">规则来对数据进行校验</span><span style="font-family: 宋体; font-size: 12pt;">.</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">例如</span><span style="font-family: 宋体; font-size: 12pt;">,</span><span style="font-family: 宋体; font-size: 12pt;">我们有一张填报表</span><span style="font-family: 宋体; font-size: 12pt;">:</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=f91e4271-db82-4a4f-bcf9-3a2e459eafdf" alt="" width="554" height="289" /></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">我们在填报的时候需要对运货费进行校验</span><span style="font-family: 宋体; font-size: 12pt;">,</span><span style="font-family: 宋体; font-size: 12pt;">那么给运货费单元格的填报属性中加入校验规则</span><span style="font-family: 宋体; font-size: 12pt;">:</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=d112ad77-1f58-4c23-a5da-7825f4e2e292" alt="" width="535" height="100" /></span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">在添加自定义校验表达式时，如果勾选</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">“</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">是否立即校验</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">”</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">复选框，表示报表在填报数据时，当鼠标移开当前单元格时就进行合法性检查，否则，在点击提交按钮时才进行合法性检查。</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">在页面中</span><span style="font-family: 宋体; font-size: 12pt;">,</span><span style="font-family: 宋体; font-size: 12pt;">我们可以看到在运费里输入一个大于</span><span style="font-family: 宋体; font-size: 12pt;">1000</span><span style="font-family: 宋体; font-size: 12pt;">的数据，如</span><span style="font-family: 宋体; font-size: 12pt;">1200</span><span style="font-family: 宋体; font-size: 12pt;">，则系统会弹出</span><span style="font-family: 宋体; font-size: 12pt;">javascript</span><span style="font-family: 宋体; font-size: 12pt;">提示框，提示用户输入正确的数据：</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=04a44787-8fa2-4008-962b-19458f333ba1" alt="" width="554" height="295" /></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;">一般来说，写在可扩展单元格中的校验，会随着单元格的扩展而被复制，写在不可扩展单元格，则不会被复制。</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">需要注意的是</span><span style="font-family: 宋体; font-size: 12pt;">:</span></span></p> 
+  <p style="line-height: 1.5; tab-stops: list 36.0pt;"><span style="font-size: 12pt;"><span style="font-family: 宋体; color: windowtext; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">&middot;<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">在合法性检查公式中，可以直接通过单元格的名称来引用单元格的值，如</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">A1,A2</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">等。</span></span></p> 
+  <p style="line-height: 1.5; tab-stops: list 36.0pt;"><span style="font-size: 12pt;"><span style="font-family: 宋体; color: windowtext; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">&middot;<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">如果随着单元格的扩展，合法性检查属性要被复制到每一行每一列，且被引用的单元格也跟着动态变化，那么该单元格要加上</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">${}</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">，表示动态引用，例如</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">${A1},${A2}</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">等等。</span></span></p> 
+  <p style="line-height: 1.5; tab-stops: list 36.0pt;"><span style="font-size: 12pt;"><span style="font-family: 宋体; color: windowtext; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">&middot;<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">若是行式报表则不需要加</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">${}</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">，直接写</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">A1</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">，</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">A2</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">即可。</span></span></p> 
+  <p style="line-height: 1.5;">&nbsp;</p> 
+  <h2><span style="font-family: 宋体; font-size: 12pt;">自动计算</span></h2> 
+  <p style="line-height: 1.5;"><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">自动计算，说白了就是计算列或者计算字段，即填报的时候，用户录入了某些数据后，系统会自动算出另外一部分单元格的值，由此简化用户的输入，减少错误率。</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">由于自动计算大部分时候是在网页上响应的，即用户在网页上录入数据时触发另外一些单元格自动计算，因此自动计算表达式采用的是</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">javascript</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">表达式或者函数，但是可以引用单元格的值。</span></span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">例如我们现在有个填报表要做自动计算</span><span style="font-family: 宋体; color: windowtext; font-size: 12pt;">:</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=bafabff5-ff8d-48b4-8685-79477555edd6" alt="" width="437" height="372" /></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">其中如何做到年龄单元格要根据出生日期自动计算出来呢</span><span style="font-family: 宋体; font-size: 12pt;">?</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">在年龄单元格的填报属性中增加自动计算</span><span style="font-family: 宋体; font-size: 12pt;">:</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=6e29ee06-bc6c-4efb-8347-120e852bd54a" alt="" width="553" height="369" /></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">其中自动计算的含义是取到当前年减去出生年份得到</span><span style="font-family: 宋体; font-size: 12pt;">.</span><span style="font-family: 宋体; font-size: 12pt;">其中</span><span style="font-family: 宋体; font-size: 12pt;">substr</span><span style="font-family: 宋体; font-size: 12pt;">和</span><span style="font-family: 宋体; font-size: 12pt;">getFullYear</span><span style="font-family: 宋体; font-size: 12pt;">都是</span><span style="font-family: 宋体; font-size: 12pt;">Js</span><span style="font-family: 宋体; font-size: 12pt;">函数</span><span style="font-family: 宋体; font-size: 12pt;">.</span><span style="font-family: 宋体; font-size: 12pt;">用来处理字符串和年份</span><span style="font-family: 宋体; font-size: 12pt;">.</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">这样在页面中就可以看到自动计算出来的年龄</span><span style="font-family: 宋体; font-size: 12pt;">:</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=cd46b9e2-0da6-419d-b3cf-47db908b32b8" alt="" width="451" height="365" /></span></p> 
+  <p style="line-height: 1.5;"> </p> 
+  <h2><span style="font-family: 宋体; font-size: 12pt;">自定义输入控件</span></h2> 
+  <p style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;">在填报表录入数据或者参数表单输入参数的单元格中，由于特殊需求，需要使用润乾没有提供的<span style="font-family: 宋体; font-size: 12pt;">JS</span>输入控件，那么就可以在报表系统中使用自定义的输入控件。 它的适用范围为：</span></p> 
+  <p style="line-height: 1.5; tab-stops: list 36.0pt;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">1.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">在填报表中：适用于数据类型为文本、可写的单元格；</span></span></p> 
+  <p style="line-height: 1.5; tab-stops: list 36.0pt;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">2.<span style="font: 12pt 宋体;"> </span></span></span><span style="font-family: 宋体; font-size: 12pt;">在参数表单中：适用于对应参数变量的单元格。</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">假如我们现在要定义一个新的下拉日历控件</span><span style="font-family: 宋体; font-size: 12pt;">,</span><span style="font-family: 宋体; font-size: 12pt;">那么如何做呢</span><span style="font-family: 宋体; font-size: 12pt;">?</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=966e9c53-3d91-468e-b467-481972cba3b0" alt="" width="546" height="332" /></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">首先在需要显示下拉日历单元格的填报属性中的编辑风格选择自定义</span><span style="font-family: 宋体; font-size: 12pt;">:</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=32e2de0f-3e7f-4d18-a1a0-1c6071889c7f" alt="" width="553" height="370" /></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">然后点击设置</span><span style="font-family: 宋体; font-size: 12pt;">:</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=091ce1ec-7513-4d9d-8eab-ec5ea586033b" alt="" width="554" height="364" /></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">把自定义控件中的显示和隐藏函数设置好</span><span style="font-family: 宋体; font-size: 12pt;">.</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">最后在页面中引入自定义的控件</span><span style="font-family: 宋体; font-size: 12pt;">:</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=da9d1a97-9ed9-4640-a77b-5e56d5493a72" alt="" width="553" height="274" /></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;">这样我们就可以在页面中看到自定义控件的效果了</span><span style="font-family: 宋体; font-size: 12pt;">:</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;"><img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=c06cc41c-5084-4802-8761-f78162b41125" alt="" width="553" height="289" /></span></p> 
+  <p style="line-height: 1.5;"> </p> 
+  <div id="article-right"> 
+   <div id="article-button"> 
+    <button id="article-button-1" onclick="ModifyArticlewinOpen2('/reportmis/mis2/reportcenter/ewebeditor/modifyArticle.jsp?resID=13725&amp;action=sendArticle','_mis2_modify_report','yes',0)">文章另发</button> 
+    <button id="article-button-1" onclick="winOpen('/reportmis/mis2/userComponents/index.jsp?resID=13725&amp;restype=0','_mis2_grant_report',425,800,0,0);">文章推送</button> 
+   </div> 
+   <div id="article-right-top">
+     附件 
+   </div> 
+   <div id="article-right-top">
+     修改历史 
+   </div> 
+  </div> 
+  <table id="article-table" border="0"> 
+   <tbody> 
+    <tr> 
+     <td width="50">修改</td> 
+     <td width="150">2010-12-21 18:01:29</td> 
+     <td width="50">孟庆欢</td> 
+    </tr> 
+    <tr> 
+     <td width="50">修改</td> 
+     <td width="150">2010-12-21 15:45:04</td> 
+     <td width="50">孟庆欢</td> 
+    </tr> 
+    <tr> 
+     <td width="50">修改</td> 
+     <td width="150">2010-12-21 13:23:47</td> 
+     <td width="50">孟庆欢</td> 
+    </tr> 
+    <tr> 
+     <td width="50">编写</td> 
+     <td width="150">2010-12-21 09:48:52</td> 
+     <td width="50">孟庆欢</td> 
+    </tr> 
+   </tbody> 
+  </table> 
+  <p style="line-height: 1.5;"> </p> 
+  <p style="line-height: 1.5;"> </p> 
+  <p style="line-height: 1.5;"> </p> 
+  <p style="line-height: 1.5;"> </p> 
+  <div class="hidden"> 
+  </div>  
+ </body>
+</html>

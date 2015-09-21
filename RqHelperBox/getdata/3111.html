@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">我们来下面一个现象,展现报表的jsp写法:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&lt;report:extHtml<br /> name=”report1″<br /> reportFileName=”fenye.raq”<br /> funcBarLocation=”top”<br /> needPageMark=”yes”<br /> generateParamForm=”no”<br /> needScroll=”no”<br /> exceptionPage=”/reportJsp/myError2.jsp”<br /> totalCountExp=”query(‘select count(*) from book’)”<br /> pageCount=”5″<br /> startRowParamName=”start”<br /> endRowParamName=”end”<br /> cachePageNum=”2″<br /> /&gt;</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">报表模版的设计:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6537" title="11" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/11.gif" alt="11" width="717" height="170" /><br /> </span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">报表模版里中到了序号&amp;B2,就是对展现出来的记录进行计数.</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">我们来看一下页面:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">第一页:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6538" title="21" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/21.gif" alt="21" width="665" height="186" /><br /> 第二页:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6539" title="3" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/3.gif" alt="3" width="658" height="192" /><br /> 第三页:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6540" title="4" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/4.gif" alt="4" width="660" height="182" /><br /> </span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">我们可以看到序号重置了.又回到了从1开始.这是为什么呢?</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">是因为我们在标签中设置了cachePageNum=”2″属性,它的意思就是缓存页数,是为了提高分页效率的,当设置了2时,就是提前缓存了2页数据,当到第3页时,报表重新取数据进行计算,这时,序号也重新计算了,所以就被重置了.</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">那如何来解决这个问题呢?</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">我们可以利用分页标签里的startRowParamName=”start”和endRowParamName=”end”这俩个参数来计算当前的序号:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">在报表中增加一列:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6541" title="5" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/5.gif" alt="5" width="785" height="128" /><br /> 然后隐藏掉A列.</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">在报表分页标签中,将cachePageNum设置为1,即每次缓存1页</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">这样我们在页面上就可以看到正确的效果了:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">第一页:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6542" title="6" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/6.gif" alt="6" width="676" height="184" /><br /> </span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">第二页:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="http://www.runqian.com.cn/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=52fe31d7-f50f-4464-a7a6-1f537bc7af09" border="0" alt="" /><br /> 第三页:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="http://www.runqian.com.cn/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=bfadaa5d-bde2-4d9d-bf46-926fcdc22ca2" border="0" alt="" /><br /> 第四页:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6543" title="7" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/7.gif" alt="7" width="659" height="162" /><br /> </span></p>  
+ </body>
+</html>

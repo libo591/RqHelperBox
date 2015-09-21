@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>在刚刚进行报表开发的阶段，首先要通过的一关就是数据源的正确连接，这一关过不去，后面的都是空谈。下面就给出报数据源找不到错误时的问题排查方法：</p> 
+   <p>1)检查数据源名称在3个地方是否一致：</p> 
+   <p>a)Web服务器配置<br /> b)报表端配置 ：Web.xml(v3.55) /reportConfig.xml(v4)<br /> c)报表中设置</p> 
+   <p>2)编写简单程序测试web服务器数据源配置：</p> 
+   <p>测试web服务器数据源程序：<br /> page contentType=”text/html;charset=gb2312″<br /> page import=”javax.sql.*,javax.naming.*,java.sql.*”</p> 
+   <p>try{<br /> Context ctx = new InitialContext();<br /> //DataSource ds = ( DataSource )ctx.lookup( “java:comp/env/ora9i” );<br /> //测试数据源一<br /> DataSource ds = ( DataSource )ctx.lookup( “java:comp/env/ora9i” );<br /> out.println(”1=======”+ds);<br /> out.println(””);<br /> out.println(”1=======”+ds.getConnection());<br /> out.println(””);<br /> }catch(Exception e){<br /> e.printStackTrace();<br /> }</p> 
+   <p>3)检查Web服务器问题：</p> 
+   <p>a)驱动程序是否正确<br /> b)Web中使用的驱动版本和数据库的是否一致<br /> c)不同web服务器的数据源配置方式<br /> d)连接池的配置<br /> e)Tomcat5.0和5.5、6.0配置不同<br /> f)Spring架构JVM1.3下jdbc配置依赖的jdbc2_0-stdext.jar问题：<br /> Spring架构，在JVM是1.3的版本时，jdbc配置需要依赖jdbc2_0-stdext.jar的支持，但是当JVM是1.4以上版本时，是不需要的，最好是删掉，以免出现问题。</p> 
+   <p>4)检查报表端问题：</p> 
+   <p>a)reportConfig.xml配置格式是否正确<br /> b)不同数据源的url前缀设置<br /> c)报表设计中的数据集设置</p> 
+   <p>3)多数据源配置<br /> 润乾多源配置方式(数据源名称,数据库类型,编码;数据源名称,数据库类型,编码;)</p> 
+   <p><span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

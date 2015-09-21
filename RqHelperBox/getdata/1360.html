@@ -1,0 +1,14 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>润乾报表提供了大量的内置函数，但是再多的函数也无法完全满足五花八门的业务需求，用户往往还需要自定义函数。</p> 
+   <p>自定义函数的标准写法是：继承润乾报表提供的function类或者DSFunction类，实现其中的calculate方法，并返回运算结果。</p> 
+   <p>自定义函数的登记：在java的类路径的config目录下，找到customFunctions.properties文件，并在其中进行自定义函数类及函数名的登记。</p> 
+   <p><span style="font-family: Georgia;">在应用中登记好后，要在设计器中用自定义函数，并在自带的web中浏览报表，就要在设计器和web端都进行登记。</span></p> 
+   <p><span style="font-family: Georgia;">在设计器端，将customFunctions.properties文件复制到\designer\web\WEB-INF\classes\config下，将类文件复制到designer\web\WEB-INF\classes下，有包名的，相应的建包路径。</span></p> 
+   <p><span style="font-family: Georgia;">在web端，将customFunctions.properties文件复制到\webapps\demo\WEB-INF\classes\config下，将类文件复制到\webapps\demo\WEB-INF\classes下，有包名的，相应的建包路径。</span></p> 
+   <p><span style="font-family: Georgia;">重启设计器，就可以在设计器中自由运用自定义函数了。</span><br /> <span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

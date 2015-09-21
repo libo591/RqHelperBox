@@ -1,0 +1,9 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><strong>问题描述<span lang="EN-US">:</span></strong></span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">&nbsp;&nbsp;&nbsp;&nbsp; 当使用<span lang="EN-US">showModalDialog</span>展现报表页面时，如：</span><span style="small;"><span lang="EN-US">window.showModalDialog(”showReport.jsp?raq=test.raq”)<br /> </span>&nbsp;&nbsp;&nbsp;&nbsp; 点击第一次下一页时，会打开一个新的页面展现报表第二页。如何避免弹出一个新的页面呢<span lang="EN-US">?</span></span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><strong>解决方法：<span lang="EN-US"></span></strong></span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">&nbsp;&nbsp;&nbsp;&nbsp; 在<span lang="EN-US">showReport.jsp</span>页面<span lang="EN-US">head</span>中加入<span lang="EN-US">&lt;base target=”_self” /&gt;</span>，如：</span><span lang="EN-US"><br /> <span style="small;">&lt;head&gt;<br /> &lt;base target=”_self” /&gt;<br /> &lt;/head&gt;</span></span></span></p>  
+ </body>
+</html>

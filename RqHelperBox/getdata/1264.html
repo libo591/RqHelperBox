@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>随着对服务器集群的负载均衡能力要求越来越高，很多服务器推出了session同步的功能。即 同一个客户端在同一个访问周期里，可能第一次访问A机器，第二次跳转到B机器访问，此时在访问A机器过程中产生的session里的内容可以被同步复制到 B机器上。这个功能使得负载均衡更加合理，但是也带来了一系列问题。</p> 
+   <p>服务器的集群只解决了服务器自己的session同步问题，而作为报表工具，润乾报表还提供了先进的参数缓存和报表缓存。那么，当客户端第一次访问 报表服务器的时候，A机器计算了报表并在A机器作了缓存，而当客户端第二次访问时，例如此时跳转到B机器，则在B机器上找不到报表的缓存，也找不到参数的 缓存，于是只好报错或者重新计算，一定程度上浪费了服务器的资源，降低了服务器的性能。</p> 
+   <p>润乾报表专门针对此类情形，提供了集群服务器之间通讯的能力–集群时缓存同步，彻底解决了负载均衡时服务器之间跳转访问带来的缓存同步的问题。</p> 
+   <p>其原理是：</p> 
+   <p>客户端第一次访问报表服务器，A机器计算了报表并在A机器作了缓存，当客户端第二次访问时，例如此时跳转到B机器，B机器根据缓存id判断出是A机器做的缓存，于是B机器向A机器发送缓存请求，A机器读取缓存并把缓存结果发送给B机器，B机器再把结果返回给客户端。</p> 
+   <p>实现步骤：</p> 
+   <p>1、 在reportConfig.xml文件中做如下配置：</p> 
+   <p>&lt;config&gt; <span style="color: #000080;">&lt;!– 配置缓存机器和缓存端口号–&gt;</span><br /> &lt;name&gt;<span style="color: #ff0000;">clusterMember</span>&lt;/name&gt;<br /> &lt;value&gt;<span style="color: #ff0000;">A,192.168.0.59,8087;B,192.168.0.48,8087;</span>&lt;/value&gt;<br /> &lt;/config&gt;<br /> &lt;config&gt; <span style="color: #000080;">&lt;!– 配置是否共享缓存目录–&gt;<br /> </span>&lt;name&gt;<span style="color: #ff0000;">isCachedFileShared</span>&lt;/name&gt;<br /> &lt;value&gt;<span style="color: #ff0000;">yes</span>&lt;/value&gt;<br /> &lt;/config&gt;<br /> &lt;config&gt; <span style="color: #000080;">&lt;!– 配置缓存共享目录–&gt;<br /> </span>&lt;name&gt;<span style="color: #ff0000;">cachedReportDir</span>&lt;/name&gt;<br /> &lt;value&gt;<span style="color: #ff0000;">\\192.168.0.59\cached</span>&lt;/value&gt;<br /> &lt;/config&gt;</p> 
+   <p>这里主要的是 clusterMember属性，它指定了系统缓存前缀、所有集群的服务器结点及每个服务器结点与缓存服务器间的通讯接口。<br /> 它的格式是：缓存前缀,IP,端口;(注：润乾通信端口非web服务器端口)</p>  
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p><strong>问题背景分析：</strong></p> 
+   <p>在行式填报表中，可以通过使用流水号来作为自增长型主键进行数据的更新。在这种情况下，多用户并发批量添加若干数据的时候，就可能会产生由于主键冲突而导致的并发插入数据失败。原因是润乾自带流水号是根据数据表的主键ID字段的max()值为基础、通过自加或自减实现递增或递减的流水号，这种流水号的递增或递减都是基于客户端的，当多用户并发的时候必然会引起冲突。这时，就需要在服务器的数据库端解决该问题。</p> 
+   <p>oracle数据库提供了序列的功能，利用oracle的序列，从数据库服务器端按照一定规则直接赋值生成一个流水号，就可以解决客户端并发时流水号相同的情况。</p> 
+   <p><strong>解决思路步骤（Oracle创建序列）：</strong></p> 
+   <p><strong>一、在oracle表中创建一个序列</strong><br /> 【1】<br /> create sequence name<br /> increment by x //x为增长间隔<br /> start with x //x为初始值<br /> maxvalue x //x为最大值<br /> minvalue x //x为最小值<br /> cycle //循环使用，到达最大值或者最小值时，从新建立对象<br /> cache x //制定缓存序列值的个数</p> 
+   <p>【2】<br /> ——–一个例子——–<br /> create sequence for_test -序列名<br /> increment by 1 -每次增加1<br /> start with 1 -从1开始<br /> nomaxvalue -没有最大值<br /> nocache -没有缓存序列</p> 
+   <p>【3】<br /> ———-创建测试表——<br /> create table Test<br /> (<br /> TestID int primary key,<br /> TestName varchar2(20) not null,<br /> Tdescription varchar2(200) null<br /> )</p> 
+   <p>【4】<br /> ———-使用序列——-<br /> insert into Test<br /> values(for_test.nextval,’序列测试’,’这是一个序列使用的例子’)</p> 
+   <p>【5】<br /> ——-序列使用结果查询——<br /> select * from test</p> 
+   <p><strong>二、在润乾报表中创建数据集</strong></p> 
+   <p>在润乾报表中创建一个数据集，语句如下：</p> 
+   <p>select for_test.nextval seq from dual //查询自己建立的序列的序列号</p> 
+   <p><strong>三、在报表单元格中使用</strong></p> 
+   <p>在需要的单元格中像一般的数据集使用一样，直接写ds.seq使用即可。这样每刷新或是查询一次，oracle会根据序列表的设置赋值。</p> 
+   <p><strong>四、基于序列seq字段创建一个流水号</strong></p> 
+   <p>在报表中创建一个流水号，在流水号的初值表达式中直接写：ds.seq*100000；具体需要的单元格中增加填报属性的流水号计算公式，设置为：++var1。这样在添加一条信息时，获取的流水号均唯一赋值。</p> 
+   <p>这样，对于同一个行式填报表的大批量并发插入操作可能导致的主键冲突问题就迎刃而解了。</p> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,14 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>当我们制作一张非静态报表的时候，都需要为该报表建立数据源，设定其数据集。对于报表的初学者来说，最不陌生的就是：demo和northwind这两个系统自带的数据源，如果您使用的是这两个数据源制作的报表，当遇到一些问题，需要发给支持人员调试时，无须做其他操作，而当我们在生产环境下，使用其他的数据库进行各种复杂的扩展时遇到问题，直接将报表发给支持人员，因为支持人员本地没有对应的数据源，所以在报表预览时，会出现下图中的提示。</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/10-1.jpg"><img class="alignnone size-medium wp-image-2455" title="10-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/10-1-300x227.jpg" alt="" width="300" height="227" /></a></p> 
+  <p>当报表需要发给技术支持进行本地测试的时候一般都需要将报表的数据集转成内建数据集。所谓内建数据集，是把报表中的数据存储到报表模板里，浏览报表的时候不用连接数据库了。</p> 
+  <p>数据集的转换操作：</p> 
+  <p>1.单击主菜单中的【配置】-&gt;【数据集】，打开如下所示的“数据集设置”窗口：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/10-2.jpg"><img class="alignnone size-medium wp-image-2456" title="10-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/10-2-300x267.jpg" alt="" width="300" height="267" /></a></p> 
+  <p>选中数据集列表中的一个数据集，点击【转为内建】按钮，即可把外部数据集转为内建数据集。如下图所示：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/10-3.jpg"><img class="alignnone size-medium wp-image-2457" title="10-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/10-3-300x267.jpg" alt="" width="300" height="267" /></a></p> 
+  <p>用户不用担心对报表数据有何影响，转为内建数据集后，【转为内建】按钮变成了【还原】按钮。选中数据集列表中的ds1，点击【还原】按钮，ds1内建数据集就还原成了它最初的“SQL检索”数据集类型。</p>  
+ </body>
+</html>

@@ -1,0 +1,6 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font color="#ff0000">问题</font>:<br /> 系统hpunix，weblogic，现在启动没有抱错，但是访问报表的时候抱错，授权license错误，怎么解决？<br /> <font color="#ff0000">问题解决方法</font>:<br /> 检查授权以及授权文件的配置都没有问题,最终发现是web.xml中这里写的-1，正确的为2，为-1的话表明没有加载servlet。所以才会出错。</p>  
+ </body>
+</html>

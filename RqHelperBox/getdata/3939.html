@@ -1,0 +1,38 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>基于庞大的网络结构，集群服务器的使用带来了不少流量等负载问题，负载均衡技术应运而生。本文首先以</span><span>F5 BIG-IP LTM</span><span>（本地流量管理器）为例简单介绍一下</span><span>F5</span><span>附在均衡设备，然后再着重介绍<a href="http://www.runqian.com.cn/rqrptcenter/12_rqrptct_2.htm">润乾报表</a>在该设备下出现的</span><span>URL</span><span>限制问题如何解决。</span></p> 
+  <h2><span>F5</span><span>负载均衡设备介绍（</span><span>F5 BIG-IP LTM</span><span>为例）</span></h2> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>F5 BIG-IP LTM </span><span>的官方名称叫做本地流量管理器</span><span>,</span><span>可以做</span><span>4-7</span><span>层负载均衡</span><span>,</span><span>具有负载均衡</span><span>�</span><span>应用交换</span><span>�</span><span>会话交换</span><span>�</span><span>状态监控</span><span>�</span><span>智能网络地址转换</span><span>�</span><span>通用持续性</span><span>�</span><span>响应错误处理</span><span>�</span><span>IPv6</span><span>网关</span><span>�</span><span>高级路由</span><span>�</span><span>智能端口镜像</span><span>�</span><span>SSL</span><span>加速</span><span>�</span><span>智能</span><span>HTTP</span><span>压缩</span><span>�</span><span>TCP</span><span>优化</span><span>�</span><span>第</span><span>7</span><span>层速率整形</span><span>�</span><span>内容缓冲</span><span>�</span><span>内容转换</span><span>�</span><span>连接加速</span><span>�</span><span>高速缓存</span><span>�</span><span>Cookie</span><span>加密</span><span>�</span><span>选择性内容加密</span><span>�</span><span>应用攻击过滤</span><span>�</span><span>拒绝服务</span><span>(DoS)</span><span>攻击和</span><span>SYN Flood</span><span>保护</span><span>�</span><span>防火墙—包过滤</span><span>�</span><span>包消毒等功能</span><span>�</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>以下是</span><span>F5 BIG-IP</span><span>用作</span><span>HTTP</span><span>负载均衡器的主要功能：</span></p> 
+  <p class="MsoNormal"><span>①</span><span>F5 BIG-IP</span><span>提供</span><span>12</span><span>种灵活的算法将所有流量均衡的分配到各个服务器</span><span>,</span><span>而面对用户</span><span>,</span><span>只是一台虚拟服务器</span><span>�</span></p> 
+  <p class="MsoNormal"><span>②</span><span>F5 BIG-IP</span><span>可以确认应用程序能否对请求返回对应的数据</span><span>�</span><span>假如</span><span>F5 BIG-IP</span><span>后面的某一台服务器发生服务停止</span><span>�</span><span>死机等故障</span><span>,F5</span><span>会检查出来并将该服务器标识为宕机</span><span>,</span><span>从而不将用户的访问请求传送到该台发生故障的服务器上</span><span>�</span><span>这样</span><span>,</span><span>只要其它的服务器正常</span><span>,</span><span>用户的访问就不会受到影响</span><span>�</span><span>宕机一旦修复</span><span>,F5 BIG-IP</span><span>就会自动查证应用已能对客户请求作出正确响应并恢复向该服务器传送</span><span>�</span></p> 
+  <p class="MsoNormal"><span>③</span><span>F5 BIG-IP</span><span>具有动态</span><span>Session</span><span>的会话保持功能</span><span>�</span></p> 
+  <p class="MsoNormal"><span>④</span><span>F5 BIG-IP</span><span>的</span><span>iRules</span><span>功能可以做</span><span>HTTP</span><span>内容过滤</span><span>,</span><span>根据不同的域名</span><span>�</span><span>URL,</span><span>将访问请求传送到不同的服务器</span><span>�</span></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <h2><span>与润乾报表相关的问题</span></h2> 
+  <h3><span>问题场景描述</span></h3> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>在使用润乾报表的</span><span>tag</span><span>生成报表展示页面时，对于图表</span><span>(</span><span>图片</span><span>)</span><span>、功能按钮来说（所有需要发请求的页面元素），会在页面代码中生成</span><span>http</span><span>请求的</span><span>url</span><span>，比如一个含有图表的报表，生成的页面源码如下：</span></p> 
+  <p class="MsoNormal"><span>&lt;img src=”http://10.222.1.123:8080/re/reportServlet?action=9&amp;graphId=10000……&gt; </span></p> 
+  <p class="MsoNormal"><span>这个请求中含有端口信息</span><span>:8080</span><span>，这在正常的环境下运行正常。</span><span> </span></p> 
+  <p class="MsoNormal"><span>而在通过负载均衡设备</span><span>F5</span><span>后，访问应用页面的</span><span>url</span><span>中不允许带端口号，页面请求须用如下方式：</span></p> 
+  <p class="MsoNormal"><span>http://10.222.1.123/re/report/resources/reportJsp/showReport.jsp?raq=/re1.raq</span><span>，否则无法访问资源。</span></p> 
+  <h3><span>解决方法</span></h3> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>该问题可以通过配置</span><span>reportConfig.xml</span><span>中的</span><span>appUrlPrefix</span><span>解决。该标签在文档中是这样描述的：</span><span>appUrlPrefix</span><span>表示访问报表时的</span><span>URL</span><span>中</span><span>WEB</span><span>服务器地址、端口及</span><span>WEB</span><span>应用名组成的一个串，如</span><span>http://192.168.0.1:8080/myWebApp</span><span>。一般不用设置，程序可以自动拼出此串。但有时访问申请经过了服务器的多重转发，造成拼出来的串不对时，需要设置此值。特殊情况：如果出现多台机器集群或者内外网多个</span><span>IP</span><span>等情况，可能导致最终拼出来的</span><span>ip</span><span>不正确，又不能指定死</span><span>ip</span><span>，此时可以用</span><span>/APPMAP</span><span>来配置。</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>所以可以配置成固定的</span><span>URL</span><span>地址，或者使用</span><span>/APPMAP</span><span>。</span></p> 
+  <h3><span>配置实例</span></h3> 
+  <p class="MsoNormal"><span>配置</span><span>reportConfig.xml</span><span>的</span><span>appUrlPrefix</span><span>为</span><span>/APPMAP</span><span>：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/811fb646-77c7-417b-b966-b2cb42520dc4.jpg" alt="" width="321" height="62" /></span></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p class="MsoNormal"><span>页面发布后，查看页面源文件，发现原来带有端口号的</span><span>url</span><span>均变为相对路径，如图示：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/26676c26-ec9e-4fba-97fb-fd07796f4ce6.jpg" alt="" width="554" height="60" /></span></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p class="MsoNormal"><span>配置为绝对</span><span>url</span><span>：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/bb2f74c9-b266-4090-9626-8c47154526f2.jpg" alt="" width="316" height="65" /></span></p> 
+  <p class="MsoNormal"><span>查看页面源文件可以看到</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/e85579bf-fc5f-4dcf-b9fb-ddd2aed94ad7.jpg" alt="" width="554" height="70" /></span></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>对于该选项，本文中提到的只是用到的一个例子，而在实际应用中有很多其他的问题也可以通过配置该标签解决，使用者可以好好理解一下这个标签的含义。</span></p> 
+  <p></p>  
+ </body>
+</html>

@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">在润乾报表的自动计算中<span lang="EN-US" xml:lang="EN-US">C1=A1</span>除<span lang="EN-US" xml:lang="EN-US">B1 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">想判断<span lang="EN-US" xml:lang="EN-US">A1</span>和<span lang="EN-US" xml:lang="EN-US">B1</span>都不能为<span lang="EN-US" xml:lang="EN-US">0</span>的时候再计算<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题解决<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">可以使用润乾的<span lang="EN-US" xml:lang="EN-US">switchCase()</span>函数 <span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">switchCase(A1,0,”0″,switchCase(B1,0,”0″,(A1/B1*10000))) 
+    <o:p /></span></p> 
+  <p><br /></p>  
+ </body>
+</html>

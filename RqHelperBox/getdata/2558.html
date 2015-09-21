@@ -1,0 +1,41 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表中可以通过设置单元格的填报属性和关联过滤表达式就可以实现两个以上（包含两个）的单元格之间的动态关联。</p> 
+  <p>而且，动态关联如何实现在教程“填报专题”中有非常详细的讲解。在教程中是以地区和城市为例来讲解的，在实现的过程中并没有什么问题。</p> 
+  <p>可是在实际应用中，可能会出现一种特殊的情况，即数据结构比较复杂的一些表，下面我举例说明一下：</p> 
+  <p>设计一张填报表，如下图：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/24-1.jpg"><img class="alignnone size-medium wp-image-2559" title="24-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/24-1-300x73.jpg" alt="" width="300" height="73" /></a></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图1</p> 
+  <p>数据集如下：</p> 
+  <p>&nbsp;<img title="601" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/601.jpg" alt="601" width="431" height="144" /></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图2</p> 
+  <p>&nbsp;<img title="612" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/612.jpg" alt="612" width="346" height="273" /></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图3</p> 
+  <p>请注意：上图中dq_id和cs_id的值是相同的。</p> 
+  <p>其实地区和城市并不是在一张表中，而是分别存在两张数据表中，通过dq_id和cs_id来关联。</p> 
+  <p>然后在设计图1中B1单元格的“编辑风格”为“下拉数据集”，并设置相应的数据集为ds1，数据列为dq_id，显示列为dqname,如下图：</p> 
+  <p>&nbsp;<img title="622" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/622.jpg" alt="622" width="456" height="287" />&nbsp;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图4</p> 
+  <p>设置D1为“下拉数据集”，如下图：</p> 
+  <p>&nbsp;<img title="631" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/631.jpg" alt="631" width="461" height="443" /></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 图5</p> 
+  <p>然后，在页面上浏览的时候如下图：</p> 
+  <p>&nbsp;<img title="641" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/641.jpg" alt="641" width="324" height="252" /></p> 
+  <p><img title="651" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/651.jpg" alt="651" width="339" height="81" />&nbsp;</p> 
+  <p>正常情况下，地区应该只有“东北”，“华南”，“西南”，“华北”，并且当选中“东北”之后，属于东北地区的城市应该全部出现，上图“城市”中只出现了一个“黑龙江”，效果明显是不对的。</p> 
+  <p>那问题出在哪里呢？</p> 
+  <p>经过我仔细检查发现：B1的数据列是dq_id，而dq_id对应的每一条数据都是不同的，而所谓的“数据列”，其实就是将数据进行一个分组，去掉重复的数据。</p> 
+  <p>既然dq_id每条数据都不一样，那么报表自然会将重复的dqname都展现出来。</p> 
+  <p>这时候，做如下修改：</p> 
+  <p>将B1的“数据列”改为dqname，并且将D1中的关联过滤表达式改为：daname=${B1}.toString()之后，则功能正常。因为dqname是有重复数据的，那么“数据列”在对它进行“分组”的时候就可以过滤掉重复数据了。</p> 
+  <p>效果如下图：</p> 
+  <p>&nbsp;<img title="661" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/661.jpg" alt="661" width="306" height="140" /></p> 
+  <p>选择“东北”之后：</p> 
+  <p>&nbsp;<img title="671" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/671.jpg" alt="671" width="333" height="114" /></p> 
+  <p>究其原因是数据表中的数据问题。因为所谓的“数据列”会将重复的数据过滤掉，既然这样，本例中的dq_id都不相同，那么报表自然会将所有的地区名字展现出来。</p> 
+  <p>所以，当我将“数据列”改成dqname之后，“数据列”会将重复的地区名字过滤（或者说是对dqname进行分组）。</p> 
+  <p>总结一下：在做“动态关联”的时候，如果数据结构比较复杂，单元格“数据列”的选择显得尤为重要。</p> 
+  <p>如果碰到这样的情况，最好是修改数据表中的数据，如果数据无法更改，那么就需要按我上面所说的将“数据列”按实际情况设置。关键是要理解动态关联的机制和数据列的含义。</p>  
+ </body>
+</html>

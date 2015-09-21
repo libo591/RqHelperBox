@@ -1,0 +1,59 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在实际项目开发过程中，当我们要用到一些特殊符号，如&reg;时，总会遇到一些问题。下面列出一些常见的问题，并给出相应的解决办法。</p> 
+  <p><strong>问题1：</strong></p> 
+  <p>如果在HTML页面中要显示特殊符号&reg;，由于&reg;不能直接输入，此时需要用转义字符串&amp;reg;来代替输入此特殊符号。但在不同的页面编码中，使用方法的不同会造成乱码显示。</p> 
+  <p><strong>解决办法：</strong> </p> 
+  <ul> 
+   <li>如果页面编码为UTF-8，可以直接复制输入&reg;或输入转义字符串&amp;reg; ，</li> 
+  </ul> 
+  <p>效果演示：</p> 
+  <p>在编码为UTF-8的HTML源文件中，输入&reg; =&amp;reg;，则显示为，</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/12.png" alt="1.png" height="143" /></p> 
+  <ul> 
+   <li>如果页面编码为GBK，一般用&amp;reg;代替输入该特殊字符。如果直接复制输入&reg;，则会显示乱码。</li> 
+  </ul> 
+  <p>效果演示：</p> 
+  <p>页面编码改为GBK，输入&reg; =&amp;reg;，如图，左边直接输入&reg;不能正常显示，右边的替代则可。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/22.png" alt="2.png" height="139" /></p> 
+  <p><strong>问题2：</strong></p> 
+  <p>要在设计器报表中显示特殊符号&reg;，在3.55版本中会显示乱码，在4.0及以上版本中调用润乾函数则可以正常显示此值。</p> 
+  <p><strong>解决办法：</strong></p> 
+  <ul> 
+   <li>&reg;的ASCII值为174，单元格中调用润乾函数char(174)，即可正常显示该特殊字符。</li> 
+  </ul> 
+  <p>效果演示：</p> 
+  <p>在A2单元格输入调用函数，</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/555.png" alt="555.png" height="200" /></p> 
+  <p>点击预览后，就可以看到正确显示该特殊符号，</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/666.png" alt="666.png" height="166" /></p> 
+  <ul> 
+   <li>要想在服务器上显示该特殊符号&reg;，则页面编码应采用UTF-8，否则会出现乱码。</li> 
+  </ul> 
+  <p>效果显示：</p> 
+  <p>当在jsp中把页面编码改为其他，如GBK，显示效果如下，不能正常显示，</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/xn-eqrzjq80c.png" alt="未命名.PNG" height="109" /></p> 
+  <p>当页面编码采用UTF-8，显示效果如下，能正常显示该特殊字符，</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/222.png" alt="222.PNG" height="89" /></p> 
+  <p><strong>问题3：</strong></p> 
+  <p>数据库字段中含有特殊符号&reg;，要取出来在报表中显示的情况：</p> 
+  <p>数据库编码为UTF-8时，可以直接存储特殊符号&reg;，直接取出使用。</p> 
+  <p>数据库编码为GBK等其他形式时，则需要存储为&amp;reg;字符串。</p> 
+  <p><strong>解决办法：</strong></p> 
+  <ul> 
+   <li>数据库字段中有这类特殊符号的，不论用哪种编码方式，都可以用页面中的符号&amp;reg;来代替。</li> 
+   <li>还可以用润乾提供的函数(rplc)统一替换（适用于4.0版）。</li> 
+   <li>也可以编写自定义函数批量替换，但会有些性能损失。</li> 
+  </ul> 
+  <p><strong>问题4：</strong></p> 
+  <p>报表单元格中我们需要的效果是直接显示&reg;，但是若按照原字段格式显示，即直接输入&amp;reg;后，预览仍显示&amp;reg；而不是需要的特殊字符。</p> 
+  <p><strong>解决办法：</strong></p> 
+  <p>设计器中右键该单元格，单击数据类型选项，选择数据类型为HTML，这时直接输入&amp;reg;，就能得到预期的结果。</p> 
+  <p>效果演示：</p> 
+  <p>原字段格式显示时，直接输入&amp;reg;，发布后结果如下，A2格仍直接显示&amp;reg;字符串。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/7.png" alt="7.png" height="104" /></p> 
+  <p>把单元格数据类型改为HTML后，特殊符号&reg;能正常显示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/6.png" alt="6.png" height="102" /></p>  
+ </body>
+</html>

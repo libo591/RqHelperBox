@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>一、任务背景</strong></p> 
+  <p>在做输入页面的时候，单选钮是一种比较常见的编辑风格，如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/wp-content/uploads/2008/08/danxuanniu0.PNG" alt="danxuanniu0" /></p> 
+  <p>单选钮比下拉框更加直观，操作更加简便，比如：下拉框选择至少要点击两次鼠标，第一次点击下拉，第二次点击选择；而单选钮只需要点击一次鼠标即可完成选择操作，而且可以一眼看出有哪些选项。因此对于选项不多的情况，如在5个以内的时候，用单选钮更加方便。</p> 
+  <p><strong>二、面临困难</strong></p> 
+  <p>单选钮要自己编程实现并不算太困难，如果仅仅是在html里写死，似乎还挺容易的，于是很多程序员习惯性地说，编程写一个不就得了。可是在实际业务中，总会发生意想不到的事情。</p> 
+  <p>首先，单选钮的选项有几个，往往并不固定，很可能由数据库里的数据动态决定，这就意味着单选钮所占的宽度有可能变化，同理，摆放在单选钮右边的元素就要动态调整位置；</p> 
+  <p>其次，当单选钮所占的位置一行放不下时，可能需要摆两行或者多行，此时不光要动态算宽度，还要动态算高度，因为单选钮下面摆放的元素也得跟着动态挪位置。</p> 
+  <p>所以，看似很简单的功能，一旦和真实业务联系起来，也变得不简单。润乾报表4.0在这方面考虑的非常周到，采用润乾报表，通过如下几个步骤即可实现：</p> 
+  <p><font face="Times New Roman"><strong>三、实现步骤</strong>&nbsp;</font></p> 
+  <p><font face="Times New Roman">1、</font>设计一个填报表，定义单选钮的编辑属性；</p> 
+  <p><font face="Times New Roman">2、</font>定义单选钮每行摆放几个元素，这样系统会自动计算并且自动摆位，一行不够自动摆放多行；</p> 
+  <p><font face="Times New Roman">3、</font>发布；</p> 
+  <p><strong>四、效果演示</strong></p> 
+  <p><img src="http://www.runqian.com.cn/wp-content/uploads/2008/08/duanxuanniu1.PNG" alt="duanxuanniu1" /></p>  
+ </body>
+</html>

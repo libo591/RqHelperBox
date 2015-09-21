@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了一个可以给可扩展的单元格自动加序号的函数-&amp;函数，本文就来给大家介绍一下此函数的用法。</p> 
+  <p>首先，看一下函数解释和功能效果</p> 
+  <p><strong>表达式</strong>：&amp;Cellx （例如：&amp;A2 ）<br /> <strong>返回值</strong>：整数，当前格所属的Cellx主格在所有扩展出来的格子中的排序<br /> <strong>说明</strong>：Cellx必须是当前格的主格，这样&amp;Cellx才能够正确运算，其返回值相当于是当前格所属的Cellx主格的位置</p> 
+  <p>效果见下图：（图中B2为A2的主格，即为B2的扩展格排列序号）</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/lizi1.png" alt="lizi.png" height="362" /></p> 
+  <p>下面我们就用一个简单的例子来体验一下这个函数</p> 
+  <p><strong>正常需求：给报表的每一行都加上序号</strong></p> 
+  <p>第一步：新建报表</p> 
+  <p>连接润乾自带的demo数据源，在订单表上建立数据集ds1，并生成网格式报表，其sql语句为：SELECT 订单.订单ID,订单.货主名称,订单.货主城市,订单.运货费 FROM 订单</p> 
+  <p>网格报表设计如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/rq-71.png" alt="rq_71.png" height="73" /></p> 
+  <p>预览效果如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/rq-72.png" alt="rq_72.png" height="395" /></p> 
+  <p>第二步：加序号</p> 
+  <p>在A列前插入新列，在新列的单元格中写入下面的表达式<br /> A1：序号 A2：=&amp;B2<br /> 然后把A2的左主格设为B2（这个操作很重要，A2中的序号是根据B2的扩展排列的）</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/rq-73.png" alt="rq_73.png" height="71" /></p> 
+  <p>设置完成后预览就可以看到我们想要的效果了，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/rq-74.png" alt="rq_74.png" height="453" /></p> 
+  <p><strong>需求扩展：报表分页后每页都重新从1开始排列序号</strong></p> 
+  <p>上面的设置产生的序号不管报表分页与否都是连续的，但是有些用户想要分页以后序号重新从1开始排，也就是每页都是重新排列序号的效果。下面就来看润乾报表如何解决这个特殊需求。一般这样的分页报表发布展示后每页显示的行数是固定的，像我们这个报表每页显示就是29行，我们可以用给序号取模的原理来让每页都从1开始排序，具体操作是把A2单元格中的表达式换成：=&amp;B2%29，然后我们看一下发布后的效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/rq-75.png" alt="rq_75.png" height="725" /></p> 
+  <p>这样，需求就解决了。下面说一下应该注意的地方：</p> 
+  <p>此方法只能用在每页的数据区行数固定的情况下（报表头必须每页显示或者都不显示），如果每页行数不是固定的29行，对29取模就没有意义了，就不能保证每页从1开始排序号了。</p> 
+  <p>希望这个序号使用的小技巧可以帮的上润乾报表用户的忙，让报表开发更方便一些。<br /> <span lang="EN-US"></span></p>  
+ </body>
+</html>

@@ -1,0 +1,275 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">海量数据的清单式列表在读取、展现及导出过程中可能会出现速度过慢、内存溢出、系统死机等问题，以分页计算方式发布报表，可以实现以页为单位对数据进行读取和展现及导出等操作，大大降低内存占有量，提高了运行效率，避免内存溢出等问题。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">在分页标签中的totalCountExp属性,是代表总记录数,为必填属性,分页就是基于这个总记录数来的。它的值是一个润乾的非数据集函数，并且返回的值应该是一个整型数据。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">下面就来介绍一下totalCountExp的几种用法:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">1.直接写整数:</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">这种方式对于固定的总记录数来说,非常方便简单.</span></p> 
+  <pre class="programlisting"><span style="font-size: 12pt;"> &lt;report:extHtml
+name=&quot;report1&quot;
+reportFileName=&quot;api/1.6.raq&quot; //报表名，必填属性
+totalCountExp=&quot;10000&quot; //总记录数，必填属性
+/&gt;
+但此用法比较少见,因为总记录数一般都是动态查询出来的.</span></pre> 
+  <pre class="programlisting"><span style="font-size: 12pt;">2.query一个sql,得到总记录数:</span></pre> 
+  <pre class="programlisting">
+<pre class="programlisting"><span style="font-size: 12pt;"> &lt;report:extHtml
+name=&quot;report1&quot;
+reportFileName=&quot;api/1.6.raq&quot; //报表名，必填属性
+totalCountExp=&quot;query('SELECT count(*) FROM 订单明细')&quot; //query执行一个count的sql。
+/&gt;
+这种用法是最常见的,如果query的sql要动态生成,还可以这样做:</span></pre>
+<pre class="programlisting"><span style="font-size: 12pt;"> &lt;report:extHtmlname=&quot;report1&quot;reportFileName=&quot;api/1.6.raq&quot; //报表名，必填属性totalCountExp=&quot;&lt;%=querySql%&gt;&quot;//query执行一个count的sql。
+/&gt;
+然后在用代码把querySql拼接上即可.</span></pre>
+<pre class="programlisting"><span style="font-size: 12pt;">3.call一个存储过程,得到总记录数:</span></pre>
+<pre class="programlisting"><span style="font-size: 12pt;"> &lt;report:extHtml
+name=&quot;report1&quot;
+reportFileName=&quot;api/1.6.raq&quot; //报表名，必填属性
+totalCountExp=&quot;call('{call RQ_TEST_CUR(?)} ','@@result')&quot; //call执行一个count的存储过程。
+/&gt;
+此用法比较特殊,由于存储过程的特性,我们可以在存储过程里完成复杂的逻辑运算传参等,然后查询出需要的总记录数.上面的用法针对oracle数据库存储过程的方法,其他数据库的写法大致相同.</span></pre>
+<pre class="programlisting"><span style="font-size: 12pt;">其中:RQ_TEST_CUR(?)为存储过程的名字,?代表输出参数(游标类型),后面的@@result与?进行绑定.</span></pre>
+<pre class="programlisting"><span style="font-size: 12pt;">4.从报表模版中的数据集中读取已建立好的数据集sql,当作总记录数.</span></pre>
+<pre class="programlisting"><span style="font-size: 12pt;">第一步,从报表模版里获取sql</span></pre>
+<pre class="programlisting">
+
+  
+    
+    
+    <div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;">import com.runqian.report4.model.ReportDefine;</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;">import com.runqian.report4.usermodel.DataSetConfig;</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;">import com.runqian.report4.usermodel.SQLDataSetConfig;</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;">import com.runqian.report4.util.ReportUtils;</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;">public class sqlReadOut {</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;">/**</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;"> * @param args</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;"> * @throws Exception </span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;"> */</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;">public static void main(String[] args) throws Exception {</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;">// TODO Auto-generated method stub</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;"> ReportDefine rd = (ReportDefine)ReportUtils.read(&quot;C:\\Program Files\\reportHome\\webapps\\demo\\reportFiles\\初级教程\\3.3.raq&quot;);</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;"> SQLDataSetConfig sdc = (SQLDataSetConfig)rd.getDataSetMetaData().getDataSetConfig(1);</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;"> String sql = sdc.getSQL();</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;"> System.out.println(sql);</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;">}</span>
+   
+     
+     
+     </div>
+
+   
+     
+     
+     <div>
+    
+      
+      
+      <span style="font-size: 12pt;">}</span>
+   
+     
+     
+     </div>
+&nbsp;
+
+  
+    
+    
+    </div>
+</pre>
+<pre class="programlisting"><span style="font-size: 12pt;">第二步,把这个sql根据第2种办法赋值给标签.</span></pre>
+<pre class="programlisting"></pre>
+<pre class="programlisting"><span style="font-size: 12pt;">以上就是分页标签中totalCountExp的几种用法,通过润乾丰富的API和页面处理,还可以组合出更多样的方法.</span></pre>
+</pre>  
+ </body>
+</html>

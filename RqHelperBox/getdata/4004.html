@@ -1,0 +1,45 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>润乾报表在页面端展现时，可生成滚动条锁定表头，通过拖拽滚动条查看相应数据，可通过标签中的</span><span>scrollWidth</span><span>和</span><span>scrollHeight</span><span>属性来设置滚动条区域的高度和宽度，但这里只能设置固定值，由于客户机器的分辨率不同，和可能导致不同用户访问同一张表时，滚动条区域大小不同，造成展现样式非常难看，这样就要求报表展现时，滚动条区域要自适应客户端浏览器的大小。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>解决方案：润乾报表在网页端展示时是以纯</span><span>html</span><span>形式展现，所以可以通过页面对展现的报表进行控制。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>一：在报表设计器中将需要锁定的行列设置为报表头和列表头</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>二：在显示报表的</span><span>jsp</span><span>的</span><span>tag</span><span>标签中增加</span><span>needScroll=”yes”</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>三：定义</span><span>js</span><span>函数</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>function testscroll(){</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span>&nbsp;</span>obj = document.getElementsByTagName(“div”);</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span>&nbsp;</span>var tab1 = document.getElementById( “report1″);</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span>&nbsp;</span>for(var i =0 ;i&lt;obj.length;i++)</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span>&nbsp;</span>{</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span>&nbsp;</span><span>&nbsp;&nbsp;&nbsp;&nbsp; </span>if(obj[i].id == ‘report1_scrollArea’)</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span></span>obj[i].style.width = document.body.clientWidth-15;</span></p> 
+  <p class="MsoNormal" style="text-indent: 31.5pt;"><span>obj[i].style.height=1000;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span>&nbsp;</span>}</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>}</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span>&nbsp;</span><span>&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp; </span></span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>在该</span><span>js</span><span>函数中可通过设置</span><span>obj[i].style.width</span><span>和</span><span>obj[i].style. height</span><span>的值设置滚动条区域的大小。具体的宽度或高度可通过</span><span>html</span><span>中的一些样式得到。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>如：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>var s = “”;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>网页可见区域宽：</span><span>“+ document.body.clientWidth;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>网页可见区域高：</span><span>“+ document.body.clientHeight;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>网页可见区域宽：</span><span>“+ document.body.offsetWidth +” (</span><span>包括边线和滚动条的宽</span><span>)”;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>网页可见区域高：</span><span>“+ document.body.offsetHeight +” (</span><span>包括边线的宽</span><span>)”;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>网页正文全文宽：</span><span>“+ document.body.scrollWidth;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>网页正文全文高：</span><span>“+ document.body.scrollHeight;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>网页被卷去的高：</span><span>“+ document.body.scrollTop;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>网页被卷去的左：</span><span>“+ document.body.scrollLeft;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>网页正文部分上：</span><span>“+ window.screenTop;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>网页正文部分左：</span><span>“+ window.screenLeft;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>屏幕分辨率的高：</span><span>“+ window.screen.height;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>屏幕分辨率的宽：</span><span>“+ window.screen.width;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>屏幕可用工作区高度：</span><span>“+ window.screen.availHeight;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>屏幕可用工作区宽度：</span><span>“+ window.screen.availWidth;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>你的屏幕设置是</span><span> “+ window.screen.colorDepth +” </span><span>位彩色</span><span>“;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>s += “\r\n</span><span>你的屏幕设置</span><span> “+ window.screen.deviceXDPI +” </span><span>像素</span><span>/</span><span>英寸</span><span>“;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>然后在该</span><span>jsp</span><span>页面加载时加载该</span><span>js</span><span>函数即可</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>&lt;script language=”javascript”&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;</span>testscroll();</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>&lt;/script&gt;</span></p> 
+  <p></p>  
+ </body>
+</html>

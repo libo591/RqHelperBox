@@ -1,0 +1,13 @@
+<html>
+ <head></head> 
+ <body> 
+  <ol> 
+   <li>在html标签中增加了一个属性： <p>importExcelAppend 行式报表填报中是否采用追加行的方式导入excel文件中的数据区行 yes or no 缺省yes。</p> <p>当属性为yes时，在当前扩展区尾部追加excel文件中的所有数据区行</p> <p>当属性为no时，从当前光标所在行开始，用excel文件中的数据区行逐行替换当前扩展区的数据行。替换完以后，其余的行采用追加导入的方式。这可以有效地防止从excel表里导入数据时第一行是空行的问题。</p></li> 
+   <li>统计图的图形特性里新增了阴影、凸出边框、丢弃其他分类等属性，使作出的统计图更美观和人性化。</li> 
+   <li>在html标签中增加了一个属性pdfExportStyle，属性值为: “文件类型,是否分页”,文件类型取值为：graph: 将文字导出为图形方式,text：将文字导出为文本方式；1表示要分页，0表示不分页。如pdfExportStyle=”text,0″ 表示导出文本方式的不分页的pdf文件。如果在tag中设置了这个属性，导出pdf时不会再弹出窗口，否则会弹出一个窗口让用户设置导出属性</li> 
+   <li>下拉视图树增加排序字段。</li> 
+   <li>headless现在可以配置。方法如下：</li> 
+   <li>在web.xml中的reportServlet中增加headless初始参数配置，如：<a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/gaijin.png" title="gaijin.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/gaijin.png" alt="gaijin.png" /></a> <p>缺省不配时headless=true。</p></li> 
+  </ol>  
+ </body>
+</html>

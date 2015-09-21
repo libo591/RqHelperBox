@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 报表很大，看的时候就需要滚动条了，但是一滚整个报表都动了，表头也看不到了，这看着就太麻烦了，老要来回来去地拖上拖下拖左拖右。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EXCEL想到了这个问题，提供了冻结窗格的功能，可以把上边或左边的几列固定下来，这样，再怎么滚动表头总是不动，就不会看走眼了。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 可惜的是，在WEB上的HTML表格却没直接提供这个功能，它的TABLE只能整个地滚。怎么能做出象EXCEL那样冻结表头的效果呢？</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 简单的想法，是把表格人为地分为上下两块，上半截表头不动，下半截表体自己滚动，这不就完了吗？看起来也不算多麻烦了。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可别高兴得太早，这仅仅解决了上边的表头，如果我们足够不幸的话，会碰到即长且宽的表格（概率不小），这时还需要有个左表头。分两块显然不够了，那分四块行吗？左上角一小块不同的，其右边是上表头，下边是左表头，右下部分是表体。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;事还没算完，这几块之间还会有关联。比如表体横向滚动时，需要让上表头跟着一起滚动，否则上下就错位了；同样，纵向滚动时左表头也要与表体同步。这就还要写一堆JS代码让这几片表格一起滚动。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 哎，可麻烦死了。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 不幸中的一幸，采用了润乾报表，这事就轻松多了，只要两步：<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1． 在设计报表时将需要冻结的行和列选中，设为表头行和表头列。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;2． 在发布报表时的tag属性中设置needScroll=”yes”，还可以用scrollWidth和scrollHeight设置滚动区域的大小。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 上面说的麻烦事都被润乾报表做完了。</p> 
+  <p>看一下效果：</p> 
+  <p align="center"><a href="http://www.quiee.com.cn/wp-content/uploads/2008/07/dj1.png" title="dj1.png"><img src="http://www.quiee.com.cn/wp-content/uploads/2008/07/dj1.png" alt="dj1.png" /></a></p> 
+  <p align="center"><a href="http://www.quiee.com.cn/wp-content/uploads/2008/07/dj2.png" title="dj2.png"><img src="http://www.quiee.com.cn/wp-content/uploads/2008/07/dj2.png" alt="dj2.png" /></a></p> 
+  <p>一切OK，搞定！</p>  
+ </body>
+</html>

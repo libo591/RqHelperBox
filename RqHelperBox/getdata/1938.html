@@ -1,0 +1,27 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表是类EXCEL使用环境的报表开发工具，同EXCEL类似，对单元格的表示都是通过类似A1,B1这种方式。在实际的项目开发中，有时候会碰到数据库数据表的数据字段名也定义为类似于A1,B1的格式。此情况下，报表模板表达式ds1.select(A1)的解析就会出现数据提取错误。</p> 
+  <p>下面的小例子重现错误并提出解决办法。</p> 
+  <p>一：首先在数据库中创建一个table，命名为Test5，并将字段名命名为A1,B1,C1</p> 
+  <p>CREATE TABLE Test5(A1 int ,B1 VARCHAR(10),C1 VARCHAR(10))</p> 
+  <p>二：插入数据</p> 
+  <p>INSERT INTO Test5 VALUES(1,’B1′,’C1′)</p> 
+  <p>INSERT INTO Test5 VALUES(2,’B2′,’C2′)</p> 
+  <p>INSERT INTO Test5 VALUES(3,’B2′,’C2′)</p> 
+  <p>三：创建报表模板，其数据集命名为ds1，表达式为：SELECT Test5.A1,Test5.B1,Test5.C1 FROM Test5</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/124.png" alt="1.png" width="398" height="119" /></p> 
+  <p>四：发布预览</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/215.png" alt="2.png" width="464" height="133" /></p> 
+  <p><span>从上图可以看出ds1.select(A1)解析出错，查询出的数据并非数据表中的值，而是一个名为com.runqian.report4.model.engine.CSVariable@1e9b48b的对象。</span></p> 
+  <p>此种情况，如果用ds.select(字段名)的话，得到的是错误的对象。</p> 
+  <p>五：解决思路</p> 
+  <p>润乾报表提供了一种代替数据集中字段名的表示方法，用ds1.select（#N）代表数据集中的某个字段，#N的N代表数据集中的第N个字段，可以用此方法把那些不好处理的字段替换查询出来。</p> 
+  <p>举例说明SELECT Test5.A1,Test5.B1,Test5.C1 FROM Test5中#1代表第一个字段A1, #2代表第二个字段B1, #3代表第三个字段C1，依次类推</p> 
+  <p>六：修改报表</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/314.png" alt="3.png" width="396" height="132" /></p> 
+  <p>七：正确的数据显示</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/410.png" alt="4.png" width="448" height="123" /></p> 
+  <p><span>总结：当遇到此类情况或者其他不方便直接表示的字段（如字段过长）时，在单元格表达式中可以用#加数字来取代这些特殊字段。</span></p>  
+ </body>
+</html>

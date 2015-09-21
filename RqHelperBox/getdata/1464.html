@@ -1,0 +1,25 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在制作报表中，背景图的用途很广泛，可以用于套打时的底图描绘，也可以用于背景水印等等。润乾报表提供了两种方式为报表设置背景图，包括自定义类方式和URL方式。当用户在报表中使用的背景图是自己写的一个Java类画的图时，可使用自定义类方式；当用户在报表中使用的背景图是一个图片文件时，可使用URL方式。其中URL方式中的URL可以是绝对路径名，也可以是相对路径名。当URL是绝对路径名时，润乾报表还提供了使用api代码动态修改报表背景图的绝对路径的方法，下面将通过一个小例子简单介绍一下该方法。</p> 
+  <p>首先，创建一个内建数据集，建立一个员工基本信息表，设置背景图片属性，如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/xn-jf0b778bkly9obk44a.png" alt="设置背景图_.png" height="129" /></p> 
+  <p>报表设计效果如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/runqian.png" alt="runqian.PNG" height="95" /></p> 
+  <p>报表发布后的效果如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/runqian-1.png" alt="runqian_1.png" height="215" /></p> 
+  <p>然后，写一个java类Application，在该类中使用如下方法实现动态修改绝对路径，代码如下</p> 
+  <p><span style="color: #0000ff;">public static void run() throws Exception {</span></p> 
+  <p><span style="color: #0000ff;">String reportFile = “D:\\test\\test.raq”; // 报表文件<br /> String lisenseFile = “E://110//workspace//helloworld//WebRoot//WEB-INF//classes//Server2009-07-31V4.0Windows.lic”;//授权文件</span></p> 
+  <p><span style="color: #0000ff;">// 第一步，读取报表模板并设置授权文件<br /> ReportDefine rd = (ReportDefine) ReportUtils.read( reportFile );<br /> ExtCellSet.setLicenseFileName(lisenseFile);</span></p> 
+  <p><span style="color: #0000ff;">// 第二步，修改背景图<br /> BackGraphConfig bgc=rd.getBackGraphConfig();<br /> String picUrl1=bgc.getURLOrClassName();<br /> Byte type=bgc.getType();<br /> System.out.println(”====背景图的当前路径为：”+picUrl1);<br /> if(type==0) //报表背景图的配置类型分为url路径和自定义类，当返回值为0时表示配置类型为url路径<br /> {<br /> String picUrl2=”D:\\test\\1.JPG”;<br /> bgc.setURLOrClassName(picUrl2);<br /> rd.setBackGraphConfig(bgc);<br /> }<br /> String picUrl3=bgc.getURLOrClassName();<br /> System.out.println(”背景图修改后路径为：”+picUrl3);<br /> ReportUtils.write(reportFile, rd);//报表回存<br /> Context context = new Context();<br /> Engine enging = new Engine(rd, context);<br /> IReport iReport = enging.calc();</span></p> 
+  <p><span style="color: #0000ff;">// 第三步，通过JFrame 查看报表效果<br /> CSReport csReport = new CSReport(iReport);<br /> JFrame jf = new JFrame(”润乾报表”);<br /> try {<br /> jf.getContentPane().add(csReport.getDisplayPane());<br /> } catch (Throwable e) {<br /> e.printStackTrace();<br /> }<br /> jf.setSize(600, 400);<br /> jf.setLocation(200, 100);</span></p> 
+  <p><span style="color: #0000ff;">}</span></p> 
+  <p>在Application类中写个主函数调用一下该方法，如下</p> 
+  <p><span style="color: #0000ff;">public static void main(String[] args){<br /> try {<br /> Application.run();<br /> } catch (Exception e) {<br /> e.printStackTrace();<br /> }<br /> }</span></p> 
+  <p>运行程序后就可以看到动态修改报表背景图的绝对路径后的效果。</p> 
+  <p>查看发布后的报表，效果如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/2runqian-2.png" alt="2runqian_2.png" height="229" /></p> 
+  <p>这样就实现了动态修改报表背景图的绝对路径，从而动态修改了报表的背景图片。</p>  
+ </body>
+</html>

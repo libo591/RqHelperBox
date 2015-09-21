@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>下拉日历是润乾报表为日期填报提供的一个便捷功能，可以让用户快速准确的填写日期信息，避免了手动填写所产生的的格式误差和数值误差。但润乾自带的下拉日历可能风格与具体开发的页面风格不相统一，而开发者想使用自己已经开发出的自定义下拉日历同时又不想完全摆脱方便快捷的润乾报表。因此，开发者想了解如何在润乾报表的开发中嵌入自己开发的下拉日历控件。比如参数模板报表中如何调用自己的下拉日历控件。</p> 
+  <p>本文以一个具体的例子来介绍下如何在润乾参数模板报表中嵌入自定义的下拉日历控件。</p> 
+  <p><strong>第一步，编写一个自定义下拉日历的JavaScript文件</strong></p> 
+  <p>我们这里选用的是网上一个开源的日历控件-梅花雨日历控件，参考下载地址：</p> 
+  <p><a href="http://hi.baidu.com/917526932/blog/item/01130687663eda3666096e6b.html">http://hi.baidu.com/917526932/blog/item/01130687663eda3666096e6b.html</a></p> 
+  <p>把其存为名为selfCalendar.js的Javascript文件</p> 
+  <p><strong>第二步，制作一参数模板报表，用”Html格子数据类型”引入下拉日历主调函数</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/1-0043.png" alt="1.png" width="465" height="104" /></p> 
+  <p>B2单元格内右键，选择”数据类型”后，如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/2-0040.png" alt="2.png" width="412" height="182" /></p> 
+  <p>在内容内输入如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/3-0035.png" alt="3.png" width="320" height="212" /></p> 
+  <p>在梅花雨日历控件中，calendar()是日历的主调函数</p> 
+  <p><strong>第三步，在展现报表的jsp内，把自定义的下拉日历JS文件引入</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/4-0030.png" alt="4.png" width="423" height="182" /></p> 
+  <p>这样，润乾报表使用”Html格子数据类型”引入自定义下拉日历的过程就完成了。</p> 
+  <p>下面是在Web页面展现的效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/5-0025.png" alt="5.png" width="392" height="179" /></p> 
+  <p>润乾报表提供这么多快捷的功能点，使得您在设计报表时更加快速灵活，根据实际应用情况，可以随心所欲的引入有特色的控件，在满足业务需求的同时，也丰富了页面效果，一举两得。</p>  
+ </body>
+</html>

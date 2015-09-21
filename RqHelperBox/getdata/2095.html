@@ -1,0 +1,35 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表软件提供基于动态库表关联技术的填报功能，完美解决数据入库的难题，极大提高填报表的处理效率，扩展了Web报表工具的应用方式。</p> 
+  <p>我们看一下下面的一个问题：</p> 
+  <p>数据库中有两个表，一个是用户列表，一个是用户信息明细表，在关联关系上，用户列表是主表，用户信息明细表是子表，互相之间有主外键关系即用户ID。</p> 
+  <p>下图就是数据库中的表结构：</p> 
+  <p>用户列表：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/16.gif" alt="1.gif" width="512" height="160" /></p> 
+  <p>用户信息明细表:</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/24.gif" alt="2.gif" width="520" height="217" /></p> 
+  <p>其中，用户列表中的userid是用户信息明细表的外键。</p> 
+  <p>接着，我们看一下报表模版中的设置:</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/34.gif" alt="3.gif" width="536" height="112" /></p> 
+  <p>假设这张填报表中的更新属性设置在A2：</p> 
+  <p>由于涉及到两个表的更新，所以我们需要设置两条更新属性：</p> 
+  <p>用户列表：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/44.gif" alt="4.gif" width="601" height="308" /></p> 
+  <p>用户信息明细表：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/52.gif" alt="5.gif" width="606" height="407" /></p> 
+  <p>我们假设这张报表是行式填报表，有增加删除行的功能，那么来看一下在页面中的增加行效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/62.gif" alt="6.gif" width="498" height="141" /></p> 
+  <p>提交后，数据正常保存。</p> 
+  <p>我们试试删除的效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/7.gif" alt="7.gif" width="776" height="312" /></p> 
+  <p>抛出了数据库的异常信息，这是为什么呢？</p> 
+  <p>原来，增加行的逻辑是，先增加主表行，再对应更新子表，这是正常的，但删除的时候，如果先删除主表信息，再删除子表信息，就会违反约束，导致了这个问题。</p> 
+  <p>那么在数据库中要如何设置呢？</p> 
+  <p>在外键的属性中有一个CASCADE，这个属性的意思是，删主表时数据库会自动把子表相关记录也删掉，也就是说，从数据库侧来保证约束的正确性。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/8.gif" alt="8.gif" width="678" height="149" /></p> 
+  <p>这样设置后，我们在页面中测试一下效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/9.gif" alt="9.gif" width="489" height="116" /></p> 
+  <p>数据就可以正常删除了。</p>  
+ </body>
+</html>

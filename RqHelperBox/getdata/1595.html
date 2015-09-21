@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾行式填报表中提供了一个可以删除整行的功能按钮，但是这个按钮只能在报表的toolbar中使用，而有时为方便操作需要在报表中直接显示删除按钮。本文将通过一个例子来介绍一下报表中<strong>删除当前行</strong>按钮的制作。</p> 
+  <p>第一步：制作一个行式填报表</p> 
+  <p>报表设计如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/6.png" alt="6.png" width="564" height="75" /></p> 
+  <p>在网页中查看此填报表，效果如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/1-0015.png" alt="1.png" width="525" height="137" /></p> 
+  <p>当点删除按钮时，会删除被选中的行，这里如果点删除按钮会删除供应商ID为3的那一行。</p> 
+  <p>第二步：添加<strong>删除当前行</strong>按钮</p> 
+  <p>在报表中追加一列，F1中添加<strong>操作</strong>，选中F2，<strong>鼠标右键-数据类型</strong>选择 数据类型为 HTML，输入内容</p> 
+  <p>&lt;input name=”click1″ type=”button” style=”width:70;height:30″ value=”删除当前行” onClick=”shanchu(this)” &gt;</p> 
+  <p>如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/4-0004.png" alt="4.png" width="653" height="286" /></p> 
+  <p>第三步：在发布报表的jsp上增加如下js脚本</p> 
+  <p><span style="color: #0000ff;">&lt;script language=”JavaScript”&gt;<br /> function shanchu(btn){<br /> var cell=btn.parentElement;<br /> report1.currCell=cell; //获取当前触犯单元格的焦点<br /> _deleteRow(report1); //调用行式报表删除行的js函数<br /> }<br /> &lt;/script&gt;</span></p> 
+  <p>第四步：在网页中查看效果，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/2-0013.png" alt="2.png" width="610" height="155" /></p> 
+  <p>这样，就在报表中成功插入了删除当前行的按钮，以后就可以很方便的删除数据，而不再需要去toolbar里寻找删除按钮了。</p>  
+ </body>
+</html>

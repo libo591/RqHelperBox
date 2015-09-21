@@ -1,0 +1,52 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span><span style="font-family: 宋体;">有的客户使用批量打印的时候用到了</span><span>runqian_getPrintReports()</span></span><span><span style="font-family: 宋体;">方法来实现打印前的一些操作。</span></span></p> 
+  <p class="MsoNormal"><span></span><span><span style="font-family: 宋体;">但在实现批量打印以及</span><span>runqian_getPrintReports()</span></span><span><span style="font-family: 宋体;">方法的时候存在如下问题：</span></span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span><span>1、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">批量打印必须使用教程中提到的大段代码吗？如以下代码是否必须？</span></span></p> 
+  <p class="MsoNormal"><span><span>&lt;object classid=”clsid:8AD9C840-044E-11D1-B3E9-00805F499D93″<span> </span>codebase=”&lt;%=appRoot%&gt;/j2re-1_4_1-windows-i586-i.exe#Version=1,4,1,0″<span> </span>width=”40″ height=”16″ id=”report1_directPrintApplet” style=”vertical-align:middle”&gt;<span> </span></span></span></p> 
+  <p class="MsoNormal"><span><span>&lt;param name=”name” value=”report1_directPrintApplet”&gt;<span> </span></span></span></p> 
+  <p class="MsoNormal"><span><span>&lt;param name=”code” value=”com.runqian.report4.view.applet.DirectPrintApplet.class”&gt;</span></span></p> 
+  <p class="MsoNormal"><span><span style="font-family: 宋体;">……</span></span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span><span>2、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span>runqian_getPrintReports()</span></span><span><span style="font-family: 宋体;">方法何时调用？如何实现返回的</span><span>reports</span></span><span><span style="font-family: 宋体;">为空时不进行打印操作？当前无论返回何值或不返回值都会打印一张空白纸。</span></span></p> 
+  <p class="MsoNormal"> </p> 
+  <h2><span><span style="font-family: 宋体;">问题解答</span></span></h2> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span><span>1、<span style="font: 7pt 'Times New Roman';"> </span></span></span><span style="font-family: 宋体;">若不希望配置批量打印时的一些相关属性，如教程中提到的</span><span>name</span></span><span><span style="font-family: 宋体;">、</span><span>code</span></span><span><span style="font-family: 宋体;">、</span><span>archive</span></span><span><span style="font-family: 宋体;">等。可以直接在发布报表的标签中增加</span><span>needDirectPrint=”yes”</span></span><span><span style="font-family: 宋体;">，然后在</span><span>runqian_getPrintReports()</span></span><span><span style="font-family: 宋体;">方法中返回要打印的报表列表即可。</span></span></p> 
+  <p class="MsoNormal" style="margin-left: 18pt;"><span><span style="font-family: 宋体;">如下面实现的方式：</span></span></p> 
+  <p class="MsoNormal"><span><span>&lt;body&gt;</span></span></p> 
+  <p class="MsoNormal"><span><span>&lt;div style=’margin-top:5px;’&gt;</span></span></p> 
+  <p class="MsoNormal"><span><span>&lt;report:html name=”report1″ reportFileName=”directPrint1.raq”</span></span></p> 
+  <p class="MsoNormal"><span><span>funcBarLocation=”top”</span></span></p> 
+  <p class="MsoNormal"><span><span>needPageMark=”no”</span></span></p> 
+  <p class="MsoNormal"><span><span>needPrint=”yes”</span></span></p> 
+  <p class="MsoNormal"><span><span>needDirectPrint=”yes”<span> </span></span></span></p> 
+  <p class="MsoNormal"><span><span>exceptionPage=”/reportJsp/myError2.jsp”</span></span></p> 
+  <p class="MsoNormal"><span><span>/&gt;</span></span></p> 
+  <p class="MsoNormal"><span><span>&lt;/div&gt;</span></span></p> 
+  <p class="MsoNormal"><span><span>&lt;/body&gt;</span></span></p> 
+  <p class="MsoNormal"><span><span>&lt;script&gt;</span></span></p> 
+  <p class="MsoNormal"><span><span>function runqian_getPrintReports(){</span></span></p> 
+  <p class="MsoNormal"><span><span><span style="color: red;">var reports = “{directPrint1}{directPrint2}”;<span> </span></span><span style="color: #0070c0;">//</span></span></span><span><span style="font-family: 宋体; color: #0070c0;">可以不带后缀名</span></span></p> 
+  <p class="MsoNormal"><span><span>return reports;</span></span></p> 
+  <p class="MsoNormal"><span><span>}</span></span></p> 
+  <p class="MsoNormal"><span><span>&lt;/script&gt;</span></span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span><span>2</span></span><span><span style="font-family: 宋体;">、</span><span>runqian_getPrintReports()</span></span><span><span style="font-family: 宋体;">函数</span></span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><span style="font-family: 宋体;">函数说明：此函数返回的格式为：</span><span>“{</span></span><span><span style="font-family: 宋体;">无参数报表名</span><span>}{</span></span><span><span style="font-family: 宋体;">报表</span><span>1(</span></span><span><span style="font-family: 宋体;">参数</span><span>1=value1;</span></span><span><span style="font-family: 宋体;">参数</span><span>2=value2;…)}{</span></span><span><span style="font-family: 宋体;">报表</span><span>2(</span></span><span><span style="font-family: 宋体;">参数</span><span>1=value1;</span></span><span><span style="font-family: 宋体;">参数</span><span>2=value2;…)}…”</span></span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>function runqian_getPrintReports() {</span></span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>//</span></span><span><span style="font-family: 宋体;">请在此函数里加上打印前需要的处理，最后返回需要打印的报表</span></span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>return “&lt;%=report%&gt;”;</span></span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>}</span></span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><span style="font-family: 宋体;">该函数在点击直接打印或批量打印按钮时自动调用。</span></span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span><span style="font-family: 宋体;">若希望返回值为空时不进行打印操作，需返回“”，见如下实现：</span></span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span>function runqian_getPrintReports(){</span></span></p> 
+  <p class="MsoNormal"><span><span>var reports = “”;</span></span></p> 
+  <p class="MsoNormal"><span><span>alert(“</span></span><span><span style="font-family: 宋体;">请选择报表！</span><span>“)</span></span></p> 
+  <p class="MsoNormal"><span><span><span style="color: red;">return “”;</span></span></span></p> 
+  <p class="MsoNormal"><span><span>}</span></span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span style="font-family: 宋体;">当进行打印时，弹出“请选择报表”的提示后不再进行打印操作。</span></span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span><span style="font-family: 宋体; color: red;">注意：此处必须以上面的方式返回，不返回或返回</span><span style="color: red;">false</span></span><span><span style="font-family: 宋体; color: red;">以及其他值均无法达到不打印的效果。</span></span></p>  
+ </body>
+</html>

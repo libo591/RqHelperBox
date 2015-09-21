@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>纯java开发的润乾报表软件在linux下面也可以应用自如。那么首先就需要配置好linux下的java环境，具体说来，就是配置jdk环境变量。本文就介绍在linux下配置jdk环境变量的几种常用方法。</p> 
+   <p>首先在linux下安装jdk，如果出现提示权限不够(且root下也提示权限不够)，可用<span style="color: #0000ff;">#ls -l filename</span>命令查看一下，如果显示类似如：</p> 
+   <p><span style="color: #0000ff;">-rw-rw-rw- 1 root root ….</span></p> 
+   <p>则表示任何用户都没有可执行权限（即使是root用户）。</p> 
+   <p>解决方法：</p> 
+   <p><span style="color: #0000ff;">#chmod a+x filename</span></p> 
+   <p>这样，安装好后，就可以接下来进行环境变量的配置了。这里给出三种可选方法：</p> 
+   <p>一、修改/etc/profile文件</p> 
+   <p>当本机仅仅作为开发使用时推荐使用这种方法，因为此种配置时所有用户的shell都有权使用这些环境变量，可能会给系统带来安全性问题。</p> 
+   <p>用文本编辑器打开/etc/profile，在profile文件末尾加入：</p> 
+   <p><span style="color: #0000ff;">JAVA_HOME=/usr/share/jdk1.5.0_05<br /> PATH=$JAVA_HOME/bin:$PATH<br /> CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar<br /> export JAVA_HOME<br /> export PATH<br /> export CLASSPATH</span></p> 
+   <p>重新登录即可。</p> 
+   <p>二、修改.bashrc文件</p> 
+   <p>这种方法更为安全，它可以把使用这些环境变量的权限控制到用户级别，如果需要给某个用户权限使用这些环境变量，只需要修改其个人用户主目录下的.bashrc文件就可以了。</p> 
+   <p>用文本编辑器打开用户目录下的.bashrc文件，在.bashrc文件末尾加入：</p> 
+   <p><span style="color: #0000ff;">set JAVA_HOME=/usr/share/jdk1.5.0_05<br /> export JAVA_HOME<br /> set PATH=$JAVA_HOME/bin:$PATH<br /> export PATH<br /> set CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar<br /> export CLASSPATH</span></p> 
+   <p>重新登录。</p> 
+   <p>三、直接在shell下设置变量</p> 
+   <p>不推荐使用这种方法，因为换个shell，该设置就无效了。这种方法仅仅是临时使用，以后要使用的时候又要重新设置，比较麻烦。</p> 
+   <p>只需在shell终端执行下列命令：</p> 
+   <p><span style="color: #0000ff;">export JAVA_HOME=/usr/share/jdk1.5.0_05<br /> export PATH=$JAVA_HOME/bin:$PATH<br /> export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span></p> 
+   <p>注意：</p> 
+  </div>  
+ </body>
+</html>

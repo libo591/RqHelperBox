@@ -1,0 +1,50 @@
+/**
+ * 与报表数据源数据集相关的API
+ */
+private static void reportWithDataSourceAndDataset() {
+	ReportDefine2 rd2 = new ReportDefine2(1,5);
+	//数据源属性为设置到运算环境中
+	Context ctx = new Context();
+	//方法1.直接给数据源名赋值连接，进行运算
+	//ctx.setConnection("demo", conn);
+	//方法2.直接给数据源名赋值连接工厂，进行运算
+	//ctx.setConnectionFactory("demo", factory);
+	//方法3.构建数据源连接对象
+	DataSourceDefine dsoc=new DataSourceDefine();
+	dsoc.setDriver("com.mysql.jdbc.Driver");  //设置jdbc的驱动
+	dsoc.setCaseSentence(true);  //设置sql的大小写是否无关，指表名字段名等
+	dsoc.setDSType(DataSource.TYPE_RELATIONAL);  //设置数据源类型，如DataSource.TYPE_RELATIONAL, DataSource.TYPE_ODBC等
+	dsoc.setName("demo");  //设置数据源名
+	dsoc.setPassword("");  //设置数据库连接密码
+	dsoc.setUser("root");  //设置数据库访问用户名
+	dsoc.setUrl("jdbc:mysql://localhost:3306/test");   //设置Jdbc的url
+	dsoc.setUseSchema(true);  //设置是否使用模式
+	dsoc.setClientCharset("GBK");  //设置客户端的字符集
+	dsoc.setDBCharset("GBK");  //设置数据库的字符集
+	dsoc.setDBType(DBTypes.MYSQL);  //设置数据库类型，如DBTypes.ORACLE, DBTypes.SQLSVR等
+	dsoc.setNeedTranContent(false);  //设置数据库返回值是否需要转码
+	dsoc.setNeedTranSentence(false);  //设置sql是否需要转码
+
+	ctx.setDataSourceConfig("demo", dsoc);
+	
+	//数据集定义为报表本身属性
+	DataSetMetaData dsmd = rd2.getDataSetMetaData();
+	if(dsmd==null){
+		dsmd = new DataSetMetaData();
+	}
+	//以sql数据集为例，其他的还有
+	//ProcDataSetConfig 存储过程数据集
+	//CSQLDataSetConfig 复杂sql数据集
+	//TxtDataSetConfig text文件数据集
+	//XMLDataSetConfig xml文件数据集
+	//BuiltinDataSetConfig 内建数据数据集
+	//CustomDataSetConfig 自定义数据集等
+	SQLDataSetConfig sqlds = new SQLDataSetConfig();
+	sqlds.setName("ds1");
+	sqlds.setSQL("select * from test");
+	sqlds.setDataSourceName("demo");
+	dsmd.addDataSetConfig(sqlds);
+	
+	rd2.setDataSetMetaData(dsmd);
+	
+}

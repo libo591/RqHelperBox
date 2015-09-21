@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>如果报表数据量很大，行、列都很多，在WEB页面输出的时候，需要固定报表表头，设置横向、纵向滚动条，通过拖动滚动条来查看报表。但是，当报表输出的标签中滚动条的宽度、高度都是固定值，不能设置成页面宽度高度的百分比，这样由于不同的客户端的分辨率可能不一样，报表展现出来的效果就不一样。对于分辨率小的机器，在页面上看不到滚动条，分辨率大的机器，滚动附近会留出了很大的空白，页面不美观，影响用户体验。 如下图：</p> 
+  <p style="text-align: left;"><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/yg1.png" alt="yg1.png" height="322" /></p> 
+  <p>原来报表展现页面中报表输出标签设置滚动条的代码是</p> 
+  <p><span style="color: #0000ff;">&lt;report:html name=”report1″ reportFileName=”&lt;%=raqpath%&gt;”<br /> …<br /> needScroll=”yes”<br /> scrollWidth=”300″<br /> scrollHeight=”200″<br /> …<br /> /&gt;<br /> </span></p> 
+  <p>润乾报表提供了灵活的动态设置滚动条高度、宽度的解决方法，如下</p> 
+  <p>首先，加一个redirect.jsp页面，里面加入一个js函数，来获取客户端浏览器窗口的大小</p> 
+  <p><span style="color: #0000ff;">&lt;SCRIPT&gt;<br /> var w = 0;<br /> var h = 0;<br /> //通过深入Document内部对body进行检测，获取浏览器窗口大小<br /> if(document.documentElement &amp;&amp; document.documentElement.clientHeight &amp;&amp; document.documentElement.clientWidth){<br /> h = document.documentElement.clientHeight;<br /> w = document.documentElement.clientWidth;<br /> }else{<br /> w = 1259 ;<br /> h = 632 ;<br /> }<br /> //重定向到报表所在的jsp页面，并且把客户端浏览器宽度、高度，作为参数传递给报表所在的jsp页面<br /> window.location.href=”&lt;%=path%&gt;/mis2/reportcenter/res/showReport.jsp?&lt;%=param%&gt;&amp;w=”+w+”&amp;h=”+h ;<br /> &lt;/SCRIPT&gt;</span></p> 
+  <p>然后，在展现报表的jsp页面上，增加如下代码来获取浏览器的宽度、高度</p> 
+  <p><span style="color: #0000ff;">String w = request.getParameter(”w”) ;<br /> String h= request.getParameter(”h”) ;</span></p> 
+  <p>最后，在报表输出的标签中，设置动态获取滚动条的宽度和高度</p> 
+  <p><span style="color: #0000ff;">&lt;report:html name=”report1″ reportFileName=”a.raq”<br /> funcBarLocation=””<br /> params=”&lt;%=param.toString()%&gt;”<br /> needScroll=”yes”<br /> scrollWidth=”&lt;%=w%&gt;” //动态设置滚动条宽度、高度<br /> scrollHeight=”&lt;%=h%&gt;”<br /> /&gt;</span></p> 
+  <p>现在报表展现如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/yg22.png" alt="yg22.png" width="517" height="316" /></p> 
+  <p>这样，我们就实现了根据客户端浏览器窗口大小，对固定表头报表自动设置滚动条高度、宽度，使用户体验大大提升。<br /> <span lang="EN-US"></span></p>  
+ </body>
+</html>

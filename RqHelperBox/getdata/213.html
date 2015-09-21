@@ -1,0 +1,6 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>当润乾的报表系统和报表用户的系统同时发布的时候，就会造成报表用户系统的一个生成图片的servlet无法正常运，但是如果把润乾报表中的10注释掉，报表用户的系统就不会出现问题，可是润乾的报表系统就无法正常运行。这个问题是因为报表用户的系统的应用中使用了类似java.net的技术，就是web swing，而swing的很多控件是不支持headless模式的，而润乾的报表系统中默认地将headless设为true，即System.setProperty( “java.awt.headless”, “true” )。所以建议 先把report4.jar更新后，在把headless配置放在web.xml文件中，即为:<br /> <a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/web.png" title="web.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/web.png" alt="web.png" /></a>如果报表用户系统是x-windows的环境，就配置成false；否则先配置x-windows环境，再配置成false。</p>  
+ </body>
+</html>

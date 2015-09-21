@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>web报表用户在使用带参数的报表查询时，很多时候用到的参数都不是从参数模板填写获取的，而是从页面传递的，比如访问者的名字。一般这些数据会存放在会话变量（Session）中。本文就来介绍下如何将页面中获取的参数传递给报表。</p> 
+  <p>实现思路：使用润乾报表参数模板标签中的hiddenParams（用户提交的一些隐含的参数，如登录用户名、用户身份等）属性。</p> 
+  <p><strong>第一步：制作带参数的报表</strong></p> 
+  <p>报表模板如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/211.png" alt="2.png" width="416" height="161" /></p> 
+  <p>其中E4单元格为：=@username+”用户已登录”,</p> 
+  <p>为其增加一个参数username，如下图:</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/112.png" alt="1.png" width="484" height="224" /></p> 
+  <p><strong>第二步：在jsp页面中模拟web项目</strong></p> 
+  <p>在展现报表的showReport.jsp中模拟将username存放在session中，并且在页面中得到该值。代码如下：</p> 
+  <p>&lt;%</p> 
+  <p>String username = “runqian”;//模拟访问者名字叫做runqian</p> 
+  <p>session.setAttribute(”username”,username);//将name放到session中</p> 
+  <p>String str=”username=”+session.getAttribute(”username”);//从session中取得username的值,并拼成name=value的形式的字符串.</p> 
+  <p>//…将这个字符串拼在jsp中参数StringBuffer param后面.</p> 
+  <p>param.append(str);</p> 
+  <p>%&gt;</p> 
+  <p>在&lt;report:param&gt;标签中将params=”&lt;%=param.toString()%&gt;”注销,增加hiddenParams=”&lt;%=param.toString()%&gt;”</p> 
+  <p>现在浏览该报表并做查询操作:</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/38.png" alt="3.png" width="454" height="368" /></p> 
+  <p>这样就达到了查询后保留从页面传递的参数了，同样这个参数可以放到数据集中进行sql检索。</p>  
+ </body>
+</html>

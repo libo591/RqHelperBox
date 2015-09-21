@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>填报表中的自动计算功能有很广泛的应用。用户在页面的某些单元格中填报数据，然后另外的单元格根据填入的数据自动计算得到相应的数据。自动计算得到的数据，用普通的显示格式设置的时候，发现设置无效，需要通过使用JavaScript函数对其进行单独设置。</p> 
+  <p>首先下图这个填报表模板，总运货费字段是根据输入的货物数量计算得来的。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/xn-4rux1i0rc2v2c1.png" alt="报表模板.png" width="365" height="36" /></p> 
+  <p>将”总运货费”设置显示格式为￥#.#，设置方法如下图。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/xn-w0tu3nztbe65a68glit.png" alt="显示格式设置.png" width="205" height="154" /></p> 
+  <p>发布预览发现：”总运货费”一列显示格式并非格式显示设置的样式。如下图所示。说明显示格式对自动计算单元格不起作用。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/xn-1-in1d571b1.png" alt="预览1.png" width="356" height="58" /></p> 
+  <p>下面使用函数来实现对计算出来的数据格式的设置。本文分别介绍两个JavaScript函数达到格式设定效果。</p> 
+  <p>一、使用toFixed()函数实现。</p> 
+  <p>JavaScript中toFixed()函数方法返回一个以定点表示法表示的数字的字符串形式。说明：toFixed(n),n为指定的小数位数。若要求保留整数，则括弧内用0；若要保留一位数字，括弧内写1；依次类推就可以根据需求限制小数位数。同时为了显示人民币符号，toFixed()函数前加”￥”。</p> 
+  <p>选择I2单元格，右键选择填报属性，在自动计算对话框中输入：”￥”+${F2*H2}.toFixed(0)。具体设置如下图。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/xn-1-3l8am17j8jfl5m.png" alt="自动计算1.png" width="240" height="166" /></p> 
+  <p>发布到web预览效果如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/xn-2-in1d571b1.png" alt="预览2.png" width="356" height="57" /></p> 
+  <p>二、使用Math.round()函数。</p> 
+  <p>Math.round(number)必选项number参数是要舍入到最接近整数的值。说明：如果number的小数部分大于等于0.5，返回值是大于number的最小整数；否则返回小于等于 number 的最大整数。</p> 
+  <p>在下面的例子中，我们要求保留小数点后一位。选择I2单元格，右键选择填报属性，在自动计算对话框输入：”￥”+Math.round(${F2*H2}*10)/10。具体设置如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/xn-2-3l8am17j8jfl5m.png" alt="自动计算2.png" width="280" height="171" /></p> 
+  <p>发布到web预览效果如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/xn-3-in1d571b.png" alt="预览3.png" width="356" height="58" /></p> 
+  <p>以上两种JavaScript函数均达到了设计预期的效果。润乾报表设计器中设计了许多的内置JS函数，用户可在设计填报表示在自动计算里使用各种JavaScript函数，对自动计算单元格格式的修饰只是其中一个应用。用户若能掌握并灵活运用JavaScript函数，将对报表设计工作起到很大的帮助。</p>  
+ </body>
+</html>

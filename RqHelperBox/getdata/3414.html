@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>许多客户在通过JSP传递参数的时候会遇到这么一个问题：传递到报表中的参数确实可以接收到，但是如果报表有参数模版，在点击”查询”按钮之后，传递过来的参数就变为空了。如何才能使参数长久的保存呢？<br /> 下面我们一起来看一下如何实现这一功能。<br /> <strong>首先在发布报表的showReport.jsp中定义两个参数arg3和arg4，并为其赋值”111″和”222″如下图：</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-011n16a74134.png" alt="" width="554" height="177" /></p> 
+  <p><strong>将arg3和arg4这两个参数的值拼成串的形式赋给argtest.<br /> 然后在报表中配置两个同名的参数arg3和arg4。<br /> 然后在报表单元格中写：@arg3和=@arg4。</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-012n3abcc151.png" alt="" width="553" height="89" /></p> 
+  <p>在页面上浏览报表时展示如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-013p76053f54.png" alt="" width="521" height="330" /></p> 
+  <p><strong>可以发现这两个参数已经传递过来了，但是当输入参数”1″，点击”查询”之后，这两个参数已经变成了null。</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-014p1089d85b.png" alt="" width="541" height="163" /></p> 
+  <p>这是因为点击”查询”按钮之后，调用了一个润干内置js函数：_submit( form1 )，那么也就是说不会执行上面定义那两个参数的代码了，这样一来就导致arg3和arg4的值变成了null.<br /> 这时候，<strong>如果我们在JSP中显示参数模版的那段代码中加入：hiddenParams=”&lt;%=paramTest.toString()%&gt;”</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-015p4cede282.png" alt="" width="553" height="135" /></p> 
+  <p><strong>那么，无论你点击多少次”查询”按钮，JSP中传递过来的参数是依然存在的。效果如下图：</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-016p5f2653cd.png" alt="" width="538" height="152" /></p> 
+  <p>hiddenParams属性说明：保留报表中隐藏的参数。</p>  
+ </body>
+</html>

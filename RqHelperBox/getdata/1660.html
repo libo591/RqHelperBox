@@ -1,0 +1,25 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>Web报表常见的一个需求是将单元格内的文字竖向显示，润乾报表单元格的内容默认情况下是横向显示的，本文介绍两种润乾报表中实现单元格内容竖排显示的方法。</p> 
+  <p>方法一、宽度限制加自动换行</p> 
+  <p>首先新建一个空白报表，内建一个数据集，内建数据集的内容如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-2-jf0b8.png" alt="图2.png" width="292" height="186" /></p> 
+  <p>然后设计报表模板，具体图示如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-3-jf0b8.png" alt="图3.png" width="182" height="69" /></p> 
+  <p>其中将单元格内容居中显示，设置B1单元格的扩展方向为”横向扩展”。</p> 
+  <p>此时设计的报表在浏览时，单元格的内容是横向显示的，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-4-jf0b8.png" alt="图4.png" width="484" height="54" /></p> 
+  <p>接下来设计实现单元格内容竖向显示的功能，将A、B列的宽度设置为8，使每列刚好是一个汉字的宽度（实际运用中的具体宽度要根据字体具体大小来设置）；同时勾选上段落属性中的”自动换行”项，使每行只能显示一个汉字，设置页面如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-5-jf0b6.png" alt="图5.png" width="286" height="149" /></p> 
+  <p>设置完成后发布报表，在IE中浏览报表效果如下图所示，即实现了单元格内容竖向显示的需求。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-6-jf0b3.png" alt="图6.png" width="165" height="257" /></p> 
+  <p>方法二、缩进控制加自动换行</p> 
+  <p>方法一是在用户对列宽没有要求的情况下可以实现，然而有些需求是对列宽有一定要求的，比如说要求列的宽度较大，同时单元格的内容仍然是竖向显示的，方法二就能解决这个需求。</p> 
+  <p><span style="font-family: 宋体;">继续对上面做好的报表进行设置，若将B列的宽度设置为25，这时将段落属性中缩进值项设置为10（此缩进值与具体字符大小即列宽度有关），同时勾选上”自动换行”属性，如下图：</span></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-7-jf0b2.png" alt="图7.png" width="301" height="143" /></p> 
+  <p>设置完成后发布报表，在IE中浏览报表效果如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-8-jf0b.png" alt="图8.png" width="296" height="248" /></p> 
+  <p>第一种方法是限制列宽为一个字的宽度再加上自动换行来实现单元格内容的竖向显示，而方法二则在列宽为较大值的情况下，通过设置段落缩进值来实现需求。由此可以看出润乾报表为用户提供了灵活和全面的设计方法及设置途径来实现各类需求，用户熟练使用润乾报表的情况下通过一些灵巧的设计方法可以做出各式各样的满足不同需求的报表来。</p>  
+ </body>
+</html>

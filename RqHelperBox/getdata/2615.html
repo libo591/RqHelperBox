@@ -1,0 +1,25 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>（全称：Hypertext Transfer Protocol over Secure Socket Layer），是以安全为目标的HTTP通道，简单讲是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。用于安全的HTTP数据传输。https:URL表明它使用了HTTP，但HTTPS存在不同于HTTP的默认端口及一个加密/身份验证层（在HTTP与TCP之间）。由于互联网的快速发展，HTTPS协议应用的越来越广泛。</p> 
+  <p>首先简单说下如何配置SSL。</p> 
+  <p>第一步：生成证书；</p> 
+  <p>1. 首先保证安装了Openssl，并且能够在在终端执行它。</p> 
+  <p>2. 为你的Apache（三倍-DES加密，PEM格式） 创建一个RSA私钥。</p> 
+  <p>$&nbsp;&nbsp; openssl&nbsp;&nbsp; genrsa&nbsp;&nbsp; -des3&nbsp;&nbsp; -out&nbsp;&nbsp; server.key&nbsp;&nbsp; 1024</p> 
+  <p>请将你的server.key文件备份，并且记住你输入得进入密码。能够通过以下的命令察看该文件：</p> 
+  <p>$&nbsp;&nbsp; openssl&nbsp;&nbsp; rsa&nbsp;&nbsp; -noout&nbsp;&nbsp; -text&nbsp;&nbsp; -in&nbsp;&nbsp; server.key</p> 
+  <p>你也可以通过以下的命令创建一个没有加密的版本（不建议）：</p> 
+  <p>$&nbsp;&nbsp; openssl&nbsp;&nbsp; rsa&nbsp;&nbsp; -in&nbsp;&nbsp; server.key&nbsp;&nbsp; -out&nbsp;&nbsp; server.key.unsecure</p> 
+  <p>3. 通过RSA私钥文件来创建一个证书请求文件（PEM格式，CSR）</p> 
+  <p>$&nbsp;&nbsp; openssl&nbsp;&nbsp; req&nbsp;&nbsp; -new&nbsp;&nbsp; -key&nbsp;&nbsp; server.key&nbsp;&nbsp; -out&nbsp;&nbsp; server.csr</p> 
+  <p>同样，你需要做一个备份，同时，在Openssl命令行提示输入CommonName的过程中，你必须输入一个FQDN（一个完全的有资格的域名），一个站点生成了一个CSR请求文件。可以通过以下的命令来查看CSR的详细内容：</p> 
+  <p>$&nbsp;&nbsp; openssl&nbsp;&nbsp; req&nbsp;&nbsp; -noout&nbsp;&nbsp; -text&nbsp;&nbsp; -in&nbsp;&nbsp; server.csr</p> 
+  <p>第二步：配置服务器；</p> 
+  <p>（1）单击“开始”菜单→“控制面板”→“管理工具”→Internet信息服务（IIS）。展开“* 服务器名称”（其中服务器名称为该服务器的名称），然后展开Web 站点。右键单击“默认网站”→单击“属性”→单击“目录安全性”选项卡。</p> 
+  <p>（2）在“安全通信”部分单击“编辑”按钮，进入安全通信编辑窗口，来进行该Web服务器的安全设置。</p> 
+  <p>（3）要将该站点设置为安全Web站点，选中位于窗口上方的“要求安全通道（SSL）”的复选框。在客户证书中选择“要求客户端证书”选项，这时，用户必须提供一个证书才能够获得访问权限。当设置完成后，单击“确定”按钮。</p> 
+  <p>这时，已经完成了安全Web站点的设置工作，并已经启用了安全通道，如果再通过http：连接来连接该Web站点，系统提示必须使用https来访问安全站点</p> 
+  <p>最后要将reportConfig.xml的&lt;name&gt;为appUrlPrefix的节点的&lt;value&gt;值设置为appmap就可以访问了。</p>  
+ </body>
+</html>

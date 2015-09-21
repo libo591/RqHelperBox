@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="21pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; group函数是对数据集按照某个字段或者表达式进行分组，获得一组组的集合，然后从每组中取出一个<br /> 指定字段或者表达式的值，放到单元格中进行扩展，扩展出来的每个单元格都保留了一个指针指向当前的组集，<br /> 该组集称为当前组。</p> 
+  <p style="21pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 因此在附属单元格中，需要对该组集进行操作时，不需要用任何条件和主单元格关联了，如果加设了条件，反倒画蛇添足，导致报表引擎还对组集中的记录进行遍历检索。</p> 
+  <p style="0cm 0cm 0pt"> </p> 
+  <p style="0cm 0cm 0pt">正确的group 用法：</p> 
+  <p style="center"> </p> 
+  <p style="0cm 0cm 0pt"><img style="143px" src="http://www.runqian.com.cn/wp-content/uploads/2009/04/12.jpg" alt="1.jpg" height="143" /></p> 
+  <p style="0cm 0cm 0pt">不合理的group用法：</p> 
+  <p style="0cm 0cm 0pt"> </p> 
+  <p style="4.0"> </p> 
+  <p style="4.0"><img style="153px" src="http://www.runqian.com.cn/wp-content/uploads/2009/04/22.jpg" alt="2.jpg" height="167" /></p> 
+  <p style="center"> </p> 
+  <p style="0cm 0cm 0pt"> </p> 
+  <p style="0cm 0cm 0pt">group函数的原理图示：</p> 
+  <p style="0cm 0cm 0pt"><img src="http://www.runqian.com.cn/wp-content/uploads/2009/04/32.jpg" alt="3.jpg" width="495" height="202" /></p>  
+ </body>
+</html>

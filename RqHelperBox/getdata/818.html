@@ -1,0 +1,23 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在使用润乾报表开发Web报表时，首先需要设置数据集，而在设置数据集时用户常常需要对数据集进行特殊处理，这时就须要使用润乾报表的”数据集工厂侦听类”来实现。</p> 
+  <p>以下介绍使用”数据集工厂侦听类”时如何解决常见的问题。为用户使用润乾报表提供更多帮助。</p> 
+  <p>错误信息：</p> 
+  <pre>错误码：500
+讯息： : 产生数据工厂: com.runqian.report4.dataset.SQLDataSetFactory 失败
+错误来源：: 数据集ds1中，数据源report/core_epm未启动或设定错误，请检查数据源：
+异常：: 产生数据工厂: com.runqian.report4.dataset.SQLDataSetFactory 失败
+错误来源：: 数据集ds1中，数据源report/core_epm未启动或设定错误，请检查数据源：
+at com.runqian.report4.model.CalcReport.calcDataSet(Unknown Source:317)
+at com.runqian.report4.usermodel.Engine.calc(Unknown Source:96)
+at ep.verify.expression.VerifyExpression.reportExpressionCalc(VerifyExpression.java:57)
+at ep.commons.init.InitShowReportParams.verifyReport(InitShowReportParams.java:63)
+at ep.commons.init.InitShowReportParams.(InitShowReportParams.java:43)
+at org.apache.jsp.reportJsp.showReport_jsp._jspService(showReport_jsp.java:68)
+at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:133)
+at javax.servlet.http.HttpServlet.service(HttpServlet.java:856)</pre> 
+  <p>原因一：先检查一下设置到IDataSetFactoryListener接口的public void beforeCreated方法中的context是不是只有connection，如果是这种情况，最好把数据源连接工厂也set一下，这样当前的context里的connection被关闭时，可以去连接工厂中取。</p> 
+  <p>原因二：将connection打印出来，如果connection并不为空。如果reportConfig.xml已经配置了数据源信息，在代码中就不需要再配置了，如果再set一个connection就可以会出错，将代码中的数据源配置代码删掉即可。</p>  
+ </body>
+</html>

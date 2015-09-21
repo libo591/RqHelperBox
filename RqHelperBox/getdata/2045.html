@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了丰富的统计图，但是仍旧难以满足五花八门的业务需要，因此用户需要自定义统计图。自定义统计图有几种应用层次。</p> 
+  <p>首先从统计图的属性编辑来看，存在两种应用：</p> 
+  <p>1、利用润乾报表提供的统计图属性编辑框定义的属性，自行画图</p> 
+  <p>2、自己设计一个统计图属性编辑框，定义截然不同的属性</p> 
+  <p>其次，从画图的角度来看，存在两种应用：</p> 
+  <p>1、自行编程画图</p> 
+  <p>2、调用第三方控件画图</p> 
+  <p>本文将介绍在设计器中部署自定义统计图的方法。</p> 
+  <p><strong>第一步：拷贝自定义统计图的类到设计器目录下：</strong></p> 
+  <p>designer\classes\自定义类所在的包名下面。如MyDataSet.java在com.runqian包中，就需要把编译后的MyDataSet.class文件放在设计器安装路径\ reportHome\designer\classes\com\runqian包中，如果classes下面不包含com.runqian包，用户需要自己新建。如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/zrclip-058pf0b0abe.png" alt="" width="365" height="170" /></p> 
+  <p>第二步：在设计器中进行登记，打开设计器的选项，如下图所示：<br /> <img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/zrclip-059n75d29710.png" alt="" width="640" height="107" /><br /> 第三步：在统计图的配置窗口中，选择自定义统计图，如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/zrclip-060pbd59870.png" alt="" width="623" height="266" /></p> 
+  <p>然后按照普通统计图的方式，设置好分类、系列和图形特性等属性后，在其他特性中，选择刚才在设计器中登记的自定义统计图类。</p> 
+  <p>在设计器中进行登记，如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/zrclip-061neb6b5f7.png" alt="" width="643" height="104" /></p> 
+  <p>这样在设计器中就可以预览自定义统计图的效果了。</p> 
+  <p>在项目应用下部署和设计器中类似，只需要把把自定义统计图的类放到\WEB-INF\classes\自定义类所在的包名下面即可。</p> 
+  <p>需要注意的是，第一次在设计器中配置好自定义统计图后，需要重启设计器才可以使用自定义统计图。</p>  
+ </body>
+</html>

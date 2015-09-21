@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>◆ 背景说明</p> 
+  <p>一张带有统计图的大报表，统计图根据报表中的数据画的图。报表比较宽和高，在浏览器中，就会出现滚动条，对于图中的数据，想看一下对应表中的数据，而不需要去移动滚动条，能快速定位到表中数据，对方便用户查看数据，会起到很好的效果。因为，报表大，通过移动滚动条去找数据，会很麻烦，需要用户很好的耐心。下面，我们通过一个例子，来看快逸报表是怎么轻松解决的。</p> 
+  <p>◆ 应用举例</p> 
+  <p>1 制作一张填报表，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/19.gif" alt="1.gif" width="498" height="297" /></p> 
+  <p>2 统计图属性设置，我们选用折线图，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/27.gif" alt="2.gif" width="554" height="371" /></p> 
+  <p>3统计图属性设置，图形超链接中，调用js函数，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/35.gif" alt="3.gif" width="554" height="368" /></p> 
+  <p>图形超链接中的内容为：</p> 
+  <p>=”javascript: focus (’@category’,’”+A1+”‘)”</p> 
+  <p>在展现报表的jsp页面中，加入这段js：</p> 
+  <p>function test1(xValue,dsCount){<br /> var k;<br /> for(i=1;i&lt;=dsCount;i++){<br /> var cell= document.getElementById(”report1_A”+i);<br /> if(cell.value == xValue){<br /> k = i;<br /> break;<br /> }<br /> }<br /> //alert(”k:”+k);</p> 
+  <p>var cell2 = document.getElementById(”report1_B”+k);<br /> //alert(cell2.value);<br /> cell2.style.backgroundColor=”#FF0000″<br /> document.getElementById(”report1_B”+k).focus();<br /> }</p> 
+  <p>在浏览器中访问报表，鼠标单击折线图上的某个点，页面就会跳到这个点对应的单元格中，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/45.gif" alt="4.gif" width="553" height="549" /></p> 
+  <p>选择统计图中的8这个点，鼠标点一下，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/53.gif" alt="5.gif" width="549" height="519" /></p> 
+  <p>这样，是不是对寻找数据方便了很多啊。</p>  
+ </body>
+</html>

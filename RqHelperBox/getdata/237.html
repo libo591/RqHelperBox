@@ -1,0 +1,9 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font color="#ff0000">问题描述</font>：</p> 
+  <p>部署的的web服务器是resin，需要在一个页面上展现多个报表，在调用每个raq标签部分添加了needPageMark=“no”，要求都不显示页码标签，结果实际情况是只有第一个报表没有分页标签，其他的报表显示了分页标签，但是在其它服务器比如：tomcat没有该问题。经调试发现服务器resin处理页面上的同类tag时，是几个tag共用一个对象，而且如果几个tag里的某个属性值都一样的话，它只在第一次设置一下，后面的就不再设置了。这与其它服务器每个tag对应一个对象，每个tag里的属性都要设置一次是不一样的。</p> 
+  <p><font color="#ff0000">解决办法：</font>：</p> 
+  <p>在reportConfig.xml中增加配置属性<br /> &nbsp; &lt;config&gt;<br /> 　　 &lt;name&gt; webServerType&lt;/name&gt;<br /> &nbsp; 　　 &lt;value&gt;resin&lt;/value&gt;<br /> &lt;/config&gt;</p>  
+ </body>
+</html>

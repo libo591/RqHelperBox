@@ -1,0 +1,23 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>填报是润乾软件一项非常方便使用的功能。用户可以通过在页面上对数据进行增加，删除，修改等操作，然后将数据回填至数据库表中。填报实现的原理其实就是根据数据表中的主键来判断标识，从而达到回填的效果。</p> 
+  <p>既然如此，那么主键是必须要查询出来的！</p> 
+  <p>可是有时候客户并不希望主键显示在页面上，同时填报表又不支持隐藏行或列的功能。那这该如何来实现呢？</p> 
+  <p>下面我就讲一下填报表中隐藏主键的步骤：</p> 
+  <p>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 新建一张填报表：</p> 
+  <p>&nbsp;<img title="56" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/56.jpg" alt="56" width="341" height="115" /></p> 
+  <p>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 设置其更新和是否可写属性：</p> 
+  <p>&nbsp;<img title="610" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/610.jpg" alt="610" width="553" height="393" /></p> 
+  <p>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 直接预览的效果：</p> 
+  <p>&nbsp;<img title="710" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/710.jpg" alt="710" width="317" height="215" /></p> 
+  <p>我们看到主键ID显示在页面上。</p> 
+  <p>4.设置A列的的“可视”属性和格线，即将“可视”不勾选，且边框格线全部是虚线：</p> 
+  <p>&nbsp;&nbsp;<img title="810" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/810.jpg" alt="810" width="300" height="118" /></p> 
+  <p>&nbsp;<img title="910" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/910.jpg" alt="910" width="271" height="178" /></p> 
+  <p>5.在IE中浏览：</p> 
+  <p>进行以上设置之后，在IE中浏览报表</p> 
+  <p>&nbsp;<img title="1010" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1010.jpg" alt="1010" width="281" height="180" /></p> 
+  <p>我们看到主键ID已经没在页面上显示了。但是依然可以正确的提交数据至数据库保存！</p>  
+ </body>
+</html>

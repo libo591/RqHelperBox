@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在开发<a class="alinks_links" title="web报表" onclick="return alinks_click(this);" rel="external" href="http://awebreport.com/">web报表</a>项目时，链接数据源是必不可少的一部，而且因为用户数据库请求千差万别，所以数据源往往需要自定义，润乾报表提供了的API和JDBC两种编程方式，是程序员可以方便灵活地完成数据源链接。</p> 
+  <p>通过润乾报表编程连接数据源的方式有两种，第一种就是利用润乾报表的api来连接数据源，即程序如下：</p> 
+  <pre>context.setDefDataSourceName(&quot;demo&quot;);
+context.setConnection(&quot;demo&quot;,con);
+DataSourceConfig dsoc = new DataSourceConfig(2,
+true, &quot;GBK&quot;, &quot;GBK&quot;, false);
+context.setDataSourceConfig(&quot;demo&quot;, dsoc);</pre> 
+  <p>第二种方式就是通过jdbc来连接数据源，即程序如下：</p> 
+  <pre>public java.sql.Connection getConnection() throws Exception {Connection conn=null;try{Class.forName(&quot;org.hsqldb.jdbcDriver&quot;);}catch(ClassNotFoundException cne){cne.printStackTrace();}try{conn= DriverManager.getConnection(&quot;jdbc:hsqldb:hsql://localhost:9001/runqianDB&quot;,&quot;sa&quot;,&quot;&quot;);
+}catch(SQLException e){e.printStackTrace();}return conn;}</pre> 
+  <p>上述两种连接数据库的方式，都可以很方便地连接web报表数据源，程序员可以根据客户的实际需求，来决定使用哪种连接方式更方便。</p> 
+  <p><span lang="EN-US"></span></p>  
+ </body>
+</html>

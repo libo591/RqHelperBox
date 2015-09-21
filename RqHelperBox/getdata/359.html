@@ -1,0 +1,7 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; java 应用有不少是 C/S的模式，在 C/S的模式下，同样可以调用润乾的 API 接口运算报表，并且把结果报表在 JFrame 窗口中进行展现，还可以进行打印。</p> 
+  <p>代码示例：<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IReport iReport = ……; //运算代码，获得一个 IReport 对象<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CSReport csReport = new CSReport(iReport); //构造CSReport控件<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JFrame jf = new JFrame(“润乾报表”); //构造 JFrame 界面<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jf.getContentPane().add(csReport.getDisplayPane()); //设置 JFrame 的相关属性并展现<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jf.setSize(600, 400);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jf.setLocation(200, 100);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jf.show();<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //……………. //其它代码<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //csReport.print(); //打印，该代码可以写在某个按钮的相关事件中</p>  
+ </body>
+</html>

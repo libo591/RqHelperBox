@@ -1,0 +1,33 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="TEXT-ALIGN: left"><span style="FONT-FAMILY: 宋体; mso-bidi-font-size: 10.5pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt"><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">问题<span lang="EN-US" xml:lang="EN-US">: 
+      <o:p /></span></span></span></p> 
+  <p style="TEXT-ALIGN: left"><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">在<span lang="EN-US" xml:lang="EN-US">jsp</span>中用<span lang="EN-US" xml:lang="EN-US">request.getParameter(“dbmid”)</span>，怎么取不到</span><strong><span style="FONT-WEIGHT: normal; FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-weight: bold">润乾报表参数表单的</span></strong><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">参数值呢？<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p style="TEXT-ALIGN: left"><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p style="TEXT-ALIGN: left"> </p> 
+  <p style="TEXT-ALIGN: left"><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">问题解决<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p style="TEXT-ALIGN: left"><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">通过润乾报表做的参数表单，你点击查询后，所有的参数都保存在参数缓冲池中，结果报表是自己到缓冲池里去找的，</span></p> 
+  <p style="TEXT-ALIGN: left"><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">所以你通过<span lang="EN-US" xml:lang="EN-US">request.getParameter(“dbmid”)</span>是取不到的<span lang="EN-US" xml:lang="EN-US">.</span>两种方法可以解决<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p style="TEXT-ALIGN: left"><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">第一种是你自己写参数表单，不用报表做参数表单，这样你用<span lang="EN-US" xml:lang="EN-US">request.getParameter(“dbmid”)</span>就能取到了<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p style="TEXT-ALIGN: left"><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">第二种就是你写程序到我们的参数缓冲池里去取<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p style="TEXT-ALIGN: left"><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt" xml:lang="EN-US">request.setCharacterEncoding(“GBK”); 
+    <o:p /></span></p> 
+  <p style="TEXT-ALIGN: left"><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt" xml:lang="EN-US">String reportParamsId = request.getParameter(“reportParamsId”); 
+    <o:p /></span></p> 
+  <p style="TEXT-ALIGN: left"><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt" xml:lang="EN-US">if(reportParamsId != null){ 
+    <o:p /></span></p> 
+  <p style="TEXT-ALIGN: left"><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt" xml:lang="EN-US">java.util.Hashtable ht = com.runqian.report.view.ParamsPool.get( reportParamsId ); 
+    <o:p /></span></p> 
+  <p style="TEXT-ALIGN: left"><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt" xml:lang="EN-US">ht.get(“</span><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt">参数名<span lang="EN-US" xml:lang="EN-US">“)</span>；取得对应参数值.<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p style="TEXT-ALIGN: left"> </p> 
+  <p><br /></p>  
+ </body>
+</html>

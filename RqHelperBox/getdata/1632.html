@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了数十种常用的统计图类型以及自定义统计图，满足了大部分企业级用户对web报表的需求。本文介绍如何使用润乾报表来灵活的实现进度条统计图的功能。</p> 
+  <p>首先看一下用润乾报表实现的进度条统计图的效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/15.png" alt="1.png" width="462" height="238" /></p> 
+  <p>下面介绍详细的操作步骤：<br /> 1、内建一个数据集ds1，有a，b两个字段，如下图所示：<br /> <img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/21.png" alt="2.png" width="478" height="278" /></p> 
+  <p>2、创建报表，如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/31.png" alt="3.png" width="619" height="131" /></p> 
+  <p>其中各单元格表达式说明：</p> 
+  <p>B2：=ds1.max(int(b))，求数据集中b字段最大的数。<br /> B3：=ds1.select(a,false)，列出说有a字段的数。<br /> C3：=int(ds1.select1(b,a==B3))，求出相应于a字段的b数值。<br /> D3：=C3/B2*100，求出相对于最大的b值所占的比例。<br /> E4：选中该单元格，单击鼠标右键，选择数据类型，选中HTML类型，内容中填写：<br /> <span style="color: #0000ff;">=”&lt;table width=”+D3{}+”% border=0 cellspacing=0 cellpadding=0&gt; &lt;tr&gt; &lt;td bgcolor=#990033&gt;&lt;div align=right&gt;&lt;font color=#ffffff &gt;”+C3{}+”&lt;/font&gt;&lt;/div&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt;”</span></p> 
+  <p>E4单元格的表达式是进度条设计的主体部分，下面是主体表达式的详细说明：<br /> 1. <span style="color: #0000ff;">&lt;table width=”+D3{}+”% border=0 cellspacing=0 cellpadding=0&gt;：</span>进度条的宽度由D3的值决定，基数120所占比例为100%，宽度占满单元格，其他根据比例来扩展。<br /> 2. <span style="color: #0000ff;">&lt;td bgcolor=#990033&gt;…&lt;/td&gt;：</span>用来控制进度条颜色，即为效果图中的棕红色。<br /> 3. <span style="color: #0000ff;">&lt;div align=right&gt;&lt;font color=#ffffff &gt;”+C3{}+”&lt;/font&gt;&lt;/div&gt;：</span>表示在进度条的右侧显示标注，颜色为白色，数据值为C3。</p> 
+  <p>由此可见，作为新一代的报表工具，润乾报表在功能上有很强的扩展性，可以说，只有想不到的，没有做不到的!</p>  
+ </body>
+</html>

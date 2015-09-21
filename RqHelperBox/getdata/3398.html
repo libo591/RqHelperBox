@@ -1,0 +1,32 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>Tomcat 是一个轻量级应用服务器，在中小型系统和并发访问用户不是很多的场合下被普遍使用，是开发和调试JSP程序的首选。</p> 
+  <p>下面介绍一下tomcat的性能优化及部署时的参数调整。</p> 
+  <p><strong>1、jdk的选择：</strong><br /> jdk 可以使用1.4或1.5版本，都没有问题，推荐使用1.5</p> 
+  <p><strong>2、jvm的设置：</strong><br /> tomcat 的jvm建议调整到1024M 即在tomcat/bin/catalina.bat文件头部添加<br /> set JAVA_OPTS=-Xms1024m -Xmx1024m 默认tomcat 最大为64M</p> 
+  <p><strong>3、调整tomcat的server.xml 其中的参数配置</strong>，例<br /> &lt;Connector port=”8080″ maxHttpHeaderSize=”8192″<br /> maxThreads=”150″ minSpareThreads=”25″ maxSpareThreads=”75″<br /> enableLookups=”false” redirectPort=”8443″ acceptCount=”100″<br /> connectionTimeout=”20000″<br /> disableUploadTimeout=”true” URIEncoding=”GBK” /&gt;</p> 
+  <p>将其中的maxThreads=”150″ 修改为maxThreads=”1500″ ，即可以最大承载1500个并发事务。一个用户基本上请求一次服务需要二个线程进行支持（一个是request,一个是response）。这样IGRP就可以承载最高750个用户的完全并发。maxThreads默认tomcat配置为200个。</p> 
+  <p><strong>4、不要遗漏URIEncoding=”GBK”，能使页面url传递中文参数时保证正确</strong>。</p> 
+  <p><strong>5、如果使用了dipper2的链接池，调整igrp的 global-config.xml 将数据库链接的max值修改成500，（需要将oracle配置里的processor值相应改大（最好修改为1000以上），否则无效），即igrp并发时链接池可以承载500个数据库链接，这样配置基本上可以保证200个用户同时并发时能从数据库链接池里得到数据库链接。</strong></p> 
+  <p><strong>6、如果使用tomcat自带的dbcp数据库链接池， tomcat5.0配置如下</strong></p> 
+  <p>先修改server.xml,增加如下内容，在 &lt;GlobalNamingResources&gt;标签里增加<br /> &lt;Resource name=”CarmotDS” type=”javax.sql.DataSource”/&gt;<br /> &lt;ResourceParams name=”CarmotDS”&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;factory&lt;/name&gt;<br /> &lt;value&gt;org.apache.commons.dbcp.BasicDataSourceFactory&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;url&lt;/name&gt;<br /> &lt;value&gt;jdbc:oracle:thin:@192.168.1.12:1521:igrp&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;password&lt;/name&gt;<br /> &lt;value&gt;carmot&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;maxActive&lt;/name&gt;<br /> &lt;value&gt;500&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;maxWait&lt;/name&gt;<br /> &lt;value&gt;9000&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;driverClassName&lt;/name&gt;<br /> &lt;value&gt;oracle.jdbc.driver.OracleDriver&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;username&lt;/name&gt;<br /> &lt;value&gt;carmot_ystest&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;maxIdle&lt;/name&gt;<br /> &lt;value&gt;20&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;/ResourceParams&gt;</p> 
+  <p>maxActive 是最大激活连接数，这里取值为500，表示同时最多有500个数据库连接。maxIdle是最大的空闲连接数，这里取值为20，表示即使没有数据库连接时依然可以保持20空闲的连接，而不被清除，随时处于待命状态。MaxWait是最大等待秒钟数，这里取值-1，表示无限等待，直到超时为止，也可取值 9000，表示9秒后超时。</p> 
+  <p>修改conf\web.xml,增加如下内容</p> 
+  <p>&lt;resource-ref&gt;<br /> 　&lt;description&gt;DB Connection&lt;/description&gt;<br /> 　&lt;res-ref-name&gt;CarmotDS&lt;/res-ref-name&gt;<br /> 　&lt;res-type&gt;javax.sql.DataSource&lt;/res-type&gt;<br /> 　&lt;res-auth&gt;Container&lt;/res-auth&gt;<br /> &lt;/resource-ref&gt;</p> 
+  <p>然后修改 conf\Catalina\localhost\ROOT.xml,在context标签里增加如下内容：</p> 
+  <p>&lt;ResourceLink global=”CarmotDS” name=”CarmotDS” type=”javax.sql.DataSource”/&gt;</p> 
+  <p>Tomcat 5.5以上版本可以直接修改conf\Catalina\localhost\ROOT.xml，,在context标签里增加如下内容：</p> 
+  <p>&lt;Resource name=” CarmotDS ” auth=”Container” type=”javax.sql.DataSource”<br /> maxActive=”500″ maxIdle=”20″ maxWait=”9000″<br /> driverClassName=”oracle.jdbc.driver.OracleDriver”<br /> username=”carmot_ystest” password=”carmot”<br /> url=”jdbc:oracle:thin:@192.168.1.12:1521:igrp”<br /> defaultAutoCommit=”true” removeAbandoned=”true”<br /> removeAbandonedTimeout=”60″ logAbandoned=”true”/&gt;<br /> removeAbandonedTimeout=60,表示60秒没有使用连接会自己回收资源.<br /> 修改global-config.xml<br /> &lt;datasource&gt;java:comp/env/CarmotDS&lt;/datasource&gt;</p> 
+  <p><strong>7、Tomcat管理，必须安装admin（可以到http://tomcat.apache.org/download-55.cgi下载Administration Web Application模块）或manager模块</strong></p> 
+  <p>Tomcat5.5版本还需先修改conf/ tomcat-users.xml 文件</p> 
+  <p>增加如下内容：<br /> &lt;role rolename=”manager”/&gt;<br /> &lt;role rolename=”admin”/&gt;<br /> &lt;user username=”admin” password=”admin” roles=”admin,manager”/&gt;</p> 
+  <p>配置链接池和管理tomcat用户等可以使用admin模块</p> 
+  <p>http://localhost:8080/admin/index.jsp</p> 
+  <p>察看tomcat状态或部署应用可以使用manager模块 (内存，线程等监控)</p> 
+  <p>http://localhost:8080/manager/status</p> 
+  <p><strong>8、日志</strong></p> 
+  <p>&lt;Logger className=”org.apache.catalina.logger.FileLogger” prefix=”localhost_log.” suffix=”.txt” timestamp=”true”/&gt;</p> 
+  <p>&lt;Valve className=”org.apache.catalina.valves.AccessLogValve” directory=”logs” prefix=”access_log.” suffix=”.log” pattern=”combined” fileDateFormat=”yyyy-MM-dd” resolveHosts=”false”/&gt;</p>  
+ </body>
+</html>

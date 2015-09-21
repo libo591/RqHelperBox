@@ -1,0 +1,10 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>resin数据源配置，打开resin/conf/下的resin.conf文件&nbsp;找到&nbsp;&lt;database&gt;处，例如：<br /> &lt;database&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jndi-name&gt;mysql&lt;/jndi-name&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;driver&nbsp;type=”com.mysql.jdbc.Driver”&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;url&gt;jdbc:mysql://localhost:3306/rain&lt;/url&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;user&gt;root&lt;/user&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;password&gt;rain&lt;/password&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&lt;/driver&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;prepared-statement-cache-size&gt;8&lt;/prepared-statement-cache-size&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;max-connections&gt;20&lt;/max-connections&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;max-idle-time&gt;30s&lt;/max-idle-time&gt;</p> 
+  <p>&lt;/database&gt;</p> 
+  <p>将应用部署到&nbsp;resin/webapps下，reportConfig中jndi设置如下:</p> 
+  <p>&lt;config&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt;JNDIPrefix&lt;/name&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;value&gt;java:comp/env&lt;/value&gt;</p> 
+  <p></p>  
+ </body>
+</html>

@@ -1,0 +1,13 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在做3.55版本的报表导出word的功能时，许多客户反馈此点击导出没有反应，这个问题的排查方法如下，以下这些工作最好在报表自带的应用里完成，</p> 
+  <p>首先，确保报表的jar包的匹配，如果这些jar包在安装后没有进行过更改和替换，就可以确定这些jar包是匹配的，或者也可以下载目前版本的3.55的报表，进行测试。</p> 
+  <p>当确定 jar包 没有问题的话，需要检查web.xml</p> 
+  <p>其中是否有导出word的 类和mapping</p> 
+  <p>Web.xml中是否有 以下配置</p> 
+  <p>&lt;servlet&gt;<br /> &nbsp;&nbsp;&lt;servlet-name&gt;com.runqian.report.view.word.WordReportServlet&lt;/servlet-name&gt;<br /> &nbsp;&nbsp;&lt;servlet-class&gt;com.runqian.report.view.word.WordReportServlet&lt;/servlet-class&gt;<br /> &nbsp;&lt;/servlet&gt;</p> 
+  <p>&lt;servlet-mapping&gt;<br /> &nbsp;&nbsp;&lt;servlet-name&gt;com.runqian.report.view.word.WordReportServlet&lt;/servlet-name&gt;<br /> &nbsp;&nbsp;&lt;url-pattern&gt;/servlet/com.runqian.report.view.word.WordReportServlet&lt;/url-pattern&gt;<br /> &nbsp;&lt;/servlet-mapping&gt;</p> 
+  <p>以上在web.xml里配置后导出word 相关项后，在展现报表的jsp里加上needSaveAsWord=”yes” 这样在页面里 出现导出word按钮，就可以正常导出了，在润乾自带应用测试通过后，就可以向项目里集成，项目与报表里同步后即可正常导出报表了。</p>  
+ </body>
+</html>

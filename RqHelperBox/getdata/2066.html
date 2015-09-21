@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在统计图的设计中，警戒线这个指标可以很好地起到数据提示的作用，标出警戒线后，可以看到有多少记录超标或者达标。这个警戒线就是一条在统计图展示出来的线，很多客户想将所有数据先取一个平均值，然后把这个平均值加到统计图里，并且将大于和小于平均值的数据，显示成不同的颜色。这样的需求就不是用警戒线能够实现的了，本文就介绍一下这种统计图的实现方法。</p> 
+  <p>实现思路：将统计图先将平均值计算出来，然后再按照平均值，将所有数据分成两部分，然后对于不同平均值的数据，按照图例进行统计，这样就能实现客户的需求了 。</p> 
+  <p>实现步骤：</p> 
+  <p>取出数据：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-001p2fb5a2f2.png" alt="" width="161" height="169" /></p> 
+  <p>对数据进行整理和计算：</p> 
+  <p><img style="width: 499px; height: 289px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-002p44af6314.png" alt="" width="616" height="404" /></p> 
+  <p>其中 A1为 =ds1.count() ，计算总记录数。</p> 
+  <p>B1为 =ds1.sum(人数 )/A1， 计算平均值。当然可以用ds.avg这个函数来实现平均数的计算。</p> 
+  <p>B2 =ds1.select(地区id,,人数&lt;B1,人数 )，B3 =平均值，B4 =ds1.select(地区id,,人数&gt;B1,人数 )</p> 
+  <p>这样写分别取出大于小于平均值的数据。</p> 
+  <p>设计统计图：</p> 
+  <p><img style="width: 375px; height: 241px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-003nacb014.png" alt="" width="447" height="310" /></p> 
+  <p>添加3个分类轴，不同分类轴定义对应的系列值，系列名称不重复。</p> 
+  <p>这样，就能显示出来想要的效果。</p> 
+  <p><img style="width: 366px; height: 214px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-004p3fb82347.png" alt="" width="479" height="280" /></p> 
+  <p>这种带有统计图的报表的设计方法就是这样，如果有类似的需求可以作为参考。</p>  
+ </body>
+</html>

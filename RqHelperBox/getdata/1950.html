@@ -1,0 +1,28 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表的单元格和统计图中都可以设置超链接属性，原理是通过超链接打开一个新窗口（或者在本窗口打开），传参或调用JavaScript函数来完成相关的业务逻辑。本文介绍在统计图的超链接中如何调用JavaScript函数。</p> 
+  <p>实现思路：</p> 
+  <p>1. 在统计图中调用JavaScript函数</p> 
+  <p>2. 页面中设置JavaScript函数来响应请求</p> 
+  <p><strong>第一步：在统计图raq文件中设置超链接</strong></p> 
+  <p>这里举例用润乾安装目录下的：\reportHome\webapps\demo\reportFiles\基础统计图\柱形图.raq）：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/1.png" alt="1.png" width="423" height="364" /></p> 
+  <p>其中，A4单元格为统计图所在的单元格，设置如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/2.png" alt="2.png" width="386" height="337" /></p> 
+  <p>其中，A4单元格为统计图所在的单元格，设置如下：在统计图的设置中，分类轴和系列名称有两个内置固定的变量名@category和@legend，这两个参数无需定义，可以直接在统计图中使用。</p> 
+  <p>显示外观栏中，在超链接的属性中加入：</p> 
+  <p>JavaScript:show(’@legend’)</p> 
+  <p>此JavaScript的功能是要点击获取到这个系列的值，并给出提示。</p> 
+  <p>需要注意的是，这里的设置和单元格超链接属性的设置有一点不同，那就是在单元格超链接属性中加入JavaScript函数的时候，要把JavaScript函数用””号括起来，例如” JavaScript:show(’@legend’)”,这样才能被报表引擎正确解析，而在统计图中的超链接属性中不需要加””号，这点需要在设置的时候仔细检查，否则会导致不能正确调用JavaScript函数。</p> 
+  <p>本例子想实现通过点击超链接在本窗口响应这个请求，所以，需要在超链接目标窗口这里设置：_self，表示目标窗口为其本身，详细的设置见下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/3.png" alt="3.png" width="441" height="384" /></p> 
+  <p><strong>第二步：在jsp中加入js函数：</strong></p> 
+  <p>&lt;script language=”javascript”&gt;<br /> function show(legend,category){<br /> alert(”点击图形的分类为”+”:”+ legend+”,其值为”+category);//弹出对话框，展示数据<br /> }<br /> &lt;/script&gt;</p> 
+  <p><strong>第三步：在web页面中看一下最终的效果：</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/4.png" alt="4.png" width="542" height="382" /></p> 
+  <p>点击华北中的日用品系列后，效果如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/5.png" alt="5.png" width="484" height="385" /></p> 
+  <p>在统计图中调用JavaScript函数，大大的增加了页面处理数据的灵活性。可以通过调用JavaScript函数，实现对报表数据进行筛选、钻取、传参等多种功能，让统计图中的数据通过调用JavaScript函数和实际应用更紧密的结合起来。</p>  
+ </body>
+</html>

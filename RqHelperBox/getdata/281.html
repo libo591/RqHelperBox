@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font color="#ff0000">任务背景</font></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 对用户输入的数据进行合法性检查，避免错误非法的数据进入数据库，这是业务系统最常见的需求。程序员在实现合法性检查功能时，比较常见的两种做法：<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1、在javascript中写合法性检查函数，从而在网页中实现校验逻辑</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;2、在后台的服务器程序中，对接收到的前端返回的数据进行合法性检查，合法则入库，不合法则返回错误信息<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这两种实现方法各有利弊。对于比较简单的合法性检查，显然在前端写javascript脚本更快，因为脚本维护方便，不用编译和重新发布应用。但是前端写脚本无法实现比较复杂的校验逻辑，比如，需要和数据库中的数据进行合法性校验等。<br /> 服务器端程序进行合法性检查，弊端在于比较麻烦，如果校验逻辑很简单，就不合适；其优点在于容易写出复杂的校验逻辑。</p> 
+  <p><font color="#ff0000">面临困难</font></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在实际业务中，用户对合法性检查的要求也五花八门，有些合法性检查要求输入时焦点移开的时候就立即检查，这种合法性检查只能用javascript来实现；有些用户要求提交时进行检查，检查不合法弹出警告，如果用户不接受警告仍旧要提交，也允许提交入库；还有些用户要求多个填报表一起填写，在表间进行合法性检查；也有些要求输入的数据和数据库中已经存在的数据进行合法性检查，避免用户输入前后矛盾的数据等等。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; 如此五花八门的需求，单用脚本或者单用服务器端的程序均无法完全满足，必须两者结合起来。同时，由于需求的不同，往往导致不同的报表要写不同的合法性检查程序，而不同的Javascript脚本势必导致jsp不一样，从而导致用户为每一个报表写一个Jsp.<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;于是维护的工作量大大增加！<br /> &nbsp; 润乾报表在设计之初，就考虑到了这些细节，它提出了一个完整的解决方案，可以实现上述的所有功能，而且不需要重复写不同的Jsp，可以用一个jsp实现所有的报表。</p> 
+  <p><font color="#ff0000">实现步骤</font></p> 
+  <p>1、 设计一个填报表，并在报表中写入合法性检查逻辑<br /> 2、 设置合法性检查为提交时检查还是即时检查<br /> 3、 设置合法性检查不通过时是否允许强行提交<br /> 4、 如果需要和数据库中已有的数据进行合法性检查，则在报表中写入表达式读取数据库中的数据，并在合法性检查逻辑中体现<br /> 5、 发布</p> 
+  <p><font color="#ff0000">效果演示</font></p> 
+  <p align="center"><a href="http://www.quiee.com.cn/wp-content/uploads/2008/08/hf1.png"><img src="http://www.quiee.com.cn/wp-content/uploads/2008/08/hf1.png" alt="hf1.png" /></a></p> 
+  <p align="center"><a href="http://www.quiee.com.cn/wp-content/uploads/2008/08/hf2.png" title="hf2.png"><img src="http://www.quiee.com.cn/wp-content/uploads/2008/08/hf2.png" alt="hf2.png" /></a></p>  
+ </body>
+</html>

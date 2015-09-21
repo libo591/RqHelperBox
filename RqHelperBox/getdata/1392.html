@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>在实际报表应用中，经常会有要把在当前页面选择的值以参数的形式传递到另外一个页面并显示出来的需求，润乾报表对于此种需求提供超链接功能，通过使用超链接或者按钮来传递所选择的值到另外一个页面。现在就以下拉数据集为例，说明如何将下拉数据集中选择的值通过超链接传递。</p> 
+   <p>此功能的实现包括三部分：制作下拉数据集；获取下拉数据集的值；通过超链接把获取到的值传递出去。</p> 
+   <p>第一步：制作下拉数据集，并做一个超链接。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/param-xgh.png" alt="param_xgh.png" height="69" /></p> 
+   <p>设置B1单元格为下拉数据集，并设置B1单元格的属性”变量名” 为param；其中B1单元格对应的下拉数据集对应的数据如下</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/data.png" alt="data.png" height="130" /></p> 
+   <p>设置A2、B2合并后的单元格的属性”超链接”值为javascript:getValue()</p> 
+   <p>第二步：获取下拉数据集的值</p> 
+   <p>写一个展现此下拉数据集报表的jsp页面（show.jsp）,并在该页面中加入下面的js函数</p> 
+   <p><span style="color: #0000ff;">&lt;script launguage=”javascript”&gt;<br /> function getValue(){<br /> var B1Vlalue = document.all[&quot;report1_B1&quot;].value;<br /> window.location.href=”<span style="color: #0000ff;">receive</span>.jsp?param=”+B1Vlalue;<br /> }<br /> &lt;/script&gt;</span></p> 
+   <p>第三步：写另一个jsp页面（receive.jsp），用来接收传递过来的参数</p> 
+   <p><span style="color: #0000ff;">&lt;%@ page contentType=”text/html;charset=GBK” %&gt;<br /> &lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report”%&gt;</span></p> 
+   <p><span style="color: #0000ff;">&lt;html&gt;<br /> &lt;head&gt;<br /> &lt;title&gt;润乾报表4.0&lt;/title&gt;<br /> &lt;/head&gt;</span></p> 
+   <p><span style="color: #0000ff;">&lt;body&gt;<br /> &lt;%<br /> String param = request.getParameter( “param” );<br /> out.println(”传递过来的参数是:”+param);<br /> %&gt;<br /> &lt;/body&gt;<br /> &lt;/html&gt;</span></p> 
+   <p>报表发布页面show.jsp如下</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/show.png" alt="show.PNG" height="186" /></p> 
+   <p>我们选中下拉数据集中的”3″后，然后点”点击此处传递参数到下一页面”，效果如下</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/receive.png" alt="receive.PNG" height="90" /></p> 
+   <p>这样就实现了利用超链接传递下拉数据集的值。<br /> <span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

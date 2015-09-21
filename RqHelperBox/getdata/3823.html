@@ -1,0 +1,435 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <p class="MsoNormal"><b><span style="FONT-FAMILY: 宋体; COLOR: #1f497d">一：折叠报表两种实现方案</span></b></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">折叠报表在</span><span>BS</span><span style="FONT-FAMILY: 宋体">项目有着广泛的应用，在公司内部，润乾报表在解决折叠报表时通常有两种方案：</span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: -18pt; MARGIN-LEFT: 18pt" class="MsoListParagraph"><span><span>1）<span style="FONT: 7pt 'Times New Roman'">&nbsp; </span></span></span><span style="FONT-FAMILY: 宋体">利用润乾报表的隐藏行属性，通过传递参数刷新报表实现。</span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: -18pt; MARGIN-LEFT: 18pt" class="MsoListParagraph"><span><span>2）<span style="FONT: 7pt 'Times New Roman'">&nbsp; </span></span></span><span style="FONT-FAMILY: 宋体">通过</span><span>jQuery</span><span style="FONT-FAMILY: 宋体">的</span><span>show(),hide()</span><span style="FONT-FAMILY: 宋体">方法对报表进行</span><span>tr</span><span style="FONT-FAMILY: 宋体">的显示，隐藏操作。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><b><span style="FONT-FAMILY: 宋体; COLOR: #1f497d">二：两种折叠方案的对比</span></b></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">第一种折叠方案</span><span>:</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">优点：</span><span>js</span><span style="FONT-FAMILY: 宋体">方法比较简单。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">缺点：无法进行填报，每次折叠打开的操作都是对报表的刷新重运算，效率比较低。适合小数据量的展示报表。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">第二种折叠方案：</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">优点：利用</span><span>jQuery</span><span style="FONT-FAMILY: 宋体">的方法对报表对象初始化以及</span><span>tr</span><span style="FONT-FAMILY: 宋体">的显示和隐藏，折叠打开的操作不需要刷新计算，故可填报，性能比较高。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">缺点：需要学习</span><span>jQuery</span><span style="FONT-FAMILY: 宋体">，对</span><span>js</span><span style="FONT-FAMILY: 宋体">的要求比较高，第一次展示是对报表的运算以及初始化，故数据量太大第一次加载也会比较慢。</span></p> 
+  <br /> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">近期在给客户解决问题时，经常会遇到折叠报表的性能问题，还有的客户希望报表即可填报又可折叠。发现大家普遍还在使用第一种折叠报表的方案，故请教了郑谷川，希望通过文章，推广</span><span>jQuery</span><span style="FONT-FAMILY: 宋体">实现折叠报表的方案。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><b><span style="FONT-FAMILY: 宋体; COLOR: #1f497d">三：</span><span style="COLOR: #1f497d">JQuery</span></b><b><span style="FONT-FAMILY: 宋体; COLOR: #1f497d">实现润乾的折叠报表</span></b></p> 
+  <br /> 
+  <p class="MsoNormal"><span>1</span><span style="FONT-FAMILY: 宋体">：制作一张填报表，如下图所示：</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/c21461c2-d6a6-44d1-9c61-c5a8e4e8e009.jpg" width="534" height="186" /></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">其中，</span><span>B3</span><span style="FONT-FAMILY: 宋体">的左主格为</span><span>A2</span><span style="FONT-FAMILY: 宋体">，</span><span>C4</span><span style="FONT-FAMILY: 宋体">左主格为</span><span>B3</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>2</span><span style="FONT-FAMILY: 宋体">：设置</span><span>A2</span><span style="FONT-FAMILY: 宋体">，</span><span>B3</span><span style="FONT-FAMILY: 宋体">，</span><span>C4</span><span style="FONT-FAMILY: 宋体">单元格的</span><span>html</span><span style="FONT-FAMILY: 宋体">事件</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>A2</span><span style="FONT-FAMILY: 宋体">单元格：</span><span>“iddata=’”+value()+”‘ piddata=””</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>B3</span><span style="FONT-FAMILY: 宋体">单元格：</span><span>“iddata=’”+value()+”‘ piddata=’”+A2+”‘”</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>C4</span><span style="FONT-FAMILY: 宋体">单元格：</span><span>“iddata=’”+value()+”‘ piddata=’”+B3+”‘”</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>3</span><span style="FONT-FAMILY: 宋体">：初始化报表数</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>var ReportTreeManager = new function(){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.version = ’1.0′;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.map = {};</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.ge = function(id){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>return document.getElementById(id);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.get = function(id){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(this.map.hasOwnProperty(id)) return this.map[id];</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>else return null;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.put = function(id, tree){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.map[id] = tree;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>/**</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;</span></span><span style="FONT-FAMILY: 宋体">初始化报表树</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;</span>*/</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.init = function(id){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var t = this.ge(id);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var tree = new ReportTree(t);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>tree.init();</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.put(id, tree);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal"><span>var ReportTree = function(t){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.table = t;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.nodes = null;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.init = function(){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this.table).find(‘td’).each(function(){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">设置点击时鼠标的样式</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this).css(‘cursor’, ‘default’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//attr(name)</span><span style="FONT-FAMILY: 宋体">访问</span><span>jQuery</span><span style="FONT-FAMILY: 宋体">对象里第一个匹配元素的</span><span>name</span><span style="FONT-FAMILY: 宋体">属性值</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var id = $(this).attr(‘iddata’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(typeof(id)!=’undefined’) {</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this).parent().attr(‘iddata’, id);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this).parent().attr(‘keycell’, $(this).attr(‘cellIndex’));</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var pid = $(this).attr(‘piddata’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(typeof(pid)!=’undefined’) {</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this).parent().attr(‘piddata’, pid);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this).removeAttr(‘iddata’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this).removeAttr(‘piddata’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>});</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.nodes = new Array();</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.travel(”, 0);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.travel = function(pid, lvl){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var ns = new Array();</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var rs = $(this.table).find(‘tr[piddata='+pid+']‘).get();</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(var i=0; i&lt;rs.length; i+=1){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var id = $(rs[i]).attr(‘iddata’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(typeof(id)==’undefined’){continue;}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(rs[i]).attr(‘treelvl’,lvl);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var n = new ReportTreeNode(rs[i]);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>n.id = id;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>n.level = lvl;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ns.push(n);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var kc = $(rs[i]).find(‘td[cellIndex='+$(rs[i]).attr(‘keycell’)+’]');</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var subs = this.travel(id, lvl+1);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(subs!==null &amp;&amp; subs.length&gt;0){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>n.children = subs;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>kc.css(‘cursor’,'pointer’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>kc.addClass(‘button plus’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>kc.click(this.clickhandler);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>else{</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(rs[i]).removeAttr(‘iddata’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(rs[i]).removeAttr(‘treelvl’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(rs[i]).removeAttr(‘keycell’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(rs[i]).removeAttr(‘piddata’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(lvl&gt;0) {$(n.row).hide();}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(ns.length &gt; 0){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.nodes = this.nodes.concat(ns);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>return ns;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.getnode = function(id, lvl){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>alert(lvl);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var node = null;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(var i=0; i&lt;this.nodes.length; i+=1){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>node = this.nodes[i];</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(node.id==id &amp;&amp; node.level==lvl) break;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>return node;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.clickhandler = function(evt){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var tid = $(this).parents().find(‘table’).attr(‘id’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var tree = ReportTreeManager.get(tid);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(tree === null) return;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var id = $(this).parent().attr(‘iddata’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var lvl = $(this).parent().attr(‘treelvl’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var node = tree.getnode(id, lvl);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(node.expand){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this).removeClass(‘minus’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this).addClass(‘plus’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>node.expand = false;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>tree.collapse(node);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>else{</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this).removeClass(‘plus’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(this).addClass(‘minus’);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>node.expand = true;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>tree.expand(node);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.collapse = function(node){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">隐藏</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var subs = node.children;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(var i=0; subs!==null &amp;&amp; i&lt;subs.length; i+=1){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.collapse(subs[i]);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(subs[i].row).hide();</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.expand = function(node){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">显示</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(!node.expand) return;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var subs = node.children;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(var i=0; subs!==null &amp;&amp; i&lt;subs.length; i+=1){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(subs[i].row).show();</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.expand(subs[i]);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>var ReportTreeNode = function(r){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.row = r;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.id = null;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.level = NaN;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.children = null;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>this.expand = false;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>};</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>4</span><span style="FONT-FAMILY: 宋体">：</span><span>CSS</span><span style="FONT-FAMILY: 宋体">控制报表样式</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>/* </span><span style="FONT-FAMILY: 宋体">折叠报表相关的样式</span><span> */</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>td.button{background-position:4px center;background-repeat:no-repeat;padding-left:20px;text-align:left;}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>td.plus{background-image:url(‘plus.png’)}</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>td.minus{background-image:url(‘minus.png’)}</span></p> 
+  <br /> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal"><span>5</span><span style="FONT-FAMILY: 宋体">：编写</span><span>jsp</span><span style="FONT-FAMILY: 宋体">发布</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;%@ page language=”java” import=”java.util.*” pageEncoding=”UTF-8″%&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;%@taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report” %&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN”&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;html&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;%<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>request.setCharacterEncoding(“UTF-8″);%&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;head&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;title&gt;</span><span style="FONT-FAMILY: 宋体">订单填报表</span><span>&lt;/title&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;meta http-equiv=”pragma” content=”no-cache”&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;meta http-equiv=”cache-control” content=”no-cache”&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;meta http-equiv=”expires” content=”0″&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;!– </span><span style="FONT-FAMILY: 宋体">引入样式文件</span><span> –&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;link rel=”stylesheet” href=”../style/default.css” type=”text/css”/&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;/head&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;body&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;center&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;jsp:include page=”../reportJsp/toolbar.jsp” flush=”false” /&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;report:html name=”report1″</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>srcType=”file”</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>reportFileName=”b.raq”</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>funcBarLocation=”&quot;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>width=”-1″</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>height=”-1″</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>/&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/center&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;/body&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;!– </span><span style="FONT-FAMILY: 宋体">引入</span><span>js</span><span style="FONT-FAMILY: 宋体">文件，必须按下列顺序引入</span><span> –&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;script type=”text/javascript” src=”../js/jquery.js”&gt;&lt;/script&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;script type=”text/javascript” src=”../js/report_tree.js”&gt;&lt;/script&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;script type=”text/javascript”&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// </span><span style="FONT-FAMILY: 宋体">将指定报表渲染为折叠报表</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(document).ready(function(){</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ReportTreeManager.init(‘report1′);</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>});</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;/script&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>&lt;/html&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span>6</span><span style="FONT-FAMILY: 宋体">：效果展示：</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">填报前如图：</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/1e34c652-bf83-4010-a2a7-f5205905d3c6.jpg" width="554" height="278" /></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">折叠再打开后报表不会刷新，点击提交后：</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/e246c01f-54f3-427c-97bd-b9930284d4d6.jpg" width="554" height="295" /></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">可见，利用</span><span>jQuery</span><span style="FONT-FAMILY: 宋体">可以实现折叠报表的填报。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><b><span style="FONT-FAMILY: 宋体; COLOR: #1f497d">四：客户生产环境下报表展示</span></b></p> 
+  <br /> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/07/42438b61-772d-4411-b7a6-b54d1b69b711.jpg" width="553" height="223" /></span></p> 
+  <br /> 
+  <p class="MsoNormal"><b><span style="FONT-FAMILY: 宋体; COLOR: #1f497d">结论：</span></b><span style="FONT-FAMILY: 宋体">利用</span><span>jQuery</span><span style="FONT-FAMILY: 宋体">实现润乾报表的折叠，只需要进行一次报表的运算，折叠打开仅仅是对</span><span>tr</span><span style="FONT-FAMILY: 宋体">的隐藏显示操作。这种方法不仅提高了报表展示的性能，还可以进行填报，值得大家研究使用。</span></p> 
+  <br /> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal"><span>ps</span><span style="FONT-FAMILY: 宋体">：原创郑谷川，感谢郑谷川的帮助。</span></p> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

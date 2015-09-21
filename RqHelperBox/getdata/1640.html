@@ -1,0 +1,34 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>对于普通报表而言，一旦发布到web页面后，其样式就被固定了，如果想把报表换种形式展现通常的做法是重新设计一张报表模板来实现。润乾报表就有一种特殊的方法可以解决这样的需求，答案就在下面的例子中。</p> 
+  <p>首先来看这样一张交叉报表，在页面上的展现效果如下图:</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-1-jf0b2.png" alt="图1.png" width="663" height="546" /></p> 
+  <p>从上图可以看到这是一个多维交叉分组报表，上表头是地区/城市，左表头是日期。</p> 
+  <p>如果想动态改变一下报表的样式，左表头变成地区和城市的分组展现，上表头变成年份和月份的分组展现，并且只通过一张报表，这就需要用到参数实现行列变换的方法。</p> 
+  <p>实现思路：</p> 
+  <p>1.设计单元格表达式根据参数的取值不同而变化，从而实现样式跟随表达式变动。</p> 
+  <p>2.点击一个超链接按钮通过url强制传参给报表中的单元格，从而控制报表的样式。</p> 
+  <p>接下来就以上述交叉报表为基础，做一个可以行列互换的功能（上表头和左表头互换），实现报表在web页面上样式改变。</p> 
+  <p>第一步：设计器中选择配置–参数，给报表增加一个参数，这个参数就是控制行列转换用的，故将参数描述为”转换参数”。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-2-jf0b2.png" alt="图2.png" width="610" height="409" /></p> 
+  <p>第二步：修改单元格表达式，让单元格接受参数。下图为这个交叉报表的设计模板。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-3-jf0b2.png" alt="图3.png" width="467" height="280" /></p> 
+  <p>1、将C2单元格的表达式修改为：<br /> =if(@arg1==’1′,ds1.group(year(订购日期),false,订购日期!=null)+”年”,ds1.group(货主地区,false,货主地区!=null))。</p> 
+  <p>此表达式的意思是：当参数arg1的值为1时，C2单元格的表达式为ds1.group(year(订购日期),false,订购日期!=null)+”年”，否则表达式为ds1.group(货主地区,false,货主地区!=null)；即当参数arg1的值为1时，上表头为时间，当参数arg1的值不为1时，上表头为货主地区。</p> 
+  <p>2、据这个逻辑，依照地区与城市之间的关系，年份和月份之间的关系，将下述几个单元格的表达式做如下修改：<br /> C3：=if(@arg1==’1′,ds1.group(month(订购日期),false)+”月”,ds1.group(货主城市,false))<br /> A4：=if(@arg1==’1′,ds1.group(货主地区,false,货主地区!=null),ds1.group(year(订购日期),false,订购日期!=null)+”年”)，<br /> B4：=if(@arg1==’1′,ds1.group(货主城市,false),ds1.group(month(订购日期),false)+”月”)。</p> 
+  <p>第三步：修改交叉表头并在其中设置超链接：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-4-jf0b3.png" alt="图4.png" width="364" height="250" /></p> 
+  <p>红色框中的交叉表头区是整张报表的关键，即要在行列转换的时候做到文字跟随变化，又要充当转换控制的按钮。</p> 
+  <p>修改此单元格的表达式为：=if(@arg1==’1′,”分布,运货费,时间”,”时间,运货费,分布”).</p> 
+  <p>然后对此单元格设置超链接，在超链接编辑框的表达式中输入：if(@arg1==null,”/reportJsp/showReport.jsp?raq=/交叉报表.raq&amp;arg1=1″,”/reportJsp/showReport.jsp?raq=/交叉报表.raq”)。<br /> 如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-5-jf0b1.png" alt="图5.png" width="775" height="542" /></p> 
+  <p>这个超链接的作用就是点击这个单元格，赋予arg参数值，然后通过超链接中的url把参数传递到jsp中的报表里，通过对参数值的判断，来确定超链接中的url，这样就可以来回转换，防止只能转换一次的情况出现。</p> 
+  <p>接下来，将报表发布到页面上去看效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-6-jf0b.png" alt="图6.png" width="663" height="426" /></p> 
+  <p>点击设置了超链接的表头单元格后，url自动转换为/reportJsp/showReport.jsp?raq=/交叉报表.raq&amp;arg1=1，强制把参数arg=1传给报表的各个单元格，单元格表达式发生变化，报表样式也随之变化，于是实现了行列互换的效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-7-jf0b1.png" alt="图7.png" width="662" height="249" /></p> 
+  <p>此时，如果想转换到前一种样式，只需再点击一次表头单元格即可。</p> 
+  <p>这个报表中，运用了很多颇具技巧性的方法，例如参数结合超链接的运用，if()函数的运用，往往一些看似很复杂的报表，通过一些技巧性的做法都是可以迎刃而解的。</p>  
+ </body>
+</html>

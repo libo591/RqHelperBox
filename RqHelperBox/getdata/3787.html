@@ -1,0 +1,39 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt">流水号其实是自动计算的一种，是一种特殊的自动计算。它是按照一定的递增或者递减规则，在当前值的基础上进行递增或者递减后算出来的值。因此，流水号在刚开始有一个初值，即第一次计算前的当前值。以后就把每一次计算出的新值作为当前值。</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt">我们在实际应用中，遇到这样一种情况，当在页面中删除一行时，想让流水号重新计算，例如之前流水号是1.2.3.4.5，删除第3行后，当前页面流水号自动变为1,2,3,4。</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt">下面我们来介绍一下如何来实现这个功能。</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt">首先，制作一张带有流水号的行式填报表：</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt"><img border="0" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=c03e48ac-b475-43f7-b357-2cbe2cf75962" /><br />更新属性设置：</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt"><img border="0" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=74ef21b4-715a-4589-88a3-8762e6bbbe6b" /><br />流水号初值设定：</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt"><img border="0" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=8d12a11c-890b-4dd6-b41a-989d30903115" /><br />流水号单元格的自动计算设置：</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt"><img border="0" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=2cfa603b-2ebc-4c80-926f-ecbc91522b8a" /></font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt">接着，我们需要编写一下页面的js函数，来完成自动更新流水号的过程：</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt">&nbsp;&nbsp;&nbsp; function _updateVar(){&nbsp;&nbsp;//获取当前单元格的原值与新值<br />&nbsp;var oldvalue=”&quot;;&nbsp;&nbsp;//单元格修改前的原值<br />&nbsp;var tableRowNum = document.getElementById( “report1″ ).rows.length;<br />&nbsp;if(report1.currCell){<br />&nbsp;&nbsp;//取选中单元格的原值<br />&nbsp;&nbsp;oldvalue=report1.currCell.value;<br />&nbsp;&nbsp;<br />&nbsp;&nbsp;var editValue = oldvalue;<br />&nbsp;&nbsp;//当前单元格的id<br />&nbsp;&nbsp;var currId = report1.currCell.id;<br />&nbsp;&nbsp;//取得当前行号<br />&nbsp;&nbsp;var currRowNum = currId.substr(9,10);<br />&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp; //循环的行数<br />&nbsp;&nbsp; var forLength = tableRowNum – currRowNum;<br />&nbsp;&nbsp;<br />&nbsp;&nbsp; for (var i = 0;i&lt; forLength;i++){<br />&nbsp;&nbsp; //将更新后的流水号计算出来<br />&nbsp;&nbsp; var cellN = parseInt(currRowNum) + parseInt(i) + 1;<br />&nbsp;&nbsp; var cell = document.getElementById( “report1_A”+cellN );<br />&nbsp;&nbsp; var cellV = parseInt(editValue) + i;<br />&nbsp;&nbsp; //设置更新后的流水号值<br />&nbsp;&nbsp; _setEditingValue( cell, cellV.toString(), cellV.toString() );<br />&nbsp;&nbsp;}<br />&nbsp;}<br />&nbsp;//删除行<br />&nbsp;_deleteRow( report1 );<br />&nbsp;<br />}</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt">函数的原理就是，取得删除行的当前流水号，然后把当前行后面的行的流水号按照顺序重新设置一下，然后把选中的这行删除。</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt">我们看一下页面中的效果：</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><br /><font style="FONT-SIZE: 12pt"><img border="0" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=be69b32d-64ff-407c-86b2-fa6c1f6d4cef" /><br />&nbsp;目前选中第三行，然后点按钮调用上面写的js：</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt"><img border="0" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=8a594e8f-b299-4cad-82ac-123f7caad26d" /><br />我们看到，第四行到第六行的流水号重新计算并按顺序更新了。</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt">这时点击提交即可保存数据了。</font></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LINE-HEIGHT: 1.5"><font style="FONT-SIZE: 12pt"><img border="0" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=10139a65-96e4-481f-b7c4-eb53d1d11426" /><br />&nbsp;</font></p> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

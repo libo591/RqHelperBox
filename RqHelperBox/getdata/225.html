@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>卡片式报表在实际业务中很常见，比如员工信息卡、胸卡、名片等，这类报表的共同特征是：每一页报表的面积都非常小，打印的时候需要在一张纸上布局多页，页与页之间有一定的空隙，便于裁剪等。<br /> 这种报表最直接的想法，就是根据纸张大小和卡片大小，计算出每张纸可以布局的行数和列数，然后展现打印。可是一般来说，用户会要求可以配置每张纸布局的行数和列数，这就要求给用户提供配置页面，然后根据用户的配置动态计算出卡片间隙，最后展现打印。<br /> 不过事情还没完，即使是卡片式报表，也会有标题，对于卡片式报表的标题，存在两种可能：一种是随卡片一起，每个卡片都带有标题；另一种是一张纸显示一次标题，而且还要居中，每个卡片不再另行显示标题。<br /> 对于这种标题的处理，就有点罗嗦了，首先要提供配置选项让用户选择每张卡片都带标题还是每张打印纸显示一次标题；其次对于每打印纸的情况，需要先把标题拎出来单独布局，剩余的数据区的内容进行卡片式布局，整个计算还挺麻烦的。<br /> 这种事情，交给润乾报表轻松搞定，实现步骤如下：</p> 
+  <p><font color="#ff0000">实现步骤</font>:</p> 
+  <ol> 
+   <li>设计报表</li> 
+   <li>定义打印属性</li> 
+   <p><font color="#ff0000">效果演示</font>:</p> 
+   <p><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/one.png" title="one.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/one.png" alt="one.png" /></a></p> 
+   <p><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/one1.png" title="one1.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/one1.png" alt="one1.png" /></a></p> 
+   <p><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/one2.png" title="one2.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/one2.png" alt="one2.png" /></a></p> 
+  </ol>  
+ </body>
+</html>

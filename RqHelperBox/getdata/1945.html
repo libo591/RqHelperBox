@@ -1,0 +1,23 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在做web报表的时候，一个单元格常常会利用另外单元格的数据作为条件去查询和检索。润乾报表提供了可以在单元格内执行存储过程，让存储过程计算完后返回想要的结果的工具，这样便可在单元格内完成对数据库的条件查询。</p> 
+  <p>本文采用DB2数据库作为例子，来说明润乾报表call函数在单元格内的用法，以及对于DB2存储过程的注意事项。</p> 
+  <p><strong>第一步：查看单元格内call函数的说明</strong></p> 
+  <p>执行存储过程，返回结果数据集合，只能返回单列数据，如果存储过程返回多个字段，则返回第一个字段的结果值。</p> 
+  <p>第二步：新建一个简单的DB2数据库存储过程</p> 
+  <p>create table TEST –数据库建表语句<br /> (<br /> ID VARCHAR2(10) ,<br /> NAME VARCHAR2(10)<br /> )<br /> –存储过程创建语句<br /> CREATE PROCEDURE test (IN in_state varchar(50))<br /> result set 1<br /> language sql<br /> P1:BEGIN<br /> DECLARE CUR cursor with return for select NAME from TEST where ID=in_state<br /> with ur;<br /> OPEN CUR;<br /> END P1;</p> 
+  <p>DB2的存储过程一定要注意result set 1这个语句，如果说没有该语句的话，在润乾报表单元格内执行存储过程是会报错的。</p> 
+  <p>第三步：在润乾报表工具单元格内，用call函数执行存储过程</p> 
+  <p>执行表达式为：Call（”{call test（?）}”,A2），如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/143.png" alt="1.png" width="553" height="218" /></p> 
+  <p>表达式说明：其中”{call test（?）}”是调用存储过程，”?”是代表的参数，A2是要传给”？”的实际值，经过存储过程运算后，返回游标结果集，如：</p> 
+  <p>数据库内表TEST 内数据如下：</p> 
+  <p>ID NAME</p> 
+  <p>1 aaa</p> 
+  <p>2 bbb</p> 
+  <p>调用存储过程时，输入参数值为：1，那么，返回结果集为一条数据，即为：aaa，输出结果如下图。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/230.png" alt="2.png" width="552" height="197" /></p> 
+  <p>总结：报表中少不了要经过复杂sql运算返回结果的情况，如果让这些运算在报表内完成，这大大降低了报表的计算效率。此时完全可以用数据库端存储过程代替，将报表内的运算转移到执行速度更快的数据库端，然后用call函数接收返回的结果，这也是提高报表的执行速度的优化方案之一。</p>  
+ </body>
+</html>

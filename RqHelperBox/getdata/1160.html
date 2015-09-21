@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>润乾报表最终在页面上是以纯html方式进行展现的，也就是说，是一个静态页面。那么，当最终用户需要web报表中提供一些交互能力时，就需要结合javascript脚本来实现。比如下图中这样的折叠报表（单击加号可以展开分组），就可以用润乾报表来设计报表模板，再结合简单的javascript脚本即可实现。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/110.png" alt="1.png" width="574" height="474" /></p> 
+   <p>实现思路：报表在网页上展示时，整体是一个HTML的table对象。因此可以在单元格中加入一些标识，然后通过javascript动态设置css的display属性来实现。</p> 
+   <p>具体实现：</p> 
+   <p>报表设计如下图所示：</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/27.png" alt="2.png" width="562" height="131" /></p> 
+   <p>重点是前三列：</p> 
+   <p>第一列用来显示折叠或展开的图标，在A3单元格的HTML事件属性中写入表达式（多级展开的情况以此类推）：”OnClick=\”changeNodeState(”+B3+”)\””</p> 
+   <p>第二列用来保存每一行的标识（这个标识应该是全表唯一的），B4单元格中写有表达式D4，为了美观，这里将其设置为了白色；</p> 
+   <p>第三列用于存自己所属的父级标识，处于根级的行保留空值即可，该列整体设置为隐藏。</p> 
+   <p>javascript处理部分如下，在发布报表的jsp中加入代码即可：</p> 
+   <p><span style="color: #ff0000;">&lt;script language=”javascript”&gt;<br /> var tree;<br /> function init(){</span><br /> <span style="color: #0000ff;">/** 构建一个树实例， 参数分别为：<br /> * 报表名–对应report标签中的name<br /> * 唯一标识所在列–第一列为0，以此类推，下同<br /> * 父级所在列<br /> * 用于显示图标的列<br /> * 表头所占行<br /> */<br /> </span><span style="color: #ff0000;">tree = new TableTree(”report1″,1,2,0,2);<br /> tree.init();</span> <span style="color: #0000ff;">// 初始化数据</span><br /> <span style="color: #ff0000;">tree.collapseAll();</span> <span style="color: #0000ff;">// 折叠所有</span> <span style="color: #ff0000;">}</span></p> 
+   <p><span style="color: #ff0000;">function changeNodeState(node){</span> <span style="color: #0000ff;">// 更改节点状态，展开/折叠</span><br /> <span style="color: #ff0000;">var node = tree.getNode(node);<br /> if(node.isOpened())<br /> node.collapseAll();<br /> else<br /> node.expand();<br /> }<br /> &lt;/script&gt;</span></p> 
+   <p><span style="color: #ff0000;">&lt;body onload=”init()”&gt;</span></p> 
+  </div>  
+ </body>
+</html>

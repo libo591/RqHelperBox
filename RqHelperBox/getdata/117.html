@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">在使用润乾报表过程中发现这样一个问题<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">&lt;report:html name=”report1″ srcType=”defineBean” beanName=”rp” 
+    <o:p /></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">报错<span lang="EN-US" xml:lang="EN-US">: java.lang.Exception:</span> 指定的<span lang="EN-US" xml:lang="EN-US">defineBean–rp</span>不存在！<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题解决<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">beanName</span><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">是用一个变量控制的，应该用变量名<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">beanName=”&lt;%=beanname%&gt;” 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><br /></p>  
+ </body>
+</html>

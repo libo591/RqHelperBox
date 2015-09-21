@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>在润乾填报表中，提供了丰富的编辑风格，如常用的下拉日历。直接将单元格的编辑风格设置为下拉日历即可在页面上点击时弹出下拉日历框供选择。</p> 
+   <p>实际上，下拉日历是调用了一个由润乾提供的js：calendar.js，因此，我们也可以不通过设置单元格的编辑风格来实现下拉日历，比如自己定义一个onclick事件来调用润乾的下拉日历js。同时，也可以自定义数据的格式。</p> 
+   <p>下面以选择月份为例，给出具体的实现：</p> 
+   <p>&lt;form name=from1&gt;选择月份： &lt;input name=reportMonth onClick=”_runqianCalendar.dateFormat=’yyyy-MM’; _runqianCalendar.type= ‘month’;_showCalendar();” &gt;</p> 
+   <p>这样，在报表展现页面上，焦点触发编辑框时就会弹出下拉日历供选择月份。</p> 
+   <p>当然，要首先引入润乾下拉日历自带的js（注意要在定义的文本框后面引入），这里以发布在润乾demo应用中为例：</p> 
+   <p>&lt;script language=javascript src=”http://127.0.0.1:6001/demo/reportServlet?action=10&amp;file=%2Fcom%2Frunqian%2Freport4%2Finput%2Fcalendar.js” mce_src=”http://127.0.0.1:6001/demo/reportServlet?action=10&amp;file=%2Fcom%2Frunqian%2Freport4%2Finput%2Fcalendar.js”&gt;&lt;/script&gt;</p> 
+   <p>&lt;script language=javascript&gt;_createRunqianCalendar();&lt;/script&gt;</p> 
+   <p>否则就会因为找不到润乾自带的下拉日历js定义的对象而报”不可识别的对象：_runqianCalendar”错误。</p> 
+   <p>由此可以看出，润乾报表在设计层面上是非常灵活的，可以很轻松的直接运用润乾提供的一些向导、可视化界面进行设计，也可以根据自己的需要通过少量的代码来实现更大的灵活性。<br /> <span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

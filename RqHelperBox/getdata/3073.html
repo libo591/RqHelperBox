@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="line-height: 1.5;"> </p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">润乾报表最新版本（2011-01月发布的版本）已增加了对导出excel2007功能的支持。</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">更新过程：</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">1、拷贝最新的jar包。</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">可以到</span><span style="font-size: 12pt;">\\192.168.0.75\</span><span style="font-size: 12pt;">润乾报表4.0对外发布\JDeploy\web\WEB-INF\lib取到。</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">其中，需要更新的jar包为：</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">report4.jar，dom4j-1.6.1.jar，excel2007.jar，geronimo-stax-api_1.0_spec-1.0.jar，ooxml-schemas-1.0.jar，poi-3.6-20091214.jar，poi-ooxml-3.6-20091214.jar，xmlbeans-2.3.0.jar。</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">2、更新标签库。</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">可以到</span><span style="font-size: 12pt;">\\192.168.0.75\</span><span style="font-size: 12pt;">润乾报表4.0对外发布\JDeploy\web\WEB-INF取到最新的标签文件：</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">runqianReport4.tld</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">使用方法：</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">在jsp标签中，增加导出excel2007的属性：</span></p> 
+  <p style="line-height: 1.5;"> </p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;">&lt;report:html name=”report1″</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;">reportFileName=”api/wangge.raq”</span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span>needSaveAsExcel2007=”yes”</span> <span style="font-family: 宋体; color: blue; font-size: 12pt;">//</span><span style="font-family: 宋体; color: blue; font-size: 12pt;">存为</span><span style="font-family: 宋体; color: blue; font-size: 12pt;">EXCEL2007</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"></span><span>excel2007Label =”<span style="font-family: 宋体; color: #ff0000; font-size: 12pt;">导出</span>excel2007″</span> <span style="font-family: 宋体; color: blue; font-size: 12pt;">//</span><span style="font-family: 宋体; color: blue; font-size: 12pt;">导出标签显示为</span><span style="font-family: 宋体; color: blue; font-size: 12pt;">“</span><span style="font-family: 宋体; color: blue; font-size: 12pt;">导出</span><span style="font-family: 宋体; color: blue; font-size: 12pt;">excel2007″</span></span></p> 
+  <p class="MsoNormal" style="line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;">/&gt;</span></p> 
+  <p><span style="font-size: 12pt;">&nbsp;</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">在页面上的效果如下：</span></p> 
+  <p style="line-height: 1.5;"> </p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6546" title="8" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/8.gif" alt="8" width="379" height="230" /></span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">其他功能用法与导出excel2003一致。</span></p> 
+  <p style="line-height: 1.5;"><span style="font-size: 12pt;">注：<br /> <span style="font-family: 宋体; font-size: 12pt;">JDK</span><span style="font-family: 宋体; font-size: 12pt;">必须是</span><span style="font-family: 宋体; font-size: 12pt;">1.5</span><span style="font-family: 宋体; font-size: 12pt;">及以上版本才会支持导出</span><span style="font-family: 宋体; font-size: 12pt;">excel2007</span> </span></p>  
+ </body>
+</html>

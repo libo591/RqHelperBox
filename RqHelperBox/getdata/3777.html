@@ -1,0 +1,43 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="FONT-FAMILY: 宋体">给客户做的报表中，有这样一个统计图：</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: center" class="MsoNormal" align="center"><span><img alt="截图09.png" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=0e606582-f28f-4b7d-a548-d5b47e24e90f" width="486" height="380" /></span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">通过图形，我们能看到，饼图是以“渠道类型”为分类，来显示各种渠道类型的占比。这个貌似很简单的统计图，却不是一下子就能做出来的。</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="FONT-FAMILY: 宋体">这个报表的特殊之处就在于，饼图的分类轴即“渠道类型”中的“运营公司、社会渠道、大客户、电子渠道”这四个格，不是在一个扩展单元格中，就是说他们是分开在四个独立的单元格中，占比也是一样。</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: center" class="MsoNormal" align="center"><span><img alt="截图10.png" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=c13dd419-8f90-490f-a505-d8f29d2b4d76" width="372" height="194" /></span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="FONT-FAMILY: 宋体">这时，想实现这样的饼图，就不是“闭着眼睛”都能做出来的了。大家不妨考虑一下，基于客户提供的这样的报表模板，我们将如何修改它，完成客户想要的功能？</span></p> 
+  <br /> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="FONT-FAMILY: 宋体">这里提供一种解决方法：即运用层次坐标方法，把“渠道类型”的四个格的值放到一个扩展单元格中，同样，把对应的“占比”四个单元格值放到一个扩展单元格中。并且，要求合并后的“渠道类型”和“占比”扩展格在同一行上。并且，单元格扩展开来之后，“渠道类型”和“占比”要一一对应。做到这些后，我们在为饼图提供数据，就显得轻而易举了。</span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">具体实现：</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: center" class="MsoNormal" align="center"><span><img alt="截图12.png" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=44d27207-b712-48f2-93bc-374a1bcec500" width="424" height="160" /></span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">看到上图，让人有种恍然大悟的感觉。我们在第</span><span>10</span><span style="FONT-FAMILY: 宋体">行做了一个隐藏行，</span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span>A10</span><span style="FONT-FAMILY: 宋体">：</span> <span>=to(1,4)</span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span>B10:<span>&nbsp; </span>=list(A5,A6,A7,A8)[A10]<span>&nbsp; </span></span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span>C10</span><span style="FONT-FAMILY: 宋体">：</span> <span>=list(C5,C6,C7,C8)[A10]</span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">其中，只让</span><span>A10</span><span style="FONT-FAMILY: 宋体">格是个实际的扩展格，</span><span>B10</span><span style="FONT-FAMILY: 宋体">和</span><span>C10</span><span style="FONT-FAMILY: 宋体">根据</span><span>A10</span><span style="FONT-FAMILY: 宋体">的数字取当前行的值。这样做，</span><span>B10</span><span style="FONT-FAMILY: 宋体">，</span><span>C10</span><span style="FONT-FAMILY: 宋体">各是扩展后，各是四行，并且一一对应。</span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span><img alt="截图13.png" src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=51e9ae13-dcb9-4615-813d-5da18c31d365" width="393" height="225" /></span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">这时，我们再去设计这个饼图的时候，就很容易了。设置分类轴为</span><span>=B10</span><span style="FONT-FAMILY: 宋体">，系列值为</span><span>=C10</span><span style="FONT-FAMILY: 宋体">。</span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">这样，这个统计图的效果就完成了。</span></p> 
+  <br /> 
+  <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体">总结：由于润乾统计图分类轴和系列都要求在一个扩展格上，因此，固定的若干单元格，看起来做为统计图的分类轴和系列有一点困难。但是，当我们巧妙的利用润乾报表强大的层次坐标运算功能后，我们可以自由组合想要的单元格和数据，为实现统计图“创造条件”。</span></p> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了大量的内置函数，但是再多的函数也无法完全满足五花八门的业务需求，于是润乾报表提供了丰富的二次开发接口，以便让报表用户自己来自定义函数。通过自定义函数来轻松方便的解决web报表业务问题，下面就简单介绍一下一个利用自定义数据集运算函数实现特定功能的例子。</p> 
+  <p><strong>例子</strong>：现在有三字码和中文名的对应关系，想实现三字码和中文名对应显示，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/2-0021.png" alt="2.png" width="345" height="119" /></p> 
+  <p><strong>下面介绍一下具体的实现步骤</strong>：</p> 
+  <p>第1步，设计报表如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/3-0009.png" alt="3.png" width="454" height="116" /></p> 
+  <p>其中，ds1.syb(A2)这个就是自定义数据集函数，参数为A2的值。</p> 
+  <p>第2步，预览报表，有如下效果</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/4-0007.png" alt="4.png" width="403" height="206" /></p> 
+  <p><strong>数据集运算函数实现思路</strong>：</p> 
+  <p>首先，A2扩展后就是一个字符串，把字符串传入数据集函数，代码中用split方法分解并放入String数组中。</p> 
+  <p>其次，将数据集中的字符串和值对应放入HashMap中。</p> 
+  <p>最后，遍历数组，如果数组中数据和HashMap中的key相等，则取出value值利用StringBuffer拼好返回值。</p> 
+  <p><strong>本示例的自定义数据集运算函数代码如下</strong>：</p> 
+  <p><span style="color: #0000ff;">package com.runqian;<br /> import java.util.HashMap;<br /> import java.util.Map;<br /> import java.util.Set;<br /> import com.runqian.base4.resources.EngineMessage;<br /> import com.runqian.base4.resources.MessageManager;<br /> import com.runqian.base4.util.ReportError;<br /> import com.runqian.report4.dataset.DataSet;<br /> import com.runqian.report4.dataset.DsValue;<br /> import com.runqian.report4.dataset.Group;<br /> import com.runqian.report4.model.expression.DSFunction;<br /> import com.runqian.report4.model.expression.Expression;<br /> import com.runqian.report4.model.expression.Variant2;<br /> import com.runqian.report4.usermodel.Context;</span></p> 
+  <p>public class CharZhuan extends DSFunction {<br /> @Override<br /> public Object calculate(Context ctx, boolean isInput) {<br /> // TODO Auto-generated method stub<br /> if (this.paramList.size() &lt; 1) {<br /> MessageManager mm = EngineMessage.get();<br /> throw new ReportError(”paramater:”<br /> + mm.getMessage(”function.missingParam”));<br /> }<br /> // 取得第一个参数,默认为表达式，需要把该表达式算出来，结果才是函数的参数值<br /> Expression param1 = (Expression) this.paramList.get(0);<br /> if (param1 == null) { // 判断参数是否为空<br /> MessageManager mm = EngineMessage.get();<br /> throw new ReportError(”paramater:”<br /> + mm.getMessage(”function.invalidParam”));<br /> }<br /> // 算出第一个参数值<br /> Object result1 = Variant2.getValue(param1.calculate(ctx, isInput),<br /> false, isInput);<br /> System.out.println(result1.toString());<br /> // 判断第一个参数值是否为空<br /> if (result1 == null) {<br /> return null;<br /> }<br /> // 判断第一个参数值的数据类型<br /> if (!(result1 instanceof String)) {<br /> MessageManager mm = EngineMessage.get();<br /> throw new ReportError(”parameter:”<br /> + mm.getMessage(”function.paramTypeError”));<br /> }<br /> Group group = null;<br /> DsValue cur = this.ds.getCurrent();<br /> group = (Group) cur;<br /> DataSet ds = group.getDataSet();<br /> int countRow = ds.getRowCount();<br /> // 将码表的对应值放到hashmap中<br /> Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();<br /> for (int i = 1; i &lt;= countRow; i++) {<br /> int j = 1;<br /> //获得某位置的数据<br /> map.put(ds.getData(i, j).toString(), ds.getData(i, j + 1)<br /> .toString());<br /> }<br /> StringBuffer sb = new StringBuffer();<br /> // 对第一个参数进行split分解.<br /> String[] str = ((String) result1).split(”-”);<br /> System.out.println(str[0] + str[1]);<br /> Set&lt;String&gt; keySet = map.keySet();<br /> //以下for循环为每个字符串找相应的汉字，并用－连接起来<br /> for (int i = 0; i &lt; str.length; i++) {<br /> //遍历HashMap找key与目标字符串相等的值<br /> for (String key : keySet) {<br /> if (key.equals(str[i])) {<br /> //如果相当，则获得与key对应的value，append到StringBuffer中<br /> sb.append(map.get(key));<br /> sb.append(”-”);<br /> }<br /> }<br /> }<br /> return sb.delete(sb.length() – 1, sb.length()).toString();<br /> }<br /> }</p> 
+  <p>这样，就使用数据集运算函数实现了三字码和中文名一一对应。</p>  
+ </body>
+</html>

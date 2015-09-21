@@ -1,0 +1,36 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了api接口，供用户进行设计开发，给客户自行开发程序很大的扩展空间，并且也使得开发变得更加灵活，控制性更强。本篇文章主要介绍一下如何通过api接口绘制一个统计图。</p> 
+  <p>例如客户想画一个柱状图，下面讲一下实现过程。新建一个jsp。</p> 
+  <p>jsp需要引入的相关包，因为本例比较简单所以引用的包也较少。</p> 
+  <p>&lt;%@ page import=”com.runqian.report4.usermodel.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.model.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.util.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.usermodel.graph.*”%&gt; </p> 
+  <p>第一步新建一个默认的空报表，代码如下</p> 
+  <p>ReportDefine rd = new ReportDefine2(1, 1);//一行一列的报表<br /> IRowCell rowCell = rd.getRowCell(1);<br /> IColCell colCell = rd.getColCell((short)1);<br /> rowCell.setRowHeight((float)150);<br /> colCell.setColWidth((float)150);</p> 
+  <p>第二步构造一个空的统计图：</p> 
+  <p>// 构造一个空统计图<br /> GraphProperty gp = new GraphProperty(); </p> 
+  <p>// 设置统计图类型–柱状图<br /> gp.setType(GraphTypes.GT_COL); </p> 
+  <p>// 设置坐标轴颜色<br /> gp.setAxisColor(238130238); </p> 
+  <p>// 设置柱形图间距<br /> gp.setBarDistance(”20″); </p> 
+  <p>// 设置统计图标题<br /> gp.setGraphTitle(”统计图例子”); </p> 
+  <p>// 设置标题与图形之间的距离<br /> gp.setTitleMargin(”10″); </p> 
+  <p>// 设置横轴标题<br /> gp.setXTitle(”横坐标轴”); </p> 
+  <p>// 设置纵轴标题<br /> gp.setYTitle(”纵坐标轴”);</p> 
+  <p>第三步，构造分类轴和系列值的定义，并把他们赋给统计图，</p> 
+  <p>GraphCategory[] graphCat = new GraphCategory[1];<br /> GraphSery[] sery=new GraphSery[1];<br /> for(int i = 0; i 
+   <graphcat.length;i ++){="" 由于本例比较简单，所以这个循环看起来是多余的，但是在实际的应用中，这个循环="" 在赋值过程中很有用处<br="" /> GraphCategory category = new GraphCategory();<br /> category.setCategory(”销量”);<br /> graphCat[i] = category;</p> 
+  <p>//根据分类设置它对应的系列对象</p> 
+  <p>for(int j = 0; j 
+   <sery.length; j="" ++="" ){<br="" /> GraphSery gSery = new GraphSery();<br /> gSery.setName(”name”);<br /> gSery.setExp(”=200″);<br /> sery[j]=gSery; }<br /> graphCat[i].setSeries(sery);<br /> }<br /> gp.setCategories(graphCat);</p> 
+  <p>最后设置单元格，并设置该单元格的图表</p> 
+  <p>INormalCell iGraphCell = rd.getCell(1,(short) 1);<br /> iGraphCell.setCellType(iGraphCell.TYPE_GRAPH);</p> 
+  <p>iGraphCell.setGraphProperty(gp); </p> 
+  <p>rd.setCell(3, (short)1, iGraphCell);<br /> IByteMap exp3 = new ByteMap();<br /> exp3.put(INormalCell.VALUE, “graph()”);<br /> iGraphCell.setExpMap(exp3);</p> 
+  <p>这样统计图就画完了，在后面加上标签进行解析</p> 
+  <p>//设置request中报表定义对象<br /> String rptName = “RPT_”+Double.toString(Math.random());<br /> request.setAttribute(rptName,rd);</p> 
+  <p> 
+   <report:html name="”report1″&lt;br" /> srcType=”defineBean”<br /> beanName=”&lt;%=rptName%&gt;”<br /> /&gt;</p> 
+  <p>这样就可以浏览这个jsp，在页面上可以看到一个有关于销量的统计。如图：</p> 
+  <p>这样就完成了api的统计图设计。有需要的朋友可以用这个作为参考。</p>  
+ </body>
+</html>

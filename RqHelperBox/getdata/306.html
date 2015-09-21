@@ -1,0 +1,32 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>一、任务背景</strong></p> 
+  <p><font face="Times New Roman">excel</font>是个很简单易用的电子表格，大量的终端用户都喜欢用<font face="Times New Roman">excel</font>设计报表，存储并且上报数据。因此在用户引入报表工具或者启动信息化项目之前，用户手里往往已经存在大量的<font face="Times New Roman">excel</font>报表，理所当然地，用户会提出：能否把<font face="Times New Roman">excel</font>里的报表样式或者数据导入报表中。</p> 
+  <p>这个要求一点都不过分，甚至是非常合理的。但是，看似很简单的需求，却需要一分为二地讨论：</p> 
+  <p><font face="Times New Roman">1、导</font>入<font face="Times New Roman">excel</font>报表样式；</p> 
+  <p><font face="Times New Roman">2、</font>导入<font face="Times New Roman">excel</font>的数据。</p> 
+  <p><strong>二、面临困难</strong>&nbsp;</p> 
+  <p>1、导入excel报表样式：</p> 
+  <p>其目的是为了减轻重复设计报表样式的工作量，因此对样式的要求极为严格，导入后的报表样式要和<font face="Times New Roman">excel</font>里的完全一样，否则用户还得重新调整样式，失去了导入的意义。</p> 
+  <p>目前，大部分报表工具的设计风格都是控件拖拽式<font face="Times New Roman">+band</font>的风格，不是<font face="Times New Roman">excel</font>那种电子表格式的，由于界面模型不同，因此往往无法把<font face="Times New Roman">excel</font>表格样式直接导入。</p> 
+  <p>其次，如果编程导入也存在问题，因为报表设计界面被<font face="Times New Roman">band</font>分成了不同的区域，你如何动态判断<font face="Times New Roman">excel</font>里的报表哪几行归到哪个<font face="Times New Roman">band</font>区域？于是为了保证程序通用性，只好把所有的内容导入一个<font face="Times New Roman">band</font>，这样就无法灵活应用<font face="Times New Roman">band</font>的特性了。</p> 
+  <p>也许有人会说，可以写好几种程序，分别针对不同风格的报表，规定死每个区域的行数，这样就可以灵活应用<font face="Times New Roman">band</font>的特性了。可是仔细想想，<font face="Times New Roman">excel</font>合并单元格的能力过于强大，用户会设计出什么样的报表很难说，能够适应<font face="Times New Roman">band</font>风格的报表少之又少，很可能当你把程序写出来后发现，能正确导入的报表寥寥无几。</p> 
+  <p>2、导入excel的数据：</p> 
+  <p>从字面意思看，导入<font face="Times New Roman">excel</font>的数据，似乎不要求报表的样式，只需要把数据导入报表就行了，可是不要忘了，用户导入数据的目的是啥？是为了入库！也就是说，用户的目的是把<font face="Times New Roman">excel</font>里的数据导入报表后，提交到数据库中，因此，存在几个要求：</p> 
+  <p><font face="Times New Roman">（1）</font>报表能够向数据库提交数据；</p> 
+  <p><font face="Times New Roman">（2）</font>报表能够根据用户的需求，自由地匹配单元格与数据库字段、记录的关系；</p> 
+  <p><font face="Times New Roman">（3）</font>报表的格子能够和<font face="Times New Roman">excel</font>中的数据一一对应；</p> 
+  <p><font face="Times New Roman">（4）</font>存入数据库之前能进行数据的合法性检查以及用户权限的校验。<font face="Times New Roman">&nbsp;</font></p> 
+  <p>看到这里，估计已经有很多人望而却步了，怎么这么麻烦！可是别着急，还有更麻烦的呢！对于那种样式比较简单的清单型的报表，还往往有导入不定行<font face="Times New Roman">excel</font>数据的要求。别急呀，人家需求正常着呢！你想啊，<font face="Times New Roman">excel</font>里准备数据的时候，没有办法确定是多少行，有多少记录就录入多少呗。可是不定行的<font face="Times New Roman">excel</font>数据如何导入<font face="Times New Roman">html</font>的输入页面里？是不是意味着还需要通过<font face="Times New Roman">javascript</font>动态添加行？新添加的行如何更新到数据库？如何与数据库建立联系？<font face="Times New Roman">&nbsp;</font></p> 
+  <p>如此多的要求，如果全部由程序员编程实现，不是不可能，而是工作量太大了，最关键的是很难设计得通用，最后导致不断修改程序或者维护好几种程序。</p> 
+  <p>由于润乾报表是采用类excel的电子表格的设计风格，因此报表样式和excel天然兼容，可以无缝地导入；结合润乾填报表自由库表关联技术，可以轻松地实现导入excel数据，并且经由合法性检查及权限校验，然后入库。</p> 
+  <p><strong>三、实现步骤</strong></p> 
+  <p><font face="Times New Roman">1、</font>打开设计器，导入<font face="Times New Roman">excel</font>报表样式；</p> 
+  <p><font face="Times New Roman">2、</font>将报表设为可以填报，添加更新属性、合法性检查等逻辑；</p> 
+  <p><font face="Times New Roman">3</font><font face="Times New Roman">、</font>将报表在网页上发布，执行导入<font face="Times New Roman">excel</font>数据，并提交保存；</p> 
+  <p><font face="Times New Roman">4、</font>如果需要导入不定行的<font face="Times New Roman">excel</font>数据，就把报表样式设为行式报表即可。</p> 
+  <p><strong>四、效果展示</strong></p> 
+  <p><img src="http://www.runqian.com.cn/wp-content/uploads/2008/08/daoru0.PNG" alt="daoru" /></p>  
+ </body>
+</html>

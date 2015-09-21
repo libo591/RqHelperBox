@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>润乾报表设计的报表模板，可实现用户在web页面输入查询条件来查询所需的数据的功能，通常输入查询条件的方式有对话框输入式和下拉菜单选择式。其中用下拉菜单进行查询参数选择时一般情况下只能选择一个查询参数，本文来介绍运用润乾报表设计器设计报表时如何实现查询参数多选的功能。</p> 
+   <p>首先设计一个报表，如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-4rux1i0rc2v2c1.png" alt="报表模板.png" width="298" height="93" /></p> 
+   <p>给报表添加一个参数，如下图所示，需要注意的是参数类型选择为字符串组。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-yfr4zp52b46h.png" alt="添加参数.png" width="427" height="63" /></p> 
+   <p>这个报表的参数模板如下图所示，增加一个数据集，选择订单表中的货主地区字段。D4单元格的web变量名设置为arg1，D4单元格右键选择填报属性，编辑风格选为〖下拉数据集〗，点击〖设置〗配置数据集，显示列和数据列均选择〖货主地区〗。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-1-718a265ci3bj2e1.png" alt="参数模板1.png" width="454" height="182" /></p> 
+   <p>Web页面的预览效果如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-web1-xp7l634e2.png" alt="web预览1.png" width="268" height="212" /></p> 
+   <p>下面介绍下拉参数菜单的多选查询如何实现。</p> 
+   <p>首先配置订单信息表的数据集，检索条件设置为DEGREE in (?) or ? is null，如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-1-hm5b72drz3cj4mdtp1.png" alt="数据集设置1.png" width="401" height="107" /></p> 
+   <p>参数标签中添加两个参数，其中两个参数的表达式的写法是第一个参数表达式为arg1，第二个参数表达式为str(arg1)，格式如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-hm5b72drz3cj4mdtp.png" alt="数据集设置2.png" width="403" height="168" /></p> 
+   <p>下面对参数模板进行相应的设置，D4单元格右键选择填报属性，点击〖设置〗，勾选〖允许多选〗和〖增强控件〗两个选项，如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-718a265ci3bj2e1.png" alt="参数模板2.png" width="442" height="218" /></p> 
+   <p>设置完成后发布到web预览如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-web2-xp7l634e1.png" alt="web预览2.png" width="268" height="211" /></p> 
+   <p>此时就实现了查询参数多选的功能，用户可勾选多项查询参数或者勾选〖全选〗选项查询全部信息，点击〖确定〗，再点击〖查询〗，就可看到要查询的报表。</p> 
+  </div>  
+ </body>
+</html>

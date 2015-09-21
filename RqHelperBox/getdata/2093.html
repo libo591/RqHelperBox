@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>来看下面一个报表：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/15.gif" alt="1.gif" width="522" height="135" /></p> 
+  <p>在这个报表中的B4单元格，是获取当前时间函数now()，我们在页面中看一下效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/23.gif" alt="2.gif" width="483" height="344" /></p> 
+  <p>而系统当前时间为：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/33.gif" alt="3.gif" width="400" height="330" /></p> 
+  <p>我们可以发现一个奇怪的现象，那就是用now()函数获取的当前时间与系统时间相差8个小时，这个是什么原因呢？</p> 
+  <p>由于润乾报表中的now()函数，是用new java.util.Date()取得的，那么问题肯定就出在jdk上了。</p> 
+  <p>原来，J2SE中包含世界不同地区的时间区域数据文件。jre/lib/zi存放着这些文件。在J2SE里，sun.util.calendar.ZoneInfo从这些文件获取DST（夏令时）规则。 java.util.TimeZone类中getDefault方法的源代码显示，它最终是会调用sun.util.calendar.ZoneInfo类的getTimeZone 方法。这个方法为需要的时间区域返回一个作为ID的String参数。这个默认的时间区域ID是从 user.timezone (system)属性那里得到。如果user.timezone没有定义，它就会尝试从user.country和java.home (System)属性来得到ID。 如果它没有成功找到一个时间区域ID，它就会使用一个”fallback” 的GMT值。换句话说， 如果它没有计算出你的时间区域ID，它将使用GMT作为你默认的时间区域。</p> 
+  <p><strong>解决办法：</strong></p> 
+  <p>设置JVM的默认时区为东八区（北京时间）：</p> 
+  <p>在jdk的安装目录中的jre\lib\zi下，存放这各个时间区域的数据文件，我们找到GMT文件bak备份一下，然后在zi文件夹下的Asia中复制一份Hong_Kong并重命名为GMT（Hong_Kong为北京时区即东八区），复制完毕后，重启服务器，在浏览报表：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/43.gif" alt="4.gif" width="484" height="342" /></p> 
+  <p>可以看到，时间与系统时间统一了。</p>  
+ </body>
+</html>

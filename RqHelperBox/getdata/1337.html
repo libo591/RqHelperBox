@@ -1,0 +1,33 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>在设计企业报表时，报表单元格的表达式中经常需要用到空值判断，例如在单元格的显示值属性中，判断当单元格的值为空时，显示为0，否则显示单元格的真实值，等等。一般这种情况下，用户习惯写的表达式是： if(value()==null, 0, value())。</p> 
+   <p>如果我们把value()换成更加复杂的表达式，例如if(ds1.select1(…)==null, 0, ds1.select1(…))，大家可以看出，这种算法明显很慢，需要把ds1.select1(…)这样的复杂表达式运算两次，而如果采用nvl()则可以避免这个问题。</p> 
+   <p>单元格函数：nvl()</p> 
+   <p>函数说明：<br /> 根据第一个表达式的值是否为空，若为空则返回指定值</p> 
+   <p>语法：<br /> nvl( valueExp1, valueExp2 )</p> 
+   <p>参数说明：<br /> valueExp1–需要计算的表达式，其结果不为空时返回其值<br /> valueExp2–需要计算的表达式，当valueExp1结果为空时返回此值</p> 
+   <p>返回值：<br /> valueExp1或valueExp2的结果值</p> 
+   <p>示例：<br /> 例1：nvl(A1,””) 表示当A1为空时，返回空串，否则返回A1</p> 
+   <p>例2：nvl(value(),0) 表示当当前格为空时返回0，否则返回当前格的值</p> 
+   <p>应用举例：</p> 
+   <table border="0"> 
+    <tbody> 
+     <tr> 
+      <td>正确写法，速度快</td> 
+      <td>错误写法，速度慢</td> 
+     </tr> 
+     <tr> 
+      <td>nvl(ds1.select1(…), 0)</td> 
+      <td>if(ds1.select1(…)==null, 0, ds1.select1(…))</td> 
+     </tr> 
+     <tr> 
+      <td>nvl(a1[……]{……}, “–”)</td> 
+      <td>if(a1[……]{……}==null, “–”, a1[……]{……})</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+  </div>  
+ </body>
+</html>

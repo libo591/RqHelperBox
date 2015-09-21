@@ -1,0 +1,14 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表中对单元格文字展现效果的设置方式和方法基本上可以满足用户的大部分需求，但是有时候用户对web报表单元格文字的显示有一些个性化的要求，如文字翻转等需求，润乾报表同样可以解决这些需求，本文通过下面这个例子来介绍一下怎样实现在单元格中文字翻转功能。</p> 
+  <p>如下这样一张普通的报表，现要将A2单元格内的”润乾报表”字样翻转90&deg;来显示，对报表模板作如下图所示的设置，在A2单元格鼠标右键选择数据类型选项，将数据类型转成HTML类型，在文本里输入修饰文字的HTML语言。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-4gqz2t.png" alt="图一.png" width="345" height="177" /></p> 
+  <p>这里使用的是div的方式，代码如下：</p> 
+  <p>&lt;div style=”FILTER:progid:DXImageTransform.Microsoft.BasicImage(Rotation=1);height:1px”&gt;<br /> 润乾报表<br /> &lt;/div&gt;</p> 
+  <p>其中style这段代码是用来对字体进行反转操作，Rotation=1代表顺时针转九十度。还可以通过&lt;font&gt;来设定字体的颜色大小等属性。需要注意的是单元格数据类型为HTML时，尺寸定义方式无效，需要手动调整单元格的高宽来适应文字显示。</p> 
+  <p>加入HTML修饰后的文字效果如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-4kqs9r.png" alt="图二.png" width="71" height="133" /></p> 
+  <p>这样就实现了A2单元格文字翻转显示的需求了。通过在单元格中嵌入HTML语言，还可以实现很多其他的文字个性化需求，用户可以了解一下HTML语言对文字数据进行一些个性化的处理，可以在报表设计中达到更好的效果。</p>  
+ </body>
+</html>

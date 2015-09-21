@@ -1,0 +1,23 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font color="#ff0000">任务背景</font>:</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在业务系统中，一些基础数据的中文名称可能存在变化，而这些基础数据可能在多个事实表里被引用，一旦中文名称发生了变化，要求历史数据也同步跟着变化，因此如果事实表里引用的是基础数据的中文名称的话，必然要求历史数据进行同步修改维护，工作量巨大。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 为了解决这个问题，程序员设计基础数据表的时候，往往增加了代码字段，事实表里引用基础数据的代码值，在报表中根据基础数据表的内容动态匹配显示成中文。这样，只要保持基础数据的代码值不变，中文名称随意改变都没有关系。</p> 
+  <p>于是，问题出现了。</p> 
+  <p><font color="#ff0000">面临困难</font>:</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 最简单的匹配方式，就是把基础数据表和事实表根据代码值关联起来，在报表的单元格里直接显示基础数据的中文名称，这种方式，不需要复杂的编程，客户端也不需要写javascript脚本进行动态匹配，是最简单的方法。但是，如果该单元格的值要被其它单元格所引用，这种方式就不行了，因为这种方式单元格里存储的就是中文，而由于事实表里存储的是代码，因此引用的时候往往需要引用代码。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 于是提出了新的需求：单元格里存储的是代码（便于被其它单元格引用），但是显示成中文。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这种情况下，就需要写网页上的脚本，来进行动态匹配。一旦基础数据的记录数很多，这种脚本还非常长，导致网页很大，下载速度慢。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 当然，上述还是比较简单的显示值匹配。另一种更加复杂的，中文名不是存储在一个字段里，此时显示值需要通过表达式计算出来。举例来说，人口普查行业的人员表，为了便于根据姓氏得出各种统计数据，往往把姓和名存储在不同的字段中，于是匹配显示值的时候，要先把姓名计算出来再和代码值进行匹配显示。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 前面讲到的还仅仅是显示，在进行数据录入的时候，一样存在显示值的匹配问题，我们不可能让用户输入代码，只能让用户选择中文名，于是出现了下拉框。可是一旦可供选择的项太多了，下拉框无比长，用户就没法选了，眼睛都会看花。于是又提出了下拉树，即把下拉选项根据业务逻辑划分成多个类，每个类下又划分成多个子类，这样一级级的查找选择，速度快多了。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 当然，也有提出动态过滤的，即前面一个下拉框比如省份选择后，后面一个下拉框比如城市就进行动态过滤，只下拉出前一个省份所包含的城市，大大减少了下拉选项的个数，方便用户选择。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 总体来说，一个很简单的代码与显示值的匹配问题，在实际业务系统中却会引发无数的问题。上面仅仅列举了比较常见的几种。如果都要程序员自己开发，工作量太大了，而且很难方方面面考虑周到。因此建议采用润乾报表，润乾报表为此提出了全面的解决方案：</p> 
+  <p><font color="#ff0000">实现步骤</font>:</p> 
+  <p>1、 单元格提供了真实值和显示值两种属性，均可灵活定义表达式<br /> 2、 提供了下拉列表、下拉视图、下拉数据集、下拉树、动态过滤等编辑风格，定义简单，使用灵活，能够满足大部分业务系统的需要。</p> 
+  <p><font color="#ff0000">效果演示</font>:</p> 
+  <p align="center"><a href="http://www.quiee.com.cn/wp-content/uploads/2008/07/daima1.png" title="daima1.png"><img src="http://www.quiee.com.cn/wp-content/uploads/2008/07/daima1.png" alt="daima1.png" /></a></p> 
+  <p align="center"><a href="http://www.quiee.com.cn/wp-content/uploads/2008/07/daima2.png" title="daima2.png"><img src="http://www.quiee.com.cn/wp-content/uploads/2008/07/daima2.png" alt="daima2.png" /></a></p> 
+  <p align="center"><a href="http://www.quiee.com.cn/wp-content/uploads/2008/07/daima3.png" title="daima3.png"><img src="http://www.quiee.com.cn/wp-content/uploads/2008/07/daima3.png" alt="daima3.png" /></a></p>  
+ </body>
+</html>

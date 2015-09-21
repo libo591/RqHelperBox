@@ -1,0 +1,41 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>报表组的应用在报表开中发越来越广泛，可以实现一些单个报表实现不了的功能。润乾报表设计器中提供用户较全面的报表组设计开发方法，但对于一些客户的个性化需求，有些功能还不能直接实现，比如点击一个sheet页面中的订单ID然后在另一个sheet页面显示该订单的明细。本文就来通过例子说明怎样间接实现该功能。</p> 
+   <p>在报表组开发中，浏览报表组默认情况下是显示第一张报表。通过查看显示报表组的页面源代码了解到报表组是把每个报表sheet的内容放在一个div中，默认显示第一个div，点击第二个报表的tab页就显示第二报表的div。所以要实现上面的功能，我们可以根据下面的思路来做。</p> 
+   <p>大致思路：</p> 
+   <p>首先创建一个包含两个报表的报表组，在第一个报表中创建超链接，连接到报表组本身，把订单ID和需要显示的哪个层的标志传递给报表组，第二个报表根据订单ID查询订单明细，报表组再根据显示层标志来显示相应的div。比如这个超链接：”/reportJsp/showReportGroupTest.jsp?rpg=/group/group.rpg&amp;order=”+A2+”&amp;showFlag=2″。就是显示第二个div并根据订单idA2单元格的值查询显示相应的订单明细。</p> 
+   <p>制作步骤：</p> 
+   <p>第一步、制作sheet报表组</p> 
+   <p>设计报表模板”订单主表”。数据集的sql语句为：”SELECT 订单.订单ID,订单.订购日期,订单.货主名称,订单.货主地区,订单.到货日期 FROM 订单 WHERE 订单.订单ID like ‘105__’ ORDER BY 订单.订单ID ASC”。</p> 
+   <p>单元格中输入内容如下：A1: 订单ID；B1: 订购日期；C1: 货主名称；D1: 货主地区；E1: 到货日期；A2: =ds1.Select(订单ID)；B2: =ds1.订购日期；C2: =ds1.货主名称；D2: =ds1.货主地区；E2: =ds1.到货日期。</p> 
+   <p>报表模板如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-1-yb7bt1f.png" alt="模板1.png" width="280" height="57" /></p> 
+   <p>设计另一个报表 “订单明细”，为报表添加一个参数order，用来接收第一个报表传递过来的订单ID，报表数据集的sql语句：SELECT 订单明细.订单ID,订单明细.产品ID,订单明细.单价,订单明细.折扣,订单明细.数量 FROM 订单明细 WHERE 订单明细.订单ID =? ORDER BY 订单明细.订单ID ASC。在数据集编辑界面增加一个参数order。</p> 
+   <p>单元格中输入的内容如下：A1：订单ID；B1: 产品；C1: 单价；D1: 折扣；E1: 数量；A2: =ds1.Select(订单ID) ；B2: =ds1.产品ID；C2: =ds1.单价；D2: =ds1.折扣；E2: =ds1.数量。</p> 
+   <p>增加一个数据集，用于显示产品的中文名字，它的sql语句：”SELECT 产品.产品ID,产品.产品名称 FROM 产品”。将B2单元格的显示值表达式设置为：ds2.select1(产品名称,产品ID==value())。报表设计模板如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-yb7bt1f.png" alt="模板2.png" width="236" height="58" /></p> 
+   <p>新建一个报表组，把刚才创建的两个报表添加到报表组中，报表组命名为group，如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-7iq873auof0q5atck.png" alt="定义报表组.png" width="274" height="117" /></p> 
+   <p>上图中url类型使用相对路径。</p> 
+   <p>给报表组定义一个参数”order”，用于接收第一个报表传过来的订单ID。设置报表组和报表之间的参数传递，选中下图中的”订单明细”点击右键如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-jf0b.png" alt="图2.png" width="162" height="124" /></p> 
+   <p>选择”报表项设置”，弹出设置对话框，如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-3-jf0b.png" alt="图3.png" width="260" height="205" /></p> 
+   <p>点击上图中的”+”号，添加报表组和报表之间传递的参数order。</p> 
+   <p>第二步、设置超链接</p> 
+   <p>在设计器打开订单主表.raq，选中A2单元格，在超链接的表达式窗口中输入””/reportJsp/showReportGroupTest.jsp?rpg=/group/group.rpg&amp;order=”+A3+”&amp;showFlag=2″”。如下图:</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-4-jf0b.png" alt="图4.png" width="397" height="147" /></p> 
+   <p>第三步、制作解析报表组的jsp</p> 
+   <p>在发布报表组的jsp文件中加入如下这段代码，意为当点击触发订单ID时，会通过参数将订单ID和需要显示的哪个层的标志传递给报表组，第二个报表根据订单ID查询订单明细，报表组再根据显示层标志来显示相应的div。</p> 
+   <p>&lt;%<br /> //得到显示哪个div的标志<br /> String showFlag = request.getParameter(”showFlag”);<br /> if(”2″.equals(showFlag)){%&gt;<br /> //标志为2的时候就显示第二张报表，就是div名字为div_item2的层<br /> &lt;script language=”javascript”&gt;<br /> //显示第二个报表的div，隐藏第一个报表的div<br /> document.getElementById( “div_item1″ ).style.display = “none”;<br /> document.getElementById( “div_item2″ ).style.display = “”;<br /> //更改tab页字体的颜色<br /> document.getElementById(”tab_item1″).className=””;<br /> document.getElementById(”tab_item2″).className=”rq_curr”;<br /> &lt;/script&gt;<br /> &lt;%}else{%&gt;<br /> //显示第一个报表的div，隐藏第二个报表的div<br /> &lt;script language=”javascript”&gt;<br /> document.getElementById( “div_item1″ ).style.display = “”;<br /> document.getElementById( “div_item2″ ).style.display = “none”;<br /> document.getElementById(”tab_item1″).className=”rq_curr”;<br /> document.getElementById(”tab_item2″).className=””;<br /> &lt;/script&gt;<br /> &lt;%}%&gt;<br /> &lt;script language=”javascript”&gt;<br /> //重新定义第二个报表tab页的点击事件<br /> document.getElementById(’tab_item2′).onclick=function()<br /> { //显示第二个报表的div，隐藏第一个报表的div<br /> document.getElementById( “div_item1″ ).style.display = “none”;<br /> document.getElementById( “div_item2″ ).style.display = “”;<br /> //更改tag标签字体的颜色<br /> document.getElementById(”tab_item1″).className=””;<br /> document.getElementById(”tab_item2″).className=”rq_curr”;<br /> //调用润乾自定义的tab页自定义函数<br /> _groupClicked(document.getElementById(’tab_item2′));<br /> }<br /> //重新定义第一个报表tab页的点击事件<br /> document.getElementById(’tab_item1′).onclick=function(){<br /> document.getElementById( “div_item1″ ).style.display = “”;<br /> document.getElementById( “div_item2″ ).style.display = “none”;<br /> document.getElementById(”tab_item1″).className=”rq_curr”;<br /> document.getElementById(”tab_item2″).className=””;<br /> _groupClicked(document.getElementById(’tab_item1′));<br /> }<br /> &lt;/script&gt;<br /> &lt;/body&gt;</p> 
+   <p>第四步、将报表组发布预览</p> 
+   <p>运行设计器中内置的tomcat，点击发布，预览图如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-5-jf0b.png" alt="图5.png" width="280" height="192" /></p> 
+   <p>点击上图框中的订单ID10508，页面会跳转到订单明细，并显示订单ID10508对应的订单明细，如下图所示。</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-6-jf0b.png" alt="图6.png" width="230" height="103" /></p> 
+   <p>润乾报表设计器提供了完整全面的报表及报表组设计方法，虽然一些特殊的需求无法直接实现，但润乾可通过一些间接的方法或途径来实现，如本文中的需求，以后用户如果再遇到类似的需求，就可以按照上面的方法解决了。</p> 
+  </div>  
+ </body>
+</html>

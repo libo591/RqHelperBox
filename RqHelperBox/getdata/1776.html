@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>下拉日历是润乾报表为web报表中的日期填报提供的一个便捷功能，可以让用户快速准确的填写日期信息，避免了手动填写所产生的的格式错误或数值误差。</p> 
+  <p>在润乾报表中下拉日历是调用了一个由润乾提供的JS：calendar.js，如果用户想在项目中调用润乾的下拉日历，非报表区域的调用这个js就可以了，比如自定义一个onclick事件来调用润乾的下拉日历JS。同时，也可以自定义数据的格式。</p> 
+  <p>下面就以一个例子（格式：选择月份）介绍调用润乾下拉日历的实现过程。</p> 
+  <p><strong>实现思路：</strong></p> 
+  <p>1， 引入润乾下拉日历自定义JS</p> 
+  <p>2， 在Form表单内通过onclick事件调用下拉日历控件</p> 
+  <p>具体实现步骤如下：</p> 
+  <p><strong>第一步：</strong>在需要调用控件的页面jsp引入润乾下拉日历自定义JS</p> 
+  <p>引入代码如下：</p> 
+  <p>&lt;script language=javascript<br /> src=”http://127.0.0.1:6001/demo/reportServlet?action=10&amp;file=%2Fcom%2Frunqian%2Freport4%2Finput%2Fcalendar.js” mce_src=”http://127.0.0.1:6001/demo/reportServlet?action=10&amp;file=%2Fcom%2Frunqian%2Freport4%2Finput%2Fcalendar.js”&gt;<br /> &lt;/script&gt;<br /> //创建润乾报表下拉日历控件实例对象<br /> &lt;script language=javascript&gt;_createRunqianCalendar();&lt;/script&gt;</p> 
+  <p>这里要注意的是，该JS要在调用它的文本框的下面引入，否则就会因为找不到润乾自带的下拉日历JS定义的对象而报”不可识别的对象：_runqianCalender”错误。</p> 
+  <p><strong>第二步：</strong>在Form表单中定义调用下拉日历的文本框</p> 
+  <p>实现代码如下：</p> 
+  <p>&lt;form name=from1&gt;<br /> 选择月份：<br /> &lt;!-调用润乾下拉日历，并设置日期格式为年月”yyyy-MM”-&gt;<br /> &lt;input name=reportMonth onClick=”_runqianCalendar.dateFormat=’yyyy-MM’;<br /> _runqianCalendar.type= ‘month’;_showCalendar();” &gt;<br /> &lt;/form&gt;</p> 
+  <p>到此，我们就简单实现了在Form表单文本框中调用润乾报表下拉日历的功能，接下来看一下例子实现的效果。</p> 
+  <p>Form表单在web显示效果。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/113.png" alt="1.png" width="504" height="238" /></p> 
+  <p>单击文本框，调用下拉日历效果。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/212.png" alt="2.png" width="503" height="292" /></p> 
+  <p>选择日期值后的效果</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/39.png" alt="3.png" width="505" height="231" /></p> 
+  <p>例子中完整的JSP如下：</p> 
+  <p>&lt;%@ page contentType=”text/html;charset=GBK”%&gt;<br /> &lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report”%&gt;<br /> &lt;html&gt;<br /> &lt;body&gt;<br /> &lt;!-调用下拉日历控件的form表单定义（文本框的onclick事件）-&gt;<br /> &lt;form name=from1&gt;<br /> 选择月份：<br /> &lt;input name=reportMonth onClick=”_runqianCalendar.dateFormat=’yyyy-MM’;<br /> _runqianCalendar.type= ‘month’;_showCalendar();”&gt;<br /> &lt;/form&gt;<br /> &lt;!-引入下拉日历JS-&gt;<br /> &lt;script language=javascript<br /> src=”http://127.0.0.1:6001/demo/reportServlet?action=10&amp;file=%2Fcom%2Frunqian%2Freport4%2Finput%2Fcalendar.js” mce_src=”http://127.0.0.1:6001/demo/reportServlet?action=10&amp;file=%2Fcom%2Frunqian%2Freport4%2Finput%2Fcalendar.js”&gt;<br /> &lt;/script&gt;<br /> &lt;!-引入创建下拉日历控件对象的JS-&gt;<br /> &lt;script language=javascript&gt;_createRunqianCalendar();&lt;/script&gt;<br /> &lt;/body&gt;<br /> &lt;/html&gt;</p> 
+  <p><strong>总结：</strong>由上面的例子可以看出，润乾报表再设计层面上是非常灵活的，可以轻松的直接运用润乾提供的一些向导、可视化界面进行设计，也可以根据自己的需要通过少量的代码来实现更加个性化的需求。</p>  
+ </body>
+</html>

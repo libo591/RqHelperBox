@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>我们在做填报表的时候可能需要对单元格中的数据进行校验，以判断数据的合法性。这里我讲一下如何通过js函数来判断填报表中单元格数据是否为空。</p> 
+  <p>首先，新建一张填报表，如下图：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/17-1.jpg"><img class="alignnone size-medium wp-image-2513" title="17-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/17-1-300x63.jpg" alt="" width="300" height="63" /></a></p> 
+  <p>并设置报表的更新属性。</p> 
+  <p>这里需要对“类别ID”进行是否为空的校验，右键单机A2，选择“填报属性”,将“是否可写”勾选上，然后选择“校验”，设置如下：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/17-2.jpg"><img class="alignnone size-medium wp-image-2514" title="17-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/17-2-300x56.jpg" alt="" width="300" height="56" /></a></p> 
+  <p>其中checknull是一个js函数，写在发布报表的JSP中，具体写法如下：</p> 
+  <p>function checknull(cell){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var checkcell = cell;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(checkcell.length==0 || checkcell==””){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }else{</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return true;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>进行如上设置之后，页面效果如下：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/17-3.jpg"><img class="alignnone size-medium wp-image-2515" title="17-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/17-3-300x188.jpg" alt="" width="300" height="188" /></a></p> 
+  <p>那么，当你点击提交的时候，也会提示“类别ID不能为空”，无法将数据保存到数据库中，除非你在类别ID中填一个值。</p>  
+ </body>
+</html>

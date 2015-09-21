@@ -1,0 +1,9 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在实际应用中，计算两个日期相差的天数是十分常见的需求。润乾报表中计算两个日期的相差天数在设计器中一般分为两种方法：</p> 
+  <p>第一种是不需要自动计算的，直接从数据集中或者通过参数传递取到两个日期，通过润乾自带函数daysAfter(datetime2(@arg1,’yyyy-MM-dd’),datetime2(@arg2,’yyyy-MM-dd’))进行计算得到两个日期的相差天数(arg2-arg1)；</p> 
+  <p>第二种是在填报表中，需要通过自动计算得到两个日期的相差天数，此时就需要在结果的单元格的填报属性-自动计算中加入js，比如fun(${C2}.toString(),${D2}.toString())，来计算C2和D2两个单元格日期的相差天数，同时在发布报表的jsp中加入相应的js脚本：</p> 
+  <p>&lt;script launguage=”javascript”&gt;<br /> function fun(cellOne,cellTwo) {<br /> var now=new Date(cellTwo.substring(0,4),cellTwo.substring(5,7)-1,cellTwo.substring(8,10));<br /> var before=new Date(cellOne.substring(0,4),cellOne.substring(5,7)-1,cellOne.substring(8,10));<br /> 　　var date = now.getTime() – before.getTime();<br /> 　　return Math.floor(date / (1000 * 60 * 60 * 24));<br /> }<br /> &lt;/script&gt;<br /> <span lang="EN-US"></span></p>  
+ </body>
+</html>

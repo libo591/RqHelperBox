@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>JDK (Java Development Kit)，JDK是整个Java的核心，包括了Java运行环境，Java工具和Java基础的类库。所以要想一个Java程序在虚拟机上准确无误的运行，就必须保证JDK环境的正确性。</p> 
+  <p>润乾报表设计器在默认安装的情况下会自带一个1.5版本的JDK。在使用润乾报表自带的DEMO和服务器制作报表的过程中，使用该版本的JDK是完全不会出任何兼容性或功能性的问题。然而润乾报表自带的数据库和服务器不能满足相当一部分客户的需求，无论是出于高性能或是其他原因而使用其他数据库和服务器的客户，稍有不慎就会因为JDK版本的问题而苦恼不已。因为有些大型数据在安装过程中会自带JDK，如ORACLE，POSTGRAS等，它们会根据与自身性能的完美结合选择自带不同版本的JDK。</p> 
+  <p>对于这类自带JDK的大型数据库，在跟润乾报表结合的时候就需要妥善处理JDK环境，否则就会发生冲突。当数据库自带的JDK版本不等于1.5的情况下，就会发生冲突。报错信息如下：</p> 
+  <p>&nbsp;<img title="112" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/112.jpg" alt="112" width="554" height="529" /></p> 
+  <p>解决这个问题的方法就是将JDK版本统一。首先关闭设计器，在控制面板的程序中卸载润乾报表。然后重新安装，在进行到如下图所示的步骤时：</p> 
+  <p>&nbsp;<img title="212" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/212.jpg" alt="212" width="510" height="368" /></p> 
+  <p>选择数据库使用的JDK版本，这样就为润乾报表设置了与数据库使用的同一版本的JDK，就成功解决了因JDK版本不同所引发的冲突了。</p>  
+ </body>
+</html>

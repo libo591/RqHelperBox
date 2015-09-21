@@ -1,0 +1,46 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在报表的部署以及使用中,经常会遇到一些数据源或者环境配置方面的问题，本文提供了两个测试常用的JSP,可以在出现相关问题时用来进行测试。</p> 
+  <p>data_source_test.jsp–测试数据源，可以检测数据源是否被正确配置，以及是否可以连接。</p> 
+  <p>&lt;%@ page contentType=”text/html;charset=GBK” %&gt;<br /> &lt;%@ page import=”com.runqian.report4.usermodel.*”%&gt;<br /> &lt;%@ page import=”com.runqian.base4.util.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.model.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.util.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.cache.CacheManager”%&gt;<br /> &lt;%@ page import=”java.io.*”%&gt;</p> 
+  <p>&lt;%@ page import=”com.runqian.report4.dataset.DataSet”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.dataset.SQLDataSetFactory”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.view.olap.OlapUtils”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.view.excel.ExcelReport”%&gt;<br /> &lt;%@ page import=”java.sql.Connection”%&gt;<br /> &lt;%@ page import=”java.sql.Driver”%&gt;<br /> &lt;%@ page import=”java.sql.DriverManager”%&gt;<br /> &lt;%@page import=”com.runqian.report4.ide.ExcelImporter”%&gt;<br /> &lt;%@page import=”com.runqian.report4.usermodel.input.InputProperty”%&gt;<br /> &lt;%@page import=”com.runqian.report4.input.DataSaver”%&gt;<br /> &lt;%@page import=”com.runqian.report4.model.engine.ExtCellSet”%&gt;<br /> &lt;%@page import=”com.runqian.report4.model.engine2.RowReport”%&gt;<br /> &lt;%@page import=”com.runqian.report4.input.RowReportSaver”%&gt;<br /> &lt;%@page import=”java.text.SimpleDateFormat”%&gt;<br /> &lt;%@page import=”com.runqian.base4.resources.FormatUtils”%&gt;<br /> &lt;%@page import=”java.util.Locale”%&gt;<br /> <br /> <br /> <br /> </p> 
+  <p></p> 
+  <p>&lt;%<br /> //设置报表路径<br /> String reportFile = “D:\\testupdate.raq”;<br /> Context cxt = new Context();<br /> ReportDefine rd = null;<br /> try {<br /> rd = (ReportDefine) ReportUtils.read(reportFile);<br /> } catch (Exception e) {<br /> // TODO Auto-generated catch block<br /> e.printStackTrace();<br /> }<br /> System.out.println(”报表读取完毕===================================”);<br /> //计算报表<br /> Engine engine = new Engine(rd, cxt);<br /> IReport iReport = engine.calc();<br /> RowReport rr = (RowReport)iReport;<br /> String did = rr.getDetailID( 1 ); //第几行是主扩展行<br /> SimpleDateFormat dateF = new SimpleDateFormat( FormatUtils.getDateFormat( Locale.getDefault() ) );<br /> SimpleDateFormat timeF = new SimpleDateFormat( FormatUtils.getTimeFormat( Locale.getDefault() ) );<br /> SimpleDateFormat datetimeF = new SimpleDateFormat( FormatUtils.getDatetimeFormat( Locale.getDefault() ) );<br /> System.out.println(”报表计算完毕@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@”);<br /> String excelFile = “D:\\test1500.xls”;<br /> ExcelImporter ei = new ExcelImporter(excelFile);<br /> IReport excelReport = ei.getReport(0);<br /> RowReportSaver rowSaver = new RowReportSaver(rr, null, cxt); //构造数据保存对象<br /> System.out.println(” 获取Excel完毕&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;”);<br /> //读入excel文件及其数据<br /> for(int i=1;i&lt;=excelReport.getRowCount();i++){ ////逐行逐列把excel数据写入填报表<br /> Area area = rr.insertDetail( did );<br /> //for(int j=1;j&lt;=iReport.getColCount();j++){<br /> //INormalCell iExcelCell=excelReport.getCell(i, (short)j); //取得excel单元格</p> 
+  <p>//if( iExcelCell == null ) continue;<br /> //String svalue = “”;<br /> //Object value = iExcelCell.getValue();<br /> //if( value != null ) svalue = value.toString();</p> 
+  <p><br /> //if((short)j==1 &amp;&amp; svalue.length()&gt;3){<br /> //list.add((”第”+sheetNum+”页的第”+i+”行”+”第”+(short)j+”列的值”+svalue+”字符长度大于3!”));<br /> //throw new Exception(”校验失败”);<br /> //}</p> 
+  <p></p> 
+  <p>//}<br /> for(int j=1;j&lt;=iReport.getColCount();j++){<br /> INormalCell iExcelCell=excelReport.getCell(i, (short)j); //取得excel单元格</p> 
+  <p>if( iExcelCell == null ) continue;<br /> String svalue = “”;<br /> Object value = iExcelCell.getValue();<br /> if( value != null ) svalue = value.toString();</p> 
+  <p>rowSaver.setCellInputValue( area.getBeginRow(), (short)j, svalue, dateF, timeF, datetimeF );</p> 
+  <p>}</p> 
+  <p>}</p> 
+  <p>System.out.println(”设置更新属性完毕%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%”);</p> 
+  <p>rowSaver.save(); //执行保存<br /> out.print(”数据保存成功”);</p> 
+  <p>%&gt;</p> 
+  <p><br /> </p> 
+  <p>enum_font.jsp–列出java环境的字体，当发现统计图里面的字体不正确时，可通过这个jsp检测系统中是否有统计图中使用的字体。</p> 
+  <p>&lt;%@ page language=”java” pageEncoding=”GBK”%&gt;<br /> 
+   <jsp:directive.page import="”java.awt.GraphicsEnvironment”/"> 
+    <br /> &lt;% 
+    <br /> GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); 
+    <br /> String[] fontNames= ge.getAvailableFontFamilyNames(); 
+    <br /> %&gt; 
+    <br /> 
+    <br /> 
+    <br /> 
+    <br /> 
+    <br /> 当前Java环境支持的字体列表 
+    <br /> 
+   </jsp:directive.page></p> 
+  <dir> 
+   <br /> &lt;% 
+   <br /> for(int i=0;i 
+   <fontnames.length;i++)<br /> out.println(” 
+   <li>”+fontNames[i]);<br /> %&gt;<br /> </li> 
+  </dir> 
+  <br /> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

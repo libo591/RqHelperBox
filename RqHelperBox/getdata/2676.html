@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在生活中，大家一定会注意到一个细节，越来越多的地方将一些重要文字或者是提示性语言用一些生动形象的图画或者是温馨画面来表达。如“禁止吸烟”，“节约用水”等，大家一看到图片就会明白其中的含义。仅仅展示还是不够的，在很多情况下，是需要根据条件的不同，展示不同的图片。例如：成绩小于60分，显示fail图片，成绩大于等于60显示pass图片。下面就详细介绍一下这个功能。</p> 
+  <p>第一步：为报表准备数据集：</p> 
+  <p>SELECT 雇员.姓氏,雇员.名字,雇员.城市,订单.雇员ID,雇员.雇员ID,订单.订单ID,订单明细.订单ID,订单明细.单价,订单明细.数量 FROM 雇员,订单明细,订单 WHERE 雇员.雇员ID = 订单.雇员ID&nbsp; AND&nbsp; 订单.订单ID = 订单明细.订单ID</p> 
+  <p>第二步：制作报表，如下图所示：</p> 
+  <p>&nbsp;<img title="521" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/521.jpg" alt="521" width="542" height="120" /></p> 
+  <p>第三步：将D3单元格数据类型设置为HTML数据类型，并在D3单元格值表达式中用if判断图片显示。if(C3()&gt;150000,”&lt;img src=’/demo/images/通过.jpg’&gt;”, “&lt;img src=’/demo/images/警告.jpg’&gt;”)</p> 
+  <p>注意：D3单元格是用HTML语法的&lt;img&gt;标签指定了图片位置，在这里也可以写绝对路径。</p> 
+  <p>预览效果如下：</p> 
+  <p>&nbsp;<img title="53" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/53.jpg" alt="53" width="523" height="422" /></p> 
+  <p>这样就可以一眼看出员工是否完成指标或者一些可量化的标准是否完成。</p>  
+ </body>
+</html>

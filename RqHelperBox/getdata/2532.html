@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>当我们设计一张带有统计图的报表然后在页面上之后，将鼠标放到图上去会显示一些对应的数值，如下图：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/20-1.jpg"><img class="alignnone size-medium wp-image-2533" title="20-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/20-1-278x300.jpg" alt="" width="278" height="300" /></a></p> 
+  <p>这里就有一个问题，将鼠标放上去之后这个“匹夫金额”显示的值特别长。可能有人会认为将单元格的“显示格式”设置成想要的格式，其长度自然会变小。可是当我设置了单元格的显示格式之后，发现并没有起作用，效果还是跟上图一样。“投资额度（千万）”列对应的值只有4位小数，发现并没有起作用，效果还是跟上图一样。</p> 
+  <p>那么有没有什么办法解决这个问题呢？</p> 
+  <p>我发现统计图中“系列值”所取的是单元格的真实值，并非显示值。既然如此，只要将单元格的真是值的长度变小一点，这个问题应该就可以解决。</p> 
+  <p>将F4单元格中的：= itemspec.investsum/10000000，改成：=round(itemspec.investsum/&nbsp; 10000000,4)。使用round()对temspec.investsum / 10000000所计算出来的值进行截取，保留4为小数。这样设置之后，当浏览报表，将鼠标放至统计图上时，显示如下：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/20-2.jpg"><img class="alignnone size-medium wp-image-2534" title="20-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/20-2-300x221.jpg" alt="" width="300" height="221" /></a></p>  
+ </body>
+</html>

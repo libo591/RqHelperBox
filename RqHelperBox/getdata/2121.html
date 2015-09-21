@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在数据库中，某些表的字段名可能完全相同。因此，使用这些表作为数据源时，开发人员可能需要设计多张报表。但是，如果使用动态宏控制数据集的表名，开发人员只需要设计一张报表，大大地提高了开发效率。</p> 
+  <p>动态控制数据集表名的关键是要在sql语句中灵活运用润乾报表的动态宏。</p> 
+  <p>首先，针对某个数据制作一张报表，如下表。</p> 
+  <p>数据集ds1：<br /> SELECT EMPLOYEE.EMPID,EMPLOYEE.EMPNAME,EMPLOYEE.BIRTHDAY,EMPLOYEE.SEX,EMPLOYEE.TITLE,EMPLOYEE.BONUS,EMPLOYEE.SALARY FROM EMPLOYEE</p> 
+  <p>别名设置如下：</p> 
+  <p>数据集ds2：<br /> SELECT TITLE.ID,TITLE.TITLENAME FROM TITLE</p> 
+  <p>E2的显示值表达式：ds2.select1(TITLENAME,ID==value())<br /> D2的显示值表达式：map(list(”1″,”2″),list(”男”,”女”))</p> 
+  <p>在这张报表中，针对TITLE数据表生成数据集ds2。假定数据库中含有多个与TITLE全部字段完全相同的表，我们根据设置的表名不同从而动态控制生成的报表。</p> 
+  <p>在制作好的报表上做如下修改。</p> 
+  <p>1.增加一个普通参数tablename；</p> 
+  <p>2.增加一个动态宏mac，其值设为第二步中设置的参数tablename；</p> 
+  <p>3.将数据集ds2修改为：SELECT ${mac}.ID,${mac}.TITLENAME FROM ${mac}。在sql中使用宏的方式是”${宏名称}”；</p> 
+  <p>4..点击预览，输入参数。</p> 
+  <p>报表效果如下：</p> 
+  <p>如果在数据库中有完全相同的表，使用动态宏，就可以根据输入参数的不同展现不同的表，在很大程度上节省了开发时间，提高了开发效率。</p>  
+ </body>
+</html>

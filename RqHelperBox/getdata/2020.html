@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在一些统计填报表中，常常会有这样一类校验规则，例如某一列数值的和不能超过一个固定的值。在这类校验中，已经不单纯是对数据的合法性进行校验了，还需要加入一些自动计算的逻辑，本文就通过自定义校验函数来实现这类校验功能。</p> 
+  <p>第一步：设计一个报表模版：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/1-0042.png" alt="1.png" width="358" height="153" /></p> 
+  <p>其中，B2和B3还有B4单元格为可写单元格,默认初始值分别为20,20,60,数据类型为数值型</p> 
+  <p>在填报属性-校验表达式中写入自定义一个校验函数名字，例如check()：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/2-0037.png" alt="2.png" width="443" height="296" /></p> 
+  <p>第二步：在展现报表的jsp中编写自定义校验函数：</p> 
+  <p>假设校验规则为：比例之和不能超过100，那么校验函数为：</p> 
+  <p>&lt;script language=”javascript”&gt;<br /> function check(){<br /> var datarows = document.getElementById( “report1″ ).getElementsByTagName(”tr”).length;//取得报表的记录行数<br /> var sumValue = 0;//初始化累加值<br /> for(var i =2;i&lt;=datarows;i++){//由于第一行是报表头,所以从第二行开始循环取得单元格的值<br /> var value = document.getElementById( “report1_B”+i).value//通过单元格的id来获取单元格值<br /> sumValue = parseFloat(sumValue)+parseFloat(value);//进行数值累加<br /> }<br /> if(sumValue&gt;100){//进行累加判断<br /> alert(”比例已经超过100!请检查!”);//如果超过预设值,那么弹出对话框进行提示<br /> }<br /> return true;<br /> }<br /> &lt;/script&gt;</p> 
+  <p>这样就可以通过校验函数，对填入的数值进行累加校验了。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/3-0032.png" alt="3.png" width="336" height="121" /></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/4-0029.png" alt="4.png" width="211" height="120" /></p> 
+  <p>利用校验里的自定义函数不但可以对数据进行校验，还可以在函数中加入业务逻辑代码，通过单元格失去焦点后的调用，配合报表来完成丰富多样的功能。</p>  
+ </body>
+</html>

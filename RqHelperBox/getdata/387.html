@@ -1,0 +1,39 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><strong>问题描述：</strong></span><span lang="EN-US"><br /> </span><span style="small;">&nbsp;&nbsp;&nbsp;&nbsp; 由于报表用户更换了数据库，需要重新更改报表中<span lang="EN-US">“</span>填报功能<span lang="EN-US">”</span>里的<span lang="EN-US">“</span>更新<span lang="EN-US">”</span>属性。报表用户想通过<span lang="EN-US">API</span>实现只统一修改报表<span lang="EN-US">“</span>模式<span lang="EN-US">”</span>属性，而不修改其它属性。</span><span lang="EN-US"><br /> <span style="small;">&nbsp;&nbsp;<br /> </span></span><span style="small;"><strong>问题解决方法：</strong></span><span lang="EN-US"><br /> <span style="small;">&nbsp;&nbsp;&nbsp;&nbsp; API</span></span><span style="small;">代码代码如下</span><span lang="EN-US"><span style="small;">:<br /> import com.runqian.report4.model.ReportDefine;</span></span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">import com.runqian.report4.usermodel.INormalCell;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">import com.runqian.report4.usermodel.input.InputProperty;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">import com.runqian.report4.usermodel.input.TableRelations;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">import com.runqian.report4.usermodel.input.UpdateProperty;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">import com.runqian.report4.util.ReportUtils;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">&nbsp;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">public class Update {</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="1;">&nbsp;&nbsp;&nbsp; </span>public static void main(String[] args) {</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="2;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>try{</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="3;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ReportDefine rd = (ReportDefine)ReportUtils.read(“D:/1.raq”);</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">&nbsp;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="3;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(int r=1;r&lt;=rd.getRowCount();r++){</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="4;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(short c=1;c&lt;=rd.getColCount();c++){</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="small;"><span style="宋体;"><span style="5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// </span><span style="宋体;">获取填报属性</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>INormalCell cell = rd.getCell(r, c);</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">&nbsp;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>InputProperty ip = cell.getInputProperty();</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(ip==null || ip.getUpdateList()==null) continue;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="small;"><span style="宋体;"><span style="5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// </span><span style="宋体;">获取更新属性</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>UpdateProperty up = (UpdateProperty)ip.getUpdateList().get(0);</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Object relations = up.getRelation();</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>TableRelations trs = (TableRelations)relations;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="5;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>trs.setSchema(“TEST”);</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="4;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="3;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="3;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ReportUtils.write(“D:/2.raq”, rd);</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="3;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>System.out.println(“done!”);</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="2;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="2;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>catch(Exception e){</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="3;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>e.printStackTrace();</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="2;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><span style="1;">&nbsp;&nbsp;&nbsp; </span>}</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;">}</span></span></p>  
+ </body>
+</html>

@@ -1,0 +1,220 @@
+<html>
+ <head></head> 
+ <body> 
+  <div style="text-indent: -21pt; margin-left: 42pt;"> 
+   <span style="font-size: 12pt;">1. 先确认安装的环境是不是<span style="font-size: 12pt;"><span style="background-color: #aaffaa; font-size: 12pt;">LINUX</span></span></span> AS 4(RedHat9也可) 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><span style="color: #ff6600; font-size: 12pt;">&nbsp;</span><span style="color: #3366ff; font-size: 12pt;">[root@root ~]# cat /etc/issue</span></span> 
+  </div> 
+  <div style="margin-left: 42pt;"> 
+   <span style="color: red; font-size: 12pt;">Red Hat Enterprise <span style="background-color: #aaffaa; font-size: 12pt;">Linux</span> AS release 4 (Nahant Update 1)</span> 
+  </div> 
+  <div style="margin-left: 42pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;">Kernel \r on an \m</span> 
+  </div> 
+  <div style="text-indent: -21pt; margin-left: 42pt;"> 
+   <span style="font-size: 12pt;">2. 创建组 weblogic</span> 
+  </div> 
+  <div style="text-indent: 21pt; margin-left: 63pt;"> 
+   <span style="font-size: 12pt;"><span style="color: red; font-size: 12pt;">groupadd weblogic –</span><span style="color: red; font-size: 12pt;">增加组</span></span> 
+  </div> 
+  <div style="text-indent: 21pt; margin-left: 63pt;"> 
+   <span style="font-size: 12pt;"><span style="color: red; font-size: 12pt;">cat /etc/group –</span><span style="color: red; font-size: 12pt;">查看是否增加这个组</span></span> 
+  </div> 
+  <div style="margin-left: 42pt;"> 
+   <span style="font-size: 12pt;">命令:</span> 
+  </div> 
+  <div style="margin-left: 84pt;"> 
+   <span style="font-size: 12pt;"><span style="color: red; font-size: 12pt;">adduser -g weblogic -p weblogic weblogic –</span><span style="color: red; font-size: 12pt;">增加用户</span></span> 
+  </div> 
+  <div style="text-indent: -21pt; margin-left: 42pt;"> 
+   <span style="font-size: 12pt;">3. 用<span style="color: black; font-size: 12pt;">weblogic </span><span style="color: black; font-size: 12pt;">用户登陆</span></span> 
+  </div> 
+  <div style="text-indent: 21pt; margin-left: 63pt;"> 
+   <span style="font-size: 12pt;"><span style="color: red; font-size: 12pt;">su weblogic –</span><span style="color: red; font-size: 12pt;">切换到</span><span style="color: red; font-size: 12pt;">weblogic</span></span> 
+  </div> 
+  <div style="text-indent: -21pt; margin-left: 42pt;"> 
+   <span style="font-size: 12pt;">4. 放入BEA-ESB <span style="font-size: 12pt;"><span style="background-color: #aaffaa; font-size: 12pt;">LINUX</span></span></span>光盘 进入光盘相应目录(如果是用虚拟机安装,可直接加载iso镜像) 如：/media/cdrom 
+  </div> 
+  <div style="text-indent: -21pt; margin-left: 42pt;"> 
+   <span style="font-size: 12pt;">5. 执行 </span> 
+  </div> 
+  <div style="text-indent: 21pt; margin-left: 63pt;"> 
+   <span style="font-size: 12pt;"><span style="color: red; font-size: 12pt;">./alsb250_wls920_linux32.bin –</span><span style="color: red; font-size: 12pt;">开始安装</span><span style="color: red; font-size: 12pt;"> </span><span style="color: red; font-size: 12pt;">会出现界面如下</span></span> 
+  </div> 
+  <div style="text-indent: 21pt; margin-left: 63pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;">Extracting 0%……………………………………………………………………….</span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/225a913403504b209340f7e0188ee213.png" alt="" width="700" height="409" /></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;"> Next</span><span style="color: #3366ff; font-size: 12pt;">下一步</span><span style="color: #3366ff; font-size: 12pt;"> </span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/52ebc2137cf74b89bc9224a8d22c0e54.png" alt="" width="700" height="409" /></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">&nbsp;</span><span style="color: #3366ff; font-size: 12pt;">选择</span><span style="color: #3366ff; font-size: 12pt;"> “YES” </span><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/f19643aa4ba5494493f95f74ee596416.png" alt="" width="700" height="409" /></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">选择好“安装路径</span><span style="color: #3366ff; font-size: 12pt;"></span><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/45da843802e4441fbef5c127697cb733.png" alt="" width="700" height="409" /></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">选择</span><span style="color: #3366ff; font-size: 12pt;"> complete </span><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/3cbb66b47989469fb9222b0da6f567b8.png" alt="" width="700" height="409" /></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/bd3a82b3ac3f452b9ddb1c120314c5fe.png" alt="" width="700" height="409" /></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">选择</span><span style="color: #3366ff; font-size: 12pt;">YES </span><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/9c043c7316984b978d7d82f81063be0c.png" alt="" width="700" height="409" /></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;"></span><span style="color: #3366ff; font-size: 12pt;">开始安装</span></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/ff4d4766d281474ea0b6f2f1eb686eb6.png" alt="" width="700" height="409" /></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;">安装完出现如下界面</span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/b7e9fd4874d14b019f3569fda75dbfff.png" alt="" width="700" height="409" /></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击“</span><span style="color: #3366ff; font-size: 12pt;">DONE</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">安装完毕</span><span style="color: #3366ff; font-size: 12pt;">如果选上</span><span style="color: #3366ff; font-size: 12pt;">Run Quickstart</span><span style="color: #3366ff; font-size: 12pt;">将会出现快速启动窗口</span><span style="color: #3366ff; font-size: 12pt;">如下图</span></span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/74cc3a5dde2b44da868a997a78aacb84.png" alt="" width="700" height="409" /></span>6. 6.执行 </span> 
+  </div> 
+  <div style="margin-left: 21pt;"> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;">/home/weblogic/bea/weblogic92/common/bin/config.sh</span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">启动配置向导</span><span style="color: #3366ff; font-size: 12pt;"> </span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/3969949439c6493cb680e2126432d4fb.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">勾上</span><span style="color: #3366ff; font-size: 12pt;">“AquaLofic Service Bus” </span><span style="color: #3366ff; font-size: 12pt;">复选框</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/6f8a157f847147bfb7c5388faca35eae.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">: [</span><span style="color: #3366ff; font-size: 12pt;">填写用户名和密码</span><span style="color: #3366ff; font-size: 12pt;">]</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/853c3fd9b65f4b57b916b22cb4cb4cb4.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">: [</span><span style="color: #3366ff; font-size: 12pt;">选择</span><span style="color: #3366ff; font-size: 12pt;">JDK </span><span style="color: #3366ff; font-size: 12pt;">选择</span><span style="color: #3366ff; font-size: 12pt;">JRocket SDK 1.5.0.0………………..]</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/1401e0d2b267426c852926a622968558.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">: [</span><span style="color: #3366ff; font-size: 12pt;">配置一些常用参数</span><span style="color: #3366ff; font-size: 12pt;">]</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/cc5e1137b0214480a29749413e4beff2.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">选择</span><span style="color: #3366ff; font-size: 12pt;">YES </span><span style="color: #3366ff; font-size: 12pt;">点击</span><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">: [</span><span style="color: #3366ff; font-size: 12pt;">端口号</span><span style="color: #3366ff; font-size: 12pt;">]</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/43f41e363b6c4ac3ab23038073c9f2f8.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;"></span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/a356eaab4e2c4da484c6c8d5c04510d8.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/75c6daa4a9c64da09e7d9dd56c2e88be.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">: [</span><span style="color: #3366ff; font-size: 12pt;">默认的</span><span style="color: #3366ff; font-size: 12pt;">weBlogic</span><span style="color: #3366ff; font-size: 12pt;">的数据库</span><span style="color: #3366ff; font-size: 12pt;"> ]</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/887823e4900c4aa8919676924b9454cb.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">点击“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/00c4c6325a84424094cccee6a42fcf8f.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:JMS</span><span style="color: #3366ff; font-size: 12pt;">的保存形式，用文件保存</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/d8f518cd6e3443229b6ddd32113f4dcf.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/03734652ecd242d08a8eaaf2450e40c4.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">NEXT</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/7261753e085b42068e782015e629a605.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">create</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">出现如下图</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff; font-size: 12pt;"><img title="点击查看原始大小图片" src="http://p.blog.csdn.net/images/p_blog_csdn_net/border88/1d2a31190f504f72a48b2d0cffebe437.png" alt="" width="700" height="409" /></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">“</span><span style="color: #3366ff; font-size: 12pt;">Done</span><span style="color: #3366ff; font-size: 12pt;">”</span><span style="color: #3366ff; font-size: 12pt;">完成</span></span> 
+   </div> 
+   <div style="margin-left: 42pt;"> 
+    <span style="color: red; font-size: 12pt;">使用</span> 
+   </div> 
+   <div style="margin-left: 42pt;"> 
+    <span style="font-size: 12pt;"><span style="color: red; font-size: 12pt;">/data/weblogic/bea/user_projects/domains/base_domain/startWebLogic.sh </span><span style="color: red; font-size: 12pt;">启动服务器</span><span style="color: red; font-size: 12pt;"> [</span><span style="color: red; font-size: 12pt;">和你的</span><span style="color: red; font-size: 12pt;">WebLogic</span><span style="color: red; font-size: 12pt;">安装路径相同</span><span style="color: red; font-size: 12pt;">]</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">使用</span><span style="color: #3366ff; font-size: 12pt;">IE</span><span style="color: #3366ff; font-size: 12pt;">或</span><span style="color: #3366ff; font-size: 12pt;">Mozilla </span><span style="color: #3366ff; font-size: 12pt;">游览</span><span style="color: #3366ff; font-size: 12pt;">weblogic</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">Server</span><span style="color: #3366ff; font-size: 12pt;">控制台</span><span style="color: #3366ff; font-size: 12pt;">:</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff;"><a href="http://192.168.16.99:7001/console"><span style="color: #108ac6; font-size: 12pt;">http://192.168.16.99:7001/console</span></a></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="font-size: 12pt;"><span style="color: #3366ff; font-size: 12pt;">ESB</span><span style="color: #3366ff; font-size: 12pt;">控制台</span></span> 
+   </div> 
+   <div style="text-indent: 21pt; margin-left: 21pt;"> 
+    <span style="color: #3366ff;"><a href="http://192.168.16.99:7001/sconsole"><span style="font-size: 12pt;"><span style="font-size: 12pt;">http://192.168.16.99:7001/s</span><span style="color: #3366ff; font-size: 12pt; text-decoration: none;">b</span><span style="font-size: 12pt;">console</span></span></a></span> 
+   </div> 
+  </div>  
+ </body>
+</html>

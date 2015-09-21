@@ -1,0 +1,14 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>有些情况下，会有将参数模板和展现结构的报表做在一起的需求，也就是把参数模板和相应的报表做在同一张报表上。</p> 
+   <p>遇到这种情况，只需要在报表的上方做一个按钮，然后在jsp里定义按钮的onclick事件，重新连接到本报表即可。</p> 
+   <p>主要代码如下：</p> 
+   <p>&lt;script language=”javascript”&gt;</p> 
+   <p>//单元格按钮的onClick事件<br /> document.getElementById(”report1_C2″).onclick=function()<br /> {<br /> var value=document.getElementById(”report1_B2″).innerText;</p> 
+   <p>window.location=”showReport.jsp?raq=wangzhipeng.raq&amp;dingdan=”+value;<br /> }<br /> &lt;/script&gt;</p> 
+   <p><span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

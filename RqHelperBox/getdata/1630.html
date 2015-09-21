@@ -1,0 +1,13 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>行式填报表是润乾报表提供的一种特殊的填报表，它相对于普通的填报表而言具有以下优点：<br /> 1 在网页上可以动态地实现增加、删除、修改行的数据<br /> 2 增加行时可以引用定义的流水号，实现流水号在增加行时自动运算（如递增）的功能<br /> 3 可以实现在网页上动态地导入不定行的excel数据</p> 
+  <p>除了上述的强大功能外，行式填报表还可以利用润乾报表提供的填报监听类来实现一些特殊功能，在填报前后进行自己的业务操作。这里就以获取行式填报表的填报数据为例来介绍填报监听类的使用。</p> 
+  <p>报表提交的时候涉及到三种对数据库的操作：插入(insert) 、删除(delete) 、更新(update)。</p> 
+  <p>行式填报表在提交时的具体体现是：<br /> (1) 在原有数据基础上进行了修改，提交时执行的是update<br /> (2) 在原有数据基础上删除删除了某行，提交时执行的是delete<br /> (3) 在原有数据基础上插入新一行数据，提交时执行的是insert</p> 
+  <p>那么我们就可以通过继承填报监听类AbstractInputListener 在beforeSave()函数中获取提交的sql语句，然后在返回的sql语句中进行遍历，查看有没有包含”insert”的字符串，如果有则说明这就是我们想要的插入新数据的sql语句，然后再在其中取出填报的数据即可。</p> 
+  <p>具体实现如下：</p> 
+  <p><span style="color: #000000;">//需要引用的类</span><br /> import com.runqian.report4.usermodel.input.AbstractInputListener;<br /> import com.runqian.report4.usermodel.input.InputSQL;</p> 
+  <p><span style="color: #000000;">//继承bstractInputListener 实现beforeSave()函数</span><br /> public class RowsInputListener extends AbstractInputListener {<br /> public void beforeSave()throws Exception {<br /> InputSQL[] abc = this.getInputSql();<br /> for(int i=0;i&lt;this.getInputSql().length;i++){<br /> String sql = abc[i].getSql();<br /> InputSQL sql1=abc[i];<br /> if(sql.matches(”insert.*”)){ <span style="color: #000000;">//判断是否是新增的记录，如果是则从InputSQL 对象中获取对应填报的数据</span><br /> System.out.println(”这是insert语句”+sql);<br /> Object []param =sql1.getParams();<br /> for(int j=0;j&lt;param.length;j++){<br /> String name=param[j].toString();<br /> System.out.println(name);<br /> }<br /> } }}}</p>  
+ </body>
+</html>

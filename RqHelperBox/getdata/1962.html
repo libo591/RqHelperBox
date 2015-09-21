@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>Spring 是一个开源框架，是为了解决企业应用程序开发复杂性而创建的。在web开发环境中经常会与struts、hibernate联合起来使用，进行规范的框架结构开发。润乾中的二次开发也可以与SSH框架相结合部署到web项目中。本文介绍在设计时没有启动web服务，在设计器中使用spring的方式来实现自定义数据集。</p> 
+  <p>实现思路：编写两个自定义数据集，一个在设计器中使用，一个在web项目中使用，在设计器中使用的类需要编写临时加载spring框架配置文件的代码，启动spring框架。Web项目中的则不需要编写，可直接与struts整合，通过监听器的方式启动struts框架时同时启动spring框架。</p> 
+  <p><strong>第一步：拷贝spring框架jar包。</strong></p> 
+  <p>使用spring的注入方式编写一个简单的自定义数据集，首先需要将spring的IOC核心容器和对web支持的jar包拷贝到设计器的lib目录下（\reportHome\designer\web\WEB-INF\lib）。</p> 
+  <p><strong>第二步：编写一个简单的自定义数据集。</strong></p> 
+  <p>public class Test {<br /> public DataSet getDataSet(Context ctx, DataSetConfig dsc, boolean retrieve) {<br /> DataSet ds = new DataSet(”ds1″);// 定义数据集名称<br /> ds.addCol(”产品ID”);//定义显示列<br /> ds.addCol(”产品名称”);<br /> List col1 = new ArrayList();// 第一列模拟数据集合<br /> for (int i = 1; i &lt;= 4; i++) {<br /> col1.add(i);<br /> }<br /> List col2 = new ArrayList();// 第二列模拟数据集合<br /> col2.add(”struts1.2″);<br /> col2.add(”hibernate3.1″);<br /> col2.add(”spring2.0″);<br /> col2.add(”runqian4.2.5″);<br /> // 设置数据<br /> for (int i = 0; i &lt; col1.size(); i++) {<br /> Row row = ds.addRow();<br /> row.setData(1, col1.get(i));// 产品ID放到第一列的位置<br /> row.setData(2, col2.get(i));// 产品名称放到第二列的位置<br /> }<br /> return ds;<br /> }<br /> }</p> 
+  <p><strong>第三步：进行spring注入。</strong></p> 
+  <p>将之前编写的自定义数据集的类，通过spring注入的形式来实现，将spring的配置文件applicationContext.xml放置在classpath中（也就是设计器中的\reportHome\designer\web\WEB-INF\classes目录下）。使用ApplicationContext这个接口下的一个实现类ClassPathXmlApplicationContext来加载配置文件，需要注意的是，这里可以加载多个配置文件，所以是以数组形势传进的。在applicationContext.xml中添加&lt;bean&gt;节点，配置spring注入的代码，在类中使用getBean()方法，根据xml中bean节点的id属性注入。返回的就是该类中定义的这个成员变量了，从而实现了spring注入功能。</p> 
+  <p>Spring配置文件applicationContext.xml代码如下：</p> 
+  <p>&lt;?xml version=”1.0″ encoding=”UTF-8″?&gt;<br /> &lt;beans xmlns=”http://www.springframework.org/schema/beans”<br /> xmlns:xsi=”http://www.w3.org/2001/XMLSchema-instance”<br /> xsi:schemaLocation=”http://www.springframework.org/schema/beans</p> 
+  <p>http://www.springframework.org/schema/beans/spring-beans-2.0.xsd”&gt;</p> 
+  <p>&lt;bean id=”Test” class=” com.runqian.Test”&gt;&lt;/bean&gt;<br /> &lt;bean id=”SpringTest” class=”com.runqian.SpringTest “&gt;<br /> &lt;property name=”test”&gt;<br /> &lt;ref bean=”Test” /&gt;<br /> &lt;/property&gt;<br /> &lt;/bean&gt;<br /> &lt;/beans&gt;</p> 
+  <p>Spring调用类代码如下:</p> 
+  <p>public class SpringTest implements IDataSetFactory {<br /> private Test test;<br /> public SpringTest () {<br /> }<br /> public void setTest(Test test) {<br /> this.test = test;<br /> }<br /> public DataSet createDataSet(Context ctx, DataSetConfig dsc,<br /> boolean retrieve) {<br /> ApplicationContext cxt = new ClassPathXmlApplicationContext(<br /> new String[] { “applicationContext.xml” });//手动加载配置文件<br /> test = (Test) cxt.getBean(”Test”);//加载之前定义好的自定义数据集类<br /> return test.getDataSet(ctx, dsc, retrieve);<br /> }<br /> }</p> 
+  <p>将之前编写的自定义数据集和spring调用类编译后，把.class文件放到设计器中的\reportHome\designer\web\WEB-INF\classes目录下(主意加上包文件)</p> 
+  <p><strong>第四步：启动设计器实现自定义数据集。</strong></p> 
+  <p>打开设计器，选择自定义数据集，填入spring调用类的包名和类名，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/1-0001.png" alt="1.png" width="440" height="286" /></p> 
+  <p>显示出之前类中定义的列名，生成数据集成功，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/2-0001.png" alt="2.png" width="357" height="287" /></p> 
+  <p>这样就实现了不启动web服务，在设计器中使用spring框架实现自定义数据集了。</p>  
+ </body>
+</html>

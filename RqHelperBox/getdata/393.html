@@ -1,0 +1,14 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;"><span style="small;"><strong>参考代码如下<span lang="EN-US">:</span></strong></span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;" lang="EN-US"><span style="small;"><span style="yes;">&nbsp;&nbsp;&nbsp; </span>&lt;script type=”text/javascript”&gt;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;" lang="EN-US"><span style="small;">//</span></span><span style="宋体;"><span style="small;">将页面中的关键字高亮显示<span lang="EN-US">,</span>在<span lang="EN-US">body</span>的<span lang="EN-US">onload</span>中调用</span><span lang="EN-US"><br /> <span style="small;">function HighLight(nWord){<br /> var orange = document.body.createTextRange();<br /> while(orange.findText(nWord)){<br /> orange.pasteHTML(”&lt;span style=’color:black;background-color: #ff9999;’&gt;” + orange.text + “&lt;/span&gt;”);<br /> orange.moveStart(’character’,1);<br /> }<br /> }</span></span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;" lang="EN-US"><span style="small;">//</span></span><span style="宋体;"><span style="small;">将页面中的关键字高亮显示<span lang="EN-US">,</span>在<span lang="EN-US">body</span>的<span lang="EN-US">onload</span>中使用<span lang="EN-US">(</span>支持多个关键字，多个关键字用空格分开</span><span style="small;"><span lang="EN-US">)<br /> function highword(nWord)<br /> {<br /> //</span>将全角空格<span lang="EN-US">(</span>逗号<span lang="EN-US">)</span>转半角空格</span><span lang="EN-US"><br /> <span style="small;">nWord = nWord.replace(/\</span></span><span style="small;">　</span><span style="small;"><span lang="EN-US">/g,”|”);<br /> nWord = nWord.replace(/\,/g,”|”);<br /> nWord = nWord.replace(/\</span>，</span><span lang="EN-US"><span style="small;">/,”|”);<br /> nWord = nWord.replace(/\ /g,”|”);</span></span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;" lang="EN-US"><span style="small;">var Arr = nWord.split(”|”);<br /> for(var i=0;i&lt;Arr.length;i++){<br /> HighLight(Arr[i]);<br /> }<br /> }</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="small;"><span style="宋体;" lang="EN-US">function hWord(){<br /> highword(”</span><span style="宋体;">润乾 报表 功能<span lang="EN-US">”);</span></span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;" lang="EN-US"><span style="small;">}</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;" lang="EN-US"><span style="small;">&lt;/script&gt;</span></span></p> 
+  <p class="MsoNormal" style="0cm 0cm 0pt;"><span style="宋体;" lang="EN-US"><span style="small;">&lt;body OnLoad=”hWord()”&gt;</span></span></p>  
+ </body>
+</html>

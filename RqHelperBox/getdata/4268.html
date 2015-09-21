@@ -1,0 +1,90 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾<strong>报表</strong>提供有动态过滤功能, 即两个下拉框的数据是存在业务联系的，例如一个是省份的下拉数据集，另一个是城市的下拉数据集，当省份的下拉数据集选择山东时，城市的下拉数据集只有选择山东省的城市，才是合理的数据，否则会出现错误。那么如果有类似城市中只有一个值的情况,比如如何根据下拉选择各类产品对应的唯一单价呢？</p> 
+  <p>下面就分析找出问题的解决思路：</p> 
+  <p>既然动态过滤实现不了，但我们可以想到<strong><a href="http://www.runqian.com.cn" target="_blank">报表</a></strong>本身提供有自动计算功能，自动计算又支持自定义js函数，js函数本身还可以引用ajax方式，于是我们就可以得出，利用自定义js函数（ajax）异步获取下拉列表产品中对应的数据库中的单价。</p> 
+  <p>以下内容将介绍具体的实现过程：</p> 
+  <p>一、数据准备</p> 
+  <p>建表语句：</p> 
+  <p>CREATE TABLE productdemo (</p> 
+  <p>&nbsp; productName varchar(10) default NULL,</p> 
+  <p>&nbsp; price float default NULL</p> 
+  <p>);</p> 
+  <p>初始化数据：</p> 
+  <p>insert into productdemo (productName, price) values(‘无机酸’,’300′);</p> 
+  <p>insert into productdemo (productName, price) values(‘氧化锌’,’128′);</p> 
+  <p>insert into productdemo (productName, price) values(‘氮肥’,’100′);</p> 
+  <p>insert into productdemo (productName, price) values(‘乙二醇’,’245′);</p> 
+  <p>&nbsp;</p> 
+  <p>二、填<strong>报表设计</strong></p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/archives/4268.html/a1-13" rel="attachment wp-att-4269"><img class="aligncenter size-full wp-image-4269" title="a1" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a112.jpg" alt="" width="364" height="88" /></a></p> 
+  <p>数据集：SELECT productdemo.productName,productdemo.price FROM productdemo</p> 
+  <p>A2：填报风格–下拉数据集</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/archives/4268.html/a2-8" rel="attachment wp-att-4270"><img class="aligncenter size-full wp-image-4270" title="a2" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a26.jpg" alt="" width="481" height="179" /></a></p> 
+  <p>B2：自动计算设置函数 genResName(A2)</p> 
+  <p>三、JS函数定义</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var xhr;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function genResName(str1){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //item1_A3</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var sss = document.getElementById(‘report1_A2′).value;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // alert(sss);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (document.XMLHttpRequest) {&nbsp;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; xhr = new XMLHttpRequest();&nbsp;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;xhr = new ActiveXObject(“Microsoft.XMLHTTP”);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //获取查询到的单价值</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xhr.open(‘GET’,'&lt;%=request.getContextPath()%&gt;/wbAjax1.do?val=’+sss);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //设置回调函数</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xhr.onreadystatechange = function(){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; var ready = xhr.readyState;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; if (ready == 4){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; parseCompletedResponse(xhr);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; };</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xhr.send(”);&nbsp;&nbsp;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function parseCompletedResponse(xhr)</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var str = xhr.responseText;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //修改单价值</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; document.getElementById(‘report1_B2′).innerHTML = str;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>四、获取单价值处理类</p> 
+  <p>主要代码如下：</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String val = request.getParameter(“val”);</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String res = “”;</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; //Context ctx = new Context();</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DBAccess dba = <strong>new</strong> DBAccess();</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Connection conn = dba.getConnectionFromDBA();</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; PreparedStatement ps = <strong>null</strong>;</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ResultSet rs = <strong>null</strong>;</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; //String sql = “select res_type_name from t_res_type where res_type_id=?”;</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; String sql = “select price from productdemo where productname=?”;</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ps = conn.prepareStatement(sql);</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ps.setString(1, val);</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rs = ps.executeQuery();</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>while</strong> (rs.next()) {</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //获取单价值</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; res = rs.getString(“price”);</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; PrintWriter out = response.getWriter();</p> 
+  <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //返回单价值</p> 
+  <p>&nbsp;&nbsp;&nbsp; out.print(res);</p> 
+  <p>五、配置文件修改web.xml</p> 
+  <p>增加如下，</p> 
+  <p>&nbsp; &lt;servlet&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &lt;servlet-name&gt;WBajax1&lt;/servlet-name&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &lt;servlet-class&gt;example.WBajax1&lt;/servlet-class&gt;</p> 
+  <p>&nbsp; &lt;/servlet&gt;</p> 
+  <p>&nbsp;</p> 
+  <p>&nbsp; &lt;servlet-mapping&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &lt;servlet-name&gt;WBajax1&lt;/servlet-name&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &lt;url-pattern&gt;/wbAjax1.do&lt;/url-pattern&gt;</p> 
+  <p>&nbsp; &lt;/servlet-mapping&gt;</p> 
+  <p>六、测试结果</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/archives/4268.html/a3-5" rel="attachment wp-att-4271"><img class="aligncenter size-full wp-image-4271" title="a3" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a34.jpg" alt="" width="293" height="159" /></a></p> 
+  <p>通过以上几步即可完成描述中的功能，附件是实现的例子，可参考例子了解具体的实现过程。</p>  
+ </body>
+</html>

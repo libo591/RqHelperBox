@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>任务背景</strong></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 目前市面上销售的报表工具，为了保证通用性，其设计器往往比较专业，适合程序员或者有一定的技术理解能力的人员来使用，而一般的业务人员如要学会，总有一定的难度。尽管很多报表工具厂商都推出了报表向导、<span id="TheWorldHiLightStyleID" style="margin: 0px; background: #ffff00; float: none; color: #000000; padding: 0px;"></span>、sql生成器、表达式生成器等等，但是都无法达到业务人员所要求的傻瓜式操作。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 为某个项目或者为某个行业定制个性化的报表设计器，是普遍的要求。这种设计器要求完全用业务化的语言、屏蔽掉所有专业性的菜单和对话框、只为项目的需求而定制。要求业务人员没有任何理解上的障碍，完全鼠标拖拽或点击即可完成报表设计，操作步骤很少，没有任何技术性的词汇。</p> 
+  <p><strong>面临困难</strong></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a、完成这样的任务工作量非常大，最困难的是报表设计器的核心展现组件，要求1、完全解析报表模板的所有属性，2、根据报表模板的属性的变动同步刷新展现报表设计界面。这样的工作量无异于设计一个报表工具了。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b、其次，是事件的响应，要求为核心展现组件设计各种响应事件，从而保证满足业务人员的各种傻瓜式操作。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c、最后还要根据业务的需要，把各种业务上的数据模型、操作菜单摆到界面上，并且实现业务人员需要的操作。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 上述这些步骤的工作量大尚且不提，最关键的是报表工具厂商一般不愿意把自己报表模板的所有属性公诸于众，那样盗版就太容易了。因此，最后演变成报表引擎也要自己设计，那和做一个报表工具有啥区别？区别仅仅在于你的报表工具是项目定制的，没有通用性？</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 不过不用担心，这样的麻烦润乾报表已经考虑到了，润乾报表4.0提供了一个cell组件：ReportEditor，该组件把上述的a、b两部分工作都已经完成了，而且封装得非常友好，其接口清晰易懂，程序员只需要把精力放在c上即可。实现步骤如下所述：</p> 
+  <p><strong>实现步骤：</strong><br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1、 搭建一个JFrame框架，在其上实现界面主体菜单以及右侧摆放报表设计时供拖拽的一些业务数据模型或者元数据等，这里假设该框架的类名为EditorDemo。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2、 设计一个JInternalFrame类，同时实现IReportEditorListener接口（cell组件事件监听接口），这里假设类名为EditorDemoSheet。在其上摆放一个ReportEditor（cell组件）。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3、 根据业务人员的需要，在EditorDemoSheet中实现IReportEditorListener接口提供的事件响应。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4、 在EditorDemo中的菜单和图标栏里设置一系列的常用菜单和图标，调用ReportEditor提供的各种方法，从而完成对报表各种属性的访问和设置。</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 从上述的实现思路可以看出，报表设计器中工作量最大的事情：报表设计器的核心展现组件，全部由cell组件干完了，程序员只需要根据用户的需要搭建菜单和图标栏，准备业务相关的数据模型或者元数据，根据用户的操作习惯实现相应的事件响应即可。工作量估计为一个人月。</p>  
+ </body>
+</html>

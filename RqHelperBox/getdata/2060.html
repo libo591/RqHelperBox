@@ -1,0 +1,23 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>一般来说，在报表中设计的统计图要用到两个变量值，一个是分类值，也就是统计中的横轴，还有一个就是系列值，顾名思义，就是统计图中的纵轴。</p> 
+  <p>在统计图中，绝大多数情况下，分类值与系列值都是来源于表中的数据，也就是说，基于数据库表中的记录来设计统计图。但有这样一种特殊情况，那就是统计图中的分类值与系列值是以数据库中的列名来取值的。</p> 
+  <p>本文即通过实例来介绍这类统计图的设计方法。</p> 
+  <p>第一步：先看一下表结构和数据，这里用内建数据集做例子：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-008n1a1222dd.png" alt="" width="506" height="132" /></p> 
+  <p>最终要实现的效果是：</p> 
+  <p><img style="width: 519px; height: 206px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-009p5bc71da.png" alt="" width="781" height="330" /></p> 
+  <p>第二步：设计报表模版：</p> 
+  <p><img style="width: 333px; height: 278px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-010p2cdc660b.png" alt="" width="518" height="491" /></p> 
+  <p>其中：</p> 
+  <p>A1：= ds1.select(设备类型)，扩展方向为横向。</p> 
+  <p>A2：=list(”待机时间”,”空转时间”,”加工时间”)，扩展方向为横向。</p> 
+  <p>A3：=case(A2,”待机时间”,ds1.待机时间,”空转时间”,ds1.空转时间,”加工时间”, ds1.加工时间)</p> 
+  <p>这其中用到里list()和case()函数，原因是因为系列值实际上是分类轴的一个附属格，为了避免报表画图的时候，只是把分类轴当成集合，系列值是当成一个值来画的，从而只取了list的第一个值的情况。</p> 
+  <p>统计图中的设置如下图：</p> 
+  <p><img style="width: 489px; height: 428px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-011n7d368b19.png" alt="" width="627" height="547" /></p> 
+  <p>最终效果如下图：</p> 
+  <p><img style="width: 526px; height: 245px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-012pc6d0668.png" alt="" width="778" height="397" /></p>  
+ </body>
+</html>

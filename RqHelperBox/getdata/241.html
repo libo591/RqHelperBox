@@ -1,0 +1,9 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font color="#ff0000">问题描述</font>：</p> 
+  <p>用api生成报表，其中数据集是自定义的.在展现数据的时候，发现自定义数据集类只被调用一次。每次打开新报表的时候，自定义数据集类没有被调用,只是在第一次调用这个方法后，它能够去com.gwssi.csdb.conmponent.queryutil.datadisplay.ReportData类中调用createDataSet()方法,<br /> 但是当第二次被调用生成rd对象的时就不去调用createDataSet()方法</p> 
+  <p><font color="#ff0000">解决方法</font>：</p> 
+  <p>调用api生成报表，数据集会缓存，所以每次计算新的报表之前要清理一下数据集缓存,在IReport iReport = enging.calc()执行之前，调用context.getDataSetMap(true).clear();这样就会每次执行createDataSet()方法，并生成新的数据集</p>  
+ </body>
+</html>

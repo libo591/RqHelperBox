@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font face="宋体"><strong>一、任务背景</strong></font></p> 
+  <p><font face="宋体">在开发数据输入页面时，经常遇到这样的情况，两个下拉框，其数据是存在业务联系的，例如一个是省份的下拉框，另一个是城市的下拉框，当省份的下拉框选择河北省时，城市的下拉框只有选择河北省的城市，才是合理的数据，否则肯定是错误的。此时，为了避免错误，最理想的情况是当省份下拉框选择了河北，那么城市的下拉框只能下拉出河北省的城市，其它省份的城市被动态过滤掉，这种功能我们称为动态关联过滤。</font></p> 
+  <p><font face="宋体"><strong>二、面临困难</strong></font></p> 
+  <p><font face="宋体">实现上述的功能需要写比较复杂的javascript，首先，需要在页面上保存一个js的数据集合，该集合存储了所有城市的记录；其次要在省份下拉框里记住哪个单元格是城市下拉框，也就是说，当省份的下拉值改变时，需要触发哪个单元格动态过滤；最后也是最关键的是过滤的算法了，省份单元格的每一次改变，都要触发过滤函数，因此过滤的算法非常关键，否则速度稍微慢点就导致用户无法忍受。</font></p> 
+  <p><font face="宋体">上述的动态关联过滤还是简单的，复杂些的，一个格子的下拉值改变，会触发多个格子的下拉值关联过滤，举例来说，存在省份、城市、旅游景点、特产、矿产、大专院校等下拉框，当省份的下拉值改变时，其它的所有单元格的下拉选项都要跟着改变，因为这些下拉框都和省份有关系。</font></p> 
+  <p><font face="宋体">还有更复杂的情况，那就是级联动态过滤，即A的改变，触发了B的关联过滤，B的改变，触发了C的关联过滤，如此级联下去，会出现多少级就不知道了，视业务的复杂度而定。</font></p> 
+  <p><font face="宋体">因此，上述的功能如果自己开发，显然不现实，工作量太大，但是也别烦恼，润乾填报表提供了这样的功能，而且实现起来非常简单：</font></p> 
+  <p><font face="宋体"><strong>三、实现步骤</strong></font></p> 
+  <p>1、<font face="宋体">定义两个下拉框；</font></p> 
+  <p>2、<font face="宋体">在需要动态过滤的单元格里，设置关联过滤的条件表达式，并设置触发单元格（如上例，应当是在城市单元格里设置关联过滤条件，并设置触发单元格为省份单元格）。</font></p> 
+  <p><font face="宋体"><strong>四、效果演示</strong></font></p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2008/08/guanlianguolv0.png" title="guanlianguolv0"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/08/guanlianguolv0.png" alt="guanlianguolv0" /></a></p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2008/08/guanlianguolv1.png" title="guanlianguolv1"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/08/guanlianguolv1.png" alt="guanlianguolv1" /></a></p> 
+  <p>&nbsp;</p>  
+ </body>
+</html>

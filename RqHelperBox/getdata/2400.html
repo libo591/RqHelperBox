@@ -1,0 +1,8 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>通常我们在浏览报表的时候，可以通过润乾自带的标签实现导出Excel，在点击导出的标签后，页面会弹出一个提示框，可以让用户对于导出的Excel设置是否分页，是否导出公式，对话框如下图所示。</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/7-1.jpg"><img class="alignnone size-full wp-image-2401" title="7-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/7-1.jpg" alt="" width="309" height="188" /></a></p> 
+  <p>当用户想直接导出excel，不弹出此提示框时，可以通过在JSP的&lt;report:html&gt;标签中添加excelPageStyle属性，直接设置存为Excel时的分页方式，不弹出导出excel设置对话框，设置其值为“0”时，导出的Excel是按不分页的形式导出，设置其值为“1”时，则按分页形式导出，不会弹出对话框，直接导出Excel，操作就是这么简单，如果你也想直接导出，那么不妨也试着设置一下。</p>  
+ </body>
+</html>

@@ -1,0 +1,14 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">对于润乾报表中正常的连接oracle数据库，我们只需要在应用服务器中配置相应的数据库连接池文件即可。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">我们以tomcat服务器为例，在tomcat安装目录的conf\Catalina\localhost下，新建一个与应用同名的xml文件：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&lt;?xml version=’1.0′ encoding=’utf-8′?&gt;<br /> &lt;Context path=”/reportmis” docBase=”reportmis” debug=”0″ privileged=”true”&gt;<br /> &lt;Resource name=”demodatasource”<br /> auth=”Container”<br /> type=”javax.sql.DataSource”<br /> maxActive=”10″<br /> maxIdle=”30″<br /> maxWait=”10000″<br /> username=”scott”<br /> password=”tiger”<br /> driverClassName=”oracle.jdbc.driver.OracleDriver”<br /> url=”jdbc:oracle:thin:@localhost:1521:orcl”<br /> useUnicode=”true” characterEncoding=”GBK” /&gt; </span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&lt;/Context&gt;</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">当我们使用oracle集群数据库时，url的写法发生了变化，</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">url中要配置集群服务器的ip，serverName等。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&lt;?xml version=’1.0′ encoding=’utf-8′?&gt;<br /> &lt;Context path=”/reportmis” docBase=”reportmis” debug=”0″ privileged=”true”&gt;<br /> &lt;Resource name=”demodatasource”<br /> auth=”Container”<br /> type=”javax.sql.DataSource”<br /> maxActive=”10″<br /> maxIdle=”30″<br /> maxWait=”10000″<br /> username=”scott”<br /> password=”tiger”<br /> driverClassName=”oracle.jdbc.driver.OracleDriver”<br /> url=”jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS = (PROTOCOL = TCP)(HOST = 10.200.<br /> 180.193)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 10.200.180.194)(PORT =<br /> 1521))(LOAD_BALANCE = yes)(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME =<br /> cjww)))”<br /> useUnicode=”true” characterEncoding=”GBK” /&gt; </span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&lt;/Context&gt;</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">参考上面的写法，只要把集群服务器的地址，端口，和服务名书写正确，就可以通过集群的方式来获取到数据库的连接了。</span></p>  
+ </body>
+</html>

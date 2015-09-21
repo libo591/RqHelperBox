@@ -1,0 +1,221 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span style="FONT-FAMILY: 宋体">随着客户需求的不同，对报表的要求不仅要求能在页面上对报表进行查看，也要求报表能在后台批量导出，将批量导出的文件供其他系统或人员使用。常见需求：</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="MARGIN-LEFT: 42pt; TEXT-INDENT: -21pt; LINE-HEIGHT: 150%; tab-stops: list 42.0pt"><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%"><span>1.<span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%; FONT-FAMILY: 宋体">项目公司报表导出部分需实现：</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="MARGIN-LEFT: 70.5pt; TEXT-INDENT: -21pt; LINE-HEIGHT: 150%; tab-stops: list 63.0pt"><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%"><span>a)<span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; </span></span></span><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%; FONT-FAMILY: 宋体">能批量导出一个项目公司下的所有报表。</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="MARGIN-LEFT: 70.5pt; TEXT-INDENT: -21pt; LINE-HEIGHT: 150%; tab-stops: list 63.0pt"><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%"><span>b)<span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; </span></span></span><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%; FONT-FAMILY: 宋体">能批量导出所有项目公司的某张报表。</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="MARGIN-LEFT: 49.5pt; TEXT-INDENT: -21pt; LINE-HEIGHT: 150%; tab-stops: list 42.0pt"><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%"><span>2.<span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp; </span></span></span><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%; FONT-FAMILY: 宋体">综合报表导出部分需实现：</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="MARGIN-LEFT: 70.5pt; TEXT-INDENT: -21pt; LINE-HEIGHT: 150%; tab-stops: list 63.0pt"><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%"><span>a)<span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; </span></span></span><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%; FONT-FAMILY: 宋体">客户希望能灵活制定某些张报表可批量导出。</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="MARGIN-LEFT: 70.5pt; TEXT-INDENT: -21pt; LINE-HEIGHT: 150%; tab-stops: list 63.0pt"><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%"><span>b)<span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; </span></span></span><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%; FONT-FAMILY: 宋体">可批量导出某个用户下的所有综合报表（不同的用户权限不同可看到的报表也不同）。</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="MARGIN-LEFT: 70.5pt; TEXT-INDENT: -21pt; LINE-HEIGHT: 150%; tab-stops: list 63.0pt"><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%"><span>c)<span style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp; </span></span></span><span style="FONT-SIZE: 11pt; COLOR: black; LINE-HEIGHT: 150%; FONT-FAMILY: 宋体">可按组织维度批量导出综合报表。比如：可以批量导出按省份分类统计的报表或按业态、按机组等级等维度批量导出。</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span style="FONT-FAMILY: 宋体">此功能可分两部分实现：</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span style="FONT-FAMILY: 宋体">一：客户自己实现部分，由于客户要想按照自己的需求导出相关报表，比如某公司下所有报表或某人员下所有报表，必然涉及到客户自己的组织机构等，客户可根据自己的组织机构树等查出相关设置，比如公司</span><span>A</span><span style="FONT-FAMILY: 宋体">下所述报表为</span> <span style="FONT-FAMILY: 宋体">表</span><span>1</span><span style="FONT-FAMILY: 宋体">，表</span><span>2</span><span style="FONT-FAMILY: 宋体">，公司</span><span>B</span><span style="FONT-FAMILY: 宋体">下为表</span><span>2</span><span style="FONT-FAMILY: 宋体">，表</span><span>3</span><span style="FONT-FAMILY: 宋体">，则根据该树得到相关报表名称</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span style="FONT-FAMILY: 宋体">二：润乾相关代码</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>&lt;%@ page contentType=”text/html;charset=GBK” %&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>&lt;%@ page import=”java.util.*” %&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>&lt;%@ page import=”java.io.*” %&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>&lt;%@ page import=”com.runqian.report4.model.*”%&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>&lt;%@ page import=”com.runqian.report4.usermodel.*”%&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>&lt;%@ page import=”com.runqian.report4.util.*” %&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>&lt;%@ page import=”org.apache.tools.zip.ZipEntry”%&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>&lt;%@ page import=”org.apache.tools.zip.ZipOutputStream,com.runqian.report4.view.excel.*” %&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>&lt;%</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">设置所有</span><span>report</span><span style="FONT-FAMILY: 宋体">对象的值为</span><span>GBK</span><span style="FONT-FAMILY: 宋体">转码</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>request.setCharacterEncoding(“GBK”);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp; </span><span>&nbsp;&nbsp; </span>String date1=”20101101″;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String date2=”20101131″;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">报表起始时间，结束时间，实际应用中从程序中获得</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String raqNames=”testexcel,testexcel1″;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">批量导出报表名称</span><span>,</span><span style="FONT-FAMILY: 宋体">此处可由客户程序传递进来</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String burs=”BDP”;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">站名称</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String root = getServletContext().getRealPath(“/”); //</span><span style="FONT-FAMILY: 宋体">获得应用根目录</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String fileName = “srbbfx”;//</span><span style="FONT-FAMILY: 宋体">定义批量导出压缩包名称</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String txtPath = root+”txtPath\\”+Double.toString(Math.random()*100000000).toString().substring(0,6)+”\\”;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>java.io.File file = new java.io.File(txtPath);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(!file.exists()) {</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp; </span>file.mkdirs();</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>} else {</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">防止名称冲突，每次导出新建临时文件夹</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String[] raqN=raqNames.split(“,”);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String[] bur=burs.split(“,”);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">用公共类制作压缩包，应用中导入</span><span>export.jar</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(txtPath+fileName+”.zip”));</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">导出时按报表名、站名循环，实际应用中增加时间循环</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(int i=0;i&lt;raqN.length;i++){</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(int j=0;j&lt;bur.length;j++){</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String raq=raqN[i]+”.raq”;//</span><span style="FONT-FAMILY: 宋体">报表名称，以</span><span>raq</span><span style="FONT-FAMILY: 宋体">结尾</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">第一步，读取报表模板</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>InputStream fis=application.getResourceAsStream(“/reportFiles/”+raq);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ReportDefine rd = (ReportDefine)ReportUtils.read( fis );</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">第二步，运算报表</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Context context = new Context();//</span><span style="FONT-FAMILY: 宋体">构建报表环境</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>context.setParamValue(“date1″,”20101101″);//</span><span style="FONT-FAMILY: 宋体">设置起始时间</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>context.setParamValue(“date2″,”20101231″);//</span><span style="FONT-FAMILY: 宋体">设置结束时间，实际应用由程序获得或循环取值</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>//<span>&nbsp;&nbsp;&nbsp;&nbsp; </span>context.setMacroValue(“macro1″,” and bur_sta_tel=’”+bur[j]+”‘”);//</span><span style="FONT-FAMILY: 宋体">给润乾宏赋值，每次取相应站数据</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Engine enging = new Engine( rd, context);//</span><span style="FONT-FAMILY: 宋体">构建润乾引擎</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>IReport iReport = enging.calc();//</span><span style="FONT-FAMILY: 宋体">计算报表，生成结果文件</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ExcelReport eReport = new ExcelReport();</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>eReport.export(“test1″,iReport);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>eReport.setFomulaExported(true);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp; </span>FileOutputStream fos = new FileOutputStream(txtPath+”b”+raqN[i]+bur[j]+”20101101″+”.xls” );</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;</span>eReport.saveTo(fos);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">将导出的</span><span>txt</span><span style="FONT-FAMILY: 宋体">文件放到待压缩的</span><span>zip</span><span style="FONT-FAMILY: 宋体">包中</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>String filePath=txtPath+”b”+raqN[i]+bur[j]+”20101101″+”.xls”;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp; </span>File f = new File(filePath);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(f.exists())</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;</span>{<span>&nbsp;&nbsp; </span>FileInputStream fis1 = new FileInputStream(f);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ZipEntry ze = new ZipEntry(f.getName());</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>zos.putNextEntry(ze);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int b;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>while((b = fis1.read()) != -1) </span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>zos.write(b);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>fis1.close();</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp; </span>fos.flush();</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;</span>fos.close();</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;</span>zos.flush();</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>zos.close();<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">判断文件是否存在，设置下等待时间</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>file = new java.io.File(“txtPath/”+fileName+”.zip”); </span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(!file.exists()) {</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Thread.sleep(10000);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="FONT-FAMILY: 宋体">将生成的压缩包下载到客户端，此处可自写代码实现，可自增代码将生成的文件删除</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>response.addHeader(“Content-Disposition”, “attachment; filename=\”&quot; + fileName+”.zip”+ “\”&quot;); </span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>try{</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>java.io.OutputStream os = response.getOutputStream();</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>java.io.FileInputStream fiss = new java.io.FileInputStream(txtPath+fileName+”.zip”);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>byte[] b = new byte[10240];</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>int i = 0; </span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>while ( (i = fiss.read(b)) &gt; 0 ) </span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>{</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>os.write(b, 0, i);</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span></span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>fiss.close();</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>os.flush();</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>os.close();</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>}</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>catch ( Exception e )</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>{} </span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>out.clear();<span>&nbsp; </span></span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>out = pageContext.pushBody();<span>&nbsp; </span></span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt"><span>%&gt;</span></p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt">&nbsp;</p> 
+  <br /> 
+  <p class="MsoNormal" style="TEXT-INDENT: 21.75pt">&nbsp;</p> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

@@ -1,0 +1,28 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>单元格进行纵向扩展时，我们称之为其右边格子的左主格。</p> 
+  <p>左主格属性可以默认缺省，也可以人为的改变。左主格可以固定的设置为某个单元格，也可以根据某个条件动态的设置。条件成立时左主格就是这个单元格，条件不成立时就是另一个单元格。比如下面的需求，就要用到动态的设置单元格的左主格的功能：一张报表有一行三列，A1是B1的左主格，B1是C1的左主格。B列根据条件隐藏，如果B列隐藏，C列就根据A列扩展；如果B列不隐藏，C列就根据B列扩展。</p> 
+  <p>下面就介绍动态设置单元格左主格的方法。</p> 
+  <p><strong>大致思路：</strong></p> 
+  <p>用提供的API读取报表，得到一个ReportDefine对象，从这个对象中得到需要设置左主格的INormalCell单元格对象，然后根据条件用单元格类中的setLeftHead方法设置这个单元格的左主格，用Bean方式发布报表。</p> 
+  <p><strong>第一步：设计报表</strong></p> 
+  <p>设计一个报表，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/114.png" alt="1.png" width="370" height="70" /></p> 
+  <p>为报表添加一个参数，命名为arg。</p> 
+  <p>单元格中设计的内容如下：</p> 
+  <p>A1: A列<br /> B1： B列<br /> C1： C列<br /> D1： 接收的参数<br /> A2： aa<br /> B2： =to(1,5)<br /> C2： cc<br /> D2： =@arg</p> 
+  <p><strong>第二步：编写发布报表的jsp</strong></p> 
+  <p>Jsp的内容如下：</p> 
+  <p>&lt;%@ page contentType=”text/html;charset=GBK”%&gt;<br /> &lt;jsp:directive.page import=”com.runqian.report4.model.ReportDefine”/&gt;<br /> &lt;jsp:directive.page import=”com.runqian.report4.util.ReportUtils”/&gt;<br /> &lt;jsp:directive.page import=”com.runqian.report4.usermodel.INormalCell”/&gt;<br /> &lt;jsp:directive.page import=”java.util.Enumeration”/&gt;<br /> &lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report”%&gt;<br /> &lt;%<br /> //得到动态设置单元格左主格的标志。如果参数arg的值为1，设置C2单元格的左<br /> //主格为A2，并且删除B列；如果参数arg的值不为”1″，设置C2单元格的左主格为B2<br /> String arg = request.getParameter(”arg”);<br /> //取得报表真实路径<br /> String reportPath = request.getRealPath(”/reportFiles/test.raq”);<br /> //用ReportUtils类中的read方法读取报表<br /> ReportDefine rd = (ReportDefine)ReportUtils.read(reportPath);<br /> //得到要设置左主格的单元格，第二行第三列<br /> INormalCell cellC2 = rd.getCell(2,(short)3);<br /> //设置单元格的左主格<br /> if(arg.equals(”1″)){<br /> //设置C2的左主格为A2<br /> cellC2.setLeftHead(”A2″);<br /> //删除B列<br /> rd.removeCol((short)2);<br /> }else{<br /> //设置C2的左主格为B2<br /> cellC2.setLeftHead(”B2″);<br /> }<br /> //生成一个动态的beanName<br /> String beanName = “RPT_”+Double.toString(Math.random());<br /> request.setAttribute(beanName,rd); //把ReportDefine对象在request中保存<br /> //接收参数<br /> StringBuffer param = new StringBuffer();<br /> Enumeration paramNames = request.getParameterNames();<br /> if(paramNames!=null){<br /> while(paramNames.hasMoreElements()){<br /> String paramName = (String) paramNames.nextElement();<br /> String paramValue=request.getParameter(paramName);<br /> if(paramValue!=null){<br /> //把参数拼成name=value;name2=value2;…..的形式<br /> param.append(paramName).append(”=”).append(paramValue).append(”;”);<br /> }<br /> }<br /> }<br /> %&gt;<br /> &lt;html&gt;<br /> &lt;body&gt;<br /> &lt;table align=center&gt;<br /> &lt;tr&gt;&lt;td&gt;&lt;!-用Bean方式发布报表-&gt;<br /> &lt;report:html name=”report1″<br /> srcType=”defineBean”<br /> beanName=”&lt;%=beanName%&gt;”<br /> params=”&lt;%=param.toString()%&gt;”<br /> /&gt;<br /> &lt;/td&gt;&lt;/tr&gt;<br /> &lt;/table&gt;<br /> &lt;/body&gt;<br /> &lt;/html&gt;</p> 
+  <p>本例中将这个jsp命名为MyJsp.jsp，保存到润乾报表demo应用下的reportJsp文件夹中。</p> 
+  <p><strong>第三步：预览</strong></p> 
+  <p>在IE浏览器中输入URL：http://127.0.0.1:6001/domo/reportJsp/MyJsp.jsp?arg=1，效果如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/213.png" alt="2.png" width="255" height="70" /></p> 
+  <p>B列删除，C列跟随A列扩展。</p> 
+  <p>更改参数arg的值，再次浏览：http://127.0.0.1:6001/demo/reportJsp/MyJsp.jsp?arg=12，效果如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/310.png" alt="3.png" width="325" height="161" /></p> 
+  <p>C列跟随B列扩展。</p> 
+  <p><strong>总结：</strong>以后遇到动态设置单元格左主格的问题，可以按照上面的方法实现了。如果要动态设置单元格的上主格，可以用类setTopHead中方法。</p>  
+ </body>
+</html>

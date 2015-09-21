@@ -1,0 +1,28 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表中使用多个数据集的时候，可能需要将数据集之间进行一个关联。一般情况下我们会在单元格中这么写：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/16-1.jpg"><img class="alignnone size-medium wp-image-2505" title="16-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/16-1-300x94.jpg" alt="" width="300" height="94" /></a></p> 
+  <p>&nbsp;</p> 
+  <p>这样写确实没有问题，但是如果这样的关联比较多的话，会导致报表运行速度特别慢，影响效率。</p> 
+  <p>对于这种情况，可以通过参数将两个数据集关联起来，并且可以提高报表的运行效率。下面就一起来看一下如何做：</p> 
+  <p>第一步，建立两个数据集ds1和ds2</p> 
+  <p>Ds1：SELECT 订单.订单ID,订单.订购日期,订单.货主名称 FROM 订单 where 订单.订单ID &lt;10370</p> 
+  <p>(注意：该数据集中”where 订单.订单ID &lt;10307”可以去掉)</p> 
+  <p>Ds2:：SELECT 订单明细.订单ID,订单明细.数量,订单明细.单价 FROM 订单明细&nbsp; where 订单ID in (?)</p> 
+  <p>然后为ds2数据集增加一个参数：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/16-2.jpg"><img class="alignnone size-medium wp-image-2506" title="16-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/16-2-300x190.jpg" alt="" width="300" height="190" /></a></p> 
+  <p>&nbsp;</p> 
+  <p>第二步：</p> 
+  <p>为报表增加一个动态参数arg1</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/16-3.jpg"><img class="alignnone size-medium wp-image-2507" title="16-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/16-3-300x154.jpg" alt="" width="300" height="154" /></a></p> 
+  <p>&nbsp;</p> 
+  <p>其中值表达式为：query(”select 订单.订单ID from 订单 where 订单.订单ID &lt;10370″)</p> 
+  <p>其实query中的SQL就是数据集ds1中的SQL。</p> 
+  <p>这样设置的意思是参数arg1的值为ds1数据集当中查询出来的“订单ID”，如此一来，数据集ds2当中的”where d订单明细.订单ID in (?)”就可以取到这个参数的值了。</p> 
+  <p>同时，报表设计可改成如下样式：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/16-4.jpg"><img class="alignnone size-medium wp-image-2508" title="16-4" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/16-4-300x88.jpg" alt="" width="300" height="88" /></a></p> 
+  <p>&nbsp;</p> 
+  <p>这样可以避免在单元格中进行大量的匹配关联的运算，可以提高报表的运行效率。</p>  
+ </body>
+</html>

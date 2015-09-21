@@ -1,0 +1,28 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>最近接触到一些客户的需求，客户想在页面展现的时候不分页，然后在导出excel的时候分页，而客户的报表列数很多，超过了excel的255列的限制。这样如果不做任何处理，直接在页面上点击导出excel的按钮，就会弹出对话框提示excel不支持超过255列，也就无法正常导出，所以要想导出这样的报表就必须采取一些特殊的设置，下面就做一个简单的例子，实现超过255列的不分页报表导出excel。</p> 
+  <p>有两种办法可以实现上面的需求，分别为：</p> 
+  <p>1．展现时候展现一张不分页的，导出的时候导出另外一张报表，在导出的时候调用API导出那个分页的报表。</p> 
+  <p>2．在jsp中设置width=”-1″ ,excelUsePaperSize=”yes”然后把报表设置成按纸分页的，也可以正常导出excel。</p> 
+  <p>下面分别介绍一下这两种方法的实现过程：</p> 
+  <p>第一种：调用API的方法。</p> 
+  <p>第一步：制作一张超过255列的报表，报表的样式如下图所示(这里直接用to(1,300)函数实现了)</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/111.gif" alt="1.gif" width="285" height="83" /></p> 
+  <p>保存这个报表为300col.raq。</p> 
+  <p>第二步：设置分页。</p> 
+  <p>点击属性-报表属性-分页，设置分页方式为按纸分页，然后另存这个报表为300col1.raq</p> 
+  <p>第三步：编写导出的API</p> 
+  <p>导出excel的API内容如下：</p> 
+  <p><span style="color: #0000ff;">&lt;%@ page language=”java” contentType=”text/html; charset=gbk”<br /> pageEncoding=”gbk”%&gt;<br /> &lt;%@page<br /> import=”com.runqian.report4.usermodel.*,com.runqian.report4.util.*,com.runqian.report4.model.ReportDefine”%&gt;<br /> &lt;%@ page import=”java.io.*,com.runqian.report4.usermodel.DataSetConfig<br /> “%&gt;<br /> &lt;%<br /> Context cxt = new Context();<br /> String reporthome = Context.getInitCtx().getMainDir();<br /> String path = application.getRealPath(reporthome);<br /> String raq = path+File.separator+”300col1.raq”;<br /> ReportDefine rd = (ReportDefine) ReportUtils.read(raq);<br /> Engine engine = new Engine(rd,cxt);<br /> IReport ir = engine.calc();<br /> ReportUtils.exportToExcel(path+File.separator+”300col.xls”,ir,true);<br /> %&gt;</span></p> 
+  <p>在发布不分页的报表(也就是300col.raq)的jsp中调用上面的jsp，将300col1.raq导出，就可以实现导出超过255列excel的需求了。</p> 
+  <p>第二种：使用标签实现。</p> 
+  <p>在展现报表jsp的润乾标签中加入如下两个内容： width=”-1″ , excelUsePaperSize=”yes”，width=”-1″的含义是页面展现的时候纸张宽度无线大，这样展现的时候就不分页了，而excelUsePaperSize=”yes”的含义是导出excel的时候按照设置的纸张大小来分页，jsp的内容如下：</p> 
+  <p><span style="color: #0000ff;">&lt;%@ page contentType=”text/html;charset=GBK” %&gt;<br /> &lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report” %&gt;</span></p> 
+  <p>&lt;% //这里为两种方法准备图片连接的公共部分<br /> String appmap = request.getContextPath();<br /> String printImage = “&lt;img alt=打印 src=’” + appmap + “/images/print.gif’ border=no style=’vertical-align:middle’&gt;”;<br /> String wordImage = “&lt;img alt=导出Word src=’” + appmap + “/images/doc.gif’ border=no style=’vertical-align:middle’&gt;”;<br /> String excelImage = “&lt;img alt=导出excel src=’” + appmap + “/images/excel.gif’ border=no style=’vertical-align:middle’&gt;”;<br /> String pdfImage = “&lt;img alt=导出PDF文件 src=’” + appmap + “/images/pdf.gif’ border=no style=’vertical-align:middle’&gt;”;<br /> String firstPageImage = “&lt;img src=’” + appmap + “/images/firstpage.gif’ border=no style=’vertical-align:middle’&gt;”;<br /> String lastPageImage = “&lt;img src=’” + appmap + “/images/lastpage.gif’ border=no style=’vertical-align:middle’&gt;”;<br /> String nextPageImage = “&lt;img src=’” + appmap + “/images/nextpage.gif’ border=no style=’vertical-align:middle’&gt;”;<br /> String prevPageImage = “&lt;img src=’” + appmap + “/images/prevpage.gif’ border=no style=’vertical-align:middle’&gt;”;<br /> String submitImage = “&lt;img alt=保存到数据库 src=’” + appmap + “/images/savedata.gif’ border=no style=’vertical-align:middle’&gt;”;<br /> String importExcelImage = “&lt;img alt=导入Excel文件 src=’” + appmap + “/images/importExcel.gif’ border=no style=’vertical-align:middle’&gt;”;<br /> %&gt;<br /> &lt;form id=”form1″ action=”excel.jsp”&gt;<br /> &lt;table align=center&gt;<br /> &lt;tr&gt;&lt;td&gt;<br /> &lt;input type=”button” onclick=”form1.action” value=”导出excel”&gt;<br /> &lt;report:html name=”report1″ reportFileName=”300col.raq”<br /> needSaveAsWord=”yes”<br /> needSaveAsPdf=”yes”<br /> needSaveAsExcel=”yes”<br /> width=”-1″<br /> excelUsePaperSize=”yes”<br /> wordLabel=”&lt;%=wordImage%&gt;”<br /> pdfLabel=”&lt;%=pdfImage%&gt;”<br /> submit=”&lt;%=submitImage%&gt;”</p> 
+  <p>/&gt;<br /> &lt;/td&gt;&lt;/tr&gt;<br /> &lt;/table&gt;<br /> &lt;/form&gt;</p> 
+  <p>使用上面的jsp发布第一种方法制作的300col1.raq，点击导出excel的按钮，选择分页方式导出，具体样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/29.gif" alt="2.gif" width="554" height="260" /></p> 
+  <p>点击确定，就会导出按纸分页的excel了，这样在页面上导出超过255列不分页报表的excel就实现了。</p>  
+ </body>
+</html>

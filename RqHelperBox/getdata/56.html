@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><font size="2"><span style="font-family: 宋体">问题:</span></font></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><font size="2"><span style="font-family: 宋体">在润乾报表中如果颜色存在数据库中直接用</span><span lang="EN-US"><font face="Times New Roman">ds1.select( color )</font></span><span style="font-family: 宋体">可以显示背景色,</span></font></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><font size="2"><span style="font-family: 宋体">但如果变成</span><span lang="EN-US"><font face="Times New Roman">ds1.select( color,,id=ds2.t_id )</font></span><span style="font-family: 宋体">就不行，页面出现好多空白.<span id="more-56"></span></span></font></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体"></span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体"><font size="2">问题解决:</font></span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><font size="2" face="Times New Roman">在润乾报表的设计器中可以这样修改int(ds2.select1(color,type_id== ds1.select1(t_type))) .</font></span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><font size="2"><span style="font-family: 宋体"><font face="Times New Roman">因为是</font>字符串,</span><font face="Times New Roman"> 所以要进行转换.</font></font></p>  
+ </body>
+</html>

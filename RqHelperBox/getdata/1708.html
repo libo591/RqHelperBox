@@ -1,0 +1,36 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>Web报表开发时会遇到用饼形图来展示数据分布的需求。在润乾报表设计器中，饼图的分类轴和系列的值都是由可扩展单元格的内容来定义的。而有的情况下开发者想用已有的固定数据来制作饼形图，此时运用润乾设计器的普通饼形图的设计方法是无法实现需求的。本文就来介绍润乾报表设计器中如何通过固定数据而非扩展单元格方式设计饼形图。</p> 
+  <p>首先看一下扩展数据和固定数据的区别，下面两个报表模板就分别展现了这两种数据。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-ygt54lowaz2dlydsuf.png" alt="扩展数据模板.png" width="240" height="78" /></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-scso1i15hz5blydsuf.png" alt="固定数据模板.png" width="218" height="123" /></p> 
+  <p>这两种数据设置方式在web中浏览结果是一样的，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-4ruo45fg4ac97a.png" alt="报表预览.png" width="256" height="92" /></p> 
+  <p>从上面两个报表模板可看出，扩展数据是由可扩展单元格扩展而来的，而固定数据是设计时写定或通过计算得到的。</p> 
+  <p>下面介绍润乾报表设计器中用固定数据的报表模板来设计饼形图如何实现。报表设计过程如下。</p> 
+  <p>第一步、报表数据集和单元格设置。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-4rux1i0rc2v2c6.png" alt="报表模板.png" width="249" height="95" /></p> 
+  <p>数据集设置为：SELECT EMPLOYEE.TITLE FROM EMPLOYEE</p> 
+  <p>单元格设置：A2为”初级”，A3为”中级”，A4为”高级”，A5为”特高级”;</p> 
+  <p>B2为=ds1.count(TITLE==”0″)，B3为=ds1.count(TITLE==”1″)，B4为=ds1.count(TITLE==”2″)，B5为=ds1.count(TITLE==”3″)。</p> 
+  <p>第二步、在报表中增加统计图设置。</p> 
+  <p>在第五行后追加单元行，将该单元行合并为一个单元格，在这个单元格点击右键设置该单元格为统计图，将单元格调整到适当的大小。</p> 
+  <p>第三步、设置统计图属性。</p> 
+  <p>统计图类型选择为饼形图。分类轴根据数据添加为4个：第一行: =A2；第二行: =A3；第三行: =A4；第四行: =A5。</p> 
+  <p>为每个分类轴添加一个系列。</p> 
+  <p>点击分类轴定义为A2的行，添加系列名称为=”员工数”，系列值为=B2；</p> 
+  <p>点击分类轴定义为A3的行，添加系列名称为=”员工数”，系列值为=B3；</p> 
+  <p>点击分类轴定义为A4的行，添加系列名称为=”员工数”，系列值为=B4；</p> 
+  <p>点击分类轴定义为A5的行，添加系列名称为=”员工数”，系列值为=B5。</p> 
+  <p>必须保证所有的系列名称一致，如下图为A2分类轴与它的系列值的配置图。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-1-jf0bs1xwt8aj4m9nt.png" alt="饼形图设置1.png" width="295" height="285" /></p> 
+  <p>下图为A3分类轴与它的系列值的配置图。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-2-jf0bs1xwt8aj4m9nt1.png" alt="饼形图设置2.png" width="294" height="282" /></p> 
+  <p>第三行和第四行的设置类似，不一一赘述。</p> 
+  <p>第四步，发布报表预览效果。</p> 
+  <p>将数据行和标题行设置为隐藏，将报表发布到web中预览，效果如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/xn-wcs18q5y4c.png" alt="饼形图.png" width="213" height="153" /></p> 
+  <p>这样就在润乾报表设计器中实现了以固定数据设计饼形图这个需求。运用润乾报表设计器进行web报表开发的过程中，遇到这种基于非单元格扩展出来的数据来设计统计图的时候就可以用这个方法解决了。</p>  
+ </body>
+</html>

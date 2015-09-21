@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表的使用过程中，许多客户需要在数据集的sql中使用in (?)的形式，这样可以实现数据的动态过滤，而参数的内容就是一个字符串组，下面就用一个简单的例子实现在数据集中使用字符串组动态实现数据的过滤。</p> 
+  <p><strong>第一步：新建一张报表，连接demo数据源。</strong></p> 
+  <p>新建一张普通的报表，连接demo数据源，新建一个数据集ds1，ds1的sql为: <span style="color: #ff00ff;">SELECT 订单.订单ID,订单.货主名称,订单.货主国家,订单.货主地区 FROM 订单</span> ,报表的样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/12.png" alt="1.png" width="342" height="47" /></p> 
+  <p><strong>第二步：新建一个参数arg1，参数的类型为字符串组。</strong></p> 
+  <p>新建一个参数arg1，类型为字符串组，并且在数据集ds1中增加一个参数arg1，类型也设置为字符串组，数据集中参数的形式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/2.png" alt="2.png" width="468" height="230" /></p> 
+  <p><strong>第三步：给数据集增加过滤条件。</strong></p> 
+  <p>编辑ds1的sql，增加过滤条件，增加过滤条件后sql为: <span style="color: #ff00ff;">SELECT 订单.订单ID,订单.货主名称,订单.货主国家,订单.货主地区 FROM 订单 where 订单.订单ID in (?),</span>数据集的sql样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/31.png" alt="3.png" width="479" height="155" /></p> 
+  <p>根据数据库中订单ID的值给参数arg1赋值，中间用逗号”,”分割，例如给arg1赋值为：10523,10524,10525,10526,10527,10528,10529,然后浏览报表，就可以看到ID为以上几个值的数据被展现出来，如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/4.png" alt="4.png" width="314" height="188" /></p> 
+  <p>如果想在不输入任何数值的时候默认查询出全部数据则还需要进行以下几步操作：</p> 
+  <p><strong>一、</strong>首先，给数据集在增加一个参数，名字也是arg1，不过此时这个新增加的参数的类型为字符串而不是字符串组，具体的样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/5.png" alt="5.png" width="440" height="215" /></p> 
+  <p><strong>二、</strong>然后，修改数据集ds1的sql为：<span style="color: #ff00ff;">SELECT 订单.订单ID,订单.货主名称,订单.货主国家,订单.货主地区 FROM 订单 WHERE 订单.订单ID in (?) or ? is null</span></p> 
+  <p><strong>三、</strong>然后浏览报表数据，使arg1的值为空，就会发现所有数据都被展现出来了，具体的样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/6.png" alt="6.png" width="554" height="602" /></p> 
+  <p>这样通过以上步骤，在数据集的sql中使用in (?)的形式实现数据的动态过滤的需求就实现了。</p>  
+ </body>
+</html>

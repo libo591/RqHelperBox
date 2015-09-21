@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">润乾报表对于多种主流的浏览器都有比较好的支持，包括IE,Chrome,Firefox等。下面就介绍一下如果在在Firefox浏览器中如何使用批量打印功能。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">我们都知道在IE中使用批量打印功能是采用&lt;object&gt;标签来定义嵌入的插件，那么在Firefox中呢，我们就需要使用&lt;embed&gt;了。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&lt;embed&gt; 标签是 HTML 5 中的新标签，由于新版本的Firefox对HTML 5标签的支持性能比较好，所以我们用这个标签来完成批量打印功能。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">批量打印页面的写法：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&lt;embed type=”application/x-java-applet;version=1.4″ pluginspage=”&lt;%=appRoot%&gt;/reportServlet?action=2&amp;toDownload=1″ width=”40″ height=”16″<br /> name=”report1_directPrintApplet”<br /> code=”com.runqian.report4.view.applet.DirectPrintApplet.class”<br /> archive=”&lt;%=appmap%&gt;/runqianReport4Applet.jar”<br /> appRoot=”&lt;%=appRoot%&gt;”<br /> dataServlet=”/reportServlet?action=1″<br /> srcType=”file”<br /> fontFace=”宋体”<br /> fontSize=”18pt”<br /> fontColor=”#0000FF”<br /> backColor=”#12632256″<br /> icon=”&lt;%=appmap%&gt;/images/print.gif”<br /> label=”打印”<br /> needPrintPrompt=”&lt;%=prompt%&gt;”<br /> scriptable=”true”&gt;<br /> &lt;/embed&gt;</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">使用方法也与IE中相类似，通过一个js函数把报表名参数传递给打印控件。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&lt;script language=javascript&gt;<br /> //此函数返回的格式为：”{无参数报表名}{报表1(参数1=value1;参数2=value2;…)}{报表2(参数1=value1;参数2=value2;…)}…”<br /> function runqian_getPrintReports() {<br /> //请在此函数里加上打印前需要的处理，最后返回需要打印的报表<br /> return “&lt;%=report%&gt;”;<br /> }</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">如果本地没有jre打印环境，由于在&lt;embed&gt; 标签中配置了插件下载，即pluginspage=”&lt;%=appRoot%&gt;/reportServlet?action=2&amp;toDownload=1″，会自动指向java官网进行下载安装，安装完重启浏览器即可。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"> </p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6560" title="01" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/01.jpg" alt="01" width="1280" height="800" />下载安装完成后，即可进行批量打印了。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6561" title="02" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/02.gif" alt="02" width="780" height="287" /><br /> </span></p>  
+ </body>
+</html>

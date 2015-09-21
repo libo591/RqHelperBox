@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>数据库中存在着主键约束特性，也就是不能出现相同的主键。如果用一些简单的整数做主键，很有可能会违反主键约束。针对这一应用约束，产生了UUID(Universally Unique Identifier)–来解决这个问题。UUID是全局唯一标识符，指在一台机器上生成的数字，它保证对在同一时空中的所有机器都是唯一的。</p> 
+  <p>web报表的开发大部分都需要使用数据库，有时就需要用到这个方法来解决一些问题，Java1.5中增加了UUID的方法，本文就将介绍如何把java中的这个方法应用在润乾报表设计中。</p> 
+  <p>Java中的方法函数，在润乾报表中使用，需要通过自定义函数来调用。</p> 
+  <p>实现思路：通过润乾提供的二次开发的接口和类实现将java中的方法调用到报表中。</p> 
+  <p>第一步、编写自定义函数的java类，继承com.runqian.report4.model.expression.Function这个类，具体代码如下。</p> 
+  <p>public class MyUUid extends Function<br /> {<br /> public MyUUid(){ }//空值构造方法<br /> public Object calculate(Context ctx, boolean isInput) //标准接口，ctx为运算环境，isInput为是否填报<br /> {<br /> //得到java中的UUID,格式为类似****-****-****的,可以根据自行设置更改返回值的格式,这里以字符串的形式演示.<br /> String s = UUID.randomUUID().toString();<br /> String value = s.substring(0,8) + s.substring(9, 13) + s.substring(14, 18) + s.substring(19, 23) + s.substring(24);//拆分字符串,重新拼成一个新字符串.<br /> return value;<br /> }<br /> }</p> 
+  <p>第二步、将编译好的java类.class文件配置到设计器以及项目中。修改设计器的配置文件，路径为\reportHome\designer\web\WEB-INF\classes\config\customFunctions.properties 文件，加入以下内容：uuid=0,com.runqian.custom.function.MyUUid</p> 
+  <p>其中:uuid是自定义函数的名称,0代表非数据集函数, com.runqian.custom.function.MyUUid是自定义函数的包和类名。</p> 
+  <p>同样方式修改服务器的配置文件，路径为\reportHome\webapps\demo \WEB-INF\classes\config\customFunctions.properties。若\reportHome\webapps\demo \WEB-INF\classes目录下没有config目录,则到\reportHome\designer\web\WEB-INF\classes下复制config目录。</p> 
+  <p>根据上面修改的内容中定义的函数包打好包后，复制到\reportHome\designer\classes和\reportHome\webapps\demo\WEB-INF\classes目录下。</p> 
+  <p>第三步、配置完成后,在报表单元格中直接调用=uuid()即可。</p> 
+  <p>下面设计一张简单的报表模板，直接调用uuid函数，发布到web预览图如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/11/111.png" alt="11.png" width="261" height="46" /></p> 
+  <p>此时显示的是当前的UUID的值。</p> 
+  <p>这样就实现在润乾报表中调用java提供的UUID方法了。</p>  
+ </body>
+</html>

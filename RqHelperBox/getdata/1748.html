@@ -1,0 +1,30 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>进行web报表设计开发时，常要使用多个数据集，以及随之而来的一些需求：如何对多个数据集进行相互关联，即：在一个数据集中使用另外数据集的查询结果。</p> 
+  <p>本文将通过一个比较简单的例子来展示润乾报表的上述应用，以下是详细步骤：</p> 
+  <p><strong>第一步</strong>，我们在新建的报表文件中定义数据集ds1,SQL语句如下：</p> 
+  <p>SELECT 订单.订单ID,订单.客户ID,订单.订购日期,订单.货主名称,订单.运货商,订单.运货费 FROM 订单</p> 
+  <p><strong>第二步</strong>，定义数据集ds2、ds3,SQL语句如下：</p> 
+  <p>ds2:SELECT 订单明细.订单ID,订单明细.单价,订单明细.折扣 FROM 订单明细 WHERE 订单ID&gt;?</p> 
+  <p>（注：其中”?”代表sql语句的参数）</p> 
+  <p>ds3: SELECT 产品.产品名称,产品.产品ID FROM 产品</p> 
+  <p><strong>第三步，</strong>设置关联引用，在ds2的”参数”标签下增加一个参数（第二步中的sql语句中有几个问号，此处就要增加几个参数），写入表达式：</p> 
+  <p>ds1.select(订单ID,,str(订购日期)==”1997-05-02 00:00:00.0″)，结果类型默认，如图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/14.png" alt="1.png" width="327" height="165" /></p> 
+  <p><strong>第四步</strong>，设置单元格表达式，</p> 
+  <p>B3: =ds2.select1(订单ID)</p> 
+  <p>C3:=ds2.产品ID</p> 
+  <p>设置显示值表达式为：ds3.select1(产品名称,产品ID==value())</p> 
+  <p>D3: =ds2.单价</p> 
+  <p>设置显示格式为：￥#0.00</p> 
+  <p>E3:=ds2.数量</p> 
+  <p>F2: =ds2.折扣</p> 
+  <p>设置显示格式为：#0.00</p> 
+  <p>具体页面格式如图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/22.png" alt="2.png" width="373" height="132" /></p> 
+  <p><strong>第五步</strong>，发布报表后预览，效果如图所示，</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/32.png" alt="3.png" width="310" height="198" /></p> 
+  <p>总结：本文只是通过一个简单需求的实现过程来说明在数据集中引用其他数据集的方法，即在该数据集的参数表达式中写入另外一个数据集表达式，取得相关字段即可。以后再遇到类似的数据集间的引用就可以用这种方法解决了。</p>  
+ </body>
+</html>

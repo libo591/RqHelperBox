@@ -1,0 +1,28 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在报表设计过程中经常会遇到计算两个日期相差的天数，下面我们可以通过一下方式实现。</p> 
+  <p>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在SQL中计算。</p> 
+  <p>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在润乾的浏览式报表中使用daysAfter()函数来计算。</p> 
+  <p>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在填报表中在自动计算中调用JS来实现。</p> 
+  <p>下面我们就以一个小例子，着重介绍一下第3种情况。</p> 
+  <p>报表数据集设计为：Ds1: SELECT *&nbsp; FROM 订单</p> 
+  <p>报表设计如下图所示：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/2-1.jpg"><img class="alignnone size-full wp-image-2368" title="2-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/2-1.jpg" alt="" width="401" height="73" /></a></p> 
+  <p>E2就是我们要计算出到货日期与发货日期相差的天数，在该单元格的自动计算中调用dmd(${B2}.toString(),${C2}.toString())，在页面中定义如下所示的JS代码：</p> 
+  <p>&lt;script language=”javascript”&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p> 
+  <p>//计算发货时间与到货时间的间隔</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function dmd(sdate, fdate){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; var m, d1, d2, days</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;m = sdate.split(”-”)</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;d1 = new Date(m[1] + ‘-’ + m[2] + ‘-’ + m[0])&nbsp;&nbsp;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m = fdate.split(”-”)</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d2 = new Date(m[1] + ‘-’ + m[2] + ‘-’ + m[0])</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; days = parseInt(Math.abs(d1 – d2) / 1000 / 60 / 60 /24)</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return days</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&lt;/script&gt;</p> 
+  <p>这样在浏览这个报表时，Ｅ2单元格中就能正常显示出，发货时间与到货时间的间隔天数了，我们预览下实现后的效果。</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/2-2.jpg"><img class="alignnone size-full wp-image-2369" title="2-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/2-2.jpg" alt="" width="458" height="115" /></a></p>  
+ </body>
+</html>

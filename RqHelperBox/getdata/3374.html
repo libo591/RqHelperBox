@@ -1,0 +1,51 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 12pt;">一些客户要根据自己的需求调整导出</span><span style="font-size: 12pt;">excel</span><span style="font-family: 宋体; font-size: 12pt;">对话框的样式，自己编辑导出</span><span style="font-size: 12pt;">excel</span><span style="font-family: 宋体; font-size: 12pt;">对话框的</span><span style="font-size: 12pt;">html</span><span style="font-family: 宋体; font-size: 12pt;">页面，下面就介绍一下自己修改导出</span><span style="font-size: 12pt;">excel</span><span style="font-family: 宋体; font-size: 12pt;">对话框的方法，这里以去掉是否导出公式的提示为例。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 12pt;">第一步：找到</span><span style="font-size: 12pt;">jar</span><span style="font-family: 宋体; font-size: 12pt;">包和</span><span style="font-size: 12pt;">html</span><span style="font-family: 宋体; font-size: 12pt;">文件。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 12pt;">找到润乾应用的</span><span style="font-size: 12pt;">/web-inf/lib/</span><span style="font-family: 宋体; font-size: 12pt;">下面的</span><span style="font-size: 12pt;">report4StaticHtml.jar</span><span style="font-family: 宋体; font-size: 12pt;">，将</span><span style="font-size: 12pt;">jar</span><span style="font-family: 宋体; font-size: 12pt;">包解压，找到</span><span style="font-size: 12pt;">jar</span><span style="font-family: 宋体; font-size: 12pt;">包里面的</span><span style="font-size: 12pt;">excelPageStyle.html</span><span style="font-family: 宋体; font-size: 12pt;">，具体位置见下图：</span></p> 
+  <p class="MsoNormal"><span style="font-size: 12pt;"><span style="font-family: 宋体; font-size: 12pt;"><img class="alignnone size-full wp-image-6498" title="z_12_30_1" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/z_12_30_1.jpg" alt="z_12_30_1" width="554" height="445" /></span></span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 12pt;">第二步：编辑</span><span style="font-size: 12pt;">html</span><span style="font-family: 宋体; font-size: 12pt;">文件。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 12pt;">编辑上图的</span><span style="font-size: 12pt;">excelPageStyle.html</span><span style="font-family: 宋体; font-size: 12pt;">文件，去掉如下一段代码：</span></p> 
+  <p class="MsoNormal"><span>&lt;tr&gt;&lt;td colspan=2 style=”padding-top:10px;font-size:14px;color:forestgreen;”&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;INPUT type=checkbox id=extFormula onclick=”if( this.checked ) formula=1;else formula=0;”&gt;&amp;nbsp;&lt;script language=javascript&gt;document.write( _excel_JJ );&lt;/script&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;/td&gt;&lt;/tr&gt;</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">修改后的</span><span>html</span><span style="font-family: 宋体;">代码如下：</span></p> 
+  <p class="MsoNormal"><span>&lt;!– </span><span style="font-family: 宋体;">导出</span><span>Excel</span><span style="font-family: 宋体;">文件的界面</span><span> –&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;script language=javascript&gt;</span></p> 
+  <p class="MsoNormal"><span>//var _excel_font_f = “</span><span style="font-family: 宋体;">宋体</span><span>“;</span></p> 
+  <p class="MsoNormal"><span>//var _excel_EE = “</span><span style="font-family: 宋体;">请选择分页方式：</span><span>“;</span></p> 
+  <p class="MsoNormal"><span>//var _excel_FF = “</span><span style="font-family: 宋体;">不分页</span><span>“;</span></p> 
+  <p class="MsoNormal"><span>//var _excel_GG = “</span><span style="font-family: 宋体;">分页</span><span>“;</span></p> 
+  <p class="MsoNormal"><span>//var _excel_HH = “</span><span style="font-family: 宋体;">确定</span><span>“;</span></p> 
+  <p class="MsoNormal"><span>//var _excel_JJ = “</span><span style="font-family: 宋体;">是否导出公式</span><span>“;</span></p> 
+  <p class="MsoNormal"><span>_initExcelPageStyle();</span></p> 
+  <p class="MsoNormal"><span>document.body.bgcolor = “#ffe4e1″;</span></p> 
+  <p class="MsoNormal"><span>&lt;/script&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;table id=winsize width=230&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;tr&gt;&lt;td colspan=2 style=”FONT-SIZE: 14px; COLOR: royalblue;”&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;script language=javascript&gt;document.write( _excel_EE );&lt;/script&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;/td&gt;&lt;/tr&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;tr style=”font-size:14px;color:forestgreen;”&gt;&lt;td&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;INPUT onclick=”pageStyle=0;extFormula.disabled=false;” type=radio CHECKED name=pageStyle&gt;&amp;nbsp;&lt;script language=javascript&gt;document.write( _excel_FF );&lt;/script&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;/td&gt;&lt;td&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;INPUT onclick=”pageStyle=1;formula=0;extFormula.disabled=true;extFormula.checked=false;” type=radio name=pageStyle&gt;&amp;nbsp;&lt;script language=javascript&gt;document.write( _excel_GG );&lt;/script&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;/td&gt;&lt;/tr&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;tr&gt;&lt;td colspan=2 align=center style=”padding-top:12px”&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;INPUT onclick=myOk() type=button ID=”B_HH” style=”width:60px;height:22px”&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;/td&gt;&lt;/tr&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;/table&gt;</span></p> 
+  <p class="MsoNormal"><span>&lt;script language=javascript&gt;</span></p> 
+  <p class="MsoNormal"><span>document.getElementById( “B_HH” ).value = _excel_HH;</span></p> 
+  <p class="MsoNormal"><span>&lt;/script&gt;</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 12pt;">保存上面的</span><span style="font-size: 12pt;">html</span><span style="font-family: 宋体; font-size: 12pt;">，然后把这个</span><span style="font-size: 12pt;">html</span><span style="font-family: 宋体; font-size: 12pt;">替换</span><span style="font-size: 12pt;">jar</span><span style="font-family: 宋体; font-size: 12pt;">包里面原来的</span><span style="font-size: 12pt;">excelPageStyle.html</span><span style="font-family: 宋体; font-size: 12pt;">。</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 12pt;">第三步：查看效果。</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 12pt;">重启润乾应用，然后随便找一张报表发布，点击导出</span><span style="font-size: 12pt;">excel</span><span style="font-family: 宋体; font-size: 12pt;">按钮，可以看到导出</span><span style="font-size: 12pt;">excel</span><span style="font-family: 宋体; font-size: 12pt;">的窗口发生变化了，具体的效果如下图所示：</span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 12pt;"><img class="alignnone size-full wp-image-6499" title="z_12_30_2" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/z_12_30_2.jpg" alt="z_12_30_2" width="554" height="317" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 12pt;">这样修改导出</span><span style="font-size: 12pt;">excel</span><span style="font-family: 宋体; font-size: 12pt;">窗口样式的需求就实现了。</span></p>  
+ </body>
+</html>

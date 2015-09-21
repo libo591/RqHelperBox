@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了编辑统计图配色方案的功能，通过<strong>配置-统计图配色方案</strong>修改已有的或自定义新的配色方案。下面就简单介绍一下如何编辑统计图的配色方案。</p> 
+  <p>点击 <strong>配置-统计图配色方案</strong>，弹出统计图配色方案界面，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/xn-nfvw0dc80bvsn-0001.png" alt="配色方案.png" height="217" /></p> 
+  <p>点击【增加】按钮可以添加一种新的配色方案，可以在左边的名称框中编辑配色方案的名称，在右边颜色方块中编辑新添加的配色方案，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/xn-1-nl8a07p.png" alt="增加1.png" height="216" /></p> 
+  <p>选中左边配色方案列表中的配色方案，点击右边的颜色方块，可以改变配色方案的颜色，如我选中了color2配色方案，点击编号为1的颜色方块，弹出选择颜色对话框，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/gaibian.png" alt="gaibian.png" height="384" /></p> 
+  <p>选中左边配色方案列表中的配色方案，点击【删除】按钮，可以删除已有的配色方案。编辑完成后点击【保存】按钮，对统计图配色方案的修改就会保存到配色方案文件中。编辑完统计图配色方案，我们就可以在统计图中使用它。点击菜单中的属性-统计图打开统计图属性定义界面，切换到”显示外观”标签页，在 <strong>统计图配色方案</strong> 下拉框中可以选择统计图的配色方案。如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/tongjifangan.png" alt="tongjifangan.png" width="582" height="278" /></p> 
+  <p>注意：统计图配色方案保存在配色方案文件color.properties中(该文件的默认的存放位置：报表设计器默认安装路径\reportHome\designer\web\WEB-INF\classes\config\color.properties)，在设计器中预览报表时可以看到各种配色方案效果，但把报表发布到服务器上以后却只能看到默认配色方案效果。要想在服务器端看到我们编辑的各种配色方案效果，需要在报表设计器默认安装路径\reportHome\webapps\demo\WEB-INF\classes文件夹下新建一个config文件夹(如果classes下有config文件夹就不用新建了)，然后把配色方案文件color.properties拷贝到config文件夹中就可以了。</p>  
+ </body>
+</html>

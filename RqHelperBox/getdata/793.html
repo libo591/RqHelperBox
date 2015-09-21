@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>问题描述：在报表展现的同时打印机直接打印，不需要点打印按钮实现这一效果。</p> 
+  <p>问题思路：润乾提供了直接打印的属性，但是这个没法通过直接打印属性直接设置，我们需要在jsp中用&lt;object&gt;&lt;/object&gt;标签来直接调用applet程序进行打印，之前也有类似的例子，但是还是需要点打印按钮来触发打印这个事件，我们这里的实现思路是写一个打印的类，这个类要继承原来的直接打印的类DirectPrintApplet，然后在这个类中直接调用DirectPrintApplet.java中的print方法，跳过触发的步骤直接打印所传的报表文件。</p> 
+  <p>实现步骤：</p> 
+  <p>1.编写打印类（DirectPrintWithoutShow名字可以自己来定），该类继承DirectPrintApplet。</p> 
+  <p>2.将这个类打入runqianReport4Applet.jar,注意：打包时先把包解压缩，然后删掉mete这个文件夹。</p> 
+  <p>3.对新包进行签名。</p> 
+  <p>4.修改jsp中直接打印调用的类的名称为新写的这个类。</p>  
+ </body>
+</html>

@@ -1,0 +1,57 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>企业中的各种业务所涉及的数据量通常是巨大的。因此对数据进行快速的分析、根据实际业务需要简单而又高效地检索出所需要的数据至关重要。润乾报表为用户提供了通用查询标签来解决这个问题。该标签可以为每张报表生成中定义的与参数无关的可查询指标及每个指标对应的条件编辑。采用通用查询标签可生成通用查询页面，用户在此页面中可选择一个或多个指标并分别设置每个指标的条件，再将这些条件联接起来（并且/或者）形成完整的查询条件，操作起来非常方便。下面就以制作带通用查询功能的订单信息报表为例，简单说明一下如何使用通用查询标签实现通用查询。</p> 
+  <p><strong>一、准备工作</strong></p> 
+  <p>1.制作订单信息报表，设置如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/xn-vuqy7fs6p175bba5o.png" alt="订单信息设计.png" height="120" /></p> 
+  <p>2.拷贝css文件夹到demo根目录下、拷贝loadconfig.jsp、queryShowReport.jsp到demo/jsp目录下。</p> 
+  <p><strong>二、实现通用查询</strong></p> 
+  <p><strong>1.生成通用查询页面</strong></p> 
+  <p>在JSP文件中用&lt;prefix:commonQuery&gt;标签来生成查询页面，prefix是用户在JSP文件头中指定tag定义文件时的前缀名。在demo/jsp目录下新建一个query.jsp，在query.jsp中按如下步骤加入代码</p> 
+  <p>首先，将如下写在query.jsp的开头。</p> 
+  <p><span style="color: #0000ff;">&lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report” %&gt;</span></p> 
+  <p>然后，在query.jsp中引入通用查询所涉及的js文件，代码如下</p> 
+  <p><span style="color: #0000ff;">&lt;script type=’text/javascript’ src=”&lt;%=request.getContextPath()%&gt;/reportServlet?action=10&amp;file=%2Fcom%2Frunqian%2Freport4%2Finput%2Fcalendar.js”&gt;&lt;/script&gt;<br /> &lt;script type=’text/javascript’ src=”&lt;%=request.getContextPath()%&gt;/reportServlet?action=10&amp;file=%2Fcom%2Frunqian%2FcomQuery.js”&gt;&lt;/script&gt;<br /> </span></p> 
+  <p>最后，加入对通用查询标签的引用</p> 
+  <p><span style="color: #0000ff;">&lt;!–通用查询表单生成标签–&gt;<br /> &lt;report:commonQuery<br /> raq=”&lt;%=report%&gt;”<br /> srcType=”file”<br /> needSave=”yes”<br /> needReload=”yes”<br /> needQuery=”yes”<br /> conditions=”” </span></p> 
+  <p>fieldColWidth=”15%”<br /> setupIcon=”../css/cq_setup.png”<br /> saveIcon=”../css/cq_save.png”<br /> reloadIcon=”../css/cq_reload.png”<br /> calIcon=”../css/cq_cal.png”<br /> queryIcon=”../css/cq_query.png”<br /> styleDefine=”../css/comQuery.css”<br /> /&gt;</p> 
+  <p>查看query.jsp，就能看到如下查询页面</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/xn-jvv041f6ti.png" alt="查询页.png" height="104" /></p> 
+  <p>这样通用查询页面就生成了。</p> 
+  <p><strong>2.查询的实现</strong></p> 
+  <p>润乾报表给出了查询功能实现的JavaScript接口，具体功能还需要用户自己实现，下面只提供一个查询实现的例子。</p> 
+  <p>首先，重写点击查询时的方法，在query.jsp中加入如下代码</p> 
+  <p><span style="color: #0000ff;">&lt;script type=’text/javascript’&gt;<br /> //重写点击查询时的方法<br /> comQuery.query = function() {<br /> var where = comQuery.genSql()//取得通用查询生成的where子句<br /> if (where == “”) {<br /> where = “1=1″;<br /> }<br /> //为查询表单中的where隐藏域赋值，并提交表单<br /> $(”where”).value=where;<br /> $(”queryForm”).submit();<br /> }<br /> &lt;/script&gt;</span></p> 
+  <p>然后，定义报表文件，在query.jsp中加入如下代码</p> 
+  <p><span style="color: #0000ff;">&lt;% //定义报表文件，在使用过程中可以通过参数传递后，使用request取得<br /> request.setCharacterEncoding(”GBK”);<br /> String report = “/dingdan.raq”;<br /> String queryFormAction = “queryShowReport.jsp?raq=”+report;<br /> String contextPath = request.getContextPath();<br /> %&gt;</span></p> 
+  <p>然后，在query.jsp加入提交表单，这个表单需要用户自己定义，代码如下</p> 
+  <p><span style="color: #0000ff;">&lt;!–提交查询的表单,至少有where及raq两个参数–&gt;<br /> &lt;form id=”queryForm” name=”queryForm” method=post action=”&lt;%=queryFormAction%&gt;” target=”reportPanel”&gt;<br /> &lt;input type=hidden name=where&gt;<br /> &lt;input type=hidden name=raq value=”&lt;%=report%&gt;”&gt;<br /> &lt;%<br /> //其它隐藏的参数<br /> java.util.Enumeration em = request.getParameterNames();<br /> while ( em.hasMoreElements() ) {<br /> String name = ( String ) em.nextElement();<br /> if (request.getParameter( name ) != null)<br /> out.write(”&lt;input type=hidden name=’” + name + “‘ value=’” + request.getParameter( name ) + “‘&gt;”);<br /> }<br /> %&gt;<br /> &lt;/form&gt;</span></p> 
+  <p>这样点击查询按钮就会提交表单，交给服务器的对应的action处理。</p> 
+  <p>最后，加入如下代码，指定查询结果显示的位置。</p> 
+  <p><span style="color: #0000ff;">&lt;!–结果表单所在的iframe,除这种方式外，还可以使用Frame等等–&gt;<br /> &lt;iframe name=”reportPanel” FRAMEBORDER=0 width=”100%” height=”100%”&gt;&lt;/iframe&gt;</span></p> 
+  <p>查看发布后的query.jsp页面，可以看到如下效果</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/xn-ol8aw01d0wbfu5ffdat44g34b.png" alt="查询页面_加说明.png" width="565" height="263" /></p> 
+  <p>设置查询条件：运货费，大于，1000；查询结果如下</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/xn-1000-ut5fi57cn19feean2w.png" alt="运货费大于1000.png" height="241" /></p> 
+  <p>这样就利用通用查询标签成功制作了一个带有通用查询功能的订单详细信息报表。</p> 
+  <p><strong>二、使用说明</strong></p> 
+  <p><strong>1.数据类型可选比较符</strong></p> 
+  <p>润乾通用查询模块，按照报表第一个数据集的设定生成条件名称下拉选项，再根据所选条件字段的数据类型，生成不同的比较符下拉选项以及相应的条件值设置框。下面对常用的几种数据类型的可选比较符做简单介绍。</p> 
+  <p>(1)字符型可选比较符</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/xn-ln0bp0jw17b.png" alt="字符型-.png" height="188" /></p> 
+  <p>(2)数值型可选比较符</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/xn-ol7an8tqqp.png" alt="数值型_.png" height="218" /></p> 
+  <p>(2)日期型可选比较符</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/xn-ln0bv45b59a.png" alt="日期型_.png" height="217" /></p> 
+  <p>当条件值出现下拉日历选项时，日期时间型对应的是年月日时分秒，日期型对应的是年月日，时间型对应的是时分秒。</p> 
+  <p><strong>2.高级设置</strong></p> 
+  <p>高级设置是为添加复杂查询条件而设置，使用左右括号以及逻辑符（并且/或者）来实现。如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/07/xn-zm0axp581a19o.png" alt="高级设置.png" width="609" height="124" /></p> 
+  <p>点取消高级设置，返回到普通查询页面。</p> 
+  <p><strong>3.注意事项</strong></p> 
+  <p>(1)报表系统的通用查询标签只提供了一个根据语义视图数据集、sql数据集生成通用查询界面的功能，其中”查询”提供了JavaScript接口，实现如上面的例子。另外，”保存”、”载入已定义”也提供了javascript接口，具体由用户根据项目情况实现。</p> 
+  <p>(2)通用查询页面中的查询条件名称是根据中所定义的生成，相应的数据型也是根据中的定义，不同的数据类型比较符会有相应的变化，当数据类型是日期型时，条件值中会显示下拉日历图标供选择。</p> 
+  <p>润乾报表通用查询标签为用户提供了灵活地组合和自定义复杂查询条件的功能，简捷地实现了对数据的查询，而且还提供了对查询条件的保存和载入功能，方便重复使用，为用户的操作带来了极大的方便。<br /> <span lang="EN-US"></span></p>  
+ </body>
+</html>

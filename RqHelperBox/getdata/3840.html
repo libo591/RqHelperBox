@@ -1,0 +1,46 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">客户在使用填报表填写数据时往往需要在页面上填完数据后并不要求将填写后的数据直接提交到数据库，要先暂存起来，等数据确定准确后再将数据保存到数据库中，同时，如果发现数据错误太多，可以点击取消按钮，将前边数据填写工作取消掉。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><img src="/wp-content/uploads/2011/07/d2371913-97d7-4fb6-a400-04775f66b738.jpg" alt="" width="316" height="36" /></span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">暂存有多种方式实现，但是要实现暂存功能，一定要将当前数据进行保存，一遍下次能查看到相关数据。这里可以将暂存的数据保存到数据库，然后通过一个标志位区分是正式入库的数据还是暂存的数据，在数据库表中增加一个标志字段</span><span>TYPE</span><span style="font-family: 宋体;">，当</span><span>TYPE</span><span style="font-family: 宋体;">值为</span><span>1</span><span style="font-family: 宋体;">时表示为正式入库数据，</span><span>TYPE</span><span style="font-family: 宋体;">为</span><span>0</span><span style="font-family: 宋体;">时为暂存数据。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">这样就可以通过动态的改变</span><span>TYPE</span><span style="font-family: 宋体;">字段的值来实现相关功能。<a href="http://www.runqian.com.cn">润乾报表</a>内置了几个</span><span>js</span><span style="font-family: 宋体;">函数，点击该</span><span>js</span><span style="font-family: 宋体;">函数就能实现该功能。同样，页面上的按钮也可以自己来定义，这里要求点击不同按钮要将实现不同的填报功能，主要是控制填往</span><span>TYPE</span><span style="font-family: 宋体;">字段的值动态变换，在更新设置中将</span><span>TYPE</span><span style="font-family: 宋体;">字段所对应的单元格设定为</span><span>A1</span><span style="font-family: 宋体;">：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><img src="/wp-content/uploads/2011/07/57c52ad8-581e-4297-86f8-da381071d15a.jpg" alt="" width="412" height="40" /></span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">这样当点击页面上不同按钮，对</span><span>A1</span><span style="font-family: 宋体;">单元格设置不同的值即可，将</span><span>A1</span><span style="font-family: 宋体;">单元格的默认值设为</span><span>0</span><span style="font-family: 宋体;">。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">更改页面按钮：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>&lt;a href=”#” onClick=”save()”&gt;</span><span style="font-family: 宋体;">保存</span><span>&lt;/a&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>&lt;a href=”#” onClick=”_submitTable( report1 );return false;”&gt;</span><span style="font-family: 宋体;">暂存</span><span>&lt;/a&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>&lt;a href=”#” onClick=”del()”&gt;</span><span style="font-family: 宋体;">取消</span><span>&lt;/a&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">点击保存时调用定义的</span><span>javascript</span><span style="font-family: 宋体;">函数</span><span>save()</span><span style="font-family: 宋体;">，下面看下该函数的定义：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>function save(){</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var cell = document.getElementById(“report1_A1″);//</span><span style="font-family: 宋体;">获得</span><span>A1</span><span style="font-family: 宋体;">单元格</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp; </span>cell.value = 1;<span></span>//</span><span style="font-family: 宋体;">修改真实值，将该值设定为</span><span>1</span><span style="font-family: 宋体;">，这样提交后</span><span>TYPE</span><span style="font-family: 宋体;">字段值就为</span><span>1</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span></span>cell.innerText= 1;<span></span>//</span><span style="font-family: 宋体;">修改显示值</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>_submitTable( report1 );//</span><span style="font-family: 宋体;">提交数据</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">这样，通过调用该函数就能将</span><span>A1</span><span style="font-family: 宋体;">单元格的值动态的改为</span><span>1</span><span style="font-family: 宋体;">，这样提交到数据库中</span><span>TYPE</span><span style="font-family: 宋体;">字段的值就会变为</span><span>1</span><span style="font-family: 宋体;">，表示该数据为正式入库的数据。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">暂存按钮执行</span><span>javascript</span><span style="font-family: 宋体;">函数</span><span>_submitTable( report1 )</span><span style="font-family: 宋体;">，该函数为润乾内置函数，将数据提交到数据库，因为设定报表时</span><span>A1</span><span style="font-family: 宋体;">单元格的默认值为</span><span>0</span><span style="font-family: 宋体;">，所以点击暂存按钮数据字段</span><span>TYPE</span><span style="font-family: 宋体;">的值为</span><span>0</span><span style="font-family: 宋体;">，表示为暂存数据。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">取消按钮要求点击后，将数据清除掉，此处可以调用填报监听类，将相应的数据删除就行，点击删除按钮后通过</span><span>js</span><span style="font-family: 宋体;">将</span><span>A1</span><span style="font-family: 宋体;">的单元格的值改为</span><span>2</span><span style="font-family: 宋体;">，然后在填报监听类里判断</span><span>A1</span><span style="font-family: 宋体;">的值是否为</span><span>2</span><span style="font-family: 宋体;">，如果是则删除相应数据。</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>function del(){</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var cell = document.getElementById(“repor1_A1″);</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>cell.value = 2;<span></span>//</span><span style="font-family: 宋体;">修改真实值</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>cell.innerText= 2;<span></span>//</span><span style="font-family: 宋体;">修改显示值</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>_submitTable( report1 );</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">在</span><span>jsptag</span><span style="font-family: 宋体;">标签中增加填报监听类：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>inputListener=”del”</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>del.java</span><span style="font-family: 宋体;">部分代码</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span>String type=report.getCell(1, (short)1).getInputValue().toString();</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp; </span>String sql=”delete table1 where TYPE=’0’”;//</span><span style="font-family: 宋体;">注意，删除时可能还需要一些其他参数，例如表名，可通过其他参数获得</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(type.equals(“2″)){//</span><span style="font-family: 宋体;">判断标识位是否为</span><span>2</span><span style="font-family: 宋体;">，如果是则执行删除操作</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>&nbsp;&nbsp; </span>stmt = con.createStatement();</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>stmt.executeUpdate(sql);</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>con.commit();</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>stmt.close();</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>con.close();</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</span></p> 
+  <p class="MsoNormal" style="text-indent: 21.75pt;"><span style="font-family: 宋体;">这样，就能实现填报表的暂存、入库、取消等功能，符合客户的业务需求。</span></p> 
+  <p></p>  
+ </body>
+</html>

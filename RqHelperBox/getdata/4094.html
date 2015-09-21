@@ -1,0 +1,48 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>润乾报表提供的分页计算功能只适用于清单式列表，本文将通过一个实例介绍如何解决大数据量分组报表的展现效率问题。</span></p> 
+  <p class="MsoNormal"><a name="OLE_LINK1"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></a><span><span>本例是通过先将数据按照分组排好序，再通过页面每次传入的页码、起始行（</span><span>begin</span></span><span><span>）和每页行数（</span><span>queryRows</span></span><span><span>）取出该页的数据，若报表中有分组合计则通过</span><span>sql</span></span><span><span>的方式求出。</span></span></p> 
+  <h2 style="tab-stops: 97.5pt;"><span>使用方法</span><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></h2> 
+  <p class="MsoNormal"><span>第一步，初始化</span><span>mysql</span><span>数据库</span></p> 
+  <p class="MsoNormal" style="margin-left: 18pt;"><span>运行</span><span>groups_test.sql</span><span>脚本，初始化例子数据。</span></p> 
+  <p class="MsoNormal"><span>第二步，拷贝文件到指定目录</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>将</span><span>js\Base64.js</span><span>（带目录）拷贝至应用根目录；</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>将</span><span>group_page_show.jsp</span><span>、</span><span>group_raq_pages.jsp</span><span>和</span><span>groups_test.raq</span><span>文件拷贝至应用根目录；</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>将</span><span>groupPage.jar</span><span>拷贝至应用的</span><span>WEB-INF\lib</span><span>下</span></p> 
+  <p class="MsoNormal"><span>第三步，启动应用，访问</span><span>groups_raq_pages.jsp</span><span>，在展现的页面输入框中输入页码，点击查询即可看到效果，如下图：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/08/eee9652e-9034-4d46-ae9b-e7be4347aea1.jpg" alt="" width="554" height="345" /></span></p> 
+  <h2><span>使用说明</span></h2> 
+  <h3><span>关于报表</span></h3> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>报表<span style="color: red;">数据集</span></span><span style="color: red;">sql</span><span>（</span><span>mysql</span><span>数据库）要写成</span><span>select … from table order by c1,c2,c3 limit ? , ?</span><span>，其中</span><span>c1 c2 c3</span><span>为报表中的分组字段</span><span>,</span><span>且顺序要与报表中分组字段顺序相同，如：</span><span>SELECT * FROM groups_test order by c1,c2 limit ?,?</span><span>；</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="color: red;">数据集参数</span><span>为</span><span>begin</span><span>和</span><span>queryRows</span><span>，参数名固定不可更改；</span></p> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>报表中若需要进行<span style="color: red;">合计</span>，需使用</span><span>query</span><span>函数计算，而不能再使用数据集或报表</span><span>sum</span><span>函数。如：</span><span>=query2(“mis2datasource”,”select distinct sum(c3) from groups_test where c1=? and c2=?”,A3,B3)</span></p> 
+  <h3><span>group_raq_pages.jsp</span></h3> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span>开发者应重新本页面，<span style="color: black;">重写后的页面使用</span></span><span style="color: black;">iframe</span><span style="color: black;">引入</span><span style="color: black;">group_page_show.jsp</span><span style="color: black;">页面</span><span style="color: black;">,</span><span style="color: black;">引入格式为：</span></p> 
+  <p class="MsoNormal"><span style="color: red;">group_raq_show.jsp?raq=***&amp;sql=***&amp;dataRows=*&amp;topRows=*&amp;bottomRows=*&amp;pageNum=*&amp;print=*</span></p> 
+  <p class="MsoNormal"><span style="color: black;">引入时须注意如下几点：</span></p> 
+  <p class="MsoNormal"><span style="color: black;">1</span><span style="color: black;">．</span><span style="color: black;">group_page_show.jsp</span><span style="color: black;">上有一个</span><span style="color: black;">id</span><span style="color: black;">为</span><span style="color: black;">MaxPageNums</span><span style="color: black;">的隐藏域，它的</span><span style="color: black;">value</span><span style="color: black;">值是</span><span style="color: red;">分页总数</span><span style="color: black;">。</span></p> 
+  <p class="MsoNormal"><span style="color: black;">2</span><span style="color: black;">．需要通过</span><span style="color: black;">url</span><span style="color: black;">传递参数：其中</span><span style="color: black;">raq</span><span style="color: black;">和</span><span style="color: black;">sql</span><span style="color: black;">两个参数需要使用</span><span style="color: black;">Base64.js</span><span style="color: black;">进行编码。</span></p> 
+  <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="color: red;"><span>&nbsp;</span>raq</span><span style="color: black;">:</span><span style="color: black;">分组报表文件</span></p> 
+  <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="color: black;">报表中应该包含两个类型是整数的参数</span><span style="color: black;">,</span><span style="color: black;">并按介绍使用这两个参数：</span></p> 
+  <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>begin</span><span style="color: black;">：报表显示内容在数据库中的开始行。</span></p> 
+  <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>queryRows</span><span style="color: black;">：报表读取数据库中数据的行数。</span></p> 
+  <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="color: red;"><span>&nbsp;</span>sql</span><span style="color: black;">:</span><span style="color: black;">分组模式说明</span><span style="color: black;">sql</span><span style="color: black;">语句，用来进行分组报表分页情况的预处理。</span></p> 
+  <p class="MsoNormal" style="margin-left: 42pt;"><span style="color: black;">格式：</span><span style="color: black;">select distinct </span><span style="color: black;">具有合计行的分组字段</span><span style="color: black;">1</span><span style="color: black;">，具有合计行的分组字段</span><span style="color: black;">2</span><span style="color: black;">，</span><span style="color: black;">count() from table group by </span><span style="color: black;">分组</span><span style="color: black;">1</span><span style="color: black;">，分组</span><span style="color: black;">2</span><span style="color: black;">，分组</span><span style="color: black;">3</span><span style="color: black;">；</span></p> 
+  <p class="MsoNormal" style="margin-left: 47.25pt;"><span style="color: black;">select</span><span style="color: black;">后的字段是有合计行的分组字段和分组包含的数据行数目，</span><span style="color: black;">group by</span><span style="color: black;">后的字段为报表中分组字段，且顺序相同，如：</span><span style="color: black;">select distinct c1,c2,count(c3) from groups_test group by c1,c2</span><span style="color: black;">；</span></p> 
+  <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;</span></span><span style="color: red;">dataRows</span><span style="color: black;">：每个分页包含的数据行数，包括数据行和合计行，不包括表头，</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt; margin-left: 21pt;"><span style="color: black;">页眉，页尾等每页开始和结束时固定包含的行</span></p> 
+  <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;</span></span><span style="color: red;">topRows</span><span style="color: black;">：数据行开始位置是报表的第几行。</span></p> 
+  <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;</span></span><span style="color: red;">bottomRows</span><span style="color: black;">：数据行结束后报表还有多少行</span></p> 
+  <p class="MsoNormal" style="text-indent: 26.25pt;"><span style="color: red;">pageNum</span><span style="color: black;">：要显示页的页码</span><span style="color: black;">,</span><span style="color: black;">可以有多个，有多个时用逗号分隔，只会显示第一个页码</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="color: black;">表示的页</span></p> 
+  <p class="MsoNormal"><span style="color: black;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span>&nbsp;</span></span><span style="color: red;">print</span><span>:</span><span>是否打印，值为</span><span>0</span><span>时表示正常的报表展示。值为</span><span>1</span><span>表示打开报表后立即打印，如</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt; margin-left: 21pt;"><span>果</span><span>pageNum</span><span>是逗号分隔的多个页码，会打印所有页。</span></p> 
+  <p class="MsoNormal"><span>3</span><span style="color: black;">．</span><span>修改</span><span>javascript </span><span>函数</span><span>runqian_printOver()</span><span>中的</span><span>url</span><span>，改为</span><span style="color: black;">group_page_show.jsp</span><span style="color: black;">页面的实际使用路径。</span></p> 
+  <p class="MsoNormal"><span style="color: black;">4</span><span style="color: black;">．分页后报表支持润乾报表的功能函数，但是导出功能只能导出当前页面显示的内容。</span></p> 
+  <h3><span>Base64.js</span></h3> 
+  <p class="MsoNormal"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>url</span><span>编码和解码用。</span></p> 
+  <h3><span>groupPage.jar</span></h3> 
+  <p><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span>封装了分页实现类。</span> &nbsp;<br /> &nbsp;<br /> </p>  
+ </body>
+</html>

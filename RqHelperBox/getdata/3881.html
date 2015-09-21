@@ -1,0 +1,28 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">润乾报表的填报表中提供了丰富的编辑风格，例如下拉框、下拉数据集、下拉树、下拉日历、上传文件等。下面我们来介绍一下如何使用上传文件的编辑风格，把图片上传到数据库中。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">首先，我们来看一张这样的报表：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=4c7bb935-7f8d-416f-b025-d74bbb1bb69f" border="0" alt="" /><br /> </span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">这是一张学生的信息卡，其中包括学生的基本信息和照片。基本信息的表达式设置与普通填报表没有什么区别，我们主要看一下照片这个单元格的设置。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">单元格的数据类型要为图片字段，这样我们才能展现一张数据库中存储的图片数据：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&nbsp;<img src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=7e3c9780-5fc6-496c-a872-842878882dd8" border="0" alt="" /></span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">我们再看一下填报编辑风格的设置：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=09e73280-7fb9-40cb-8dc0-48f52f8e3d09" border="0" alt="" /></span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">其中，扩展名称是在上传时对文件后缀名进行校验，不符合设置的文件都无法上传并有出错提示：</span></p> 
+  <p><img src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=35348fe7-0950-4624-bd0b-6d0a4294cb11" border="0" alt="" /><br /> &nbsp;上下载权限可以设置编辑风格是只能上载、只能下载、上下载都可。</p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=1ce65154-8505-4975-a63f-ba50ff89f966" border="0" alt="" /><br /> 保存文件名的列名，顾名思义，就是会把图片的的原始文件名存到设置的这个字段中（此字段必须预先在数据表中存在且为字符串）</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">然后，我们看下数据库中对图片字段的设置：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=7fd87333-e4da-4403-962c-668cd92e7b0f" border="0" alt="" /><br /> 存储图片字段的数据类型需要为大数据字段，由于例子中使用的是oracle数据库，则使用BLOB和CLOB都可，当然不同的数据库存储图片的数据类型各异，像sqlserver数据库中对于图片文件的数据类型为image。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">然后，我们来看一下更新属性的设置：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">&nbsp;<img src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=1def364e-9346-457b-9948-ee2335c4972a" border="0" alt="" /><br /> 可以看出，这与普通的填报表设置并无区别。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">最后，我们看一下在页面中的效果：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">更新前：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=ec098884-e813-4613-980c-df6e0007d6a3" border="0" alt="" /></span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">更新时，双击上传图片位置，选择相应图片：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=704ef961-73ae-42db-a520-ee673d34ffa6" border="0" alt="" /></span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">更新后，图片被更新到数据库中，并在页面上展现了出来：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;"><img src="/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=c0b198c8-41f6-4f4b-a054-568a42cd78a3" border="0" alt="" /><br /> &nbsp;</span></p> 
+  <p></p>  
+ </body>
+</html>

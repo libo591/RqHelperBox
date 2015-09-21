@@ -1,0 +1,32 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal"><span style="font-family: 宋体; color: black;">◆</span><span style="font-family: 'Arial','sans-serif'; color: black;"> </span><span style="font-family: 宋体; color: black; font-size: 12pt;">需求说明</span><span style="font-family: 'Arial','sans-serif'; color: black; font-size: 12pt;"> </span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;"></span><span style="font-family: 宋体; color: black;">现在有这样一些含日期类型的数据，如下图：</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;"><img src="/wp-content/uploads/2011/06/f53ec40b-f9f2-4ae5-8273-ed2af271594d.jpg" alt="" width="324" height="370" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;"></span><span style="font-family: 宋体; color: black;">需要做出如下的报表和统计图：</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;">2.1 </span><span style="font-family: 宋体; color: black;">报表：</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;"><img src="/wp-content/uploads/2011/06/8b649e8e-de79-49e0-9c0e-6f331ff6993f.jpg" alt="" width="482" height="434" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;">2.2 </span><span style="font-family: 宋体; color: black;">统计图：</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;"><img src="/wp-content/uploads/2011/06/94dcb4ac-ec5f-4331-916d-0bcaf6485e77.jpg" alt="" width="553" height="212" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; color: black;">◆</span><span style="font-family: 'Arial','sans-serif'; color: black;"> </span><span style="font-family: 宋体; color: black; font-size: 12pt;">制作过程</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;"></span><span style="font-family: 宋体; color: black;">先建一张报表，建数据集取数，给单元格写表达式，如下图：</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;"><img src="/wp-content/uploads/2011/06/758480ac-ea99-4444-82b1-044132d3f35c.jpg" alt="" width="521" height="347" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; color: black;">各单元格表达式：</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;">A1</span><span style="font-family: 宋体; color: black;">：订购日期</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;">B1</span><span style="font-family: 宋体; color: black;">：月份</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;">C1</span><span style="font-family: 宋体; color: black;">：运货费</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;">A2</span><span style="font-family: 宋体; color: black;">：</span><span style="font-family: 'Arial','sans-serif'; color: black;">=ds1.group(year(</span><span style="font-family: 宋体; color: black;">订购日期</span><span style="font-family: 'Arial','sans-serif'; color: black;">),false)<span> </span>//</span><span style="font-family: 宋体; color: black;">按年分组</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;">B2</span><span style="font-family: 宋体; color: black;">：</span><span style="font-family: 'Arial','sans-serif'; color: black;">=to(1,12)</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;">C2</span><span style="font-family: 宋体; color: black;">：</span><span style="font-family: 'Arial','sans-serif'; color: black;">=if(int(ds1.sum(</span><span style="font-family: 宋体; color: black;">运货费</span><span style="font-family: 'Arial','sans-serif'; color: black;">,month(</span><span style="font-family: 宋体; color: black;">订购日期</span><span style="font-family: 'Arial','sans-serif'; color: black;">)==B2))==0,null,ds1.sum(</span><span style="font-family: 宋体; color: black;">运货费</span><span style="font-family: 'Arial','sans-serif'; color: black;">,month(</span><span style="font-family: 宋体; color: black;">订购日期</span><span style="font-family: 'Arial','sans-serif'; color: black;">)==B2))<span> </span>//</span><span style="font-family: 宋体; color: black;">按月求和，如果没有这个月的值，则设值为</span><span style="font-family: 'Arial','sans-serif'; color: black;">null</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体; color: black;">在</span><span style="font-family: 'Arial','sans-serif'; color: black;">C2</span><span style="font-family: 宋体; color: black;">格的隐藏行表达式中：</span><span style="font-family: 'Arial','sans-serif'; color: black;">if(value()==null,true,false)<span> </span>//</span><span style="font-family: 宋体; color: black;">没有数据的月隐藏</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;">D2</span><span style="font-family: 宋体; color: black;">：</span><span style="font-family: 'Arial','sans-serif'; color: black;">=A2</span></p> 
+  <p class="MsoNormal"><span style="font-family: 'Arial','sans-serif'; color: black;">2 A3</span><span style="font-family: 宋体; color: black;">单元格统计图设置，如下图：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/06/7f285f01-c470-4484-95ec-d47bbf241b76.jpg" alt="" width="553" height="416" /></span></p> 
+  <p class="MsoNormal"><span></span><span style="font-family: 宋体;">发布，浏览，就能见到效果了，如下图：</span></p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/06/adb7597c-bd76-4adf-8b4d-d5e02abedf2d.jpg" alt="" width="498" height="360" /></span></p> 
+  <p>&nbsp;</p> 
+  <p class="MsoNormal"><span><img src="/wp-content/uploads/2011/06/fdf6b1a2-c855-4c22-9944-557251c4e626.jpg" alt="" width="498" height="388" /></span></p> 
+  <p>&nbsp;</p>  
+ </body>
+</html>

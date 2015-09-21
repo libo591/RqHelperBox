@@ -1,0 +1,9 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>报表和报表之间可以通过参数模板或超链接等等传递数据，但是同一个报表组中的报表传递数据就不能通过这两种方法了，可以JS函数来传递。比如报表组中报表一A1的值要传到报表二B2，可以通过下面方法实现：</p> 
+   <p>&lt;script language=”javascript”&gt;<br /> //报表一中的A1值传给报表二中的B2方法<br /> function sendA1()<br /> {<br /> var a1Value=””;<br /> var a1Display=””;<br /> //item1为报表在报表组中的逻辑名，A1为单元格名<br /> a1Value=document.getElementById(”item1_A1″).value;<br /> a1Display=document.getElementById(”item1_A1″).innerHTML;<br /> document.getElementById(”item2_B2″).value=totalValue;<br /> document.getElementById(”item2_B2″).innerText=totalDisplay;<br /> }<br /> //点击图中”报表二”的onClick方法<br /> document.getElementById(’tab_item2′).onclick=function()<br /> {<br /> //先调用JSP自动生成的_groupClicked方法<br /> _groupClicked(document.getElementById(’tab_item2′));<br /> sendA1();<br /> }<br /> <img class="alignnone size-full wp-image-1247" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/04/12.jpg" alt="12" width="349" height="168" /><br /> 先在报表一A1输入一个值，然后点击报表二，在报表二中就会出现刚才在报表一输入的值。</p> 
+  </div>  
+ </body>
+</html>

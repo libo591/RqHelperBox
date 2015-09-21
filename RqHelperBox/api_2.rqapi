@@ -1,0 +1,22 @@
+/**
+ * 创建空白报表模板，并进行单元格属性和表达式的设置
+ */
+private static void createReportDefine() {
+	//ReportDefine和ReportDefine2均为报表模板对象，ReportDefine2能动态进行增删行列
+	//构造方法传递构建的行，列数，这里新建一个1行5列的报表
+	ReportDefine2 rd2 = new ReportDefine2(1,5);
+	//获取第一行，第一列的单元格A1
+	INormalCell cell = rd2.getCell(1, (short)1);
+	//设置单元格的bold为true
+	cell.setBold(true);
+	//获取单元格的表达式集合，参数表示如果对象为空，则新建
+	IByteMap expMap = cell.getExpMap(true);
+	//设置单元格的值表达式为to(1,5)
+	expMap.add(INormalCell.VALUE, "to(1,5)");
+	//保存结果，验证
+	try {
+		ReportUtils.write("F:/00/newReport.raq", rd2);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}

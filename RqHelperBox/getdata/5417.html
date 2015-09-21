@@ -1,0 +1,38 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal"><span style="font-family: 宋体; font-size: 10.5pt; mso-bidi-font-size: 11.0pt; mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; mso-bidi-font-family: 'Times New Roman'; mso-bidi-theme-font: minor-bidi; mso-ansi-language: EN-US; mso-fareast-language: ZH-CN; mso-bidi-language: AR-SA;"><a id="OLE_LINK34" name="OLE_LINK34"></a><span><span style="font-family: 宋体;">需求说明：</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span style="font-family: 宋体;">润乾<strong>报表</strong>提供了输入校验的功能，若用户输入的值不满足校验规则，就会弹出校验提示。用户需要为在弹出校验提示之后，清空编辑框的内容。</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span style="font-family: 宋体;"><strong>需求实现：</strong></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span style="font-family: 宋体;">重写</span><span>js</span></span></span><span><span><span style="font-family: 宋体;">函数</span><span>_submitEditor2(),</span></span></span><span><span><span style="font-family: 宋体;">此函数在当前编辑单元格失去焦点的时候就会被调用。</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span style="font-family: 宋体;">重写该函数需要修改以下两处：</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span>1.</span></span></span><span><span><span style="font-family: 宋体;">若该单元格设置了填报数据类型，数据类型校验不通过，在确定单元格焦点前清空编辑框的值。</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span>if( ! _checkDataType( inputDataType, value, “” ) ) {</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><a id="OLE_LINK38" name="OLE_LINK38"></a><span style="color: red;">editor.value=”&quot;;</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>editor.focus();</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>if( table.selectText != null ) editor.select();</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>return false;</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span>}</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span>2.</span></span></span><span><span><span style="font-family: 宋体;">若该单元格设置了校验规则，填报数据不符合校验规则，在确定单元格焦点前清空编辑框的值。</span></span></span></p> 
+  <p class="MsoNormal"><span><span><a id="OLE_LINK39" name="OLE_LINK39"></a><span>if( !eval( dataValid ) ) {</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span style="font-family: 宋体;">……</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>if( editor.style ) {</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>editor.style.display = “block”;</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span><span style="color: red;">editor.value=”&quot;;</span></span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>editor.focus();</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>if( table.selectText != null ) editor.select();</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>}</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>else editor.Table.style.display = “block”;</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>return false;</span></span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><span>}</span></span></span></span></p> 
+  <p class="MsoNormal"><span><a id="OLE_LINK35" name="OLE_LINK35"></a><span style="font-family: 宋体;"><strong>实现效果：</strong></span></span></p> 
+  <p class="MsoNormal"><span><span><span style="font-family: 宋体;">设计<strong><a href="http://www.runqian.com.cn" target="_blank">报表</a></strong>模板如下：</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_009n64c13bea.png" alt="" width="352" height="214" /></span></span></span></p> 
+  <p class="MsoNormal"><span><a id="OLE_LINK36" name="OLE_LINK36"></a><span style="font-family: 宋体;">模板中既包括数据类型校验也包括合法性校验规则校验。</span></span></p> 
+  <p class="MsoNormal"><span><span><span style="font-family: 宋体;">在<strong><a href="http://www.runqian.com.cn/archives/5417.html/" target="_blank">报表</a></strong>发布页面中重新</span><span>_submitEditor2()</span></span></span><span><span><span style="font-family: 宋体;">，并引入校验规则需要的</span><span>js</span></span></span><span><span><span style="font-family: 宋体;">，即可。</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span style="font-family: 宋体;">数据类型校验：</span></span></span></p> 
+  <p class="MsoNormal"><span><span><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_010pa3cee85.png" alt="" width="442" height="213" /></span></span></span></p> 
+  <p class="MsoNormal"><span><a id="OLE_LINK37" name="OLE_LINK37"></a><span style="font-family: 宋体;">点击确定后，单元格内容置空：</span></span></p> 
+  <p class="MsoNormal"><span><span><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_011p329fe760.png" alt="" width="303" height="189" /></span></span></span></p>  
+ </body>
+</html>

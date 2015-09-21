@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在报表数据的显示样式上，会遇到客户需要将文本逆时针旋转的方式显示，尽管说润乾设计器在设计报表的时候没有直接提供逆时针旋转文本的属性，但是我们可以结合润乾提供的在报表中使用Html类型数据来实现。</p> 
+  <p>现在我们先看一下文本逆时针旋转90&deg;后的效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/14.gif" alt="1.gif" width="543" height="242" /></p> 
+  <p>从上图可以看到逆时针旋转90&deg;竖排显示的效果，下面以一个例子来说明报表的制作过程</p> 
+  <p><strong>第一步：新建一空白报表，正常输入默认情况下的文字作为对比</strong></p> 
+  <p>如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/24.gif" alt="2.gif" width="547" height="220" /></p> 
+  <p><strong>第二步：Html数据类型设置字体旋转效果</strong></p> 
+  <p>如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/33.gif" alt="3.gif" width="500" height="234" /></p> 
+  <p>B3单元格设置数据类型为HTML，内容内输入为：</p> 
+  <p>&lt;input type=”text” readonly=”true” value=”文字逆时针旋转90&deg;” style=”FILTER:progid:DXImageTransform.Microsoft.BasicImage(Rotation=3);”/&gt;</p> 
+  <p>其中 style是实现旋转的样式代码，主要是更改Rotation=3 的值，有兴趣的话读者可以自己修改该值，看看实现的效果。</p> 
+  <p><strong>第三步：发布预览文本显示效果</strong></p> 
+  <p>如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/43.gif" alt="4.gif" width="469" height="215" /></p>  
+ </body>
+</html>

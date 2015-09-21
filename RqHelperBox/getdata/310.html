@@ -1,0 +1,10 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>一、问题描述：</strong></p> 
+  <p>在采用jdbc直连时，后台错误信息：</p> 
+  <p>[ERROR]&nbsp; – 产生数据工厂: com.runqian.report4.dataset.<br /> SQLDataSetFactory 失败: 数据源s4-ora9i中，未设定转换目标字符集。</p> 
+  <p><strong>二、解决方法：</strong></p> 
+  <p>由于在JDBC直连情况下没有设置&lt;client-charset&gt;&lt;/client-charset&gt;属性导致,将该属性设置为客户端展现时的字符集类型，如GBK.</p>  
+ </body>
+</html>

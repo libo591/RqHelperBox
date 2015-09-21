@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表提供了丰富的统计图功能，如柱形图、饼形图、雷达图、折线图、区域图、条形图、散列图、全距图等近三十种统计图类型。但有些时候，这些统计图仍然无法满足多种多样的客户需求，但润乾报表仍然可以很好的解决，这就是集算器统计图。</p> 
+  <p>集算器统计图就是用户通过调用集算器文件生成的画法来绘制统计图，他可以比传统的统计图更灵活更强大的展示数据。</p> 
+  <p>我们先要针对需求制作集算器画法文件，下图就是一种点图的画法：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-005n53d8cad.png" alt="" width="931" height="521" /></p> 
+  <p>一般集算器的画法文件都由我们来给客户定制好，然后打包进dmgraph.jar中。</p> 
+  <p>然后我们在报表设计器中就可以使用这个写好的集算器统计图了：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-006pc7cacb9.png" alt="" width="626" height="548" /></p> 
+  <p>统计图的设置与普通统计图类似，设置好系列值和分类轴等信息。</p> 
+  <p>集算器统计图的一些图形特性可以在图形参数栏设置：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-007n7d27f33f.png" alt="" width="627" height="547" /></p> 
+  <p>然后，我们需要把dmgraph.jar包放到web-inf的Lib下，把dmGraphApplet.jar（集算器统计图打印包）放到项目应用根目录下，并更新report4.jar和dm.jar以及相关的导出功能包。</p> 
+  <p>然后在reportConfig.xml中设置集算器服务器授权：</p> 
+  <p>&lt;config&gt;<br /> &lt;name&gt;dmLicense&lt;/name&gt;<br /> &lt;value&gt;集算器测试20110530报表服务器win.lic&lt;/value&gt;<br /> &lt;/config&gt;</p> 
+  <p>并且添加dmConfig.xml文件到web-inf下，写法为：</p> 
+  <p>&lt;?xml version=”1.0″ encoding=”GBK”?&gt;<br /> &lt;dmConfig&gt;<br /> &lt;config&gt;<br /> &lt;name&gt;programLicense&lt;/name&gt;<br /> &lt;value&gt;/WEB-INF/dm4report.lic&lt;/value&gt;<br /> &lt;/config&gt;<br /> &lt;config&gt;<br /> &lt;name&gt;logConfig&lt;/name&gt;<br /> &lt;value&gt;/WEB-INF/runqianDMLog.properties&lt;/value&gt;<br /> &lt;/config&gt;<br /> &lt;!– 数据透视：最大分组行数 –&gt;<br /> &lt;config&gt;<br /> &lt;name&gt;groupMaxSize&lt;/name&gt;<br /> &lt;value&gt;1000&lt;/value&gt;<br /> &lt;/config&gt;<br /> &lt;!– 数据透视：行列式行数上限 –&gt;<br /> &lt;config&gt;<br /> &lt;name&gt;groupMaxRow&lt;/name&gt;<br /> &lt;value&gt;2000&lt;/value&gt;<br /> &lt;/config&gt;<br /> &lt;/dmConfig&gt;<br /> 这样，我们就可以在页面中看到部署以后的集算器统计图了：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-008n5f45a299.png" alt="" width="874" height="441" /></p>  
+ </body>
+</html>

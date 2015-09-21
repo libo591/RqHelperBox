@@ -1,0 +1,7 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>问题描述</strong>：填报表用<span style="Times New Roman;">IE</span>展现后在字符串类型的单元格里输入超过<span style="Times New Roman;">1332</span>个汉字便不能入库，并且还会将原有单元格对应的数据清空。</p> 
+  <p><strong>解决过程</strong>：在本机上做了个填报表重现了用户的问题，润乾<span style="Times New Roman;">V4.0</span>版的设计器自带的<span style="Times New Roman;">ORACLE</span>驱动包为<span style="Times New Roman;">oracle9i.jar,ORACLE 10G</span>安装后的厂商给的驱动是<span style="Times New Roman;">class12.jar</span>，用<span style="Times New Roman;">class12.jar</span>替换<span style="Times New Roman;">oracle9i.jar</span>后能填报二千个汉字。根据<span style="Times New Roman;">oracle</span>的文档，<span style="Times New Roman;">thin</span>的<span style="Times New Roman;">jdbc</span>驱动，如果不是<span style="Times New Roman;">ascii</span>或者拉丁字符集合它就认为其他字符集都需要两个字节来存储，但是通过<span style="Times New Roman;">jdbc</span>的<span style="Times New Roman;">setString</span>方法时候，驱动会把<span style="Times New Roman;">java</span>的<span style="Times New Roman;">utf</span>－<span style="Times New Roman;">16</span>转换为<span style="Times New Roman;">utf-8</span>，这样英文由两个字节变成一个字节，中文由两个字节变为<span style="Times New Roman;">3</span>个字节，所以<span style="Times New Roman;">4000/3</span>大概就是<span style="Times New Roman;">1333</span>个中文字符了。<br /> <span lang="EN-US"></span></p>  
+ </body>
+</html>

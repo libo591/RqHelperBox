@@ -1,0 +1,33 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报软件设计报表的时候，数据一般都是自动扩展出来的，不用每个单元格去填写数据。</p> 
+  <p>这样的话，有时候我们可能需要取得某个单元格扩展后的第N个单元格的值。</p> 
+  <p>这个时候cell()函数就可以派上用场了。下面我们就一起来看看，如何实现取得某个单元格扩展后的第N个单元格的值。其实很简单。</p> 
+  <p>首先，新建一张报表，如下图：</p> 
+  <p>&nbsp;<img title="541" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/541.jpg" alt="541" width="191" height="52" /></p> 
+  <p>假如我想取得A1扩展出来的第一个和第三个单元格的值，可以这么写：</p> 
+  <p>&nbsp;<img title="551" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/551.jpg" alt="551" width="191" height="78" /></p> 
+  <p>预览的结果：</p> 
+  <p>&nbsp;<img title="561" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/561.jpg" alt="561" width="164" height="165" /></p> 
+  <p>Cell()函数说明：</p> 
+  <p>&nbsp;&nbsp;&nbsp; 在平面内取单元格，注意这里的单元格是运算后的单元格</p> 
+  <p>&nbsp; &nbsp;&nbsp;语法：</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell({cellExp}{,rowOffsetExp{,colOffsetExp}})</p> 
+  <p>&nbsp;&nbsp;&nbsp; 参数说明：</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cellExp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 单元格表达式(不写表示当前单元格)</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rowOffsetExp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 整数的相对cellExp的行偏移量表达式</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; colOffsetExp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 整数的相对cellExp的列偏移量表达式</p> 
+  <p>&nbsp;&nbsp;&nbsp; 函数示例：</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell(,1,-5) 取得当前单元格的下一行，左边5列的单元格</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell(C1) 取得与当前单元格的偏移为“当前单元格的源格与C1的偏移”的格</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell(D1,1,3) 取得D1的下一行，右3列的单元格</p> 
+  <p>有一个细节需要注意：单元格的扩展方式。以上表为例，如果A1是横向扩展的，想取得A1扩展出来的第一个和第三个单元格的值，cell()中的写法是不一样的。</p> 
+  <p>请看下图：</p> 
+  <p>&nbsp;<img title="571" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/571.jpg" alt="571" width="204" height="86" /></p> 
+  <p>预览结果：</p> 
+  <p>&nbsp;<img title="581" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/581.jpg" alt="581" width="444" height="84" /></p> 
+  <p>Cell()中的参数跟单元格的扩展方式是相关联的。</p> 
+  <p>通过以上例子的讲解，相信大家都明白该如何使用cell()函数了吧！</p>  
+ </body>
+</html>

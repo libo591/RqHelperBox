@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>用宏实现数据表，数据字段的动态查询的报表实例屡见不鲜，用宏也可以实现数据集的动态设定，我们经常做报表时，数据是直接写到报表单元格的，而动态设定数据集时，要怎样在设计报表的时候写数据呢？</p> 
+  <p>具体实现方式如下：</p> 
+  <p>1. 创建三个数据集，本例中使用的数据源是demo。</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-1.jpg"><img class="alignnone size-medium wp-image-2442" title="9-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-1-300x62.jpg" alt="" width="300" height="62" /></a></p> 
+  <p>2. 定义一个参数，如下图所示：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-2.jpg"><img class="alignnone size-medium wp-image-2443" title="9-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-2-300x24.jpg" alt="" width="300" height="24" /></a></p> 
+  <p>3. 定义一个宏，如下图所示：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-3.jpg"><img class="alignnone size-medium wp-image-2444" title="9-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-3-300x30.jpg" alt="" width="300" height="30" /></a></p> 
+  <p>4. 在报表中，写入如下数据:</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-4.jpg"><img class="alignnone size-full wp-image-2445" title="9-4" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-4.jpg" alt="" width="235" height="165" /></a></p> 
+  <p>当我们预览是，在设置报表参数值的窗口中输入“ds1”是，在数据浏览窗口中显示数据如下图所示：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-4-1.jpg"><img class="alignnone size-full wp-image-2446" title="9-4-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-4-1.jpg" alt="" width="271" height="84" /></a></p> 
+  <p>在设定数据集时，我们的SQL语句并没对查询的数据加任何限制，却只显示一条数据，由此得出，单元格中的数据并没有进行扩展，为了是数据有效扩展，增加一列，在A2单元格中输入“=${macro1}.fieldName(1)”，在A3单元格中输入“=${macro1}.select(A2)”，报表中的数据如下图所示：</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-4-2.jpg"><img class="alignnone size-medium wp-image-2447" title="9-4-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-4-2-300x113.jpg" alt="" width="300" height="113" /></a></p> 
+  <p>第一行，和第一列，我们只是用来做数据扩展的，所以将其分别设置为隐藏行，隐藏列，这样我们就完成了动态设定数据集的功能，让我们来预览一下数据吧！</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-4-3.jpg"><img class="alignnone size-medium wp-image-2448" title="9-4-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-4-3-300x214.jpg" alt="" width="300" height="214" /></a></p> 
+  <p>在浏览时，报表中的数据，已经可以根据输入的数据集的名称来动态显示了，为了便于数据集的设定，可以设计一个参数模板，和报表一起发布。</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-4-4.jpg"><img class="alignnone size-medium wp-image-2449" title="9-4-4" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/9-4-4-300x196.jpg" alt="" width="300" height="196" /></a></p> 
+  <p>经过以上的设置，我们就能在发布报表时动态设定要查询的数据集了。此实例，用到了增强函数，如果您的版本不支持增强函数可以通过其他方式来实现。</p>  
+ </body>
+</html>

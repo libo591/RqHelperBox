@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>通常单元格的超链接在网页上显示的目标窗口，缺省为_self,我们要想在点击这个超链接后，在一个新的窗口打开，就需要选中设置超连接的单元格，在设计器右边属性列表里有“超链接窗口”属性。</p> 
+  <p>可以自己写个js函数，然后在润乾的超链接中调用该js，js中用window.open()，具体的参数可按如下设置。</p> 
+  <p>具体操作步骤如下：</p> 
+  <p>1.在网页的Javascript脚本里写入如下函数：</p> 
+  <p>function show_product(id){&nbsp;</p> 
+  <p>var strurl=’/api/jsp/3.5.jsp?raq=/api/wangge4_sub.raq&amp;arg1=’+id;</p> 
+  <p>window.open(strurl,”_blank”,” Width=650 ,Height=500,top=100,left=100″);</p> 
+  <p>}</p> 
+  <p>2.在报表触发单元格里写入如下超链接表达式</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/02/5-1.jpg"><img class="alignnone size-full wp-image-2390" title="5-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/02/5-1.jpg" alt="" width="333" height="53" /></a></p> 
+  <p>3.经过上面的设置在点击该单元格时，一个宽为650，高为500的窗口会在距屏幕上方，左侧为100像素值的位置打开。</p> 
+  <p>下面再说一说弹出窗口外观的设置。只要再往上面的代码中加一点东西就可以了。<br /> 我们来定制这个弹出窗口的外观、尺寸大小、弹出位置以适应该页面的具体情况。</p> 
+  <p>&lt;SCRIPT LANGUAGE=”javascript”&gt;<br /> &lt;!–<br /> window.open(’page.html’,’newwindow’,’height=100,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no’)<br /> //写成一行<br /> –&gt;<br /> &lt;/SCRIPT&gt;</p> 
+  <p>参数解释：<br /> &lt;SCRIPT LANGUAGE=”java script”&gt; js脚本开始；<br /> window.open 弹出新窗口的命令；<br /> page.html 弹出新窗口的文件名；<br /> newwindow 弹出窗口的名字（不是文件名），可用空 〃代替；<br /> height=100 窗口高度；<br /> top=0 窗口距离屏幕上方的像素值；<br /> left=0 窗口距离屏幕左侧的像素值；<br /> toolbar=no 是否显示工具栏，yes为显示；<br /> menubar,scrollbars 表示菜单栏和滚动栏；<br /> resizable=no 是否允许改变窗口大小，yes为允许；<br /> location=no 是否显示地址栏，yes为允许；<br /> status=no 是否显示状态栏内的信息（通常是文件已经打开），yes为允许；<br /> &lt;/SCRIPT&gt; js脚本结束。</p>  
+ </body>
+</html>

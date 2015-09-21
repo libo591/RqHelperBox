@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>需求背景</strong></p> 
+  <p>c需求—输入任意单个日期自动排出甲乙丙的白班、夜班、休班。</p> 
+  <p><strong>问题分析</strong></p> 
+  <p>首先确认这个班次是一直循环排下去的，每个月初不重置，3天一个循环，这样我们可以通过除3取余来控制，最后我们还要考虑到闰年的情况。</p> 
+  <p><strong>实现步骤</strong></p> 
+  <p>报表设计如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-006p30095fda.png" alt="" width="532" height="435" /></p> 
+  <p>这里使用case函数来对12个月分别进行判断，计算当前日期的累积天数，用于除3取余。</p> 
+  <p>通过daysInYear函数判断当前年的天数，并设置行隐藏或展现。if(daysInYear(@time)==365,false,true)。其他无用信息隐藏就可以了。</p> 
+  <p>在输入参数框中输入：2010-09-08，预览如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-007p588a23e3.png" alt="" width="491" height="330" /></p> 
+  <p>至此，通过使用日期函数和case等函数完成了这样一个需求的报表。</p>  
+ </body>
+</html>

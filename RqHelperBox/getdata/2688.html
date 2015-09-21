@@ -1,0 +1,13 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在设计报表时，可能会遇到按段分组的需求，例如按照销售金额每一千元分一组。这个需求可以用很多方法实现，本文简单介绍如何用to函数进行分组。</p> 
+  <p>第一步：准备一张数据集和报表；</p> 
+  <p>&nbsp;<img title="442" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/442.jpg" alt="442" width="317" height="83" /></p> 
+  <p>预览效果如下：</p> 
+  <p>&nbsp;<img title="451" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/451.jpg" alt="451" width="245" height="584" /></p> 
+  <p>第二步：在A列前面添加一列，写表示式：to(ds1.max(订单金额)/1000+1,0)意义是获得订单金额中的最大值，取前两位，用to函数做自然排序，然后把A列隐藏；再修改B列的表达式，用 “订单金额&gt;=A2*1000&amp;&amp;订单金额&lt;=A2*1000+1000”限定排序的依据。</p> 
+  <p>经过以上两步的修改，就可以实现下图所示的效果：</p> 
+  <p>&nbsp;<img title="46" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/46.jpg" alt="46" width="219" height="539" /></p>  
+ </body>
+</html>

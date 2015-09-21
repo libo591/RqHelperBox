@@ -1,0 +1,54 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>填报表往往需要在客户端页面输入时进行合法性检查，如检查输入是否为数字或符合规定的格式等。润乾报表通过两种方式实现合法性检查：</p> 
+  <p>第一种，通过设置单元格的填报数据类型自动实现合法性检查，如设置成数值型或<span>Email</span>地址等。</p> 
+  <p>第二种，通过设置单元格校验属性，输入校验表达式，实现手工校验。比如：要求在<span>c5</span>单元格里填写的数据为在<span>0</span>到<span>100</span>之间，则可设单元格校验表达式为：<span>${C5}&gt;=0&amp;&amp; ${C5}&lt;=100</span>。</p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">可是这两种方式都是通过弹出</span><span>alert</span><span style="FONT-FAMILY: 宋体">框来提示的，如下图，在用户使用过程中好感度会有所影响。</span></p> 
+  <p class="MsoNormal"><span><img src="http://192.168.0.63:83/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=7db3f66c-ec16-4db4-9677-f8e8cae51409" height="181" width="552" /></span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">如何在校验方面设置的漂亮些呢？例如填入非法数据后会友好提示。下面我们就通过自动计算的结合来实现一中相对友好的校验方式。</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">首先对上述报表增加一行，用来显示提示报错内容，例如整个第一行：</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">再最后增加一列，增加自动计算表达式，然后将其列隐藏：</span></p> 
+  <p class="MsoNormal"><span><img src="http://192.168.0.63:83/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=eeb724e2-a10a-4b92-a4d1-a758b7976df5" height="402" width="432" /></span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">传入</span><span>js</span><span style="FONT-FAMILY: 宋体">中的参数为需要验证的单元格表达式，以及需要写入提示信息的单元格</span><span>id</span><span style="FONT-FAMILY: 宋体">。然后在展现报表的</span><span>jsp</span><span style="FONT-FAMILY: 宋体">页面中加入</span><span>javascript</span><span style="FONT-FAMILY: 宋体">。</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">这里我们需要验证的内容为单元格内容必须是整数且数值大于</span><span>1000.</span><span style="FONT-FAMILY: 宋体">如果违反规则，则单元格内容变红色，并且在</span><span>A1</span><span style="FONT-FAMILY: 宋体">单元格中提示。</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">首先加入通过正则表达式判断整型的</span><span>js</span><span style="FONT-FAMILY: 宋体">，内容比较简单不做过多介绍：</span></p> 
+  <p class="MsoNormal"><span>function isInt(str){</span></p> 
+  <p class="MsoNormal"><span>if(isObj(str)){</span></p> 
+  <p class="MsoNormal"><span>var reg = /^(-|\+)?\d+$/;</span></p> 
+  <p class="MsoNormal"><span>return reg.test(str);</span></p> 
+  <p class="MsoNormal"><span>}</span></p> 
+  <p class="MsoNormal"><span>return true;</span></p> 
+  <p class="MsoNormal"><span>}</span></p> 
+  <p class="MsoNormal"><span>function isObj(str){</span></p> 
+  <p class="MsoNormal"><span>if(str==null||typeof(str)==’undefined’)</span></p> 
+  <p class="MsoNormal"><span>return false;</span></p> 
+  <p class="MsoNormal"><span>return true;</span></p> 
+  <p class="MsoNormal"><span>}</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">然后通过润乾的一直内置</span><span>js</span><span style="FONT-FAMILY: 宋体">来获取焦点单元格的值</span><span>report1.currCell.value</span><span style="FONT-FAMILY: 宋体">来进行下一步判断</span><span>.</span></p> 
+  <p class="MsoNormal"><span>function getValueIntBy(testvalue,cellName){</span></p> 
+  <p class="MsoNormal"><span>alert(cellName);</span></p> 
+  <p class="MsoNormal"><span>document.getElementById(cellName).innerText=”&quot;;//</span><span style="FONT-FAMILY: 宋体">将提示单元格内容制空</span></p> 
+  <p class="MsoNormal"><span>if(!isInt(report1.currCell.value)){//</span><span style="FONT-FAMILY: 宋体">判断焦点单元格类型</span></p> 
+  <p class="MsoNormal"><span>report1.currCell.style.color=”#FF0000″; //</span><span style="FONT-FAMILY: 宋体">改变焦点单元格颜色</span></p> 
+  <p class="MsoNormal"><span>document.getElementById(cellName).innerText = “</span><span style="FONT-FAMILY: 宋体">请输入整数！！</span><span>“;//</span><span style="FONT-FAMILY: 宋体">将提示内容输出到</span><span>A1</span><span style="FONT-FAMILY: 宋体">单元格中</span></p> 
+  <p class="MsoNormal"><span>return “”;</span></p> 
+  <p class="MsoNormal"><span>}</span></p> 
+  <p class="MsoNormal"><span>if(report1.currCell.value&gt;1000){ </span></p> 
+  <p class="MsoNormal"><span>document.getElementById(cellName).innerText = “</span><span style="FONT-FAMILY: 宋体">请输入</span><span>1000</span><span style="FONT-FAMILY: 宋体">！！</span><span>“;</span></p> 
+  <p class="MsoNormal"><span>report1.currCell.style.color=”#FF0000″;</span></p> 
+  <p class="MsoNormal"><span>}</span></p> 
+  <p class="MsoNormal"><span>return “”;</span></p> 
+  <p class="MsoNormal"><span>}</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">最后再将校验规则做到润乾本身的校验中去</span><span>,</span><span style="FONT-FAMILY: 宋体">并且去除立即校验勾选</span></p> 
+  <p class="MsoNormal"><span><img src="http://192.168.0.63:83/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=6ca9dac0-7022-483f-b998-0a37928d747a" height="170" width="474" /></span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">在页面中进行测试</span><span>.</span><span style="FONT-FAMILY: 宋体">输入字符后可看到单元格内容变色</span><span>,</span><span style="FONT-FAMILY: 宋体">提示框中显示提示</span><span>.</span></p> 
+  <p class="MsoNormal"><span><img src="http://192.168.0.63:83/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=c9e4a7c6-8864-403c-9a05-64e799a9e43f" height="62" width="554" /></span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">大于</span><span>1000</span><span style="FONT-FAMILY: 宋体">时</span><span>,</span><span style="FONT-FAMILY: 宋体">同样会进行校验</span><span>:</span></p> 
+  <p class="MsoNormal"><span><img src="http://192.168.0.63:83/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=2e7efa57-5a7d-40f2-9f0d-c0daf18acc31" height="61" width="554" /></span></p> 
+  <p class="MsoNormal"> </p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">点提交时才会进行校验，同理如果提交时也不想弹出</span><span>alert</span><span style="FONT-FAMILY: 宋体">框，只需要自定义提交的</span><span>js</span><span style="FONT-FAMILY: 宋体">，再里面进行校验，如果返回</span><span>true</span><span style="FONT-FAMILY: 宋体">的话，调用润乾内置的提交函数</span><span>_submitTable()</span><span style="FONT-FAMILY: 宋体">。</span></p>  
+ </body>
+</html>

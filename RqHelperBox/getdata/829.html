@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="" class="MsoNormal"><span style=""><span>在实际业务场景中，我们经常会碰到枚举分组，对于润乾报表来说我们做这样的分组有多种方式，但就从效率的角度来讲我们还是建议使用</span><span lang="EN-US"><span style="">enumGroup</span></span><span>函数来做分组，下面看一下下面的对比</span></span></p> 
+  <p style="" class="MsoNormal"><span><span style="">请看如下报表： <br /></span></span></p> 
+  <p style="" class="MsoNormal"><img src="http://www.runqian.com.cn/wp-content/uploads/2009/04/11.jpg" alt="1.jpg" height="124" /></p> 
+  <p style="" class="MsoNormal"><span style=""><span>这是一个不规则分组的报表，将饮料和点心归入副食品组，肉</span><span lang="EN-US"><span style="">/</span></span><span>家禽和海鲜归入肉类组，日用品归入日用品组，其他所有类别归入其他组。设计这样的一个报表有多种做法，下面我们列出比较典型的两种：</span></span></p> 
+  <p style="" class="MsoNormal"> </p> 
+  <p style="" class="MsoNormal"><span><span style="">第一种做法：</span></span></p> 
+  <p style="" class="MsoNormal"><img src="http://www.runqian.com.cn/wp-content/uploads/2009/04/21.jpg" alt="2.jpg" height="113" /></p> 
+  <p style="" class="MsoNormal"> </p> 
+  <p style="" class="MsoNormal"><span><span style="">第二种做法：</span></span></p> 
+  <p style="" class="MsoNormal"><img src="http://www.runqian.com.cn/wp-content/uploads/2009/04/31.jpg" alt="3.jpg" height="121" /></p> 
+  <p style="" class="MsoNormal"><span><span style="">分析：</span></span></p> 
+  <p style="" class="MsoNormal"><span style=""><span>第一种做法是比较常规的做法，首先在第一列中根据分组要求，枚举出三个组，然后分别在第二列、第三列、第四列里对数据进行汇总时，根据分组条件增加过滤条件，如类别</span><span lang="EN-US"><span style="">ID==1 or</span></span> <span>类别</span><span lang="EN-US"><span style="">ID==3</span></span><span>等等，一般的传统报表工具都是这种做法。</span></span></p> 
+  <p style="" class="MsoNormal"><span><span style="">这种做法的弊端在于：引擎对每一个汇总项进行计算时，都需要对数据进行一次遍历，查找出满足条件的记录进行汇总，因此计算速度很慢。</span></span></p> 
+  <p style="" class="MsoNormal"><span style=""><span>第二种做法采用了</span><span lang="EN-US"><span style="">enumgroup</span></span><span>函数，这种做法是对按照枚举分组规则数据集先进行分组，之后在第二列、第三列、第四列里对数据进行汇总时直接从当前组里取数，不再需要遍历和过滤了。因此第二种做法速度非常快，性能比较优。</span></span></p> 
+  <p><span style=""><span lang="EN-US"></span></span></p>  
+ </body>
+</html>

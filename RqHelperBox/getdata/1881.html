@@ -1,0 +1,28 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在一些统计报表中，经常会遇到带有上下标的文字或数据，在润乾报表中同样可以使用这种带有上下标的文字格式。</p> 
+  <p>润乾报表富文本数据类型支持html中支持以下标签：</p> 
+  <p>1、字体标签：&lt;font&gt;&lt;/font&gt;，其中包括各种字体属性：字体（face）、字色（color）、字号（size），各个属性可以同时使用在一个标签用法中。</p> 
+  <p>注：富文本标签中的”字体”并不能自由定义，它定义的是字体的网页字号，只能在一号到七号间选择，相对应的实际字号为8磅到36磅。</p> 
+  <p>2、粗体标签：&lt;b&gt;&lt;/b&gt;标签内文字的字体加粗</p> 
+  <p>3、斜体标签：&lt;i&gt;&lt;/i&gt;标签内文字的字体变斜体</p> 
+  <p>4、下划线标签：&lt;u&gt;&lt;/u&gt;标签内文字加下划线</p> 
+  <p>5、上标标签：&lt;sup&gt;&lt;/sup&gt;标签内文字变为上标</p> 
+  <p>6、下标标签：&lt;sub&gt;&lt;/sub&gt;标签内文字变为下标</p> 
+  <p>另外，如果有容易产生混淆的情况，需要使用”&lt;””&amp;”等字符，如同Html中同样使用”&amp;gt;”、”&amp;amp;”等。</p> 
+  <p>下面来看一个例子，更加深刻的体会富文本数据类型的使用方法。</p> 
+  <p>首先，生成一张空白报表，在A1单元格点击鼠标右键弹出单元格设置菜单：</p> 
+  <p>&nbsp;</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/1-0030.png" alt="1.png" width="279" height="387" />进入数据类型设置，选择富文本：</p> 
+  <p><span style="line-height: 150%; font-size: 12pt;"></span></p> 
+  <p><span style="line-height: 150%; font-size: 12pt;"><span style="line-height: 150%; font-size: 12pt;"><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/2-0028.png" alt="2.png" width="364" height="215" />然后设计一个红色的黑体，字号是6，带有上标”【1】”，下标”a”那么在数据类型设置的内容里写上：</span></span></p> 
+  <p><span style="line-height: 150%; font-size: 12pt;"><span style="line-height: 150%; font-size: 12pt;">&lt;font face=”黑体” size=6 color=#ff0000 &gt;汉字&lt;sup&gt;[1]&lt;/sup&gt;&lt;sub&gt;a&lt;/sub&gt;&lt;/font&gt;预览效果：<br /> </span></span></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/3-0023.png" alt="3.png" width="303" height="174" />在润乾的富文本数据类型中，还支持部分在font标签中使用的style，其中，支持style中的下列属性：字体（font-family）、字色（color）、字号（font-size）、粗体/非粗体（font-weight:bold/ font-weight:normal）、斜体/非斜体（font-style:italic/ font-style:normal）和有下划线/无下划线（text-decoration:underline/ text-decoration:none），在同一个style中可以使用一个或者多个属性。</p> 
+  <p>例如：&lt;font style=” font-family:华文仿宋;font-size:24;font-style:italic;font-weight:normal;color:#ff0000;text-decoration:underline”&gt;测试&lt;/font&gt;，显示效果如下：</p> 
+  <p>&nbsp;</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/4-0022.png" alt="4.png" width="302" height="197" />需要注意的是,富文本数据类型的单元格，在web端浏览时，按照Html语法由浏览器解析相应代码，因此，代码必须符合Html语法规则。</p> 
+  <p>富文本数据类型的引入，极大的方便了一些复杂文字类和数据类报表的展现，并且富文本数据类型支持导出到Pdf、Word以及Excel，实现了与常用办公软件的融合，使得用户在使用润乾报表时更加得心应手。</p> 
+  <p>[1]附注:具体内容可以参考润乾用户手册-操作指南-数据类型章节中关于富文本的介绍。</p>  
+ </body>
+</html>

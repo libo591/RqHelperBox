@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾填报表中，内置了多种单元格的编辑风格，例如：密码框、复选框、单选按钮、下拉树、下拉数据集等等。有的时候用户希望引用一些自己定义的控件编辑风格来实现，润乾同样可以满足以上需求。</p> 
+  <p>本文以自定义下拉日历为例子，来介绍一下自定义编辑风格的实现：</p> 
+  <p><strong>第一步，编写一个自定义下拉日历的JavaScript文件</strong></p> 
+  <p>我们这里选用的是网上一个开源的日历控件-梅花雨日历控件V3.0版本，参考下载地址为：<a href="http://hi.baidu.com/917526932/blog/item/01130687663eda3666096e6b.html">http://hi.baidu.com/917526932/blog/item/01130687663eda3666096e6b.html</a>。将其存成一个名为calendar2.js的文件。</p> 
+  <p><strong>第二步：制作一张填报表</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/1.png" alt="1.png" width="390" height="135" /></p> 
+  <p>其中，C2单元格和E2单元格的填报属性相同，设置为：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/2.png" alt="2.png" width="426" height="284" /></p> 
+  <p>点击设置：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/3.png" alt="3.png" width="426" height="285" /></p> 
+  <p>在梅花雨日历控件中，WebCalendar()是初始化日历方法，calendar()是日历的主调函数，hiddenCalendar()是隐藏日历控件的方法。</p> 
+  <p>第三步：在展现报表的jsp文件中，把自定义的下拉日历的js文件引入</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/4.png" alt="4.png" width="429" height="207" /></p> 
+  <p>这样，设置自定义下拉日历的过程就完成了。</p> 
+  <p>下面是Web页面展现的效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/5.png" alt="5.png" width="333" height="189" /></p> 
+  <p>润乾报表中的自定义编辑风格，方便用户进行个性化设计，使得您在设计报表时更加快速灵活，根据实际应用情况，可以随心所欲的添加具有特色的控件，在满足业务需求的同时，也丰富了页面效果，一举两得。</p>  
+ </body>
+</html>

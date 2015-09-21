@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>SSL简介</strong></p> 
+  <p>SSL,&nbsp;或者Secure&nbsp;Socket&nbsp;Layer，是一种允许web浏览器和web服务器通过一个安全的连接进行交流的技术。这意味着将被发送的数据在一端被翻译成密码，传送出去，然后在另一端解开密码，再进行处理。这是一个双向的过程，也就是浏览器和服务器都需要在发送数据之前对它们进行加密。</p> 
+  <p>SSL协定的另一个重要方面是认证(Authentication)。这就是说，在你开始试图通过一个安全连接与一个web服务器交流的时候，这个服务器会要求你的浏览器出示一组证件，通过“鉴定”的方式来证明这就是你所声明的网站。</p> 
+  <p>在某些情况下，服务器还会要求你的web浏览器的认证书，证明你就是你所说的那个人。这就是所知的“客户认证”，尽管实际情况中，更多地用在商务-对-商务(B2B)交易，而不是对个人用户。但大多数有SSL功能的web服务器不要求客户认证(Client&nbsp;Authentication)。</p> 
+  <p>用Tomcat来配置SSL主要有下面这么两大步骤：</p> 
+  <p><strong>一、生成证书</strong></p> 
+  <p>1、在命令行下执行：&nbsp;%Java_home%\bin\keytool&nbsp;-genkey&nbsp;-alias&nbsp;tomcat&nbsp;-keyalg&nbsp;RSA&nbsp;在此命令中，keytool是JDK自带的产生证书的工具。把RSA运算法则作为主要安全运算法则，这保证了与其它服务器和组件的兼容性。这个命令会在用户的home&nbsp;directory产生一个叫做“&nbsp;.keystore&nbsp;”的新文件。在执行后，你首先被要求出示keystore密码。Tomcat使用的默认密码是“&nbsp;changeit&nbsp;”全都是小写字母)，如果你愿意，你可以指定你自己的密码。你还需要在server.xml配置文件里指定自己的密码，这在以后会有描述。</p> 
+  <p>2、你会被要求出示关于这个认证书的一般性信息，如公司，联系人名称，等等。这些信息会显示给那些试图访问你程序里安全网页的用户，以确保这里提供的信息与他们期望的相对应。</p> 
+  <p>3、你会被要求出示密钥(key)密码，也就是这个认证书所特有的密码(与其它的储存在同一个keystore文件里的认证书不同)。你必须在这里使用与keystore密码相同的密码。(目前，keytool会提示你按ENTER键会自动帮你做这些)。&nbsp;如果一切顺利，你现在就拥有了一个可以被你的服务器使用的有认证书的keystore文件。</p> 
+  <p><strong>二、配置tomcat</strong>&nbsp;</p> 
+  <p>第二个大步骤是把secure&nbsp;socket配置在$CATALINA_HOME/conf/server.xml文件里。$CATALINA_HOME代表安装Tomcat的目录。一个例子是SSL连接器的&lt;Connector&gt;元素被包括在和Tomcat一起安装的缺省server.xml文件里。它看起来象是这样：</p> 
+  <p>&nbsp;$CATALINA_HOME/conf/server.xml&lt;–&nbsp;Define&nbsp;a&nbsp;SSL&nbsp;Coyote&nbsp;HTTP/1.1&nbsp;Connector&nbsp;on&nbsp;port&nbsp;8443&nbsp;–&gt; &lt;!–&nbsp;&lt;Connector&nbsp;port=”8443″&nbsp;minProcessors=”5″&nbsp;maxProcessors=”75″&nbsp;enableLookups=”true”&nbsp;disableUploadTimeout=”true”&nbsp;acceptCount=”100″&nbsp;debug=”0″&nbsp;scheme=”https”&nbsp;secure=”true”;&nbsp;clientAuth=”false”&nbsp;sslProtocol=”TLS”/&gt;&nbsp;–&gt;Connector元素本身，其默认形式是被注释掉的(commented&nbsp;out)，所以需要把它周围的注释标志删除掉。然后，可以根据需要客户化(自己设置)特定的属性。一般需要增加一下keystoreFile和keystorePass两个属性，指定你存放证书的路径（如：keystoreFile=”C:/.keystore”）和刚才设置的密码（如：keystorePass=”123456″）。&nbsp;在完成这些配置更改后，必须象重新启动Tomcat，然后你就可以通过SSL访问Tomcat支持的任何web应用程序。只不过指令需要像下面这样：</p> 
+  <p>&nbsp;https://localhost:8443</p> 
+  <p></p>  
+ </body>
+</html>

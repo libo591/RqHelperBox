@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>统计图的使用方法是很灵活的，在设计报表的过程中，可能有部分的数据对应的统计值为空或者0，有些客户在进行统计的时候，不想把这样的数据统计进去，下面就介绍一下如何设计这样的统计图。</p> 
+  <p>具体方法：1，可以只显示统计数据不为空的记录，然后用这个记录作图，这个只需要在扩展单元格里加上条件即可实现。2，如果需要将数据完全展示，则第一种办法就不行了，这时需要将所有数据都显示，然后判断一下共有多少条需要统计的非空记录，用统计图特性来实现。</p> 
+  <p>详细过程为：</p> 
+  <p>首先将报表和统计图制作出来：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/1-0008.png" alt="1.png" width="375" height="304" /></p> 
+  <p>由于有些地区没有数据，所以展示出来是这样的。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/2-0008.png" alt="2.png" width="392" height="308" /></p> 
+  <p>其中华中和西北都是没有数据的，下面就介绍一下怎么去掉为空的选项。</p> 
+  <p>在B列后加一列把这列隐藏，C2为=if(B2==0,0,1)</p> 
+  <p>C3里写 =sum(C2{})</p> 
+  <p>然后统计图里加上相关的信息：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/3-0005.png" alt="3.png" width="519" height="47" /></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/4-0002.png" alt="4.png" width="294" height="52" /></p> 
+  <p>这样，就可以看到效果了。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/5-0003.png" alt="5.png" width="398" height="313" /></p> 
+  <p>如果有类似的需求，就可以按照上面的方法设置，其中<img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/05/6-0001.png" alt="6.png" width="300" height="41" />这里也支持用参数来控制，可以通过参数来控制要显示多少个柱状的统计数据，但是需要注意的是他取到的是最大的几条统计数据，其他数据将被归类为其他，选择”丢弃其他分类”将不显示其他这一分类。</p>  
+ </body>
+</html>

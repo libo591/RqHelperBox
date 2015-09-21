@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾填报表发布到web页面以后会自动生成一个提交按钮，点击此按钮后系统不做提示，直接进行填报。但是有些web报表用户希望在点击提交按钮后会弹出确认提示框，根据确认提示框点击是或者否再确定是否真的要进行填报，以免出现误操作、误填报。本文就来介绍一下怎样实现这种自定义提交提示框。</p> 
+  <p>实现思路：<br /> 1. 提交提示框无非是一段JavaScript代码来实现的，所以先要编写自定义提交提示框的JavaScript并插入到发布报表的jsp中。<br /> 2. 在toolbar中添加新功能的按钮。由于报表本身带有提交按钮，如果再添加一个按钮就会重复，所以要屏蔽掉默认的提交按钮或者修改默认按钮调用的JavaScript方法。</p> 
+  <p>下面根据思路来做一个例子，实现步骤如下：</p> 
+  <p>第一步：修改toolbar.jsp，增加自定义javascript<br /> 打开toolbar.jsp（该jsp是在展现报表的showReport.jsp中调用的，是存放功能按钮代码的一个单独的jsp，可修改该jsp来进行增加修改页面中功能条），增加自定义提交提示框的JavaScript代码如下：<br /> &lt;script language=”javascript”&gt;<br /> function firm()//提交的函数名称<br /> {<br /> if(confirm(”是否保存”))//利用对话框返回的值（true 或者 false）<br /> {<br /> //如果是true ，则调用_submitTable( report1 )进行提交<br /> _submitTable( report1 );<br /> return true;<br /> }<br /> else<br /> {<br /> //否则则取消<br /> alert(”你按了取消，返回页面”);<br /> return false;<br /> }<br /> }<br /> &lt;/script&gt;</p> 
+  <p>这样一段简单代码就实现了自定义提交提示框的基本功能，接下来只需要修改按钮调用到这段代码就可以实现效果了。如果需要其它提示框功能，也可照上述方法相应地自行添加。</p> 
+  <p>第二步：设置页面提交按钮对应代码如下：<br /> 在toolbar.jsp中找到提交按钮的代码段<br /> &lt;a href=”#” onClick=”_submitTable( report1 );return false;”&gt;&lt;%=submitImage%&gt;&lt;/a&gt;<br /> 默认是通过一张之前定义的submitImage这张图片触发超链接提交的,提交时激活润乾内置的JavaScript脚本。现在我们需要对这行代码进行修改，调用第一步编写的自定义提交提示框的JavaScript代码。<br /> &lt;a href=”#” onClick=”firm()”&gt;&lt;%=submitImage%&gt;&lt;/a&gt; &lt;!-这里的firm()方法是第一步时定义的 –&gt;<br /> 修改完jsp以后我们来看下增加了自定义提交提示框填报表的效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/19.png" alt="1.png" width="664" height="456" /><br /> 这样就可以实现在填报表中使用自定义提交确认提示框了，方便了web报表用户进行提交操作时的自定义设置，避免了误操作和误填报。</p>  
+ </body>
+</html>

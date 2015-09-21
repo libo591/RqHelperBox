@@ -1,0 +1,41 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">有客户有这样的需求，需要利用统计图显示最</span><span>N</span><span style="FONT-FAMILY: 宋体">年的数据，即统计图的横轴为最近</span><span>N</span><span style="FONT-FAMILY: 宋体">年的日期。统计图属性定义中有”仅用前</span><span>N</span><span style="FONT-FAMILY: 宋体">条数据记录来画统计图”的设置，这个设置的意思是选出系列值从大到小排列的前十条数据来画统计图，因此这个设置项并不能满足客户的需求。</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">我们可以利用</span><span>top()</span><span style="FONT-FAMILY: 宋体">函数来选出最近</span><span>N</span><span style="FONT-FAMILY: 宋体">年的数据，然后再利用选出的最近</span><span>N</span><span style="FONT-FAMILY: 宋体">年的数据来画统计图，即可满足客户的需求。</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">下面我们来看这个例子：</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">第一步：新建数据集，打开报表设计器，新建内建数据集如下：</span></p> 
+  <p class="MsoNormal"><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_018p319e08bf.png" height="415" width="519" /></span></p> 
+  <p class="MsoNormal"><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_019n232b7b33.png" height="468" width="552" /></span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">第二步：设计报表，如下：</span></p> 
+  <p class="MsoNormal"><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_021n536ff692.png" height="444" width="560" /></span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">第三步：定义统计图，</span><span>A7</span><span style="FONT-FAMILY: 宋体">单元格中统计图定义如下：</span></p> 
+  <p class="MsoNormal"><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_022p7ad69272.png" height="488" width="498" /></span></p> 
+  <p class="MsoNormal"><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_023n6f48a08d.png" height="429" width="505" /></span></p> 
+  <p class="MsoNormal"><span>A14</span><span style="FONT-FAMILY: 宋体">单元格中统计图定义如下：</span></p> 
+  <p class="MsoNormal"><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_024p5218a550.png" height="442" width="505" /></span></p> 
+  <p class="MsoNormal"><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_025p60ca288f.png" height="429" width="497" /></span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">第四步：设置隐藏行，选中第</span><span>5</span><span style="FONT-FAMILY: 宋体">行，在右侧将是否可见的对勾去掉；</span></p> 
+  <p class="MsoNormal"><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_026n7a014184.png" height="107" width="321" /></span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">第五步：保存预览，统计图效果如下：</span></p> 
+  <p class="MsoNormal"><span><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_027p6a620c89.png" height="290" width="552" /></span></p> 
+  <p class="MsoNormal"><span>top()</span><span style="FONT-FAMILY: 宋体">：</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">函数说明：</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">从数据集中符合条件的记录中选取头</span><span>num</span><span style="FONT-FAMILY: 宋体">条并返回</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">语法：</span></p> 
+  <p class="MsoNormal"><span>datasetName.top( &lt;select_exp&gt;,&lt;num_exp&gt;{, desc_exp, filter_exp,sort_exp} )</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">参数说明：</span></p> 
+  <p class="MsoNormal"><span>select_exp</span><span style="FONT-FAMILY: 宋体">：要选择的字段列，可以是字段列名</span><span>/</span><span style="FONT-FAMILY: 宋体">列号，也可以是表达式。</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">列号用</span><span>#n</span><span style="FONT-FAMILY: 宋体">表示，例如</span><span>#0</span><span style="FONT-FAMILY: 宋体">代表第</span><span>0</span><span style="FONT-FAMILY: 宋体">列，</span><span>#1</span><span style="FONT-FAMILY: 宋体">代表第</span><span>1</span><span style="FONT-FAMILY: 宋体">列，依此类推</span></p> 
+  <p class="MsoNormal"><span>num_exp</span><span style="FONT-FAMILY: 宋体">：</span><span style="FONT-FAMILY: 宋体">要取得记录个数表达式，该字段计算的最终结果为整型</span></p> 
+  <p class="MsoNormal"><span>desc_exp: </span><span style="FONT-FAMILY: 宋体">指定数据排序的顺序，</span><span>true</span><span style="FONT-FAMILY: 宋体">表示降序排列，</span><span>false</span><span style="FONT-FAMILY: 宋体">表示升序排列。</span></p> 
+  <p class="MsoNormal"><span>filter_exp:</span> <span style="FONT-FAMILY: 宋体">数据过滤表达式。</span></p> 
+  <p class="MsoNormal"><span>sort_exp: </span><span style="FONT-FAMILY: 宋体">排序表达式。</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">返回值：</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">一组数据的集合，数据类型由</span><span>select_exp</span><span style="FONT-FAMILY: 宋体">的运算结果决定</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">示例：</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">例</span><span>1</span><span style="FONT-FAMILY: 宋体">：</span><span>ds1.top(name,10)</span> <span style="FONT-FAMILY: 宋体">返回数据集</span><span>ds1</span><span style="FONT-FAMILY: 宋体">中头十条记录的</span><span>name</span><span style="FONT-FAMILY: 宋体">字段值</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">例</span><span>2</span><span style="FONT-FAMILY: 宋体">：</span><span>ds1.top(name,10,true,,score)</span></p> 
+  <p class="MsoNormal"><span style="FONT-FAMILY: 宋体">将数据集记录按成绩降序排列，返回头十条记录的</span><span>name</span><span style="FONT-FAMILY: 宋体">字段值</span></p>  
+ </body>
+</html>

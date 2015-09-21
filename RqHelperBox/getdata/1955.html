@@ -1,0 +1,30 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>有许多客户提出需求，希望能够润乾报表实现权限控制的功能，想实现不同角色、不同ID的人访问同一张报表的时候，能够有不同的可写权限，看见的可写内容也不一样，下面本文制作一个简单的例子，来实现不同角色通过不同的url来访问报表时，看到的报表可写权限不同效果。</p> 
+  <p>这个功能的实现思路是通过不同的url传递不同的角色ID给报表，由于在报表可写属性中根据不同的角色ID设置了不同的属性，所以可以实现不同角色、不同ID的人访问同一张报表的时候，能够有不同的可写权限，看见的可写内容也不一样的效果。</p> 
+  <p>第一步，制作一张填报表。</p> 
+  <p>首先连接demo数据源，并新建一张空白的填报表，内建一个数据集，内建数据集的字段以及报表的样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/15.png" alt="1.png" width="552" height="329" /></p> 
+  <p>然后添加一个参数，参数名为userID，这个参数的作用是用来判断访问的角色，进而决定单元格的可写属性，参数的具体形式和设置内容如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/24.png" alt="2.png" width="491" height="330" /></p> 
+  <p>第二步，设置可写表达式，实现可写属性的判断。</p> 
+  <p>先在F2单元格的显示值表达式写入：map(list(”1″,”0″),list(”是”,”否”))，然后在A2单元格的填报属性-可写表达式 里面写入如下表达式：if(@userID==ds1.录入人 &amp;&amp; ds1.是否审批==’0′,true,false)，具体的样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/34.png" alt="3.png" width="464" height="339" /></p> 
+  <p>同理，我们在B2,C2,D2,E2,F2单元格中也分别写入如下内容：</p> 
+  <p>B2：if(@userID==ds1.录入人 &amp;&amp; ds1.是否审批==’0′,true,false)</p> 
+  <p>C2：if(@userID==ds1.录入人 &amp;&amp; ds1.是否审批==’0′,true,false)</p> 
+  <p>D2：if(@userID==ds1.录入人 &amp;&amp; ds1.是否审批==’0′,true,false)</p> 
+  <p>E2：if(@userID==ds1.录入人 &amp;&amp; ds1.是否审批==’0′,true,false)</p> 
+  <p>F2：if(@userID==ds1.录入人 &amp;&amp; ds1.是否审批==’0′,true,false)</p> 
+  <p>第三步：发布报表。</p> 
+  <p>用自带的tomcat发布上面的报表，将报表的名字存为testRole.raq，然后分别通过下面的两个url访问这张报表：</p> 
+  <p>1. http://127.0.0.1:6001/demo/reportJsp/showReport.jsp?raq=/testRole.raq&amp;userID=11</p> 
+  <p>2. http://127.0.0.1:6001/demo/reportJsp/showReport.jsp?raq=/testRole.raq&amp;userID=22</p> 
+  <p>这两个报表后面&amp;userID=11和&amp;userID=22的作用是传递参数userID的值，当用第一个url访问这张报表的时候，我们可以看到录入人为11的是可写的，而录入人为22的则不可写，具体的情况如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/44.png" alt="4.png" width="552" height="250" /></p> 
+  <p>输入url为：http://127.0.0.1:6001/demo/reportJsp/showReport.jsp?raq=/testRole.raq&amp;userID=22的时候可以看到，录入人为22的单元格都是可写的，而录入人为11的单元格都是不可写的。如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/53.png" alt="5.png" width="547" height="242" /></p> 
+  <p>这样就实现了对不同的角色传递不同的参数，来控制单元的可写属性了，客户也可以根据自己的需求，设置不同的登陆角色名，类似于例子中的userID，访问报表的时候就可以自由控制权限了。</p>  
+ </body>
+</html>

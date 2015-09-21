@@ -1,0 +1,49 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表的报表样式可以分为普通报表和行式报表两大类。由于存储和计算的基本单位不同，行式报表在运算速度和处理数据量上有着很大的优势，使用行式报表可以显著提升报表的运算效率和处理数据量。</p> 
+  <p>普通报表：把报表中的单元格作为存储和计算的基本单位，比如一个3行3列的普通报表，那么在内存里就是把3*3=9个单元格作为9个对象进行存储和计算。<br /> 行式报表：把报表中的行作为存储和计算的基本单位，比如一个3行3列的行式报表，那么在内存中就是把3行作为3个对象来存储和计算，这种报表极大的提高了运算速度。</p> 
+  <p>下面我们以具有20万条记录的表test_one为例，来对普通网格式报表和行式展现报表的运算速度进行一下对比。</p> 
+  <p><strong>普通网格式报表</strong>：用时<strong>49</strong>秒。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/1.png" alt="1.png" height="103" /></p> 
+  <p><strong>行式展现报表</strong>：用时<strong>29</strong>秒。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/2.png" alt="2.png" height="100" /></p> 
+  <p>可以看出，在20万条记录的情况下，使用行式报表可以缩短40%以上的运算时间，大大提高了运算效率。当数据量再继续增加尤其是列数大大增加的时候，行式展现报表的高效优势就会体现得越发明显。</p> 
+  <p>但并不是任何一个报表都是行式报表，只有满足以下特征的报表，才可以是行式报表：</p> 
+  <ul> 
+   <li><strong>主格不同行</strong></li> 
+  </ul> 
+  <p>例：主格在同一行，属于<strong>普通报表</strong>。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/3.png" alt="3.png" height="153" /></p> 
+  <p>例：主格不在同一行，属于<strong>行式报表</strong>。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/4.png" alt="4.png" height="212" /></p> 
+  <ul> 
+   <li><strong>无横向扩展</strong></li> 
+  </ul> 
+  <p>例：单元格横向扩展，属于<strong>普通报表</strong>。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/5.png" alt="5.png" height="63" /></p> 
+  <p>例：单元格纵向扩展，属于<strong>行式报表</strong>。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/6.png" alt="6.png" height="137" /></p> 
+  <ul> 
+   <li><strong>无拉伸单元格</strong></li> 
+  </ul> 
+  <p>例：扩展时存在纵向拉伸单元格，属于<strong>普通报表。</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/7.png" alt="7.png" height="118" /></p> 
+  <p>例：扩展时无拉伸单元格，属于<strong>行式报表</strong>。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/8.png" alt="8.png" height="120" /></p> 
+  <ul> 
+   <li><strong>按源格遍历法运算（源格不能循环引用）</strong></li> 
+  </ul> 
+  <p>例如：下图所示的报表有一个累积奖金列。所谓的累积，就是从第一行起累加到当前行的数值之和。我们把F2格的表达式写成=E2+F2[-1]。在设计状态，只有一行单元格，E2格只有一个，扩展后变成了很多行，变成了很多个E2格，这就属于源格循环引用的一个例子，所以这个报表不属于行式报表。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/9.png" alt="9.png" height="42" /></p> 
+  <ul> 
+   <li><strong>无图注</strong></li> 
+  </ul> 
+  <p>不包含任何类型的统计图。</p> 
+  <p>当然，每次设计报表之后都要对照上述要求逐条判断是件挺麻烦的事情，为此，润乾提供了方便快捷的行式报表判断机制，如下图所示，当制作好了一张报表之后，只要点击设计器菜单栏属性菜单中的【检查是否行式】就可以得出结论。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/10.png" alt="10.png" height="376" /></p> 
+  <p>判断当前报表为行式报表之后，只需在报表属性中把报表样式改为行式报表，那么在对这个报表进行存储和运算时就会作为行式报表以行为单位来高效率进行了。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/05/11.png" alt="11.png" height="425" /></p> 
+  <p><span lang="EN-US"></span></p>  
+ </body>
+</html>

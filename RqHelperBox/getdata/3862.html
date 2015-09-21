@@ -1,0 +1,63 @@
+<html>
+ <head></head> 
+ <body> 
+  <h2><span style="font-family: 宋体;">问题背景：</span></h2> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">注意！号外！！！！润乾目前官方提供了一种满足折叠报表需求的解决方案，是由润乾产品部出品的，该折叠功能区别之前提供的折叠报表需求的解决方案，更好的满足针对大数据量折叠报表的性能需求。</span></p> 
+  <h2><span style="font-family: 宋体;">功能及部署操作：</span></h2> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">一、实现功能：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">展开下一节点的时候，实现动态从后台数据库中取数；一旦一个节点的下一级节点的数据被取到后，该节点再次的展开和折叠则不会再次请求数据</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">二、程序用法</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">1</span><span style="font-family: 宋体; font-size: 9pt;">、将样式文件和</span><span style="font-size: 9pt;">js</span><span style="font-family: 宋体; font-size: 9pt;">文件添加到应用中</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">将压缩包里</span><span style="font-size: 9pt;">js</span><span style="font-family: 宋体; font-size: 9pt;">文件夹和</span><span style="font-size: 9pt;">style</span><span style="font-family: 宋体; font-size: 9pt;">文件夹中文件放到应用中</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">2</span><span style="font-family: 宋体; font-size: 9pt;">、在展现折叠报表页面引入样式文件和</span><span style="font-size: 9pt;">js</span><span style="font-family: 宋体; font-size: 9pt;">文件</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">在展现折叠报表的页面引入折叠报表相关的</span><span style="font-size: 9pt;">js</span><span style="font-family: 宋体; font-size: 9pt;">（压缩包下</span><span style="font-size: 9pt;">js</span><span style="font-family: 宋体; font-size: 9pt;">文件夹下的所有文件）和</span><span style="font-size: 9pt;">css</span><span style="font-family: 宋体; font-size: 9pt;">样式</span><span style="font-size: 9pt;">(</span><span style="font-family: 宋体; font-size: 9pt;">压缩包下</span><span style="font-size: 9pt;">style</span><span style="font-family: 宋体; font-size: 9pt;">文件夹下</span><span style="font-size: 9pt;">)</span><span style="font-family: 宋体; font-size: 9pt;">文件，如：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">&lt;!– </span><span style="font-family: 宋体; font-size: 9pt;">引入必要的</span><span style="font-size: 9pt;">js</span><span style="font-family: 宋体; font-size: 9pt;">和</span><span style="font-size: 9pt;">css –&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">&lt;script type=”text/javascript” src=”js/jquery.js”&gt;&lt;/script&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">&lt;script type=”text/javascript” src=”js/report_tree.js”&gt;&lt;/script&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">&lt;script type=”text/javascript” src=”js/Base64.js”&gt;&lt;/script&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">&lt;link rel=”stylesheet” type=”text/css” href=”style/treeReport/default.css”&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">&lt;!– </span><span style="font-family: 宋体; font-size: 9pt;">引入必要的</span><span style="font-size: 9pt;">js</span><span style="font-family: 宋体; font-size: 9pt;">和</span><span style="font-size: 9pt;">css end –&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">3</span><span style="font-family: 宋体; font-size: 9pt;">、调用</span><span style="font-size: 9pt;">js</span><span style="font-family: 宋体; font-size: 9pt;">方法</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">在展现折叠报表页面需要引入初始化折叠报表方法，代码如下：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">&lt;script type=”text/javascript”&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//</span><span style="font-family: 宋体; font-size: 9pt;">定义等待图片路径</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>var waitImagePath = “style/treeReport/images/loading.gif”;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// </span><span style="font-family: 宋体; font-size: 9pt;">初始化折叠报表</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>$(document).ready(function(){</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>ReportTreeManager.init(‘report1′,’&lt;%=request.getContextPath()%&gt;’,'&lt;%=params.toString()%&gt;’);</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>});</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">&lt;/script&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">4</span><span style="font-family: 宋体; font-size: 9pt;">、将折叠报表使用的</span><span style="font-size: 9pt;">jar</span><span style="font-family: 宋体; font-size: 9pt;">文件</span><span style="font-size: 9pt;">puckerReport.jar</span><span style="font-family: 宋体; font-size: 9pt;">、</span><span style="font-size: 9pt;">json.jar</span><span style="font-family: 宋体; font-size: 9pt;">引入到项目中</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">5</span><span style="font-family: 宋体; font-size: 9pt;">、在</span><span style="font-size: 9pt;">web.xml</span><span style="font-family: 宋体; font-size: 9pt;">文件中添加</span><span style="font-size: 9pt;">servlet</span><span style="font-family: 宋体; font-size: 9pt;">定义，代码如下</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span></span>&lt;servlet&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;servlet-name&gt;treeReportServlet&lt;/servlet-name&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;servlet-class&gt;com.runqianapp.report.view.TreeReportServlet&lt;/servlet-class&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span></span>&lt;/servlet&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span></span>&lt;servlet-mapping&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span>&nbsp;&nbsp;&nbsp; </span>&lt;servlet-name&gt;treeReportServlet&lt;/servlet-name&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span>&nbsp;&nbsp;&nbsp; </span>&lt;url-pattern&gt;/treeReportServlet&lt;/url-pattern&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;"><span></span>&lt;/servlet-mapping&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">三、<a title="报表制作" href="http://www.runqian.com.cn/archives/1172.html">报表制作</a></span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">该折叠报表有几级折叠，就应该做几张报表，每张报表是一个需要折叠的级</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">在需要</span><span style="font-size: 9pt;">“</span><span style="font-family: 宋体; font-size: 9pt;">展开</span><span style="font-size: 9pt;">/</span><span style="font-family: 宋体; font-size: 9pt;">折叠</span><span style="font-size: 9pt;">“</span><span style="font-family: 宋体; font-size: 9pt;">的单元格的</span><span style="font-size: 9pt;">HTML</span><span style="font-family: 宋体; font-size: 9pt;">事件中添加如下代码：</span><span style="font-size: 9pt;">“iddata=’”+value()+”‘ piddata=” nextReport=’collapse_report_lv2.raq’”</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">注意：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">1</span><span style="font-family: 宋体; font-size: 9pt;">、第一级报表是通过展现折叠报表的</span><span style="font-size: 9pt;">jsp</span><span style="font-family: 宋体; font-size: 9pt;">页面的报表展现标签引入的</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">2</span><span style="font-family: 宋体; font-size: 9pt;">、除第一级报表外，其他没一级报表都有一个参数名为“</span><span style="font-size: 9pt;">parent</span><span style="font-family: 宋体; font-size: 9pt;">”的参数，表示上一级</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">3</span><span style="font-family: 宋体; font-size: 9pt;">、最后一级报表没有</span><span style="font-size: 9pt;">“</span><span style="font-family: 宋体; font-size: 9pt;">展开</span><span style="font-size: 9pt;">/</span><span style="font-family: 宋体; font-size: 9pt;">折叠</span><span style="font-size: 9pt;">“</span><span style="font-family: 宋体; font-size: 9pt;">的单元格，则在第一个显示数据的单元格的</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">4</span><span style="font-family: 宋体; font-size: 9pt;">、报表所需的参数在每一级报表中都得使用</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">HTML</span><span style="font-family: 宋体; font-size: 9pt;">事件中添加如下代码：</span><span style="font-size: 9pt;">“iddata=’”+value()+”‘ piddata=” “</span><span style="font-family: 宋体; font-size: 9pt;">，因为它是最后一级，没有下一级报表</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">四、展开</span><span style="font-size: 9pt;">/</span><span style="font-family: 宋体; font-size: 9pt;">折叠图片的使用</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">这两个图片的定义是在</span><span style="font-size: 9pt;">default</span><span style="font-family: 宋体; font-size: 9pt;">。</span><span style="font-size: 9pt;">css</span><span style="font-family: 宋体; font-size: 9pt;">文件中的，代码如下：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">td.plus{background-image:url(‘images/plus.png’)}//</span><span style="font-family: 宋体; font-size: 9pt;">已折叠图片</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">td.minus{background-image:url(‘images/minus.png’)}//</span><span style="font-family: 宋体; font-size: 9pt;">已展开图片</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">若需更改此图片可在此处修改即可</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">五、等待图片的使用</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">为了方便更改等待图片，等待图片的路径定义在</span><span style="font-size: 9pt;">jsp</span><span style="font-family: 宋体; font-size: 9pt;">页面上的</span><span style="font-size: 9pt;">javascript</span><span style="font-family: 宋体; font-size: 9pt;">标签内，代码如下：</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-size: 9pt;">var waitImagePath = “style/treeReport/images/loading.gif”;</span></p> 
+  <p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体; font-size: 9pt;">如需更改等待图片，更改此处代码即可</span></p> 
+  <p></p> 
+  <div id="_mcePaste" class="mcePaste" style="position: absolute; width: 1px; height: 1px; overflow: hidden; top: 0px; left: -10000px;">
+    ﻿ 
+  </div>  
+ </body>
+</html>

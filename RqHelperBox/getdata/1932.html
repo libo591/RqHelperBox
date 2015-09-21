@@ -1,0 +1,27 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>J2EE开发中配置数据库连接池的方式有很多种，多数情况下只要在应用服务器上配置数据库连接池就能满足需求，但是也有不少客户会使用一些中间件配置数据库连接池的方式，比如Spring，此时若采取通常的配置方法，发现润乾报表发布时不能正常展现了，报数据源连接的问题。本文介绍润乾报表如何读取Spring配置文件中的数据源发布报表。</p> 
+  <p>实现思路：</p> 
+  <p>在Jsp内读取Spring内数据源配置，创建报表运行上下文环境Context，然后生成ReportDefine对象，最后采用defineBean方式发布报表。</p> 
+  <p>具体的实现步骤如下：</p> 
+  <p>第一步：设计报表</p> 
+  <p>这里使用mysql数据库为例做报表，数据源名称为”mysqlCon”，设计完报表如下所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/125.png" alt="1.png" width="469" height="148" /></p> 
+  <p>第二步：读取Spring配置文件内的数据源工具类及工具类配置</p> 
+  <p>1、 编写读取Spring配置文件内的数据源工具类</p> 
+  <p>为避免每一个jsp运行报表时，在Jsp内都要用大段重复的代码获取数据源生成报表运行的上下文环境（Context），这里采用将生成Context的代码放在公共类中，每次Jsp发布报表的时候，只需将该类在Jsp内引入即可。</p> 
+  <p>工具类代码如下：</p> 
+  <p>import java.io.FileInputStream;<br /> import java.io.InputStream;<br /> import java.sql.Connection;<br /> import java.sql.SQLException;<br /> import javax.sql.DataSource;<br /> import org.springframework.context.ApplicationContext;<br /> import org.springframework.context.support.ClassPathXmlApplicationContext;<br /> import com.runqian.report4.model.ReportDefine;<br /> import com.runqian.report4.model.engine.ExtCellSet;<br /> import com.runqian.report4.usermodel.Context;<br /> import com.runqian.report4.usermodel.DataSourceConfig;<br /> import com.runqian.report4.util.ReportUtils;</p> 
+  <p>public class CalReportUtils{<br /> public static Context getContext(){<br /> //读取spring配置文件，生成Spring上下文环境<br /> ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{”applicationContext.xml”});<br /> //通过getBean方式获取到Spring配置文件内的数据源，其中”mysqlDataSource”为//Spring内数据库连接池的Bean名称。<br /> DataSource ds = (DataSource)ctx.getBean(”mysqlDataSource”);<br /> Connection connection = null ;<br /> try {<br /> //通过DataSource获取到数据库连接对象connection<br /> connection = ds.getConnection();<br /> } catch (SQLException e) {<br /> e.printStackTrace();<br /> }<br /> //设置报表运算使用的授权文件，这里是固定格式。<br /> String license = “F:/runqianWindowServer.lic”;<br /> ExtCellSet.setLicenseFileName(license);<br /> //创建报表运行时的上下文环境，这里引入类时要注意，应该是润乾包内的Context<br /> Context ct = new Context();<br /> //设置报表设计时使用的数据源名称<br /> ct.setDefDataSourceName(”mysqlCon”);<br /> //设置报表运行的数据库连接<br /> ct.setConnection(”mysqlCon”,connection);<br /> //数据源配置<br /> DataSourceConfig dsoc = new DataSourceConfig(10, true, “GBK”, “GBK”, false);<br /> ct.setDataSourceConfig(”mysqlCon”, dsoc);<br /> //返回报表运行的上下文环境对象ct<br /> return ct;<br /> }<br /> }</p> 
+  <p>2、工具类配置</p> 
+  <p>将编写好的工具类放在应用的Web-inf/classes下，重启应用服务器，使其加载在classpath中。</p> 
+  <p>第三步：defineBean方式发布报表的Jsp文件</p> 
+  <p>这里要采用defineBean的方式发布报表，下面是具体的Jsp例子：</p> 
+  <p>&lt;%@ page language=”java” import=”java.util.*” pageEncoding=”GBK”%&gt;<br /> &lt;%@ taglib uri=”/WEB-INF/runqianReport4.tld” prefix=”report” %&gt;<br /> &lt;%@ page import=”com.runqian.report4.usermodel.Context” %&gt;<br /> //引入报表运行上下文环境工具类<br /> &lt;<a href="mailto:%@page">%@page</a> import=”com.runqian.jolei.common.CalReportUtils”%&gt;<br /> &lt;%@ page import=”java.io.*”%&gt;<br /> &lt;%@ page import=”java.util.*”%&gt;<br /> &lt;%@ page import=”com.runqian.report4.model.ReportDefine” %&gt;<br /> &lt;%@ page import=”com.runqian.report4.util.ReportUtils” %&gt;<br /> &lt;%<br /> String path = request.getContextPath();<br /> String basePath = request.getScheme()+”://”+request.getServerName()+”:”+request.getServerPort()+path+”/”;<br /> %&gt;<br /> &lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN”&gt;<br /> &lt;html&gt;<br /> &lt;head&gt;<br /> &lt;base href=”&lt;%=basePath%&gt;”&gt;<br /> &lt;title&gt;获取Spring数据源方式发布报表&lt;/title&gt;<br /> &lt;/head&gt;<br /> &lt;body&gt;<br /> &lt;%<br /> //通过工具类获取一个context对象,从而创建出报表运行所需环境<br /> Context ctx = CalReportUtils.getContext();<br /> //报表路径，可相对应用根目录<br /> String reportFilePath = “E:/aaaa.raq”;<br /> InputStream file;<br /> ReportDefine rd = null;<br /> try {<br /> //使用流的方式将报表读入<br /> file = new FileInputStream(reportFilePath);<br /> //使用报表工具类读取报表流，生成ReportDefine报表对象<br /> rd = (ReportDefine)ReportUtils.read( file );<br /> } catch (Exception e) {<br /> e.printStackTrace();<br /> }<br /> <br /> request.setAttribute(”reportBean”,rd);<br /> request.setAttribute( “myContext”, ctx );<br /> %&gt;<br /> &lt;table align=center&gt;<br /> &lt;tr&gt;&lt;td&gt;<br /> &lt;!-defineBean方式发布报表标签使用，srcType指定为defineBean，beanName指定为request中的名称reportBean，contextName指定为request中的myContext。到此就可以正常发布展现报表了–&gt;<br /> &lt;report:html name=”report1″ srcType=”defineBean” beanName=”reportBean” contextName=”myContext”/&gt;<br /> &lt;/td&gt;&lt;/tr&gt;<br /> &lt;/table&gt;<br /> &lt;/body&gt;<br /> &lt;/html&gt;</p> 
+  <p>发布报表后的显示结果</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/03/216.png" alt="2.png" width="541" height="147" /></p> 
+  <p><span>到此可以看到，尽管没有在应用服务器上配置数据库连接池，一样可以读取Spring内的数据源配置成功发布报表。</span></p> 
+  <p><span>总结：润乾报表中配置数据库连接池的方式有很多种，是能够支持不同客户需求的。本文介绍的发布方式只是其中的一种，比如另外的方式还可以在severlet中实现等。</span></p>  
+ </body>
+</html>

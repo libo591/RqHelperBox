@@ -1,0 +1,38 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表中支持多种数据集类型，包括：SQL检索、存储过程、复杂SQL、TXT文件、XML数据集、自定义数据集等。</p> 
+  <p>在自定义数据集的实际应用中，我们遇到这样一个问题：</p> 
+  <p>客户的XML数据文件有很多，想通过设置一个XML数据集然后跟不同的情况打开不同的XML文件。从业务需求上分析，也就是通过动态读取不同XML文件中的数据，然后把数据返回给数据集的过程。</p> 
+  <p>我们分析一下实现的过程是：</p> 
+  <p>用自定义数据集，传入参数为xml文件路径。这样可以通过参数决定从哪个XML文件中读取数据。</p> 
+  <p>下面是实现的demo源代码，其中PraseXML.java是用来解析XML文件，并得到XML的docment，XMLDataSetTest.java是自定义数据集。</p> 
+  <p>PraseXML.java：</p> 
+  <p>import java.io.FileInputStream;<br /> import java.io.InputStream;</p> 
+  <p>import org.jdom.Document;<br /> import org.jdom.input.SAXBuilder;</p> 
+  <p>public class PraseXML {</p> 
+  <p>/**<br /> * 解析XML文件，并得到XML的docment<br /> * @param name 文件名称<br /> * @return<br /> */<br /> public Document getDoc(String name){<br /> try{<br /> SAXBuilder sb = new SAXBuilder();//使用默认的jdom解析器<br /> Document doc = sb.build(new FileInputStream(name)); //解析XML文件，并得到XML的docment<br /> return doc;<br /> }catch(Exception e){<br /> e.printStackTrace();<br /> return null;<br /> }<br /> }<br /> }</p> 
+  <p>XMLDataSetTest.java：</p> 
+  <p>import java.util.List;<br /> import java.util.Vector;</p> 
+  <p>import org.jdom.Document;<br /> import org.jdom.Element;</p> 
+  <p>import com.runqian.report4.dataset.DataSet;<br /> import com.runqian.report4.dataset.IDataSetFactory;<br /> import com.runqian.report4.dataset.Row;<br /> import com.runqian.report4.usermodel.Context;<br /> import com.runqian.report4.usermodel.DataSetConfig;</p> 
+  <p>public class XMLDataSetTest implements IDataSetFactory {</p> 
+  <p>public DataSet createDataSet(Context context, DataSetConfig arg1,<br /> boolean arg2) {<br /> Document doc = null;<br /> String filename = (String) context.getParamValue(”fileName”);<br /> //String filename = “c:/b.xml”;<br /> // 调用PraseXML().getDoc（）把XML文件解析成Document，以便处理<br /> doc = new PraseXML().getDoc(filename);<br /> DataSet ds = new DataSet(”ds1″);<br /> // 取得XML文件的根<br /> Element root = doc.getRootElement();// root<br /> List list = root.getChildren();// list coll_jj<br /> // 对根目录下的每个子节点循环</p> 
+  <p>for (int i = 0; i &lt; list.size(); i++) {<br /> // System.err.println(”i&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;”+i);<br /> // 得到根目录的下一级子节点<br /> Element e = (Element) list.get(i);// 二级<br /> if (”COLL_JJ”.equals(e.getName())) {<br /> List child = e.getChildren();<br /> int m = 0;<br /> for (int j = 0; j &lt; child.size(); j++) {<br /> System.err.println(”j&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;” + j);<br /> Row row = null;<br /> Element e2 = (Element) child.get(j);// 三级<br /> List uvo = e2.getChildren();<br /> Vector vrow = new Vector();</p> 
+  <p>for (int n = 1; n &lt;= uvo.size(); n++) {<br /> Element e3 = (Element) uvo.get(n – 1);// 四级<br /> if (j == 0) {<br /> ds.addCol(e3.getName());<br /> }<br /> vrow.add(e3.getText());<br /> System.out.println(e3.getText());<br /> }<br /> row = ds.addRow();<br /> if (!vrow.isEmpty()) {<br /> for (int k = 0; k &lt; vrow.size(); k++) {<br /> ds.setData(m + 1, k + 1, vrow.get(k));</p> 
+  <p>}<br /> m++;</p> 
+  <p>}<br /> //<br /> }</p> 
+  <p>}</p> 
+  <p>}<br /> System.out.println(ds.getData(1, 1));<br /> System.out.println(ds.getData(2, 1));<br /> return ds;<br /> }</p> 
+  <p>/**<br /> * 转换列数据值类型<br /> *<br /> * @param value<br /> * 列原值<br /> * @param type<br /> * 列数据类型<br /> * @return Object<br /> */<br /> public static Object getColValue(String value, String type) {<br /> if (value == null || value.trim().length() == 0) {<br /> return null;<br /> }<br /> if (type.equals(”int”)) {<br /> return Integer.valueOf(value);<br /> } else if (type.equals(”date”)) {<br /> return java.sql.Date.valueOf(value);<br /> } else if (type.equals(”double”)) {<br /> return Double.valueOf(value);<br /> } else {<br /> return value;<br /> }</p> 
+  <p>}</p> 
+  <p>public static void main(String args[]) {</p> 
+  <p>XMLDataSetTest ts = new XMLDataSetTest();<br /> Context cont = new Context();<br /> DataSetConfig ds = null;<br /> boolean arg2 = false;<br /> ts.createDataSet(cont, ds, arg2);</p> 
+  <p>}<br /> }</p> 
+  <p>然后把这两个文件编译成.class后，在报表文件中使用：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/17.gif" alt="1.gif" width="406" height="304" /></p> 
+  <p>然后在数据集中写入自定义数据集的类:</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/07/25.gif" alt="2.gif" width="502" height="187" /></p> 
+  <p>然后我们就可以通过传参数来动态的打开不同的XML数据集了。</p>  
+ </body>
+</html>

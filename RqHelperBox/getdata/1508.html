@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表在页面上是以纯html形式发布的，每个单元格都有自己的ID，也就是说，可以在页面上引用任何一个单元格的值来进行进一步的处理。</p> 
+  <p>有两种可以确定到单元格位置的方法：</p> 
+  <p>一、通过报表名和单元格名：reportName_cellName，其中reportName是发布报表tag中name的属性值，cellName是单元格名称</p> 
+  <p>如：<span style="color: #0000ff;">report1_C1.value</span>–获得报表report1的C1单元格的真实值</p> 
+  <p><span style="color: #0000ff;">report1_C1.innerText</span>–获得报表report1的C1单元格的显示值</p> 
+  <p>二、通过设置单元格的变量名属性</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/zrclip-001n70349969.png" alt="" height="361" /></p> 
+  <p>设置了变量名之后，就可以在页面中对其进行引用了，可以在jsp代码中引用，还提供了tag标签来引用。</p> 
+  <p>1.在jsp代码中引用：</p> 
+  <p><span style="color: #0000ff;">&lt;%<br /> String myVar = request.getAttribute( “myVar” );<br /> %&gt;</span></p> 
+  <p>2.使用tag标签引用：</p> 
+  <p><span style="color: #0000ff;">&lt;report:var name=”myVar” /&gt;</span></p>  
+ </body>
+</html>

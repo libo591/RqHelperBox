@@ -1,0 +1,11 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font color="#ff0000">问题描述</font>:<br /> 报表设计中遇到mysql数据库日期型字段，无法读取值为0000-00-00 00:00:00的数据,提示：<br /> javax.servlet.ServletException: Cannot convert value ‘0000-00-00 00:00:00′ from colum 7 to TIMESTAMP.</p> 
+  <p><font color="#ff0000">解决方法</font>：</p> 
+  <ol> 
+   <li>在jdbc url上加zeroDateTimeBehavior=convertToNull就可以了，此时时间字段输出为“0”。</li> 
+   <li>在第一种方法行不通的情况下，建议升级mysql的jdbc驱动，重启服务器或者设计器。</li> 
+  </ol>  
+ </body>
+</html>

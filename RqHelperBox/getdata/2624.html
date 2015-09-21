@@ -1,0 +1,59 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>一些用户在使用润乾报表过程中出现过这样的问题，启动设计器的时候提示授权过期，并且弹出了选择授权的对话框，但是选定授权后，一点确定设计器就自动关闭。下面就简单介绍一下如何解决这个问题。</p> 
+  <p>润乾设计器启动时的初始属性配置在report4Config.xml文件中， report4Config.xml位于设计器的安装目录reportHome\Desi-gner\tmp，下面就简单介绍一下report4Config.xml文件中的各个属性，如何解决选择授权后设计器自动关闭的问题。</p> 
+  <p>&lt;OPTIONS</p> 
+  <p>TABLE_STATEMENT=”2045″//</p> 
+  <p>bAdjustCellExp=”true” //粘贴单元格时调整表达式</p> 
+  <p>bAutoBackup=”true”//保存时自动备份(加后缀文件.bak)</p> 
+  <p>bAutoConnect=”true”//自动连接(最近连接)</p> 
+  <p>bAutoFilterFont=”false”//自动过滤字体</p> 
+  <p>bAutoOpen=”false”//自动打开(最近文件)</p> 
+  <p>bAutoOpenSemantic=”true”//自动打开(最近)</p> 
+  <p>bAutoParseSemantic=”true”//自动分析<br /> bAutoShowTip=”false”//显示实时信息</p> 
+  <p>bBold=”false”//是否加粗</p> 
+  <p>bDeletePrompt=”true”//<br /> 删除警告</p> 
+  <p>bIEBrowser=”true”//IE浏览器</p> 
+  <p>bIdeConsole=”true”//接管控制台</p> 
+  <p>bItalic=”false”//斜体</p> 
+  <p>bLogException=”false”//将异常写入日志</p> 
+  <p>bPreventCalcDSCols=”false”//阻止计算数据集的名字</p> 
+  <p>bPropertyHint=”true”//动态提示设置的属性</p> 
+  <p>bUnderline=”false”//下划线</p> 
+  <p>bUseEditStyle=”false”//是否自定义纸张</p> 
+  <p>bUseVarchar=”false”//创建表时用varChar代替char</p> 
+  <p>bWindowSize=”true”//记忆窗口位置大小</p> 
+  <p>fBottomMargin=”25.0″//下边距</p> 
+  <p>fColWidth=”25.0″//列宽</p> 
+  <p>fIndent=”0.0″//缩进</p> 
+  <p>fLeftMargin=”19.0″//左边距</p> 
+  <p>fRightMargin=”19.0″//右边距</p> 
+  <p>fRowHeight=”8.0″//行高</p> 
+  <p>fTopMargin=”25.0″//上边距</p> 
+  <p>fileDirectory=”C:\Users\shirley\Desktop”//</p> 
+  <p>iBackColor=”-1″//背景色</p> 
+  <p>iColCount=”10″//列数</p> 
+  <p>iConnectTimeout=”10″//连接数据库时最长等待(秒)</p> 
+  <p>iDispRatio=”100″//显示比例</p> 
+  <p>iFontSize=”12″//字体</p> 
+  <p>iForeColor=”-16777216″//前景色</p> 
+  <p>iPaper=”9″//纸张类型</p> 
+  <p>iRowCount=”10″//行数</p> 
+  <p>iStackVolumn=”20″//历史步骤最大数目</p> 
+  <p>sCSSFile=”C:\Program Files\reportHome\designer\tmp\reportCellStyle.css”//单元格样式文件</p> 
+  <p>sFontName=”Dialog”//字体</p> 
+  <p>sJSPCharset=””//JSP文件字符集</p> 
+  <p>sJSPDirectory=”C:\Program Files\reportHome\designer”//JSP主目录</p> 
+  <p>sJSPPrefix=”report”//标签库前缀</p> 
+  <p>sJSPTldName=”/WEB-INF/runqianReport4.tld”//标签库文件名</p> 
+  <p>sLanguage=”zh_CN”//设计器语言</p> 
+  <p>sLicenseFile=”E:\润前报表设计器\润乾4.0授权文件\License4.0[64100621100826_640000]\技术应用中心专用授权Designer2010-12-31V4.0.lic”//设计器授权文件名称</p> 
+  <p>sLogFileName=”C:\Program Files\reportHome\designer\tmp\report.log” //设计器日志文件名称</p> 
+  <p>sReportDirectory=”C:\Program Files\reportHome\webapps\demo\reportFiles”//应用资源路径</p> 
+  <p>sTemplateDirectory=””//报表模板路径</p> 
+  <p>semanticsFiles=”&amp;quot;C:\\Program Files\\reportHome\\webapps\\demo\\WEB-INF\\runqianSemanticFile.xml&amp;quot;”</p> 
+  <p>/&gt;//设计器文件</p> 
+  <p>红色字体标注出来的就是设计器授权的路径，在这里手动设置授权文件路径就能解决设计器无法选择授权的问题。</p>  
+ </body>
+</html>

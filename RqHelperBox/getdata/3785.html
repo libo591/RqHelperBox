@@ -1,0 +1,68 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <div style="LAYOUT-GRID: 15.6pt none" class="Section1"> 
+   <br /> 
+   <p class="MsoTitle"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 14pt">润乾报表逆向刷新功能</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 21pt" class="MsoNormal">&nbsp;</p> 
+   <br /> 
+   <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">传统方式下，报表的生成是按照之上而下的顺序生成。如果在报表某个位置显示的数据，有其下方显示所决定（比如：对下方显示的汇总），则必须在数据源中对数据进行预先处理，或有报表先在内存中对下方显示进行计算，然后再决定该位置数据的内容。</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 21pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">通过实际的应用我们发现，无论是在数据源中对数据进行处理还是报表先在内存中计算，都会增加报表的复杂度和降低报表的效率。</span></p> 
+   <br /> 
+   <p style="MARGIN-LEFT: 21pt" class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">润乾报表软件开创性的提出了非线性报表数学模型，提供了高效的设计方案，可以很简</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">单的实现上述逆向刷新的功能。实例如下：</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: 21pt; MARGIN-LEFT: 21pt" class="MsoNormal"><font style="FONT-SIZE: 10.5pt"></font>&nbsp;</p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-SIZE: 10.5pt"><img src="/wp-content/uploads/2011/06/5ab2e242-a91f-4d4b-b330-0a9f88b2c19f.jpg" width="553" height="208" /></span></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">报表设计说明：</span></p> 
+   <br /> 
+   <p style="TEXT-INDENT: -18pt; MARGIN-LEFT: 18pt" class="MsoListParagraph"><font style="FONT-SIZE: 10.5pt">1、<span style="FONT: 10.5pt 'Times New Roman'">&nbsp; </span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">报表生成过程中可以根据当前数据的运算结果，逆向更新已生成部分的数据的显示内容。</span></font></p> 
+   <br /> 
+   <p style="TEXT-INDENT: -18pt; MARGIN-LEFT: 18pt" class="MsoListParagraph"><font style="FONT-SIZE: 10.5pt">2、<span style="FONT: 10.5pt 'Times New Roman'">&nbsp; </span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">报表中点击各行前的</span><img src="/wp-content/uploads/2011/06/1e1fb1ec-dd70-442e-b4fa-e607b72ff64e.jpg" width="19" height="19" /><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">复选框，能精确地定位和更新当前的数据内容。</span></font></p> 
+   <br /> 
+   <p style="TEXT-INDENT: -18pt; MARGIN-LEFT: 18pt" class="MsoListParagraph"><font style="FONT-SIZE: 10.5pt">3、<span style="FONT: 10.5pt 'Times New Roman'">&nbsp; </span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">报表设计无需额外编码，全部使用润乾的填报中自动计算原理实现。</span></font></p> 
+   <br /> 
+   <p class="MsoNormal"><font style="FONT-SIZE: 10.5pt"></font>&nbsp;</p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">报表设计原理：</span></p> 
+   <br /> 
+   <p class="MsoNormal"><font style="FONT-SIZE: 10.5pt">1<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">、先设计如下的填报表：</span></font></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-SIZE: 10.5pt"><img src="/wp-content/uploads/2011/06/2fb6eeb9-e541-4b24-ac51-01f6ba4d1f10.jpg" width="554" height="84" /></span></p> 
+   <br /> 
+   <p class="MsoNormal"><font style="FONT-SIZE: 10.5pt">2<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">、</span>A3<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">单元格编辑风格设置为复选框，<span style="COLOR: red; FONT-SIZE: 10.5pt">开值为</span></span><span style="COLOR: red; FONT-SIZE: 10.5pt">1</span><span style="FONT-FAMILY: 宋体; COLOR: red; FONT-SIZE: 10.5pt">，关值为</span><span style="COLOR: red; FONT-SIZE: 10.5pt">0</span><span style="FONT-FAMILY: 宋体; COLOR: red; FONT-SIZE: 10.5pt">（最好分别设置为</span><span style="COLOR: red; FONT-SIZE: 10.5pt">1</span><span style="FONT-FAMILY: 宋体; COLOR: red; FONT-SIZE: 10.5pt">和</span><span style="COLOR: red; FONT-SIZE: 10.5pt">0</span><span style="FONT-FAMILY: 宋体; COLOR: red; FONT-SIZE: 10.5pt">，后面计算会用到这个开关值）</span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">。左主格设置为</span>B3<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">单元格。</span></font></p> 
+   <br /> 
+   <p class="MsoNormal"><font style="FONT-SIZE: 10.5pt"></font>&nbsp;</p> 
+   <br /> 
+   <p class="MsoNormal"><font style="FONT-SIZE: 10.5pt">3<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">、</span>G3<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">单元格添加自动计算表达式，</span>G3<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">计算结果：选中则为</span>E3<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">的值，不选中则为</span>0<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">。</span></font></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-SIZE: 10.5pt"><img src="/wp-content/uploads/2011/06/f8f7195d-356e-4448-b42a-407f7d39d738.jpg" width="553" height="303" /></span></p> 
+   <br /> 
+   <p class="MsoNormal"><font style="FONT-SIZE: 10.5pt"></font>&nbsp;</p> 
+   <br /> 
+   <p style="TEXT-INDENT: -18pt; MARGIN-LEFT: 18pt" class="MsoListParagraph"><font style="FONT-SIZE: 10.5pt">4、<span style="FONT: 10.5pt 'Times New Roman'">&nbsp; </span>G2<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">单元格添加自动计算表达式，汇总选中的</span>E3<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">的值。</span></font></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-SIZE: 10.5pt"><img src="/wp-content/uploads/2011/06/c2f8d803-cb0b-4876-be38-5c80bb8f6fb4.jpg" width="553" height="300" /></span></p> 
+   <br /> 
+   <p class="MsoNormal"><font style="FONT-SIZE: 10.5pt"></font>&nbsp;</p> 
+   <br /> 
+   <p style="TEXT-INDENT: -18pt; MARGIN-LEFT: 18pt" class="MsoListParagraph"><font style="FONT-SIZE: 10.5pt">5、<span style="FONT: 10.5pt 'Times New Roman'">&nbsp; </span>D1<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">单元格添加自动计算表达式，对汇总的选中的</span>E3<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">单元格的值进行格式化输出。</span></font></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-SIZE: 10.5pt"><img src="/wp-content/uploads/2011/06/1d729de7-7c1d-4410-a8f6-65c21796f883.jpg" width="553" height="300" /></span></p> 
+   <br /> 
+   <p class="MsoNormal"><font style="FONT-SIZE: 10.5pt"></font>&nbsp;</p> 
+   <br /> 
+   <p style="TEXT-INDENT: -18pt; MARGIN-LEFT: 18pt" class="MsoListParagraph"><font style="FONT-SIZE: 10.5pt">6、<span style="FONT: 10.5pt 'Times New Roman'">&nbsp; </span>F1<span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">单元格设置自动计算表达式，计算已勾选部分占总量的比例，格式化后输出。</span></font></p> 
+   <br /> 
+   <p class="MsoNormal"><span style="FONT-SIZE: 10.5pt"><img src="/wp-content/uploads/2011/06/1e182e1d-ada5-41f7-8778-73f350045ef7.jpg" width="553" height="300" /></span></p> 
+   <br /> 
+   <p class="MsoNormal"><font style="FONT-SIZE: 10.5pt"></font>&nbsp;</p> 
+  </div> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

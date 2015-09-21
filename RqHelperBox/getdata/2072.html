@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在多用户并发进行填报的时候，总会遇到一个发生率很高的问题，就是主键的重复。主键重复造成的结果是前一个用户的填报内容，被另一个用户给覆盖掉了，造成了数据丢失。</p> 
+  <p>这个问题如果由编程人员来解决，那将会是一件非常麻烦的事情。但是如果交由数据库去处理，就变得简单多了，因为不管多少个用户，对数据库来说只是一个更新数据库的命令队列，数据库本身会对主键的问题进行判断。这也就是大多数数据库提供的字段自动增长功能的原因。</p> 
+  <p>润乾报表系统也支持这种自动增长字段的方式，如下图：</p> 
+  <p><img style="width: 480px; height: 399px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-001pf4ec76d.png" alt="" width="725" height="451" /></p> 
+  <p>由此可见，在报表端设置起来是非常简单的。</p> 
+  <p>下面介绍一下针对三种常用的数据库，自动增长字段的设置方法：</p> 
+  <p>1、MySQL<br /> 在建表的时候，在主键字段后面加上AUTO_INCREMENT即可，例如：<br /> <span style="color: #0000ff;">CREATE TABLE AUTO_KEY_TABLE (<br /> ID INT PRIMARY KEY AUTO_INCREMENT,<br /> DATA VARCHAR(255)<br /> );</span></p> 
+  <p>2、SQLServer<br /> SQLServer相对麻烦一些，需要在企业管理器里面配置，如下图：</p> 
+  <p><img style="width: 504px; height: 334px;" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/06/zrclip-002n76159954.png" alt="" width="619" height="382" /></p> 
+  <p>3、Oracle<br /> Oracle的设置相对复杂，因为Oracle提供的自动增长方式与前两个不同。在Oracle里面提供了序列对象，由该序列提供一个唯一值，但是每次插入数据的时候，需要在SQL中调用这个序列才可以。<br /> 但是Oracle也同时提供了触发器的功能，可以在插入数据前自动调用触发器，从而实现用户的需求。完整的代码如下：<br /> <span style="color: #0000ff;">– 创建演示表<br /> CREATE TABLE AUTO_KEY_TABLE(”ID” INT PRIMARY KEY,”DATA” VARCHAR(255));<br /> – 创建一个序列<br /> CREATE SEQUENCE AUTO_KEY_SEQ;<br /> – 创建触发器<br /> CREATE TRIGGER BIFER_AUTO_KEY_TABLE<br /> BEFORE INSERT ON AUTO_KEY_TABLE<br /> REFERENCING<br /> OLD AS OLD_VALUE<br /> NEW AS NEW_VALUE<br /> FOR EACH ROW<br /> BEGIN<br /> SELECT AUTO_KEY_SEQ.NEXTVAL INTO :NEW_VALUE.ID FROM DUAL;<br /> END;</span></p> 
+  <p>上面的操作完成后，可以通过以下SQL测试一下：<br /> <span style="color: #0000ff;">INSERT INTO AUTO_KEY_TABLE(DATA) VALUES(’test’);<br /> </span>可以看到，在未指定主键值的情况下，数据库会自动生成主键，保证了数据的唯一性。</p>  
+ </body>
+</html>

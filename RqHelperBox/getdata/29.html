@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">问题:&nbsp;</span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">在润乾报表的使用过程中做了一个叫</span><span lang="EN-US"><font face="Times New Roman">tmpTitle</font></span><span style="font-family: 宋体">的输入框，在把这个</span><span lang="EN-US"><font face="Times New Roman">jsp</font></span><span style="font-family: 宋体">解析生成</span><span lang="EN-US"><font face="Times New Roman">html</font></span><span style="font-family: 宋体">的时候，</span><span lang="EN-US"><font face="Times New Roman">tmpTitle</font></span><span style="font-family: 宋体">的初值是</span><span lang="EN-US"><font face="Times New Roman">“</font></span><span style="font-family: 宋体">我的标题</span><span lang="EN-US"><font face="Times New Roman">“</font></span><span style="font-family: 宋体">，在这个收入框的旁边有一个超链接。我想在生成这个页面后在</span><span lang="EN-US"><font face="Times New Roman">tmpTitle</font></span><span style="font-family: 宋体">这个输入框中输入另外的内容，然后直接点击旁边的超链接按钮。怎样写程序才能得到这个新的</span><span lang="EN-US"><font face="Times New Roman">tmpTitle</font></span><span style="font-family: 宋体">值？<span id="more-29"></span></span></p> 
+  <p><span lang="EN-US"><font face="Times New Roman">&nbsp;</font></span></p> 
+  <p><span lang="EN-US"><font face="Times New Roman">问题解决：</font></span></p> 
+  <p></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span style="font-family: 宋体">可以在</span><span lang="EN-US"><font face="Times New Roman">jsp</font></span><span style="font-family: 宋体">中写</span><span lang="EN-US"><font face="Times New Roman">js</font></span><span style="font-family: 宋体">函数</span><span lang="EN-US"><font face="Times New Roman">.&lt;script language=”javascript”&gt;</font></span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><font face="Times New Roman"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>function setDb(){<span>&nbsp;&nbsp; </span></font></span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><font face="Times New Roman"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>alert(document.getElementById(“report1_D2″).value);</font></span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><font face="Times New Roman">}</font></span></p> 
+  <p style="margin: 0cm 0cm 0pt" class="MsoNormal"><span lang="EN-US"><font face="Times New Roman">&lt;/script&gt;</font></span></p>  
+ </body>
+</html>

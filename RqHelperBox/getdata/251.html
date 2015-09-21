@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 报表都是方方正正、四平八稳的，所谓的方方正正，意指报表头往往居中，报表的标题区喜欢放一些附属内容，如制表日期、单位名称、报表编号等等，这些内容要么靠左、要么靠右、要么居中，因此整个报表看起来特别端正。如下图所示：</p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/auto1.png" title="auto1.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/auto1.png" alt="auto1.png" /></a></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这样的报表，对于横向列数固定的报表来说，非常容易实现，设计时把位置摆好就行了。可是对于横向扩展的交叉报表，甚至多片横向扩展的分片报表来说，就很麻烦了。因为横向一扩展，报表的宽度就变了，这些原先摆得很整齐的格子就错位了。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 于是比较直接的想法就是写程序，通过程序动态调整标题区格子的位置。可是这个程序并不那么好写，需要考虑的情况比较多，上图所示的是一个比较简单的情况，另一种极端的情况是简单交叉报表，设计时数据区可能只有两列，但是标题区由于要摆放制表日期、单位等等内容，标题区的列数反倒比较多。此时数据区扩展的时候，要先把数据区空白的区域优先占用，不够了才往外扩充。这种情况，甚至需要通过程序把标题区的格子缩小变紧凑。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 还有更麻烦的，即报表横向扩展后，实在太宽了，需要横向分页，此时每页都需要一个标题区，每页的标题区都需要如上图所示的四平八稳的标题、制表日期、单位等，此时程序需要先算出分成几页，然后为每一页算出标题、制表日期、单位的位置，最后为每一页添加这些标题。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 而程序实现这些功能也仅仅是我们的想像，报表工具是否提供了那么友好的接口供您随意的添加标题、计算分页呢？<br /> 当然，这么痛苦的事情并不是没有解决办法的，润乾报表的非线性报表模型之一——定位与拉伸规则，很轻松地解决了这个问题，实现步骤如下：<br /> 1、为标题区的行设置行类型为“头标题”<br /> 2、把除了靠右对齐和靠左对齐以外的格子合并起来，并把“分页时伸缩”属性打勾<br /> 于是，简单的两步就把上面所提到的所有问题全部解决了，请看下图的对比效果：</p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/auto2.png" title="auto2.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/auto2.png" alt="auto2.png" /></a></p> 
+  <p align="center">没有设置定位拉伸属性</p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/auto3.png" title="auto3.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/auto3.png" alt="auto3.png" /></a></p> 
+  <p align="center">设置了定位拉伸属性</p>  
+ </body>
+</html>

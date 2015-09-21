@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>统计图是将数据以图形的形式展现出来，方面人们更直观的浏览数据。</p> 
+  <p>在润乾报表设计器中有许多类型的统计图，其中大有学问！</p> 
+  <p>有时候客户需要在现有的统计图上做一些改进，如我今天要阐述的功能——同期比。</p> 
+  <p>如下图所示：</p> 
+  <p>&nbsp;<img title="1110" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1110.jpg" alt="1110" width="394" height="252" /></p> 
+  <p>此图将东北和华北在不同时期的运货费做了一个统计，方面用户进行对比。</p> 
+  <p>下面我们就来看看这种效果是如何实现的：</p> 
+  <p>1.&nbsp;&nbsp;&nbsp;&nbsp; 新建一张报表：</p> 
+  <p>数据集为：SELECT 订单.订购日期,订单.货主地区,订单.运货费 FROM 订单 where 订单.货主地区 in (‘华北’,'东北’)</p> 
+  <p>&nbsp;<img title="1210" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1210.jpg" alt="1210" width="372" height="76" /></p> 
+  <p>其中A2中的表达式为：=ds1.group(year(订购日期),false)，</p> 
+  <p>B2中的表达式为：=ds1.group(货主地区,false),</p> 
+  <p>C2中的表达式为：ds1.运货费。</p> 
+  <p>2.&nbsp;&nbsp;&nbsp;&nbsp; 设计统计图：</p> 
+  <p>&nbsp;<img title="1310" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1310.jpg" alt="1310" width="554" height="487" /></p> 
+  <p>注意图中用红色方框标识的地方：</p> 
+  <p>其中“分类轴定义”是A2，即横轴为A2，也就是年份，“系列名称”为B2，即图例为东北和华北，“系列值”为C2，即纵轴为运货费。</p> 
+  <p>如此设置之后，统计图的横轴便会通过年份来分组，且在同一时期出现两根柱子，统计的值是两个不同地区在同一时期的值。样即可方便用户查看不同地区在同意年度的对比。如下图：</p> 
+  <p>&nbsp;<img title="1410" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1410.jpg" alt="1410" width="396" height="255" /></p>  
+ </body>
+</html>

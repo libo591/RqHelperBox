@@ -1,0 +1,23 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>有些客户在设计报表的时候希望在设计器启动的时候就直接启动demo应用，以便设计的时候不用再去点击启动tomcat 的按钮，有一些客户则直接使用demo应用作为正式的应用，希望启动设计器的时候直接启动demo应用，这些需求的结果是一样的，但是这个如何满足呢，</p> 
+  <p>进入设计器安装根目录的bin目录</p> 
+  <p>看一下两个bat文件，</p> 
+  <p>&nbsp;<img src="http://192.168.0.6/reportmis/mis2/reportcenter/ewebeditor/imgServlet?fileID=70951bb0-f1aa-416e-ae18-318d84726418" alt="" width="211" height="269" /></p> 
+  <p>将这startdemo.bat文件里的内容</p> 
+  <p>echo on</p> 
+  <p>call setEnv.bat</p> 
+  <p>start “database” %EXECJAVA%&nbsp; -cp %RunqianCLASSPATH% -Dstart.home=%START_HOME% com.runqian.starter.StartUtil com.runqian.starter.EmbedeDataBaseProcessor start</p> 
+  <p>start “runqianreport webserver” %EXECJAVA% -cp %RunqianCLASSPATH% -Dstart.home=%START_HOME% com.runqian.starter.StartUtil com.runqian.starter.EmbededTomcatProcessor start demo</p> 
+  <p>追加到startup.bat文件里，成为这样:</p> 
+  <p>@echo off</p> 
+  <p>call setEnv.bat</p> 
+  <p>start “runqianreport” %EXECJAVAW% -Xms64m -Xmx128m&nbsp; -cp %RunqianCLASSPATH% -Dstart.home=%START_HOME% com.runqian.starter.StartUtil com.runqian.starter.Report4DesignerProcessor</p> 
+  <p>echo on</p> 
+  <p>call setEnv.bat</p> 
+  <p>start “database” %EXECJAVA%&nbsp; -cp %RunqianCLASSPATH% -Dstart.home=%START_HOME% com.runqian.starter.StartUtil com.runqian.starter.EmbedeDataBaseProcessor start</p> 
+  <p>start “runqianreport webserver” %EXECJAVA% -cp %RunqianCLASSPATH% -Dstart.home=%START_HOME% com.runqian.starter.StartUtil com.runqian.starter.EmbededTomcatProcessor start demo</p> 
+  <p>保存后，当启动设计器的时候demo应用也会随之启动的。</p>  
+ </body>
+</html>

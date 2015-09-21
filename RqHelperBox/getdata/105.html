@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">设计润乾报表写<span lang="EN-US" xml:lang="EN-US">sql</span>时发现一个问题<span lang="EN-US" xml:lang="EN-US">,</span>数据库里好几个表的字段都是<span lang="EN-US" xml:lang="EN-US">id,name. 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">想关联表时<span lang="EN-US" xml:lang="EN-US">,</span>要写成 <span lang="EN-US" xml:lang="EN-US">SELECT g.name as channel, f.name system…. 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">在设计器里写成<span lang="EN-US" xml:lang="EN-US">ds1.channel,ds1.system</span> 显示出错<span lang="EN-US" xml:lang="EN-US">:</span>单元格<span lang="EN-US" xml:lang="EN-US">D4</span>中有<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">错误<span lang="EN-US" xml:lang="EN-US">:</span> 表达式：<span lang="EN-US" xml:lang="EN-US">ds1.channel</span>中不可识别的数据集函数：<span lang="EN-US" xml:lang="EN-US">channel 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题解决<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">经测试，是驱动的问题。换个数据库驱动就可以了<span lang="EN-US" xml:lang="EN-US">. 
+     <o:p /></span></span></p> 
+  <p><br /></p>  
+ </body>
+</html>

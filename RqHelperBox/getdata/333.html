@@ -1,0 +1,10 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>一、问题描述</strong></p> 
+  <p>超链接转到另一张报表之后，再想后退怎么办呢？</p> 
+  <p><strong>二、解决方法</strong></p> 
+  <p>用IE的后退或自己写后退前进按钮。</p> 
+  <p>&lt;script language=”javascript”&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;function goHist(a)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;{ history.go(a); }<br /> &lt;/script&gt;<br /> &lt;form method=”post”&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&lt;input type=”button” value=”后退” onClick=”goHist(-1)” name=”button”&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&lt;input type=”button” value=”前进” onClick=”goHist(1)” name=”button”&gt;<br /> &lt;/form&gt;</p>  
+ </body>
+</html>

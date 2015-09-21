@@ -1,0 +1,23 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>客户希望将多个自己的报表文件导入到一个excel文件中，导成excel的多个sheet页，从而更直观的展现自己的数据，查看起来也更方便一些。下面就用一个例子介绍如何实现这个需求。</p> 
+  <p>实现思路：在报表应用的JSP中编写API代码，将传过来的多个报表文件分别计算，得到IReport对象，分别将每个IReport对象导出到一个ExcelReport对象中，在导出时给每个IReport对象起一个不同的名字。</p> 
+  <p><strong>第一步，制作三张报表(这里以三张为例)。</strong></p> 
+  <p>制作三张报表，连接demo数据源，三张报表的信息如下：</p> 
+  <p>第一张报表数据集ds1的sql为：SELECT 产品.产品ID,产品.产品名称,产品.单价 FROM 产品 报表的样式如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-018p658d01f8.png" alt="" width="534" height="373" /></p> 
+  <p><span style="font-family: 宋体;">第二张报表数据集</span><span>ds1</span><span style="font-family: 宋体;">的</span><span>sql</span><span style="font-family: 宋体;">为：</span><span>SELECT</span> <span style="font-family: 宋体;">类别</span><span>.</span><span style="font-family: 宋体;">类别</span><span>ID,</span><span style="font-family: 宋体;">类别</span><span>.</span><span style="font-family: 宋体;">类别名称</span><span>,</span><span style="font-family: 宋体;">类别</span><span>.</span><span style="font-family: 宋体;">说明</span> <span>FROM</span> <span style="font-family: 宋体;">类别</span> <span style="font-family: 宋体;">报表的样式如下图所示：</span></p> 
+  <p><span style="font-family: 宋体;"><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-019n10748c30.png" alt="" width="526" height="350" /></span></p> 
+  <p><span style="font-family: 宋体;"><span style="font-family: 宋体;">第三张报表数据集</span><span>ds1</span><span style="font-family: 宋体;">的</span><span>sql</span><span style="font-family: 宋体;">为：</span><span>SELECT</span> <span style="font-family: 宋体;">运货商</span><span>.</span><span style="font-family: 宋体;">公司名称</span><span>,</span><span style="font-family: 宋体;">运货商</span><span>.</span><span style="font-family: 宋体;">电话</span><span>,</span><span style="font-family: 宋体;">运货商</span><span>.</span><span style="font-family: 宋体;">运货商</span><span>ID FROM</span> <span style="font-family: 宋体;">运货商</span><span style="font-family: 宋体;">报表的样式如下图所示：</span></span></p> 
+  <p><span style="font-family: 宋体;"><span style="font-family: 宋体;"><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-020n471d9d91.png" alt="" width="533" height="373" /></span></span></p> 
+  <p><span style="font-family: 宋体;"><span style="font-family: 宋体;"><strong>第二步，编写导出三张报表的JSP文件。</strong></span></span></p> 
+  <p><span style="font-family: 宋体;"><span style="font-family: 宋体;">jsp文件的内容如下：</span></span></p> 
+  <p><span style="font-family: 宋体;"><span style="font-family: 宋体;">&lt;%@ page language=”java” contentType=”text/html; charset=gbk”<br /> pageEncoding=”gbk”%&gt;<br /> &lt;%@page<br /> import=”com.runqian.report4.usermodel.*,com.runqian.report4.util.*,com.runqian.report4.model.ReportDefine”%&gt;<br /> &lt;%@ page import=”java.io.*,com.runqian.report4.usermodel.DataSetConfig,java.util.*,com.runqian.report4.view.excel.ExcelReport”%&gt;<br /> &lt;%<br /> List&lt;String&gt; list = new ArrayList&lt;String&gt;();<br /> list.add(”F:/1.raq”);<br /> list.add(”F:/2.raq”);<br /> list.add(”F:/3.raq”);<br /> out.println(”共有”+list.size()+”个raq文件”);<br /> //OutputStream os = new FileOutputStream(”F:/Reports.xls”);<br /> ExcelReport er = new ExcelReport();<br /> for(int i = 0; i&lt;list.size(); i++){<br /> ReportDefine rd = (ReportDefine)ReportUtils.read(list.get(i));<br /> Context ctx = new Context();<br /> Engine engine = new Engine(rd,ctx);<br /> IReport ireport = engine.calc();<br /> System.out.println(”i=============”+i);<br /> er.export(”sheet_”+String.valueOf(i),ireport);<br /> }<br /> er.saveTo(”F:/Reports.xls”);<br /> System.out.println(”已经导出了一个sheet_”+i);<br /> os.close();<br /> %&gt;</span></span></p> 
+  <p><span style="font-family: 宋体;"><span style="font-family: 宋体;"><strong>第三步，运行jsp，导出报表文件。</strong></span></span></p> 
+  <p><span style="font-family: 宋体;"><span style="font-family: 宋体;">把上面的jsp放到应用中，然后访问上面的jsp，就会看见三张报表被导出到了指定的路径，具体的样式如下图所示。</span></span></p> 
+  <p><span style="font-family: 宋体;"><span style="font-family: 宋体;"><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-021p7d3a51a8.png" alt="" width="553" height="424" /></span></span></p> 
+  <p><span style="font-family: 宋体;"><span style="font-family: 宋体;">在客户实际应用的过程中，根据上面的代码把需要导出的报表路径都写到一个list里面就可以了，可以直接套用下面的循环，这样减少了代码量，也更直观。</span></span></p> 
+  <p><span style="font-family: 宋体;"><span style="font-family: 宋体;">通过上面几步就可以将多张报表导入到同一个excel里面了。</span></span></p>  
+ </body>
+</html>

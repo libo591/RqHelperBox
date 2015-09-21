@@ -1,0 +1,10 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>一、问题描述</strong></p> 
+  <p>打开设计器时有个小弹出窗口，弹出窗口中的信息无法显示。</p> 
+  <p><strong>二、解决方法</strong></p> 
+  <p>那个窗口里显示的是链接的网站的内容，可以修改连接地址。<br /> reportHome\designer\config\systemconfig.xml 或者reportHome\designer\OEM\config\systemconfig.xml这个文件里有关于打开窗口连接的设置。如果不想弹出那个窗口，可以直接在systemconfig.xml中将：</p> 
+  <p>&lt;CONFIG ieBrowserURL=”http://ww/w.runqian.com.cn/designer_online” splashFile=”designer/config/runqiansplash.jpg”&gt;<br /> &lt;/CONFIG&gt;<br /> 这段注释或删掉。</p>  
+ </body>
+</html>

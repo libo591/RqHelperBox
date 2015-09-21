@@ -1,0 +1,14 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在制作统计图报表过程中，用户除了关心统计图能否统计出正确的数据，就是在意统计图的色彩是否鲜明，是否能真正起到图表所必须具备的明了，醒目等特点的作用。所以润乾设计器自带的统计图配色方案就很难满足每一位用户的要求了。自定义统计图配色方案也就应运而生。在这里如何自定义统计图配色方案就不详细介绍了，用户手册中4.6.12 统计图配色方案，里面有详细的介绍。</p> 
+  <p>统计图配色方案定义完成后，随之而来的问题就是自定义的统计图配色方案只在设计器下生效，发布到WEB端，统计图的颜色还是没定义之前的效果。下面就详细介绍如何解决自定义统计图配色方案在WEB端不生效的问题。</p> 
+  <p>第一步，在设计器中配置统计图配色方案，该配色方案会保存在配色方案文件color.properties中，配色方案文件默认的存放位置是：报表设计器默认安装路\reportHome\designer\web\WEB-INF\classes\config\color.properties)。</p> 
+  <p>&nbsp;<img title="47" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/47.jpg" alt="47" width="553" height="265" /></p> 
+  <p>第二步，将设计器下的统计图配色方案复制，粘贴在服务器端存放统计图配色方案的配置文件夹中，服务器端配色方案文件默认的存放位置是：(以润乾自带的tomct为例)报表设计器默认安装路\reportHome\webapps\demo\WEB-INF\classes\config</p> 
+  <p>&nbsp;<img title="48" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/48.jpg" alt="48" width="554" height="240" /></p> 
+  <p>第三步：重启服务器。</p> 
+  <p>经过以上三步，再在IE浏览器中浏览图表时，就可以看到效果了。</p> 
+  <p>需要注意的是：服务器端有可能没有config文件夹，而配色方案一定要放到config文件夹下，服务器才会通过配置文件找到该配置文件。</p>  
+ </body>
+</html>

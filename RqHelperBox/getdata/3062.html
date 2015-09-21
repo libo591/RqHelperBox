@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">润乾报表提供了全面的API接口，完善了对多种多样业务需求的支持。在常见的api接口问题中，常会遇到需要利用API接口来打开设计器的问题，下面就来介绍一下。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"> </p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;">启动报表设计器一般需要以下几点：</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;">1.报表设计器实例化</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-family: 宋体; font-size: 12pt;">2.设置数据源</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">3.设置菜单及工具栏</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">4.设置报表</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">5.启动设计器</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">参考下面代码：</span></p> 
+  <table style="table-layout: fixed; border: #cccccc 1px dotted;" border="0" cellspacing="0" cellpadding="6" width="95%" align="center"> 
+   <tbody> 
+    <tr> 
+     <td style="word-wrap: break-word;" bgcolor="#f3f3f3"><span style="font-size: 12pt;"><span style="font-size: 12pt; font-weight: bold;">以下是引用片段：</span><br /> </span><p></p> <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">package com.runqian.ide;</span></p> <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">import javax.swing.JOptionPane;</span></p> <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">import com.runqian.base4.tool.ConfigFile;<br /> import com.runqian.base4.tool.GCToolBar;<br /> import com.runqian.base4.util.DBTypes;<br /> import com.runqian.report4.ide.base.GCMenu;<br /> import com.runqian.report4.ide.usermodel.ReportIde;</span></p> <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">public class test<br /> {<br /> public static void main(String[] args )<br /> {<br /> //报表设计器实例化<br /> System.setProperty(“report.home”, “C:\\Program Files\\reportHome”);//设置报表工作路径<br /> ConfigFile.setFileName(“C:/Program Files/reportHome/designer/tmp/report4config.xml”); //设计器启动时读取的配置文件，不设置该项时，系统会自动在报表工作路径下寻找report4Config.xml<br /> String license = “D/test.lic”;//设置授权文件<br /> ReportIde ide = ReportIde.getInstance(“D/test.lic”); //实例化设计器<br /> //设置数据源<br /> try{<br /> ide.setDataSource(“test1″,DBTypes.SQLSVR,”GBK”,”GBK”,false,false,”org.hsqldb.jdbcDriver”,”jdbc:hsqldb:hsql://localhost//runqianDB”,”sa”,”&quot;,false,false,”&quot;,false);//增加数据源设置<br /> //ide.deleteDataSource(“demo”); //删除数据源，如果数据源不存在，不动作<br /> //ide. getDataSource (“demo”); //获取数据源对象<br /> //设置菜单以及工具栏<br /> ide.setMenuEnable(GCMenu.iOPEN, false);//设置设计器”打开”菜单不可用<br /> ide.setMenuEnable(GCMenu.iNEW,true);//设置设计器”新建”菜单可用<br /> ide.setMenuVisible(GCMenu.iDELETE, false);//设置设计器”删除”菜单不可见<br /> ide.setMenuVisible(GCMenu.iCOPY, false);//设置设计器”复制”菜单可见<br /> ide.setToolBarVisible(GCToolBar.iMERGE,false);//设置设计器”合并”按钮不可见<br /> ide.setToolBarEnable(GCToolBar.iBOLD,false);// 设置设计器”加粗”按钮不可用<br /> }catch(Throwable e1){<br /> // TODO: handle exception<br /> }<br /> //设置报表<br /> ide.openSheetEditor(“D:/test.raq”,false); //设置设计器启动时打开的报表<br /> //启动设计器<br /> ide.show(); //显示设计器<br /> ide.toFront();//在前段显示设计器<br /> }<br /> }</span></p> </td> 
+    </tr> 
+   </tbody> 
+  </table>  
+ </body>
+</html>

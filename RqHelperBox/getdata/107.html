@@ -1,0 +1,42 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题</span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">使用润乾报表的过程中发现在加载授权文件时<span lang="EN-US" xml:lang="EN-US">“</span>报表证书错误<span lang="EN-US" xml:lang="EN-US">“ 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">操作系统 <span lang="EN-US" xml:lang="EN-US">Red Hat AS 5 (update 1) 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">使用<span lang="EN-US" xml:lang="EN-US">weblogic8.1 sp5</span>英文版自带的<span lang="EN-US" xml:lang="EN-US">j2sdk- 
+     <st1:chsdate isrocdate="False" islunardate="False" year="1899" w:st="on" month="12" day="30">
+       1.4.2 
+     </st1:chsdate>_08 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">报错信息<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">[2007-12-26 17:46:01] runqianReportLogger : [INFO ] -</span> <span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">报表证书错误<span lang="EN-US" xml:lang="EN-US">! 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">/weblogic/bea/jdk142_08/jre/lib/i386/libawt.so: libXp.so.6: cannot 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">open shared object file: No such file or directory 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">java.lang.UnsatisfiedLinkError: /weblogic/bea/jdk142_08/jre/lib/i386/ 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">libawt.so: libXp.so.6: cannot open shared object file: No such file or directory 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">at java.lang.ClassLoader$NativeLibrary.load(Native Method) 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题解决<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">java</span><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">图片处理需要本地<span lang="EN-US" xml:lang="EN-US">X86</span>动态连接库支持<span lang="EN-US" xml:lang="EN-US">,</span>缺少支持打印的图形化动态链接库<span lang="EN-US" xml:lang="EN-US">libXp.so.6,</span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">下载并安装<span lang="EN-US" xml:lang="EN-US">XFree86-libs- 
+     <st1:chsdate isrocdate="False" islunardate="False" year="1899" w:st="on" month="12" day="30">
+       4.2.0 
+     </st1:chsdate>-8.i386.rpm</span>，<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">/usr/X11R6/lib</span><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">下就会出现需要的<span lang="EN-US" xml:lang="EN-US">libXp.so.6.2 
+     <o:p /></span></span></p> 
+  <p><br /></p>  
+ </body>
+</html>

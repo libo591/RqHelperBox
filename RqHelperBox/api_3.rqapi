@@ -1,0 +1,41 @@
+/**
+ * 与报表参数和宏相关的API
+ */
+private static void reportWithParamAndMacro() {
+	ReportDefine2 rd2 = new ReportDefine2(1,5);
+	//获取模板中的参数元数据
+	ParamMetaData pmd = rd2.getParamMetaData();
+	if(pmd==null){
+		pmd = new ParamMetaData();
+	}
+	//新建参数对象
+	Param param = new Param(
+			"arg1",//参数名
+			"参数1",//参数描述
+			(byte)Param.PARAM_NORMAL,//参数类型
+			Types.DT_STRING,//com.runqian.report4.usermodel.Types中的值
+			(short)0,//精度
+			(short)0,//小数位
+			true,//是否可为空
+			"",//格式
+			"1",//值
+			""//编辑风格
+			);
+	//将参数对象添加到元数据中
+	pmd.addParam(param);
+	rd2.setParamMetaData(pmd);
+	
+	
+	MacroMetaData mmd = rd2.getMacroMetaData();
+	if(mmd==null){
+		mmd = new MacroMetaData();
+	}
+	Macro macro = new Macro(
+			"macro1",//宏名字
+			"desc1",//宏描述
+			Macro.MACRO_NORMAL,//宏类型
+			"id=1"//宏值
+	);
+	mmd.addMacro(macro);
+	rd2.setMacroMetaData(mmd);
+}

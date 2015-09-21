@@ -1,0 +1,165 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>项目需求描述：</strong></p> 
+  <p>华南资讯科技有限公司的广东人口系统证件打印是基于润乾的套打实现的，打印在整个项目中有着举足轻重的作用。</p> 
+  <p>在报表设计的时候，每张报表都有一个打印设置，但是这个设置可能与客户端电脑的打印机配置不相匹配(如设计的是A3纸，可是客户端打印机只支持A4纸)；或者不同的报表需要用不同的打印机来打印(如发票打印机打印套打式报表等)。这样客户端用户在打印这些报表时每次都需要更改打印设置，用起来比较烦琐，因此需要将客户端的打印设置保存到服务器上，以便下次再打印这张报表时，可以从服务器读出打印设置，从而不需要再次设置。</p> 
+  <p>润乾报表已经提供了此功能，具体类代码为com.runqian.report4.usermodel. PrintSetupServlet。但此代码的缺点是设置信息以properties类型的文件保存在user.home下。客户对以文件保存配置信息的做法不认可，并且后续可能使用web集群环境，那么就很有必要将以文件形式保存客户端打印设置改进为以数据库形式保存客户端打印设置。</p> 
+  <p><strong>解决思路：</strong></p> 
+  <p>重写PrintSetupServlet类，当客户点击打印按钮时即调用此方法，已有打印配置则读取，没有则保存。</p> 
+  <p>保存到数据表时的主键：客户端电脑名+客户端电脑网卡IP+报表名</p> 
+  <p><strong>实现步骤：</strong></p> 
+  <p>一：实现将打印设置保存到数据库的代码</p> 
+  <p>1）&nbsp; jdbc工具类（以sqlserver为例）</p> 
+  <p><strong>public</strong> <strong>class</strong> JdbcUtil</p> 
+  <p>{</p> 
+  <p>&nbsp;&nbsp;&nbsp; <strong>static</strong>{</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; String d = “com.microsoft.sqlserver.jdbc.SQLServerDriver”;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; <strong>try</strong>{</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Class.<em>forName</em>(d);</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; }<strong>catch</strong>(Exception e){</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; e.printStackTrace();</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp; <strong>public</strong> <strong>static</strong> Connection getConnection(){</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; String url =</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; “jdbc:sqlserver://127.0.0.1:1433;DatabaseName=Demo”;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String username = “sa”;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; String pwd = “jade”;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; Connection con = <strong>null</strong>;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; <strong>try</strong>{</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; con = DriverManager.<em>getConnection</em>(url,username,pwd);</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; }<strong>catch</strong>(Exception e){</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; e.printStackTrace();</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp; <strong>return</strong> con;</p> 
+  <p>}</p> 
+  <p>&nbsp;&nbsp;&nbsp; <strong>public static</strong> close(Statement stmt,Connection conn) {</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>try</strong> {</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>if</strong> (stmt != <strong>null</strong>) {</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stmt.close();</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>if</strong> (conn != <strong>null</strong> &amp;&amp; !conn.isClosed()) {</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn.close();</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <strong>catch(Exception e){</strong></p> 
+  <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; e.printStackTrace();</strong></p> 
+  <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; }</strong>&nbsp;&nbsp;</p> 
+  <p>}</p> 
+  <p>2）&nbsp; 存储打印信息到数据库的代码</p> 
+  <p><strong>package</strong> com.runqian.report4.usermodel;</p> 
+  <p><strong>import</strong> java.io.PrintWriter;</p> 
+  <p><strong>import</strong> java.sql.Connection;</p> 
+  <p><strong>import</strong> java.sql.ResultSet;</p> 
+  <p><strong>import</strong> java.sql.SQLException;</p> 
+  <p><strong>import</strong> java.sql.Statement;</p> 
+  <p><strong>import</strong> javax.servlet.http.HttpServlet;</p> 
+  <p><strong>import</strong> javax.servlet.http.HttpServletRequest;</p> 
+  <p><strong>import</strong> javax.servlet.http.HttpServletResponse;</p> 
+  <p><strong>import</strong> com.runqian.base4.util.ArgumentTokenizer;</p> 
+  <p><strong>import</strong> com.runqian.base4.util.ReportError;</p> 
+  <p><strong>public</strong> <strong>class</strong> PrintSetupServlet <strong>extends</strong> HttpServlet&nbsp; {</p> 
+  <p>&nbsp;&nbsp;&nbsp; <strong>public</strong> PrintSetupServlet () { }</p> 
+  <p>&nbsp;&nbsp;&nbsp; /**</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;* 本方法由系统在打印对话框初始化与关闭时调用</p> 
+  <p>&nbsp;&nbsp;&nbsp; &nbsp;*/</p> 
+  <p>&nbsp;&nbsp;&nbsp; <strong>public</strong> <strong>void</strong> service(HttpServletRequest request,</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HttpServletResponse response) {</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PrintWriter pw = <strong>null</strong>;&nbsp; //向客户端输出打印设置对象</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Statement stmt = <strong>null</strong>;&nbsp;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Connection conn = <strong>null</strong>; //这个对象直接取润乾默认的数据库连接</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>try</strong> {</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; request.setCharacterEncoding(“GBK”);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; response.setContentType(“text/html; charset=GBK”);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw = response.getWriter();</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String action = request.getParameter(“action”); //取得action值(存/取)</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String key = request.getParameter(“key”); // 存取打印设置的关键字</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String width = request.getParameter(“width”); // 纸张宽</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String height = request.getParameter(“height”); // 纸张高</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String x = request.getParameter(“x”); // 左边距</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String y = request.getParameter(“y”); // 上边距</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String w = request.getParameter(“w”); // 内容区宽</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String h = request.getParameter(“h”); // 内容区高</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String orientation = request.getParameter(“orientation”); // 纸张方向</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String printerName = request.getParameter(“printerName”); // 打印机名</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String setup = width + “|” + height + “|” + x + “|” + y + “|”</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + w + “|” + h + “|” + orientation + “|” + printerName;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <strong>if</strong>( conn == <strong>null</strong> ) {</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //获得数据库连接（代码见JdbcUtil）</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; conn = JdbcUtil.<em>getConnection</em>( );</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stmt = conn.createStatement( );</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //进行打印设置的保存工作</p> 
+  <p>//查询语句</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String selectSQL = “select * from printsetup where id = ‘”+ key+ “‘”;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //更新语句</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String updateSQL = “update printsetup set config =’” + setup+”‘ where id = ‘”+ key+ “‘”;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //插入语句</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String insertSQL = “insert into printsetup values(‘”+key+”‘,’”+setup+”‘)”;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>if</strong>( “write”.equalsIgnoreCase( action )){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ResultSet rs = stmt.executeQuery( selectSQL );</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>if</strong>( rs.next() ){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stmt.executeUpdate( updateSQL );</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<strong>else</strong>{</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stmt.executeUpdate( insertSQL );</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<strong>else</strong>{</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //进行打印设置的读取工作</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ResultSet rs = stmt.executeQuery( selectSQL );</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>if</strong>( rs.next() ){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setup = rs.getString( “config” );</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>if</strong> (setup != <strong>null</strong>) {</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ArgumentTokenizer at = <strong>new</strong> ArgumentTokenizer(setup, ‘|’);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 以下是向客户端传送打印设置，每行一个属性，属性名含义与前面保存时的相同</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.println(“width=” + at.nextToken());</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.println(“height=” + at.nextToken());</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.println(“x=” + at.nextToken());</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.println(“y=” + at.nextToken());</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.println(“w=” + at.nextToken());</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.println(“h=” + at.nextToken());</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.println(“orientation=” + at.nextToken());</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.println(“printerName=” + at.nextToken());</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.println(“setup=yes”); // 输出这一行，说明此报表保存有打印配置</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <strong>else</strong></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.println(“setup=no”);// 输出这一行，说明此报表没有保存打印配置</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <strong>catch</strong> (Exception e) {</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; e.printStackTrace();</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <strong>finally</strong> {</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //关闭输出对象与数据库连接</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pw.close( );</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JdbcUtil.close( stmt, conn );</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp; }</p> 
+  <p>}</p> 
+  <p>编译后将classes文件替换原文件。</p> 
+  <p>二：Web.xml配置servlet</p> 
+  <p>需要增加一个servlet的配置如下：</p> 
+  <p>&lt;!– 客户端打印设置–&gt;</p> 
+  <p>&lt;servlet&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &lt;servlet-name&gt;com.runqian.report4.usermodel.PrintSetupServlet&lt;/servlet-name&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &lt;servlet-class&gt;com.runqian.report4.usermodel.PrintSetupServlet&lt;/servlet-class&gt;</p> 
+  <p>&nbsp; &lt;/servlet&gt;</p> 
+  <p>&nbsp; &lt;servlet-mapping&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &lt;servlet-name&gt;com.runqian.report4.usermodel.PrintSetupServlet&lt;/servlet-name&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp; &lt;url-pattern&gt;/servlet/PrintSetupServlet&lt;/url-pattern&gt;</p> 
+  <p>&nbsp; &lt;/servlet-mapping&gt;&nbsp;&nbsp;&nbsp;&nbsp;</p> 
+  <p>&lt;!– 客户端打印设置–&gt;</p> 
+  <p>三：发布页面的Tag标签设置</p> 
+  <p>生成一个需要保存打印设置的报表，在tag标签中需增加一个属性设置，如下：</p> 
+  <p>&lt;report:html ……</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; savePrintSetup=”yes”</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ……</p> 
+  <p>/&gt;</p> 
+  <p>四：sqlserver数据库中新建数据表</p> 
+  <p>CREATE TABLE &nbsp;printsetup (</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; id varchar (255) NOT NULL ,</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; config varchar (255) NOT NULL</p> 
+  <p>)</p> 
+  <p>五：重启应用服务器</p> 
+  <p><strong>总结：</strong></p> 
+  <p><strong></strong>&nbsp;</p> 
+  <p>对于打印设置的保存问题，可通过实际业务需求对此代码进行灵活的改进。举例说明：如果在真实的生产环境下，ip是动态生成的，那么我们可以修改key值的规则，即将 key：客户端电脑名+客户端电脑网卡IP+报表名 修改为 key：客户端电脑名+报表名 即可。</p>  
+ </body>
+</html>

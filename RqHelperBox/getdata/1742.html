@@ -1,0 +1,22 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表有着完善的输出功能，可以直接把web报表导出为Excel、Word、Pdf、Txt等文件形式。但是一些web报表用户希望可以将报表导出到XML文件中以便对数据进行分析与解析，润乾报表同样可以实现这个需求，本文讲述如何用一些特殊的方法去实现报表导出为XML文件。</p> 
+  <p>实现思路：导出XML功能的实现，可以通过将计算好的IReport对象传递给润乾提供的com.runqian.report4.view.xml.XMLReport类下的export()。</p> 
+  <p>根据思路来做一个例子，实现步骤如下：</p> 
+  <p>打开一个已设计好的报表模板，将这个报表模板发布到web预览，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/11.png" alt="11.png" width="375" height="274" /></p> 
+  <p>然后在展现报表的jsp中加入下面代码：</p> 
+  <p>Context ctx = new Context();//构建报表引擎计算环境</p> 
+  <p>String path = “C:/api/reportFiles/demo.raq”; //该文件名可以为绝对路径，也可以相对当前程序启动路径</p> 
+  <p>ReportDefine rd = (ReportDefine) ReportUtils.read(path);//读取报表</p> 
+  <p>Engine engine = new Engine(rd, ctx); //构造报表引擎</p> 
+  <p>IReport report = engine.calc();//运算报表</p> 
+  <p>XMLReport xml = new XMLReport();//创建导出XML类的实例</p> 
+  <p>xml.export(report);//将计算好的报表传递给xml类的export方法中</p> 
+  <p>xml.saveTo(”C:/demo.xml”);//xml文件数据路径(也可以使用OutputStream输出)</p> 
+  <p>一段简单的代码就可以实现将报表导出到XML文件中，下面我们看下XML文件中导入的内容，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/12.png" alt="12.png" width="379" height="333" /></p> 
+  <p>这样页面中各式各样的报表导出到XML后就被规范成了XML格式的数据，方便开发人员进行数据的分析和解析。</p>  
+ </body>
+</html>

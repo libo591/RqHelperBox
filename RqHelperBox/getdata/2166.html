@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表中参数模版与报表结合发布的设计，使得在页面中对报表数据进行过滤查看非常简单。在实际应用中，我们经常会遇到多次选择参数，但当参数选择非常多的时候，每次清空重新填写就很麻烦，有没有什么简单的办法来解决呢?</p> 
+  <p>我们可以给参数模版增加一个”全部重置”的按钮，下面就来介绍一下。</p> 
+  <p><strong>第一步，我们在页面中来增加一个按钮，点击这个按钮触发重置函数：</strong></p> 
+  <p>&lt;input type=”button” name=”Submit” onClick=clearForm(’form1′) value=”重置”&gt;</p> 
+  <p><strong>第二步，我们在jsp中编写上述的这个重置函数clearForm：</strong></p> 
+  <p>&lt;script language=”javascript”&gt;<br /> function clearForm(formName)<br /> {<br /> var formObj = document.forms[formName];<br /> var formEl = formObj.elements;<br /> for (var i=0; i&lt;formEl.length; i++)<br /> {<br /> var element = formEl[i];<br /> if (element.type == ’submit’) { continue; } //跳过提交按钮<br /> if (element.type == ‘reset’) { continue; } //跳过重置按钮<br /> if (element.type == ‘button’) { continue; } //跳过普通按钮<br /> if (element.type == ‘hidden’) { continue; } //跳过隐藏域<br /> if (element.type == ‘text’) { element.value = ”; } //如果是编辑框,清空<br /> if (element.type == ‘textarea’) { element.value = ”; } //如果是大文本编辑框,清空<br /> if (element.type == ‘checkbox’) { element.checked = false; } //如果是复选框,清空<br /> if (element.type == ‘radio’) { element.checked = false; } //如果是单元按钮,清空<br /> if (element.type == ’select-multiple’) { element.selectedIndex = -1; } //如果是下拉复选框,清空<br /> if (element.type == ’select-one’) { element.selectedIndex = -1; } //如果是下拉单选框,清空<br /> }<br /> }<br /> &lt;/script&gt;</p> 
+  <p>这样，我们在页面中就可以看到参数重置的效果了：</p> 
+  <p>点击前：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-038nfae598a.png" alt="" width="737" height="312" /></p> 
+  <p>点击重置按钮后,参数被清空：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/09/zrclip-039n30c2daec.png" alt="" width="731" height="303" /></p>  
+ </body>
+</html>

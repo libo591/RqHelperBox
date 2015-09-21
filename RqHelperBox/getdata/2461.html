@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>业务背景一：</p> 
+  <p>&nbsp;&nbsp;&nbsp; 多行的网格式填报表，在填写的时候很容易弄混，有可能填错行，尤其是报表比较宽、行数又比较多的时候。此时如果把当前正在编辑的行整行高亮显示，就非常方便用户对照查看，不容易填错行，如下图所示：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/11-1.jpg"><img class="alignnone size-medium wp-image-2462" title="11-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/11-1-300x132.jpg" alt="" width="300" height="132" /></a></p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp; 从上图可以看出，把当前正在编辑的行换一种背景色，用户编辑的时候就不容易填错行了。该背景色最好和应用的整体外观风格、报表的外观风格协调，才会好看。因此，需要定义填报时当前行高亮显示的背景色。</p> 
+  <p>业务背景二：</p> 
+  <p>当填报表添加了背景图</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/11-2.jpg"><img class="alignnone size-medium wp-image-2463" title="11-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/11-2-300x188.jpg" alt="" width="300" height="188" /></a></p> 
+  <p>将该报表发布到网页上，效果如下图所示：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/11-3.jpg"><img class="alignnone size-medium wp-image-2464" title="11-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/11-3-300x190.jpg" alt="" width="300" height="190" /></a></p> 
+  <p>&nbsp;&nbsp;&nbsp; 在这种情况下，当前行的背景颜色，不仅没有提示作用，还将我们的提示信息，给覆盖上了。</p> 
+  <p>缺省的选中单元格边框是红色的矩形框，当前行的背景为淡蓝色，可以采取在JSP文件中报表标签之前设置如下JavaScript变量，来取消背景颜色。</p> 
+  <blockquote dir="ltr"> 
+   <div> 
+    <pre>&lt;script language=javascript&gt;</pre> 
+   </div> 
+   <div> 
+    <pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; v<strong>ar _editingRowBackColor = &quot;&quot;;&nbsp;&nbsp;&nbsp;&nbsp; //</strong><strong>空值表示无色</strong></pre> 
+   </div> 
+   <div> 
+    <pre>&lt;/script&gt;</pre> 
+   </div> 
+  </blockquote> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/11-4.jpg"><img class="alignnone size-medium wp-image-2465" title="11-4" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/11-4-300x187.jpg" alt="" width="300" height="187" /></a></p> 
+  <p>通过在JSP中进行设置后，当前行的背景色被取消，图片中的提示字符也就不会覆盖掉了。</p>  
+ </body>
+</html>

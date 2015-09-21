@@ -1,0 +1,120 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>需求背景：</p> 
+  <p>润乾行式填<strong>报表</strong>提供了对记录的追加，插入功能，可以以行为单位追加新记录并提交入库。但是新插入和追加的行的单元格是复制于当前光标所在行的，新添加行的单元格属性（编辑风格、可写属性、自动计算等）也都复制于该行的单元格。</p> 
+  <p>进一步的说，若填报单元格中用到了可写表达式，那么该填<strong><a href="http://www.runqian.com.cn" target="_blank">报表</a></strong>中的单元格是会根据可写表达式的值动态变化的。</p> 
+  <p>因此按照默认规则，新添加的行会根据当前光标所在行的对应单元格生成单元格，可写属性也复制于该单元格，这样就会造成新添加行的单元格不可写。</p> 
+  <p>可是用户可能会希望新添加的行中单元格的编辑风格能够继承自当前光标所在单元格，但是可写属性却要均为可写，单元格的填报值则依然为空，从而保证用户可以在新添加行中自由录入。</p> 
+  <p>实现原理：</p> 
+  <p>单元格填报有关的属性有：writable,onclick,editStyle。</p> 
+  <p>l 若单元格可写，三个属性如下：</p> 
+  <p>writable属性为true。</p> 
+  <p>editStyle指定单元格的编辑风格，比如编辑框editStyle=”1”,下拉列表框editStyle=”2”，下拉数据集editStyle=”3”,下拉日历editStyle=”6”，下拉树editStyle=”8”, 密码框editStyle=”9”,而对单选按钮和复选框该editStyle=undefined。</p> 
+  <p>onclick定义点击单元格时出发的js事件。</p> 
+  <p>l 若单元格不可写，writable属性为undefined,editStyle属性为undefined。</p> 
+  <p>可用js来控制单元格的可写属性。如下：</p> 
+  <p>设置单元格不可写: currCell.onclick = _hideEditor</p> 
+  <p>设置单元格可写: currCell.writable=true;currCell.onclick=_displayEditor</p> 
+  <p>用js来控制可写单元格的编辑风格。针对不同的编辑风格设置单元格可写是有所不同的，例如：</p> 
+  <p>//设置下拉日历的可写，控制单元格的onclick属性</p> 
+  <p>_hideEditor();</p> 
+  <p>_runqianCalendar.dateFormat=’yyyy-MM-dd HH:mm:ss’; //设置下拉日历取值类型</p> 
+  <p>_runqianCalendar.type= ‘date’;</p> 
+  <p>_showCalendar();</p> 
+  <p>_setRowColBackColor(this)</p> 
+  <p>//设置下拉数的可写，控制单元格的onclick属性</p> 
+  <p>_hideEditor();</p> 
+  <p>tree_show(this,’tree_report123′);//显示2行3列单元格（扩展前的单元格）的下拉树</p> 
+  <p>_setRowColBackColor(this)</p> 
+  <p>//设置单选按钮和复选框的可写，单元格的editStyle为undefined,但在该单元格中有多个子元素。</p> 
+  <p>var childElements=newColStyle.childNodes;</p> 
+  <p>for(var iLoop = 0; iLoop &lt; childElements.length; iLoop ++)</p> 
+  <p>{</p> 
+  <p>var child = childElements[iLoop];</p> 
+  <p>//设置INPUT子元素的disabled和checked属性为false,单选按钮和复选框可写，并且未勾选</p> 
+  <p>if (“INPUT” == child.nodeName) {</p> 
+  <p>child.disabled=false;</p> 
+  <p>child.checked=false;</p> 
+  <p>}</p> 
+  <p>//对其他编辑风格的单元格，控制其onclick属性</p> 
+  <p>currCell.onclick=_displayEditor</p> 
+  <p>具体实现：<br /> 1. 报表模板：</p> 
+  <p>报表模板设置如下：</p> 
+  <p><a href="http://www.runqian.com.cn/archives/4279.html/b1-2" rel="attachment wp-att-4280"><img class="aligncenter size-full wp-image-4280" title="b1" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/b1.jpg" alt="" width="569" height="55" /></a></p> 
+  <p>里面含有多种编辑风格，并且单元格的可写属性用了可写表达式进行控制，详细设计见文章附件。</p> 
+  <p>2. 报表展现页面：</p> 
+  <p>部分代码：</p> 
+  <p>//设置单元格可写，指定编辑风格。如果单元格可写可通过单元格编辑风格editStyle判断，如果单元格不可写需要先根据列号（colNo）判断，先指定单元格的编辑风格editStyle，再显示不同的编辑风格框。所以需要确定每一列的编辑风格。</p> 
+  <p>function setWritable(currCell, writable,colNo) {</p> 
+  <p>if (!writable) {</p> 
+  <p>currCell.onclick = _hideEditor;//设置为不可写（填）</p> 
+  <p>} else {//否则设置报表为可写（填）</p> 
+  <p>if(currCell.editStyle==6||colNo==3){//编辑风格为下拉日历或列号(colNo)为4</p> 
+  <p>currCell.onclick = function anonymous() {</p> 
+  <p>_hideEditor();</p> 
+  <p>_runqianCalendar.dateFormat=’yyyy-MM-dd HH:mm:ss’; //设置下拉日历取值类型</p> 
+  <p>_runqianCalendar.type= ‘date’; //请注意此处的写法</p> 
+  <p>_showCalendar();</p> 
+  <p>_setRowColBackColor(this) };</p> 
+  <p>}</p> 
+  <p>else if(currCell.editStyle==8||colNo==2){//编辑风格为下拉树或列号(colNo)为3 currCell.onclick = function anonymous() {</p> 
+  <p>_hideEditor();</p> 
+  <p>tree_show(this,’tree_report123′);</p> 
+  <p>_setRowColBackColor(this) }</p> 
+  <p>}</p> 
+  <p>else{</p> 
+  <p>//根据colNo指定单元格编辑风格</p> 
+  <p>if(colNo==1){//第二列编辑风格为编辑框</p> 
+  <p>currCell.editStyle=”1″;</p> 
+  <p>}</p> 
+  <p>else if(colNo==4){ //第5列编辑风格为密码框</p> 
+  <p>currCell.editStyle=”9″;</p> 
+  <p>}</p> 
+  <p>else if(colNo==5){ //第5列编辑风格为下拉列表框</p> 
+  <p>currCell.editStyle=”2″;</p> 
+  <p>}</p> 
+  <p>else if(colNo==7){//第八列编辑风格为下拉数据集</p> 
+  <p>currCell.editStyle=”3″;</p> 
+  <p>}</p> 
+  <p>currCell.onclick=_displayEditor;//显示编辑风格</p> 
+  <p>}</p> 
+  <p>}</p> 
+  <p>}</p> 
+  <p>//重新复制行函数，蓝色字体为修改内容</p> 
+  <p>function _copyARow_N( table, baseRow, index ) {</p> 
+  <p>……</p> 
+  <p>for( var i = 0; i &lt; baseRow.cells.length; i++ ) {</p> 
+  <p>var newColStyle = newRowStyle.cells[i];</p> 
+  <p>if( table.currCell == baseRow.cells[i] ) currCell = newColStyle;</p> 
+  <p>if( newColStyle.oldBkcolor != null ) newColStyle.style.backgroundColor = newColStyle.oldBkcolor;</p> 
+  <p>if( newColStyle.flow ) {</p> 
+  <p>if( newColStyle.flow.indexOf( “rowNoInGroup” ) &lt; 0 ) { li_currTbl = table; li_currCell = newColStyle; var flow = eval( newColStyle.flow ) + “”; if(flow!=null&amp;&amp;flow!=”&quot;){ newColStyle.innerText = flow; newColStyle.value = flow; } } } else { var es = newColStyle.editStyle; //针对单选按钮和复选框的处理 if(es==undefined&amp;&amp;newColStyle.childNodes.length&gt;1)</p> 
+  <p>{</p> 
+  <p>var childElements=newColStyle.childNodes;</p> 
+  <p>for(var iLoop = 0; iLoop &lt; childElements.length; iLoop ++)</p> 
+  <p>{</p> 
+  <p>var child = childElements[iLoop];</p> 
+  <p>//设置单选按钮和复选框的disable和checked属性，可写并且初始未勾选</p> 
+  <p>if (“INPUT” == child.nodeName) {</p> 
+  <p>child.disabled=false;</p> 
+  <p>child.checked=false;</p> 
+  <p>}</p> 
+  <p>}</p> 
+  <p>}</p> 
+  <p>//其他编辑风格的处理（包括不可写单元格）</p> 
+  <p>else if( !newColStyle.writable||newColStyle.calc||es == “1″ || es == “6″ || es == “8″ || es == “11″ || es == “12″ ||es == “9″||es == “2″||es == “3″)</p> 
+  <p>{</p> 
+  <p>newColStyle.writable=true;</p> 
+  <p>//调用setWritable设置单元格可写属性</p> 
+  <p>setWritable(newColStyle,true,i);</p> 
+  <p>newColStyle.innerText = “”;</p> 
+  <p>newColStyle.value = “”;</p> 
+  <p>}</p> 
+  <p>}</p> 
+  <p>……</p> 
+  <p>}</p> 
+  <p>查看报表模板可知，报表单元格中含有不可写单元格，或通过表达式控制可写属性的单元格，通过上面的方式就保证不管当前行单元格的可写属性如何，新添加的行的单元格均可写，并且保留原本设置的编辑风格了。</p> 
+  <p><a href="http://www.runqian.com.cn/archives/4279.html/b2-2" rel="attachment wp-att-4281"><img class="aligncenter size-full wp-image-4281" title="b2" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/b2.jpg" alt="" width="597" height="354" /></a></p>  
+ </body>
+</html>

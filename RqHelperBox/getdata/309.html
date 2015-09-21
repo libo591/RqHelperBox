@@ -1,0 +1,10 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>一、问题描述:</strong></p> 
+  <p>联表写sql时,发现的问题:数据库里好几个表的格式都是id,name.想联表时,要写成 SELECT&nbsp; g.name as channel, f.name&nbsp; system….在设计器里写成ds1.channel,ds1.system&nbsp;&nbsp;</p> 
+  <p>显示出错:单元格D4中有错误: 表达式：ds1.channel中不可识别的数据集函数：channel</p> 
+  <p><strong>二、问题解决描述:</strong></p> 
+  <p>本地测试是同样的问题,最终确认是数据库驱动的问题.建议换个数据库驱动试试.</p>  
+ </body>
+</html>

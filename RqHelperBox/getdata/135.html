@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题<span lang="EN-US" xml:lang="EN-US">:</span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">在使用润乾报表导出<span lang="EN-US" xml:lang="EN-US">excel</span>的过程中遇到这样的错误<span lang="EN-US" xml:lang="EN-US">:</span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">2008-01-18 14:28:12] runqianReportLogger : [ERROR] – Error</span><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">：</span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">java.lang.NoClassDefFoundError: org/apache/poi2/hssf/record/ImageRecord</span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题解决<span lang="EN-US" xml:lang="EN-US">:</span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">经检查<span lang="EN-US" xml:lang="EN-US">WEB-INF/lib/</span>目录下 备份了多个时间段的poi2.<span lang="EN-US" xml:lang="EN-US">jar</span>包</span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体; mso-font-kerning: 1.0pt; mso-bidi-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: ZH-CN; mso-bidi-language: AR-SA">导致更新<span lang="EN-US" xml:lang="EN-US">jar</span>后不起作用,删除掉以前的重复的poi2.<span lang="EN-US" xml:lang="EN-US">jar即可.</span></span></p>  
+ </body>
+</html>

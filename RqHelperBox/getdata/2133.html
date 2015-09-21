@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>问题描述</p> 
+  <p>润乾报表能够将Excel保存到数据库的相应接口，方便客户将Excel中的数据导入数据库。但是在实际应用中会遇到这样一个问题：对于Excel中数值型数据，如果对其设置了小数位数（如2位）时，导入数据库时精度会丢失。</p> 
+  <p>数据库中数据：</p> 
+  <p>显示数据：</p> 
+  <p>可以看到，小数点第二位的0都没有显示出来。</p> 
+  <p>问题分析</p> 
+  <p>使用ExcelImporter读入Excel并用getReport()方法得到其iRepor对象时，报表并未经过运算。而报表引擎只有经过运算后才能识别Excel中的数据格式并保留相应精度。所以必须使得读入Excel的报表进行相应的运算处理。</p> 
+  <p>解决方法</p> 
+  <p>下面是具体的实现源码：</p> 
+  <p>代码段一：</p> 
+  <p>public void saveFromExcel(String reportFile, String excelFile, int sheetNum)<br /> throws Exception {<br /> IReport report = calcReport(reportFile);<br /> ReportDefine2 excelReport = (ReportDefine2) excelToReport(excelFile,sheetNum);<br /> Engine engine = new Engine(excelReport, cxt);<br /> IReport iReport = engine.calc();<br /> System.out.println(”Excel中数据为：”);<br /> for(int i=1;i&lt;=report.getRowCount();i++){<br /> for(int j=1;j&lt;=report.getColCount();j++){<br /> INormalCell iCell=report.getCell(i, (short)j);<br /> INormalCell iExcelCell=iReport.getCell(i, (short)j);<br /> if(iCell.getInputProperty()!=null){<br /> if(iExcelCell.getDispValue()!=null){<br /> System.out.print(iExcelCell.getDispValue()+” “);<br /> iCell.getInputProperty().setInputValue(iExcelCell.getDispValue());<br /> }else{<br /> System.out.print(iExcelCell.getValue()+” “);<br /> iCell.getInputProperty().setInputValue(iExcelCell.getValue());<br /> }<br /> }else{<br /> InputProperty ip = new InputProperty();<br /> ip.setInputValue(iExcelCell.getValue());<br /> iCell.setInputProperty( ip );<br /> }<br /> }<br /> System.out.println();<br /> }<br /> DataSaver dsave = new DataSaver((ExtCellSet)report,null,cxt);<br /> dsave.save();<br /> }</p> 
+  <p>代码段二：</p> 
+  <p>private IReport excelToReport(String excelFile, int sheetNum)<br /> throws Exception {<br /> ExcelImporter ei = new ExcelImporter(excelFile);<br /> return ei.getReport(sheetNum);<br /> }</p> 
+  <p>请注意代码段一中的<br /> ————————————————-<br /> ReportDefine2 excelReport = (ReportDefine2) excelToReport(excelFile,sheetNum); //将读入的iReport对象强制转化成ReportDefine2对象<br /> Engine engine = new Engine(excelReport, cxt);<br /> IReport iReport = engine.calc(); //计算报表<br /> ————————————————-</p> 
+  <p>有的时候对Excel中文本类型的单元格使用getDispValue()得到的是null，所以有如下判断<br /> if(iExcelCell.getDispValue()!=null){ iCell.getInputProperty().setInputValue(iExcelCell.getDispValue());<br /> }else{ iCell.getInputProperty().setInputValue(iExcelCell.getValue());<br /> }</p> 
+  <p>运行该程序，结果如下图所示，数据精度完整显示。</p>  
+ </body>
+</html>

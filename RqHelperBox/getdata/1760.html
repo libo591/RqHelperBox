@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在web应用中，经常会用到一些特殊字符，比如要显示这样的字符”<img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/taoda.png" alt="taoda.png" width="15" height="14" />“，在Html、word和java中单独展现这样的字符都非常的简单。但是当需要在这三种情况时同时输出特殊字符就出了问题，因为Java、html和word的处理方式是不一样的；这些字符在页面显示正常，在Java和导出word中就可能显示不正常，出现乱码；或者在Java或导出word中显示正常，在html中却是乱码；这对于需要同时满足页面展现、打印和导出到word的需求来说，就很棘手。</p> 
+  <p>在润乾中灵活变通一下，将这种特殊字符做成一张图片，以图片的方式展现、打印和导出，就能很容易的解决这个应用问题。下面我们就以”<img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/taoda.png" alt="taoda.png" width="15" height="14" />“字符为例，看一下具体解决过程。</p> 
+  <p><strong>第一步：把特殊字符做成图片形式</strong></p> 
+  <p><strong>第二步：制作报表</strong></p> 
+  <p>1 制作一张报表，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/18.png" alt="1.png" width="413" height="94" /></p> 
+  <p>2 建数据集，sql：SELECT类别名称,产品名称,产品销售额 FROM 各类销售额</p> 
+  <p>3 单元格表达式：A1,B1,C1,D1合并单元格，输入：”各类产品统计表”；在A2,B2,C2,D2中分别输入：”类别名称”，”产品名称”，”产品销售额”，”备注”；</p> 
+  <p>A3,B3,C3的表达式分别为：=ds1.group(类别名称,false)，= ds1.select(产品名称)，= ds1.产品销售额；在D3中，单击右键，将单元格的数据类型设置成图片文件，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/27.png" alt="2.png" width="410" height="281" /></p> 
+  <p>内容中输入：if(C3 &lt; 5000, ‘taoda.png’,”)；意思为产品销售额小于5000的显示这个”<img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/taoda.png" alt="taoda.png" width="15" height="14" />“字符，大于5000的不显示；将”taoda.png”图片放在报表文件夹下就可以了。</p> 
+  <p><strong>第三步：发布报表</strong></p> 
+  <p>在web页面中展现，预览效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/35.png" alt="3.png" width="368" height="345" /></p> 
+  <p>现在展现、导出、打印都可以同时正常显示了。</p> 
+  <p><strong>总结：</strong>在web报表开发过程中，灵活运用各功能是很重要的，有些看似棘手的问题，改变下思路，就很容易解决了。</p>  
+ </body>
+</html>

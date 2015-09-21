@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>超链接是WEB项目中经常会用到的功能，如实现数据钻取，数据详细说明等。在WEB页面中，各种属性的数据是很多的，怎样对有超链接的数据与普通数据进行区别展现，让用户能一目了然的知道，哪些数据是有超链接的，哪些没有，这就是本文要介绍的如何设置超链接数据的样式。</p> 
+  <p>以超链接实现数据钻取为例，来展示润乾报表是怎么实现这个功能的。</p> 
+  <p>先简单介绍下报表超链接的制作：制作好两张报表，客户订单.raq、订单明细.raq。订单明细表是以订单号关联，展现客户订单表中各个订单所购产品的详细信息。选中客户订单.raq的订单号值单元格（比如B2格），在属性栏的表达式中，输入：”/reportJsp/showReport.jsp?raq=/订单明细.raq&amp;arg1=”+B2就可以了。超链接就做好了（arg1是订单明细.raq表中定义的，接收订单号值的参数）。</p> 
+  <p>下面以客户订单表作例子来完成样式的设置，下面是默认的没有样式显示的报表效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/17.png" alt="1.png" width="329" height="160" /></p> 
+  <p>上图是没有超链接样式的页面效果，下面再看一下超链接样式的效果：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/26.png" alt="2.png" width="312" height="157" /></p> 
+  <p>对比两张图发现，在第2个图中的订单号的值下面多了一个横线，颜色也变了，这就是设置了超链接样式。那这样的特效显示在润乾报表中是怎么设置的呢，其实很简单，仅仅用一个tag标签就可以实现了，看下面的代码：</p> 
+  <p>showReport.jsp部分代码：</p> 
+  <p>&lt; report:html name=”report1″ reportFileName=”&lt; %=report% &gt;”<br /> params=”&lt; %=param.toString()% &gt;”<br /> funcBarLocation=””<br /> needPageMark=”yes”<br /> generateParamForm=”no”<br /> needLinkStyle=”no”//单元格有超链接属性时，是否用设计的字体属性显示；<br /> //有两个value值，yes和no，no为显示超链接样式，默认值为yes。<br /> width=”-1″<br /> exceptionPage=”/reportJsp/myError2.jsp”<br /> / &gt;</p> 
+  <p>就是代码中的这个标签needLinkStyle=”no”就让我们轻松实现了超链接的特效显示</p> 
+  <p>文章总结：用润乾实现超链接样式的设置方法简单便捷，做好超链接报表后，只需要一个标签needLinkStyle=”no”，就可以将页面超链接数据与普通数据区分开来，让用户一目了然。</p>  
+ </body>
+</html>

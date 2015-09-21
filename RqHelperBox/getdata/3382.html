@@ -1,0 +1,12 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在润乾报表中，当用户在页面上输入起始日期和截止日期之后，希望能将这两个日期之间的日期都扩展出来。比如，输入一个2011-01-27和2011-02-02，那么可以扩展出：<br /> 2011-01-27<br /> 2011-01-28<br /> 2011-01-29<br /> 2011-01-30<br /> 2011-01-31<br /> 2011-01-27<br /> 2011-02-01<br /> 2011-02-02<br /> 这种效果可以通过daysAfter(),relDate(),to()这三个函数来共同实现。下面举例说明。<br /> <strong>新建一张报表：</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-024p54597cec.png" alt="" width="366" height="79" /></p> 
+  <p>A1和B1中分别是两个日期。<br /> A2中写：=to(0,daysafter(A1,B1))<br /> B2中写：=relDate(A1,A2)<br /> <strong>daysAfter(A1,B1)可计算出两个日期之间相差的天数，然后通过to（）对单元格进行一个扩展，那么在B2中的relDate(A1,A2)其实就是relDate(2010-12-20,number)，number是一个具体的数值。<br /> </strong>预览效果如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-025p7a73041b.png" alt="" width="324" height="268" /></p> 
+  <p><strong>如果日期是以参数的形式输入，那么可以这么写：</strong><br /> 先定义两个日期型的参数，starttime和endtime</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-026n7f9a1c3a.png" alt="" width="361" height="50" /></p> 
+  <p>通过单元格引用参数的值。<br /> <strong>DaysAfter()函数说明：</strong><br /> 计算两个日期型数据相差几天<br /> 语法：<br /> <strong>daysAfter(dateExp1, dateExp2)<br /> 参数说明：<br /> </strong>dateExp1 日期或标准日期格式的字符串，<br /> 如：yyyy-MM-dd HH:mm:ss，yyyy-MM-dd，HH:mm:ss<br /> dateExp2 日期或标准日期格式的字符串，<br /> 如：yyyy-MM-dd HH:mm:ss，yyyy-MM-dd，HH:mm:ss<br /> 返回值：<br /> 整数<br /> 示例：<br /> 例1：daysAfter(dateTime(“1983-12-15 10:20:30″),datetime2(“1982年12月30日”,”yyyy年MM月dd日”))<br /> 返回：-350<br /> 例2：daysAfter(“1983-12-15 10:20:30″,”1982-12-30″) 返回：-350<br /> RelDate()函数说明：<br /> <strong>从给定的日期型数据中，算出相差n天后的新的日期数据<br /> 语法：<br /> </strong>relDate(dateExp, nExp)<br /> 参数说明：<br /> dateExp 给定的起始日期表达式，其结果必须为日期或标准日期格式的字符串，<br /> 如：yyyy-MM-dd HH:mm:ss、yyyy-MM-dd 或 HH:mm:ss<br /> nExp 整数表达式，需要求得nExp天后的新日期<br /> 返回值：<br /> 日期时间<br /> 示例：<br /> 例1：relDate(datetime2(“19800227″,”yyyyMMdd”),5) 返回：1980-03-03 00:00:00<br /> 例2：relDate(“1972-11-08 10:20:30″,-10) 返回：1972-10-29 10:20:30<br /> 例3：relDate(dateTime(“2006-01-15 13:20:30″),15) 返回：2006-01-30 13:20:30</p>  
+ </body>
+</html>

@@ -1,0 +1,18 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表在web端是以纯html方式发布的。润乾提供一系列的tag标签来发布报表，用户通过定义Tag标签的属性及其值，在不需要调用润乾API情况下，就可以完成报表的解析及运算，并按用户配置的属性要求将HTML文件流输出到客户端。本文主要介绍tag标签中常用的两个属性–width和height。</p> 
+  <p>对于过长或过宽的浏览式报表，通常需要将其按照一定标准进行纵向或横向分页，这时就要用到报表分页高度height和报表分页宽度width这两个属性。其值为整数，单位是px，负数表示无穷大即不分页，一般用-1表示。</p> 
+  <p>对于过宽报表，在发布报表的&lt;report:html ……/&gt;中设置width属性的值为-1，即横向不分页，效果如下图所示：<br /> <img class="alignnone size-full wp-image-2806" title="xn-ihqs0h1zbr55bd36c1" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/xn-ihqs0h1zbr55bd36c1.png" alt="xn-ihqs0h1zbr55bd36c1" width="573" height="70" /></p> 
+  <p>同样的报表，将width属性值设置为200，即报表分页宽度为200px，效果如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/xn-kbrq3c439aqk6b.png" alt="横向分页.png" height="122" /></p> 
+  <p>对于过长报表，在发布报表的&lt;report:html ……/&gt;中设置height属性的值为-1，即纵向不分页，效果如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/xn-ihqs0h1zbs65f250a.png" alt="纵向不分页.png" height="531" /></p> 
+  <p>同样的报表，将height属性值设置为100，即报表分页高度为100px，效果如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/xn-kbrq3cwz4epsv.png" alt="纵向分页.png" height="351" /></p> 
+  <p>可见，通过对width和height两个属性值的设定，就可以灵活的根据需要控制报表展现时是否分页以及分页时的高度和宽度了。</p> 
+  <p>值得注意的是，在 报表属性-打印 里面有纸张方向的设定，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/08/xn-iqr30x1jfj52a.png" alt="纸张方向.png" height="157" /></p> 
+  <p>上文中所述的height属性代表报表分页高度、width属性代表报表分页宽度均指此处纸张方向设置为纵向的情况。若此处的纸张方向设置为横向，则两属性相反，即纸张方向为横向的情况下，height属性代表的就是报表分页宽度、width属性代表的就是报表分页高度了。（这里的高和宽指的是按照用户正常面对电脑屏幕时的视野，横向时实际就是相当于用户将头左转90度看到的视野）</p>  
+ </body>
+</html>

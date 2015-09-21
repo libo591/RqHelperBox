@@ -1,0 +1,8 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>问题描述：</strong><br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在windows环境下，写的一个导出pdf的程序，且能正常运行。但发布到aix上的时候，运行就报错：</p> 
+  <p>[2008-08-27 14:50:25] runqianReportLogger : [DEBUG] – 开始运算报表，首先取数……<br /> [2008-08-27 14:50:25] runqianReportLogger : [DEBUG] – 取数完毕，开始计算……<br /> [2008-08-27 14:50:27] runqianReportLogger : [DEBUG] – 计算结束：<br /> Exception in thread “main” ExceptionConverter: java.io.IOException: The document has no pages.<br /> &nbsp; at com.lowagie.text.pdf.PdfPages.writePageTree(Unknown Source)</p> 
+  <p><strong>解决方法：</strong><br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在java虚拟机的启动参数中加上 –Djava.awt.headless=true，即可。配置后正确。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 具体的做法就是在weblogic的启动脚本startWebLogic.sh的最后部分中加入“-Djava.awt.headless=true”。如下橙色字体所示（只摘抄部分）：<br /> ${JAVA_HOME}/bin/java ${JAVA_VM} ${MEM_ARGS} ${JAVA_OPTIONS} -Dweblogic.Name=${SERVER_NAME} -Dweblogic.ProductionModeEnabled=${PRODUCTION_MODE} -Djava.security.policy=”${WL_HOME}/server/lib/weblogic.policy” -Djava.awt.headless=true weblogic.Server</p>  
+ </body>
+</html>

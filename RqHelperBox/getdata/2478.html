@@ -1,0 +1,20 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><strong>我们使用sum()函数，对可扩展单元格或集合表达式进行求和，这似乎已经是我们在制作报表时司空见惯的操作了，你是否用过sum()函数计算过所有奇数列的和吗？如果没有的话，就和我一起做一个小例子吧！</strong></p> 
+  <p><strong> </strong></p> 
+  <p><strong> 在</strong><strong>A2</strong><strong>单元格输入</strong><strong>=to(1,10),</strong><strong>将其扩展方式设置成横向扩展，</strong><strong>C2</strong><strong>单元格输入</strong><strong>=sum(A1{}),</strong><strong>如图例</strong><strong>1</strong><strong>所示。</strong><strong> </strong></p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/14-1.jpg"><img class="alignnone size-full wp-image-2479" title="14-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/14-1.jpg" alt="" width="204" height="74" /></a></p> 
+  <p>图例1</p> 
+  <p>进行预览时，C2中的数据是A2所扩展出的所有单元格的和，如图例2所示。这个数据和可不是我们所想要的哦！可是sum()函数没有可判断单元格的参数啊！</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/14-2.jpg"><img class="alignnone size-medium wp-image-2480" title="14-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/14-2-300x26.jpg" alt="" width="300" height="26" /></a></p> 
+  <p>图例2</p> 
+  <p>我们怎样才能对于奇数列的单元格进行求和呢？我们需要先将欲求的奇数列过滤出来，在A3单元格中输入“=if(col()%2==1,A2,0)”（该if表达式的意思就是把奇数列的单元格原样显示,偶数列的显示为0），并将第三行进行隐藏，将C2单元格的内容改为“=sum(A3｛｝)”，具体设置如图例3所示。</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/14-3.jpg"><img class="alignnone size-full wp-image-2481" title="14-3" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/14-3.jpg" alt="" width="239" height="97" /></a></p> 
+  <p>图例3</p> 
+  <p>经过上面的设置，我们再来预览一下统计出来的数据和。图例4就是我们成功计算出的奇数列的和。</p> 
+  <p>&nbsp;</p> 
+  <p><a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/14-4.jpg"><img class="alignnone size-medium wp-image-2482" title="14-4" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/14-4-300x32.jpg" alt="" width="300" height="32" /></a></p> 
+  <p>图例4</p>  
+ </body>
+</html>

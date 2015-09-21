@@ -1,0 +1,29 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在制作报表时，经常会遇到将数据库里一列数据按照条件取值后，分为多列显示的需求，由于受到扩展格的影响，总是实现不了这样的需求。本文简单简单介绍一下如何用valueat函数实现按条件取值分多列显示数据的需求。</p> 
+  <p>第一步：制作报表，如图所示：</p> 
+  <p>&nbsp;<img title="159" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/159.jpg" alt="159" width="485" height="72" /></p> 
+  <p>预览效果：</p> 
+  <p>&nbsp;<img title="160" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/160.jpg" alt="160" width="445" height="259" /></p> 
+  <p>如图所示，由于B2的默认左主格是A2，所以B2随A2扩展，里面没有数据。</p> 
+  <p>第二步：修改报表，如图所示：</p> 
+  <p>&nbsp;<img title="1611" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1611.jpg" alt="1611" width="554" height="83" /></p> 
+  <p>如图所示：首先在B2和C2用count函数计算出指定条件后有多少条数据，然后在A3单元格中用max函数获取一个最大值，然后用to函数从0扩展出展示数据所需要的单元格数量，最后用valueat函数根据指定位置返回数组或者集合表达式中的某一个元素。</p> 
+  <p>Valueat函数的用法如下：&nbsp;&nbsp;</p> 
+  <p>&nbsp;&nbsp;&nbsp; 语法：</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; valueat(arrayexp，suffixExp)</p> 
+  <p>&nbsp;&nbsp;&nbsp; 参数说明：</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; arrayexp&nbsp;&nbsp;&nbsp; 数组或者集合表达式</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; suffixExp&nbsp;&nbsp;&nbsp; 整数，用于指定返回集合中的第几个元素，以0开始计数</p> 
+  <p>&nbsp;&nbsp;&nbsp; 返回值：</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 集合中的一个元素，数据类型由集合中的元素类型决定</p> 
+  <p>&nbsp;&nbsp;&nbsp; 示例：</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 例1：valueat(to(5,8),2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 返回值为：7</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 例2：valueat({“a”,”b”,”c”},0)&nbsp;&nbsp;&nbsp; 返回值为：”a”</p> 
+  <p>B3单元格里的表达式：valueat(ds1.Select(TYPE,,TYPE==”9011″),A3)</p> 
+  <p>C3单元格的表达式：valueat(ds1.Select(TYPE,,TYPE==”9011″),A3)</p> 
+  <p>预览效果：</p> 
+  <p>&nbsp;<img title="1621" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/1621.jpg" alt="1621" width="470" height="277" /></p>  
+ </body>
+</html>

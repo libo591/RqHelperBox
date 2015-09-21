@@ -1,0 +1,32 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">在润乾<strong>报表</strong>中，单元格和<strong>统计图</strong>中都可以设置超链接属性，原理是通过超链接打开一个新窗口（或者在本窗口），传参或调用JavaScript函数来完成相关的业务逻辑。那么在<strong><a href="http://www.geezn.com/archives/1014.html" target="_blank">统计图</a></strong>中的超链接中如何调用JavaScript函数呢？</span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">实现思路：</span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%; text-indent: -18pt; margin-left: 18pt; tab-stops: list 18.0pt;"><span><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">1. </span><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">在统计图中调用JavaScript函数</span></span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%; text-indent: -18pt; margin-left: 18pt; tab-stops: list 18.0pt;"><span><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">2. </span><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">页面中设置JavaScript函数来响应请求</span></span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;"><span><strong>第一步：在<a href="http://www.runqian.com.cn" target="_blank">统计图</a>raq文件中设置超链接</strong></span></span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">（这里举例用润乾安装目录下的：<a href="C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Zoundry Raven\webapps\demo\reportFiles"><span>\</span>reportHome\webapps\demo\reportFiles\</a><span>基础统计图\柱形图.raq）：</span></span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;"><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_001p18c35caa.png" alt="" width="531" height="457" /></span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">其中，A4单元格为统计图所在的单元格，设置如下：</span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;"><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_003n604b3064.png" alt="" width="563" height="495" /></span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">在统计图中设置中，分类轴和系列名称有两个内置固定的变量名<a href="mailto:category@legend"><span><span style="color: windowtext; font-size: 14pt; text-decoration: none; text-underline: none;">@category</span><span style="color: windowtext; font-size: 14pt; text-decoration: none; text-underline: none;">和@legend</span></span></a><span>，</span>这两个参数无需定义，可以直接在统计图中使用。</span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">在显示外观栏中，我们在超链接的属性中加入：</span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">JavaScript:show(‘@legend’)</span></p> 
+  <p class="MsoNormal" style="text-align: left; line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">此JavaScript的功能是要获取到点击的这个系列的值，并提示给我们。</span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">需要注意的是，这里的设置和单元格超链接属性的设置有一点不同，那就是在单元格超链接属性中加入JavaScript函数的时候，要把JavaScript函数用”&quot;号括起来，例如” JavaScript:show(‘@legend’)”,这样才能被报表引擎正确解析，而在统计图中的超链接属性中不需要加”&quot;号，这点需要在设置的时候仔细检查，否则会导致不能正确调用JavaScript函数。</span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">由于我们这个例子想通过点击超链接在本窗口相应这个请求，所以，需要在超链接目标窗口这里设置：_self，表示目标窗口为其本身，详细的设置见下图：</span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;"><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_004n35b5558.png" alt="" width="560" height="486" /></span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 黑体; font-size: 14pt;"><strong>第二步：在jsp中加入js函数：</strong></span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">&lt;script language=”javascript”&gt;</span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">function show(legend,category){</span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">alert(“</span><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">点击图形的分类为”+”:”+ legend+”,其值为”+category);//弹出对话框，展示数据</span></span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">}</span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">&lt;/script&gt;</span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">第三步：我们在web页面中看一下最终的效果：</span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;"><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_005n16a7cbaa.png" alt="" width="498" height="377" /></span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">点击华北中的日用品系列后，效果如下：</span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;"><img src="http://www.runqian.com.cn/wp-content/uploads/2012/07/zrclip_006p1ea6e63.png" alt="" width="506" height="362" /></span></p> 
+  <p class="MsoNormal" style="line-height: 150%;"><span style="line-height: 150%; font-family: 宋体; font-size: 14pt;">在统计图中调用JavaScript函数，大大的增加了页面处理数据的灵活性，我们可以通过调用JavaScript函数，实现对报表数据进行筛选，钻取，传参等多种功能，让统计图中的数据通过调用JavaScript函数和您的实际应用更紧密的结合起来。</span></p>  
+ </body>
+</html>

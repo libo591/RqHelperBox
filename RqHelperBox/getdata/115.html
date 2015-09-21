@@ -1,0 +1,23 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">在用润乾报表设计报表时发现发现<span lang="EN-US" xml:lang="EN-US">,</span>扩展的格子是复制出来的 好像不可以设置为不同的宽度<span lang="EN-US" xml:lang="EN-US">,</span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">想判断如果格子是钻取就设置宽度为<span lang="EN-US" xml:lang="EN-US">100,</span>否则为<span lang="EN-US" xml:lang="EN-US">15. 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题解决<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">在润乾报表中直接无法判断<span lang="EN-US" xml:lang="EN-US">,</span>可以通过变通的方式实现<span lang="EN-US" xml:lang="EN-US">,</span>例如<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">A1 =list(“SSSSS”,”AAAA”,”B”,”AAAA”) 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">B1 =if(A1==”AAAA”,space(100),15)</span> <span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">按单元格内容扩大<span lang="EN-US" xml:lang="EN-US">. 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><br /></p>  
+ </body>
+</html>

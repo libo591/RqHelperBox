@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p><span style="font-family: 宋体;">对于数据库表设计是横表情况的报表设计比较容易，在扩展格里取=ds1.select(ID)，在附属格里分别取=ds1.value1,=ds1.value2,……就可以了。</span></p> 
+   <p><span style="font-family: 宋体;">对于数据库表设计是纵表（如下图），又要求数据展现时和横表报表展现一样的情况，报表设计时就需要动一点脑筋了。</span></p> 
+   <p><span style="font-family: 宋体;">数据库设计 ：</span></p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/06/1.jpg" alt="1.jpg" height="182" /></p> 
+   <p><span style="font-family: 宋体;">具体实现的方法可能有很多种，这里给出一个例子，满足纵表转横表展示功能，如下：</span></p> 
+   <p><span style="font-family: 宋体;">报表设计 ：</span></p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/06/2.jpg" alt="2.jpg" height="83" /></p> 
+   <p>两个数据集：</p> 
+   <p>ds1：select * from test1</p> 
+   <p>ds2：select * from test1</p> 
+   <p>单元格中的表达式：</p> 
+   <p>B2：=ds1.dselect(字段编号) //相当于select distinct ……，取所有不重复的”字段编号”值，或者用=ds1.group(字段编号)用字段编号分组</p> 
+   <p>C1：=ds1.dselect(名称) //取所有不重复的”名称”值</p> 
+   <p>C2：=ds2.select(属性,,ds2.字段编号==B2&amp;&amp;ds2.名称==C1) //用横轴”字段编号”，纵轴”名称”作为筛选条件，把唯一的”属性”值取出来 。</p> 
+   <p>报表结果预览 ：</p> 
+   <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/06/3.jpg" alt="3.jpg" width="565" height="71" /></p> 
+   <p>如以上设计，实现了纵表转横表展示问题。<br /> <span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

@@ -1,0 +1,238 @@
+<html>
+ <head></head> 
+ <body> 
+  <p></p> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><b><span style="">一、需求背景</span></b></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">在<a href="http://www.geezn.com">集智数据平台</a>的<span>Web</span>自定义报表功能中提供了样式管理功能，可以灵活的进行全局样式或私有样式的管理，通过全局样式管理，可以实现对报表的批量样式修改功能。有关全局样式管理功能的介绍和使用可参考文章《使用样式管理实现批量报表的快速换肤》。</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">那么，如果用户是在自己的已有系统中集成润乾报表，而未使用集智数据平台，用户需要对报表进行样式批量修改，有什么样的解决方案呢？</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">这里，我们为大家介绍如何通过<span>API</span>来实现报表样式批量修改功能。</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left">&nbsp;</p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><b><span style="">二、解决方案</span></b></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">润乾报表在系统运算过程中以对象的形态存在，报表的每一个单元格都有其各种属性，通过对各种属性的设置，我们可以改变单元格的样式，包括格线、背景色、前景色、字体等。</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">我们可以通过<span>java</span>方法批量读取报表文件，然后遍历全部报表对象的单元格，将单元格属性信息回设到报表对象中，达到批量换肤的目的。</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">以下是通过<span>API</span>实现报表样式批量修改解决方案的示例步骤与代码：</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;1</span><span style="">、通过<span>api</span>预定义报表样式，例如：<span>ChangeReportStyle.java</span></span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">package common.reader.raq;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">import com.runqian.report4.model.NormalCell;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">import com.runqian.report4.model.ReportDefine;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">import com.runqian.report4.model.RowCell;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">import com.runqian.report4.usermodel.INormalCell;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">import com.runqian.report4.util.ReportUtils;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style=""></span>&nbsp;</p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">public class ChangeReportStyle {</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="">。。。。。。<span>//</span>此处省略</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp; /**</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp; * </span><span style="">根据行性质，设置行的属性<span>,</span>根据实际需求进行修改。</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp; * @param row</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp; */</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void setRowProperty(RowCell row) {</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte rowType = row.getRowType();</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; switch (rowType) {&nbsp;&nbsp;&nbsp;&nbsp; </span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case (RowCell.TYPE_GROUP_HEADER): {</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optimizeRow(row, true);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case (RowCell.TYPE_TITLE_HEADER):</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optimizeRow(row, true);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case (RowCell.TYPE_TABLE_HEADER):</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optimizeRow(row, true);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case (RowCell.TYPE_PAGE_HEADER):</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optimizeRow(row, true);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case (RowCell.TYPE_NORMAL):</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optimizeRow(row, false);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case (RowCell.TYPE_TABLE_FOOTER):</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optimizeRow(row, false);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case (RowCell.TYPE_TITLE_FOOTER):</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optimizeRow(row, false);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case (RowCell.TYPE_PAGE_FOOTER):</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optimizeRow(row, false);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style=""></span>&nbsp;</p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /**</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;* </span><span style="">此方法，请根据实际需要进行调整 </span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;* @param row</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;* @param isHeader</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;*/</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void optimizeRow(RowCell row, boolean isHeader) {</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int r = currentRow;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; short c = 1;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NormalCell cell = null;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean isParam = testFile.indexOf(“_arg”)&gt;1;</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (; c &lt;= cols; c++) {</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell = (NormalCell) rd.getCell(r, c);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try {</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (isHeader) {</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setBackColor(-1445385);// background color</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setForeColor(-14655348);// foreground color</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setLBColor(-2235674);// left</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(!isParam)cell.setLBStyle(INormalCell.LINE_SOLID);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setRBColor(-2235674);// right</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(!isParam)cell.setRBStyle(INormalCell.LINE_SOLID);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setTBColor(-2235674);// top</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(!isParam)cell.setTBStyle(INormalCell.LINE_SOLID);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setBBColor(-2235674);// bottom</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(!isParam)cell.setBBStyle(INormalCell.LINE_SOLID);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setBold(true);// font’s bold property</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setHAlign(INormalCell.HALIGN_CENTER);// header</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //horizon align</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setBackColor(-1);// background color</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setForeColor(-14655348);// foreground color</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setLBColor(-2235674);// left</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(!isParam)cell.setLBStyle(INormalCell.LINE_SOLID);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setRBColor(-2235674);// right</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(!isParam)cell.setRBStyle(INormalCell.LINE_SOLID);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setTBColor(-2235674);// top</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(!isParam)cell.setTBStyle(INormalCell.LINE_SOLID);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setBBColor(-2235674);// bottom</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(!isParam)cell.setBBStyle(INormalCell.LINE_SOLID);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cell.setBold(false);// font’s bold property</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rd.setCell(r, c, cell);</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (Exception e) {</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; e.printStackTrace();</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">}</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; TEXT-INDENT: 23.25pt; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style=""></span>&nbsp;</p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style=""></span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style=""></span>&nbsp;</p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">2</span><span style="">、操作流程</span></p> 
+  <br /> 
+  <p><span style=" ">首先运行程序，选择报表模板所在的路径，如图所示：</span> </p> 
+  <br /> 
+  <p><img border="0" src="an.com.cn/wp-content/uploads/2011/07/fc4e60af-d81e-4b58-8923-1022d4a645ff1.png" /><br />&nbsp;</p> 
+  <br /> 
+  <p><span style=" ">选择读取<span>raq</span>模板，将读取<span>directory path</span>的全部模板，如下图所示：</span> </p> 
+  <br /> 
+  <p><img border="0" src="an.com.cn/wp-content/uploads/2011/07/6aef95e8-969c-4728-8f78-c2d8c62b68a71.png" /><br />&nbsp;</p> 
+  <br /> 
+  <p><br /> </p> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">选择优化颜色按钮，实现对模板的批量样式修改。</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left">&nbsp;</p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><b><span style="">三、结语</span></b></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">通过<span>API</span>的方式可以为用户实现报表样式的批量统一修改，而不用再一张张地对每个报表单独进行设置。但这一解决方案需要用户深度掌握润乾报表的<span>API</span>，并且对于批量修改的报表样式局限于共性的修改，比如：全局字体、全局字体颜色、全局背景色、表头样式、数据区样式等。</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style=""></span>&nbsp;</p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">关于报表样式批量修改，除了开头提到的集智数据平台全局样式管理功能，也还有其他可供参考方法，例如通过<span>CSS</span>的报表样式控制，读者可参见文章：</span></p> 
+  <br /> 
+  <p style="TEXT-ALIGN: left; LAYOUT-GRID-MODE: char" class="MsoNormal" align="left"><span style="">《报表样式的<span>CSS</span>控制方法》</span></p> 
+  <br /> 
+  <p></p>  
+ </body>
+</html>

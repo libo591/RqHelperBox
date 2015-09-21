@@ -1,0 +1,6 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 修改下拉日历的的显示格式时,例如:将2008-7-31修改为2008年7月31日,如果在com\runqian\base4\resources路径下的format.properties配置文件直接修改为date=yyyy年MM月dd日,在web上看到的下拉日历是乱码,原因是format.properties中存储的是对应汉字年月日的Encoding编码,所以直接添加会有问题,解决方法:在dos下执行一下命令:java -cp ” report4.jar包所在路径/report4.jar” com.runqian.base4.resources.MessageEditor,打开report4自身带的编辑器然后再对format.properties进行编辑然后打包到report4.jar中即可.</p>  
+ </body>
+</html>

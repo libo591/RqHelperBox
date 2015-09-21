@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>按段分组是个比较典型的不规则分组报表，其分组是根据数据的值段来分的，例如按照分数段、年龄段、按时间段等，属于某个值区间的记录归到一个组里如下图所示：</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/13-11.jpg"><img class="alignnone size-medium wp-image-2474" title="13-1" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/13-11-300x229.jpg" alt="" width="300" height="229" /></a></p> 
+  <p>在上图中我们可以看到，报表根据订购日期将订单数量和订单金额分成四组，分别统计四个季度的订单。</p> 
+  <p>这种按值段进行分组的分组报表被称为按段分组报表</p> 
+  <p>下面我们介绍一下润乾报表中如何实现该报表</p> 
+  <p>1.定义数据集</p> 
+  <p>Ds1:SELECT *&nbsp; FROM 订单,客户 where 订单.客户ID=客户.客户ID。</p> 
+  <p>2.报表设计界面如下图所示。</p> 
+  <p>&nbsp;<a href="http://www.runqian.com.cn/wp-content/uploads/2011/03/13-2.jpg"><img class="alignnone size-medium wp-image-2475" title="13-2" src="http://www.runqian.com.cn/wp-content/uploads/2011/03/13-2-300x94.jpg" alt="" width="300" height="94" /></a></p> 
+  <p>3．详细说明：</p> 
+  <p>根据上述描述可知，该报表按季度分组，主要是通过plot函数实现的。在B3单元格中的表达式“=ds1.plot(month(发货日期),list(4,7,10),false,false)+1”，</p> 
+  <p>参数说明：month(发货日期)取出发货时间所在月份，如数组{4,7,10}在参数3为false的情况下将整数集划分成4个集合，依次分别是&lt;4、&lt;7(此集合中元素必定&gt;=4)、&lt;10 (此集合中元素必定&gt;=7)及其它(即&gt;=10)，集合的编号从0开始起编，依次为0,1,2,3；所以当月份为1时，返回值为0，为了得到正确的季度所以最后加1。</p>  
+ </body>
+</html>

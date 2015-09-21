@@ -1,0 +1,40 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表中提供了强大的分页函数，解决了让开发者头疼的报表页码和总页数等问题。下面就利用分页函数来实现在报表中显示当前页的记录条数。</p> 
+  <p>首先看这样一个简单的网格式报表：</p> 
+  <p>报表模版：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/1-0033.png" alt="1.png" width="425" height="144" /></p> 
+  <p>其中，连接的数据源为设计器自带的demo数据源，sql如下：</p> 
+  <p>Ds1：SELECT EMPLOYEE.EMPID,EMPLOYEE.EMPNAME,EMPLOYEE.BIRTHDAY,EMPLOYEE.SEX,EMPLOYEE.DEGREE,EMPLOYEE.BONUS FROM EMPLOYEE</p> 
+  <p>Ds2：SELECT DEGREE.ID,DEGREE.NAME FROM DEGREE</p> 
+  <p>各单元格表达式为:</p> 
+  <p>A4: =ds1.Select(int(EMPID),false)</p> 
+  <p>B4: =ds1.EMPNAME</p> 
+  <p>C4: =ds1.BIRTHDAY，显示格式为：yyyy年MM月dd日</p> 
+  <p>D4: =ds1.SEX，显示值为：map(list(”1″,”2″),list(”男”,”女”))</p> 
+  <p>E4: =ds1.DEGREE，显示值为：ds2.select1(name,id==value())</p> 
+  <p>F4: = ds1.BONUS，显示格式为：￥#0.00</p> 
+  <p>设置报表属性中的分页属性为按行分页，每页10行（标题，表头，页眉不计算在内）</p> 
+  <p>Web页面效果如下：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/2-0029.png" alt="2.png" width="356" height="233" /></p> 
+  <p>下面，就在此报表的基础上，给每页增加总记录数和本页记录数的显示。</p> 
+  <p>先在报表模版中追加一行，并设置为报表尾：</p> 
+  <p>在F5单元格中写上：=ds1.count()，用来计算一下整个报表的记录条数。</p> 
+  <p>接着，再追加一行报表尾，合并整行单元格后，写入表达式：</p> 
+  <p>=if(pno() != 0,”本页”+count(A4{})+”条/共”+ F5+”条”,”本页10条/共10条”)</p> 
+  <p>解释一下这个表达式的意思：</p> 
+  <p>第一步，用if函数来对分页进行判断，pno() != 0的意思是，当前页码不为0即分页至少有两页。</p> 
+  <p>第二步，在分页的情况下，count(A4{})为计算本页中A4扩展出来的条数即当前页的记录数。并引用了F5单元格的整个报表总记录条数，最后拼接而成。</p> 
+  <p>第三步，设置缺省条件下的记录数显示，即报表只分了一页，当然本页只有10条且一共10条记录。</p> 
+  <p>第四步，由于在最终的效果中不需要看到第五行，所以把这行设置为隐藏行。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/3-0024.png" alt="3.png" width="425" height="178" /></p> 
+  <p>看一下页面显示效果：</p> 
+  <p>第一页</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/4-0023.png" alt="4.png" width="387" height="260" /></p> 
+  <p>最后一页：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2010/04/5-0018.png" alt="5.png" width="388" height="232" /></p> 
+  <p>可以看出，在最后一页中只有8条记录，而下方的显示也是正确的。</p> 
+  <p>这时会有这样一个疑问，为什么一定要用到分页函数pno()呢，原因是这样的，只有在分页后的当前页中，count(A4{})出来的记录数才是正确的，否则的话就对没有分页的报表中所有的A4进行计数了，用分页函数pno()实际上就是限定了count()函数的作用范围。</p>  
+ </body>
+</html>

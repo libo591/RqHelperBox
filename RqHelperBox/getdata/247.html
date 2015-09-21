@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><font color="#ff0000">任务背景</font>:</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 报表离不开打印，打印离不开分页。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 比较常见的报表的分页，一般是根据纸张尺寸自动分页。即根据纸张的尺寸和页边距，计算出每一页能摆下多少行多少列，从而计算出每一页的报表，然后进行打印或者展现。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这种方式，对于行列的宽度、高度固定的情况，比较容易实现，很简单的计算罢了。可是不要忘了，单元格里的数据是从数据库里动态取出来的，因此如果单元格里的数据超出了单元格的宽度，就意味着需要撑宽单元格或者自动折行，而自动折行则意味着撑高单元格。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 因此最常见最普通的分页方式计算起来并不容易，你需要先把数据取出来，根据每一行的数据长度先判断是否存在自动折行或者撑宽单元格的现象，然后才能计算出每一页的行数和列数。如果存在自动折行，那么每一页的行数并不会相同，因为只是某些行自动折行。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 另一种也比较常见的分页方式是固定行数分页，即规定每一页必须且只能显示固定的行数，多余的显示到下一页。这种分页方式似乎更加简单，没有那么复杂的运算。可是别高兴得太早，用户的需求永远是合理且复杂的。对于固定行数的报表，用户的目的往往是为了格式的规整统一，甚至有时候是为了套打。因此如果格子里的数据超出了单元格的宽度怎么办？不能撑宽，那么自动折行可以吗？在不撑高单元格的前提下是可以的，那么如果撑高了怎么办？对不起，不允许就是不允许，自己想办法缩小字体吧。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 缩小字体也不是那么容易的，因为如果仅仅根据单元格的宽度来缩小字体，往往会导致文字过分缩小而缺少可读性。因此需要根据单元格的高度和宽度进行综合计算，既要折行又要缩小，从而算出一个最大的缩小系数，保证可读性。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 解决了缩小的问题，事情还没结束。由于数据是从数据库里动态取出来的，那么记录的行数是不固定的，假设要求一页显示10行，而你取出来的记录正好是15行，那么意味着第二页只有5行，此时意味着第二页的格式不标准了，怎么办？于是用户很自然地提出补足空行。晕了吧，补多少空行呢？不一定，只能根据取出来的记录数结合每页显示的行数进行动态计算。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当然还有更复杂的分页方式，比如自动适应纸张大小。这种情况更多见于动态横向扩展的报表。由于报表的列数不固定，可是用户希望不管多少列，都在一张纸里打印，不要横向分页，此时需要根据最终的列数动态调整列宽；当然纵向的情况也同样存在。<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 因此总的来说，很小的一个分页问题，却会引发一系列的麻烦，如果都要自己编程解决，实在太麻烦了，而且很难做的通用。润乾报表在打印分页方面考虑很周到，提供了一系列的简单配置，使用方便。</p> 
+  <p><font color="#ff0000">实现步骤</font>:</p> 
+  <ol> 
+   <li>设计报表</li> 
+   <li>设置分页方式及相关属性，比如说固定行数的分页方式，需要配置每页显示的行数等；自动适应纸张尺寸的方式，需要配置横向适应还是纵向适应</li> 
+  </ol> 
+  <p><font color="#ff0000">效果演示</font>:</p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/moreone1.png" title="moreone1.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/moreone1.png" alt="moreone1.png" /></a></p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/moreone2.png" title="moreone2.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/moreone2.png" alt="moreone2.png" /></a></p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/moreone3.png" title="moreone3.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/moreone3.png" alt="moreone3.png" /></a></p> 
+  <p align="center">补足空行</p>  
+ </body>
+</html>

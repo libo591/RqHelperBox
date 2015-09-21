@@ -1,0 +1,310 @@
+<html>
+ <head></head> 
+ <body> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">海量数据的清单式列表在读取、展现及导出过程中可能会出现速度过慢、内存溢出、系统死机等问题，分页计算extHtml标签扩展了原html标签的功能，实现了以页为单位对数据进行读取和展现及导出等操作，大大降低了内存占有量，提高了运行效率，避免内存溢出等问题。</span></p> 
+  <p style="text-align: left; line-height: 1.5;"><span style="font-size: 12pt;">分页标签的写法大致为:</span></p> 
+  <pre class="programlisting"><span style="font-size: 12pt;">&lt;report:extHtml
+name=&quot;report1&quot;
+reportFileName=&quot;api/1.6.raq&quot;
+totalCountExp=&quot;query('SELECT count(*) FROM 订单明细')&quot;
+params=&quot;&lt;%=param.toString()%&gt;&quot;
+scale=&quot;1.1&quot;
+pageCount=&quot;10&quot;
+needPageMark=&quot;yes&quot;
+funcBarFontFace=&quot;黑体&quot;
+funcBarFontSize=&quot;14&quot;
+funcBarFontColor=&quot;red&quot;
+functionBarColor=&quot;#FFCCFF&quot;
+separator=&quot;|&quot;
+needSaveAsExcel=&quot;yes&quot;
+needSaveAsPdf=&quot;yes&quot;
+needSaveAsWord=&quot;yes&quot;
+funcBarLocation=&quot;top&quot;
+needPrint=&quot;yes&quot;
+firstPageLabel=&quot;首页&quot;
+prevPageLabel=&quot;前一页&quot;
+nextPageLabel=&quot;后一页&quot;
+lastPageLabel=&quot;尾页&quot;
+printLabel=&quot;全打印&quot;
+excelLabel=&quot;导出excel&quot;
+pdfLabel=&quot;导出pdf&quot;
+wordLabel=&quot;导出word&quot;
+generateParamForm=&quot;yes&quot;
+displayNoLinkPageMark=&quot;yes&quot;
+saveAsName=&quot;测试&quot;
+startRowParamName=&quot;startRow&quot; //起始行参数名，非必填，默认值为startRow
+endRowParamName=&quot;endRow&quot; //结束行参数名，非必填，默认值为endRow
+userFuncBarElements=&quot;&lt;a href='http://www.runqian.com.cn'&gt;润乾&lt;/a&gt;&quot;
+needScroll=&quot;no&quot;
+scrollHeight=&quot;100&quot;
+needLinkStyle=&quot;yes&quot;
+exceptionPage=&quot;myErrorPage.jsp&quot;
+/&gt;
+</span></pre> 
+  <pre class="programlisting"><span style="font-size: 12pt;">从上面我们可以看到,这里的totalCountExp属性是写死的,如果想写一个通用jsp,如何来动态设置总记录的表达式呢?</span></pre> 
+  <pre class="programlisting"><span style="font-size: 12pt;">我们可以先在报表里建立一个数据集,这个数据集的sql就是查询总记录条数的,那么,这个数据集就可以在设计报表模版的时候就写好:</span></pre> 
+  <pre class="programlisting"><span style="font-size: 12pt;"><img class="alignnone size-full wp-image-6502" title="m_11_11_1" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/m_11_11_1.jpg" alt="m_11_11_1" width="555" height="501" /></span></pre> 
+  <pre class="programlisting"><span style="font-size: 12pt;">这样我们就可以在加载报表模版的时候,把这个sql从报表模版里面读取出来,并设置到里面分页标签里面去:</span></pre> 
+  <pre>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;">import com.runqian.report4.model.ReportDefine;</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;">import com.runqian.report4.usermodel.DataSetConfig;</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;">import com.runqian.report4.usermodel.SQLDataSetConfig;</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;">import com.runqian.report4.util.ReportUtils;</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;">public class sqlReadOut {</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;">/**</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;"> * @param args</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;"> * @throws Exception </span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;"> */</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;">public static void main(String[] args) throws Exception {</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;"> // 读取报表模版定义 </span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;"> ReportDefine rd = (ReportDefine)ReportUtils.read(&quot;C:\\Program Files\\reportHome\\webapps\\demo\\reportFiles\\初级教程\\3.3.raq&quot;);</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;"> //取报表模版第一个数据集的对象</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;"> SQLDataSetConfig sdc = (SQLDataSetConfig)rd.getDataSetMetaData().getDataSetConfig(1);</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;"> //得到sql</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;"> String sql = sdc.getSQL();</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;"> System.out.println(sql);</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;">}</span>
+ 
+   
+   
+   </div>
+
+ 
+   
+   
+   <div>
+  
+    
+    
+    <span style="font-size: 12pt;">}</span>
+ 
+   
+   
+   </div>
+</pre> 
+  <pre class="programlisting"><span style="font-size: 12pt;">我们获得sql后,可以传递到前台页面,再接收:</span></pre> 
+  <pre class="programlisting"><span style="font-size: 12pt;">String sql = request.getParameter( &quot;sql&quot; );</span></pre> 
+  <pre class="programlisting">
+<pre class="programlisting"><span style="font-size: 12pt;">&lt;report:extHtml
+name=&quot;report1&quot;
+reportFileName=&quot;api/1.6.raq&quot; //报表名，必填属性
+totalCountExp=&quot;&lt;%=sql%&gt;&quot; //总记录数，必填属性
+//其值为一个润乾的非数据集函数，返回整型数据。如用query执行一个count的sql。
+/&gt;
+</span></pre>
+<pre class="programlisting"><span style="font-size: 12pt;">用同样的方法,还可以设置标签中的其他属性,这样就可以根据不同的报表模版来动态的设置标签的属性了.</span></pre>
+</pre>  
+ </body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>Web应用开发中一个很普遍的需求就是页面的跳转，润乾报表已经为用户提供了如起始页、下一页、上一页、最后页的直接跳转功能。若想实现直接跳转到指定页码的功能，润乾报表也提供了相应的功能，利用js函数_toPage( )应用在报表设计过程中，即可实现上述需求。</p> 
+  <p>一、首先看一下效果图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-1-jf0b4.png" alt="图1.png" width="352" height="262" /></p> 
+  <p>二、实现步骤：</p> 
+  <p>1：首先设计一个报表，报表属性设置为按行分页，每页十五行，如图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-2-jf0b7.png" alt="图2.png" width="309" height="204" /></p> 
+  <p>报表的设计模板如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-3-jf0b7.png" alt="图3.png" width="289" height="60" /></p> 
+  <p>2：配置展现报表的jsp文件，实现页面跳转的需求，具体配置内容如下：</p> 
+  <p>(1)为了实现需求，首先在jsp文件中定义页面跳转的输入框和提交按钮，具体的html代码如下：</p> 
+  <p><span style="color: #0000ff;">&lt;input type=”text” style=”width:30px;” value=”” name=”atpage” id=”atpage”&gt;&lt;input type=”submit” value=”go” onclick=”aa();”&gt;</span></p> 
+  <p>(2) 然后定义提交时调用的js函数，调用了润乾提供的_topage()函数，具体的定义代码如下：</p> 
+  <p><span style="color: #0000ff;">function aa(){<br /> <span style="color: #000000;">//获得定义ID为atpage输入框的值<br /> </span>var tpagenum = document.getElementById(”atpage”).value;<br /> <span style="color: #000000;">//调用润乾内置的_toPage()函数，将获得的值传入即可实现转到某一页<br /> </span>try{report1_toPage(tpagenum);}<br /> catch(e){}<br /> return false;<br /> }</span></p> 
+  <p>(3) 最后在发布报表的tag里面加上userFuncBarElements属性，即将定义好的输入框和提交按钮加到了报表上方的功能条中，具体的代码如下：</p> 
+  <p><span style="color: #0000ff;"><span style="color: #0000ff;">&lt;report:html name=”report1″ reportFileName=”moreData.raq”<br /> userFuncBarElements=”&lt;input type=\”text\” style=\”width:30px;\” value=\”\” name=\”atpage\” id=\”atpage\”&gt;&lt;input type=\”submit\” value=\”go\” onclick=\”aa();\”&gt;”<br /> width=”-1″<br /> /&gt;<br /> </span></span></p> 
+  <p>3 报表的页面展现如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-4-jf0b7.png" alt="图4.png" width="273" height="258" /></p> 
+  <p>这个报表共有57页，在页面跳转对话框中输入1-57之间任意一个数字查询指定页的报表查询结果，如图中输入了12，查询结果如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/10/xn-5-jf0b5.png" alt="图5.png" width="280" height="264" /></p> 
+  <p>这样就实现了这个报表的指定页面跳转功能。</p> 
+  <p>润乾报表内置了很多很实用的内置函数供用户调用，同时也支持js函数的使用，熟练使用润乾报表中的内置函数和js函数可以实现许多诸如此类的常用需求，使开发变得更快速简单。</p>  
+ </body>
+</html>

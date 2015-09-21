@@ -1,0 +1,15 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>有一部分客户在使用润乾报表的时候，希望点击报表中的某一个单元格能够弹出一个网页对话框。不是网页，而是模态窗口。效果如下图所示：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-027n471c8a57.png" alt="" width="516" height="445" /></p> 
+  <p>这种效果可以通过单元格的超链接调用一个js来实现。<br /> <strong>设计一张如下图的报表，名为test.raq：</strong></p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-028n5ec98f2f.png" alt="" width="267" height="125" /></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;"><strong>选中A1单元格，在右边属性栏中找到”超链接”，在其表达式中写：”javascript:showModal(\’showReport.jsp?raq=room2.raq\’,400,300)”，</strong>如下图：</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;"><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-029p1cd29203.png" alt="" width="513" height="130" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;">意思是在一个模态窗口中打开room.raq，并且该窗口的宽度和高度分别是400和300<br /> 其中，showModal()是在发布报表的JSP中定义的，具体内容如下：<br /> function showModal(urlstr,width,height)<br /> {<br /> var me;<br /> me=window;<br /> x=(screen.availWidth-width)/2;<br /> y=(screen.availHeight-height)/2;<br /> dWin=window.showModelessDialog(urlstr,me,’dialogWidth=’+width+’px;dialogHeight=’+height+’px;help:no;status:no;scroll:no;dialogLeft=’+x+’;dialogTop=’+y);<br /> }<br /> <strong>进行如上设置之后，在网页上发布test.raq，点击A1中的”111111111″</strong>效果如下：</span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;"><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-030pc3ad4fe.png" alt="" width="453" height="472" /></span></p> 
+  <p class="MsoNormal"><span style="font-family: 宋体;"><span style="font-family: 宋体;">并且，新窗口中的按钮的功能都是有效的。</span></span></p> 
+  <p class="MsoNormal">&nbsp;</p>  
+ </body>
+</html>

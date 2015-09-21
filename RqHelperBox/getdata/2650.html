@@ -1,0 +1,30 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>单元格是否可写是审核填报人是否有权限对报表做出修改的一个重要属性，同时还是衡量报表工具是否功能完善的一个重要指标。润乾报表不仅可以通过传参数的形式判断传入参数，在报表可写属性中根据不同的参数设置了不同的属性实现权限控制，还可以在页面上通过控件的状态判断单元格是否可写。下面就详细介绍一下如何通过复选框的状态控制单元格是否可写。</p> 
+  <p>这个问题的实现思路是通过复选框的ID或NAME等唯一的属性找到复选框，判断其是否被选中，再根据其状态设置单元格是否可写。</p> 
+  <p>第一步：制作一张填报表，如图所示：</p> 
+  <p>&nbsp;<img title="76" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/76.jpg" alt="76" width="431" height="71" /></p> 
+  <p>将A2单元格设置为html数据类型，内容：=”&lt;input id=testcheck”+row()+” type=’checkbox’&nbsp;&nbsp; name=’checkbox’&nbsp; onClick=’test(”+row()+”);’/&gt;”</p> 
+  <p>将B2单元格设置为可写。</p> 
+  <p>第二步：写JS判断A2的状态并设置B2是否可写。</p> 
+  <p>&lt;script language=”javaScript”&gt;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function test(row){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var check = document.getElementById(”testcheck”);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var flag= row.toString();</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var check = document.getElementById(”testcheck”+flag);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var b = document.getElementById(”report1_B”+flag);</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(check.checked){</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b.writable = true;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //alert(check.value)</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }else{</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b.writable = false;</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p> 
+  <p>&lt;/script&gt;</p> 
+  <p>第三步：发布报表，预览效果。</p> 
+  <p>&nbsp;<img title="77" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/77.jpg" alt="77" width="402" height="301" /></p> 
+  <p>上图实现的效果就是选中第复选款，姓氏列可以编辑，否则不可编辑。</p> 
+  <p>这样就实现通过复选框状态控制单元格可写。需要注意的是，这个报表单元格是扩展的，所以要处理一下checkBox的ID和单元格的ID。如果不是扩展单元格直接将这两个写成固定的就可以了。</p>  
+ </body>
+</html>

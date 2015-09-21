@@ -1,0 +1,6 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>客户需求：<br /> 网格式报表，希望不用在单元格中手动输入每列（也就是对应表中的字段）的字段值，如下图：<br /> &nbsp;<img src="/wp-content/uploads/2011/08/41314890-b97b-4361-b4bf-3729c2547c35.jpg" border="0" alt="" align="middle" /><br /> 而是根据数据库表的字段个数，报表动态扩展列数。<br /> 解决方案：<br /> 1、&nbsp;使用eval()，通过动态解析并计算表达式，实现列的扩展；<br /> 2、&nbsp;使用ds.colCount()，获得数据集的列数；<br /> 3、&nbsp;使用ds.fieldName()，根据列号取数据集的列名。<br /> 使用这三个函数就能实现客户的需求了，具体做法如下：<br /> 我们使用demo中的“订单”这张表为例，SQL语法为：SELECT * FROM 订单，表中的单元格写法如图：<br /> &nbsp;<img src="/wp-content/uploads/2011/08/597f6d5f-1570-44fb-b5a6-c96015f65526.jpg" border="0" alt="" align="middle" /><br /> 最终调整单元格大小后，预览如下图：<br /> &nbsp;<img src="/wp-content/uploads/2011/08/1e5885ec-56e6-4d29-96a1-8400e69dba0a.jpg" border="0" alt="" align="middle" /><br /> </p>  
+ </body>
+</html>

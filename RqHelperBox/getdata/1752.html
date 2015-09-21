@@ -1,0 +1,39 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>参数报表功能因其应用性强，经常在web报表开发中应用到。web报表开发者可以根据自己的需求把需要的数据查询出来，既然用到了查询就少不了需要根据默认条件来查询。因为很多时候我们需要不输入条件就可以看到报表。本文就来介绍两种实现默认查询的方法。</p> 
+  <p>以下面这个报表模板为例来描述这两种方法。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/xn-msvn2d.png" alt="模板.png" width="315" height="52" /></p> 
+  <p>A1: 订单ID<br /> B1: 货主国家<br /> C1: 货主地区<br /> D1: 货主地址<br /> A2: =ds1.Select(订单ID)<br /> B2: =ds1.货主国家<br /> C2: =ds1.货主地区<br /> D2: =ds1.货主地址</p> 
+  <p><strong>第一种方法：参数编辑框”值表达式”中设置默认值</strong></p> 
+  <p>此方法常用于以某个固定值默认查询。</p> 
+  <p>为报表添加一个参数 area，如下图所示。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/25.png" alt="2.png" width="305" height="99" /></p> 
+  <p>浏览报表的时候就会查询出货主地区为华北的数据。</p> 
+  <p><strong>第二种方法：利用动态宏设置默认查询条件</strong></p> 
+  <p>此方法常用于默认不查询任何数据。大致思路： 通过动态宏返回不同的查询条件进行查询，如果选择了查询条件并点击”查询”按钮进行查询，动态宏就返回空值，不影响报表查询，报表根据选择的查询条件来查询；如果没有选择查询条件也没有点击 “查询”按钮，动态宏则返回默认条件，报表就会根据设置的默认条件来查询。</p> 
+  <p><span style="color: #000080;">第一步，设计参数模板</span></p> 
+  <p>为上述的报表木板做参数木板，新建一个填报表，保存为”参数查询_arg.raq”，A1单元格输入的内容：”请选择货主地区：”。给B1单元格设置下拉列表框，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/16.png" alt="1.png" width="276" height="185" /></p> 
+  <p>选中B1单元格，设置变量名为”area”</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/61.png" alt="6.png" width="419" height="90" /></p> 
+  <p><span style="color: #000080;">第二步：判断参数模板中是否选择了条件并点击”查询”</span></p> 
+  <p>在设计器中打开” 参数查询_arg.raq”，给报表追加一列C列，选中C1单元格，设置它的变量名为”selectFlag”，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/71.png" alt="7.png" width="418" height="89" /></p> 
+  <p>设置C1单元格的值为”1″，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/xn-8nr642bgpb95d.png" alt="参数模板.png" width="253" height="42" /></p> 
+  <p>然后把C列的宽度设置为1，把C列隐藏起来，注意这里不是设置列的可视属性。</p> 
+  <p><span style="color: #000080;">第三步：设置动态宏，根据判断结果返回不同的查询条件</span></p> 
+  <p>在设计器中打开报表”参数查询.raq”，增加一个参数”selectFlag”：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/34.png" alt="3.png" width="306" height="97" /></p> 
+  <p>增加动态宏”ifSelect”，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/43.png" alt="4.png" width="281" height="176" /></p> 
+  <p>动态宏的意思是如果用户点击了”查询”按钮，就返回空，宏不起作用；没有点击”查询”按钮，就返回宏里设置的默认查询条件进行查询，例子中返回的是：”1=2″，意思就是不查询任何数据（用户可以根据自己的需要在宏里设置不同的查询条件）。</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/52.png" alt="5.png" width="328" height="143" /></p> 
+  <p><span style="color: #000080;">第四步：预览报表</span></p> 
+  <p>在IE中浏览报表”参数查询.raq”</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/12/8.png" alt="8.png" width="294" height="92" /></p> 
+  <p>从上图中可以看出没有查出任何数据。</p> 
+  <p>对比以上两种方法发现，第一种方法比较适合参数设置默认条件，第二种方法比较适合默认不查出任何数据。以后遇到类似的需求就可以用上面的方法实现了。</p>  
+ </body>
+</html>

@@ -1,0 +1,19 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在通常情况下，做了自动计算就是要让他发挥它的功能，自动按照自己的业务逻辑计算出想要得到的值。但是有一种情况，有时候需要自动计算执行，有时候则不需要，在想要动态控制自动计算是否执行的功能是否可以实现。</p> 
+  <p>一些需求是这样的，数据库中有数量，单价，总价三个字段，当总价的值在数据库中存在，则不需要执行自动计算，而当其没有值的时候就执行自动计算。下面就详细介绍下，如何屏蔽自动计算。</p> 
+  <p>第一步：为报表制作数据集；</p> 
+  <p>&nbsp;<img title="84" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/84.jpg" alt="84" width="538" height="347" /></p> 
+  <p>第二步：制作报表；</p> 
+  <p>&nbsp;<img title="85" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/85.jpg" alt="85" width="430" height="70" /></p> 
+  <p>报表第一行是一个tag，判断当总价有值时显示1，没有值时显示0。这样就相当于做一个标记。然后将A列隐藏就不会影响报表展示的美观性。</p> 
+  <p>第三步：写自动计算表达式；</p> 
+  <p>&nbsp;<img title="86" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/86.jpg" alt="86" width="554" height="377" /></p> 
+  <p>三目运算表达式：&lt;表达式1&gt;?&lt;表达式2&gt;:&lt;表达式3&gt;; “?”运算符的含义是: 先求表达式1的值, 如果为真, 则求表达式2 的值并把它作为整个表达式1的值; 如果表达式1 的值为假, 则求表达式3 的值并把它作为整个表达式1的值.</p> 
+  <p>在这里运用三目运算表达式与第二步中判断数据库中是否有值做标记的方法结合屏蔽自动计算表达式的运算。</p> 
+  <p>第四步：效果，如图所示：</p> 
+  <p>&nbsp;<img title="87" src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/02/87.jpg" alt="87" width="277" height="329" /></p> 
+  <p>注意：自动计算表达式中，不能引用自动计算所在单元格中自身的值。所以三目运算表达式的表达式3中执行的是F2。</p>  
+ </body>
+</html>

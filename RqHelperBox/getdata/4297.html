@@ -1,0 +1,39 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾<strong>报表</strong>在页面端展现时，可生成滚动条锁定表头，通过拖拽滚动条查看相应数据，客户在使用时通常是将<a href="http://www.runqian.com.cn" target="_blank">报表</a>集成到自己的页面中，这样就要求生成滚动条的样式要和客户的显示风格保持一致，需要能定义润乾所生成的滚动条的样式。</p> 
+  <p>解决方案：润乾<strong>报表</strong>在网页端展示时是以纯html形式展现，所以可以通过页面对展现的报表进行控制。</p> 
+  <p>一：在报表设计器中将需要锁定的行列设置为<strong><a href="http://www.runqian.com.cn/archives/4297.html/" target="_blank">报表</a></strong>头和列表头</p> 
+  <p>二：在显示<strong>报表</strong>的jsp的tag标签中增加needScroll=”yes”</p> 
+  <p>三：定义js函数</p> 
+  <p>function testscroll(){</p> 
+  <p>&nbsp;obj = document.getElementsByTagName(“div”);</p> 
+  <p>&nbsp;var tab1 = document.getElementById( “report1″);</p> 
+  <p>&nbsp;for(var i =0 ;i&lt;obj.length;i++)</p> 
+  <p>&nbsp;{</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp; if(obj[i].id == ‘report1_scrollArea’)</p> 
+  <p>&nbsp;&nbsp;&nbsp;&nbsp; {</p> 
+  <p>&nbsp; obj[i].style.scrollbarArrowColor=’#FF0FFF’;</p> 
+  <p>&nbsp; obj[i].style.scrollbarFaceColor=”#F7F7EF”;</p> 
+  <p>obj[i].style.scrollbarHighlightColor=”#FFFFFF”;</p> 
+  <p>obj[i].style.scrollbarShadowColor=”#FFFFFF”;</p> 
+  <p>obj[i].style.scrollbar3dLightColor= “#000000″;</p> 
+  <p>obj[i].style.scrollbarTrackColor= “#FFFFFF”;</p> 
+  <p>obj[i].style.scrollbarDarkShadowColor=”#000000″;</p> 
+  <p>&nbsp;</p> 
+  <p>}</p> 
+  <p>&nbsp;}</p> 
+  <p>}</p> 
+  <p>通过obj[i].id == ‘report1_scrollArea’可得到报表的滚动条区域，通过设置它的style属性就能够更改该滚动条的显示样式。</p> 
+  <p>Crollbar-Face-color:滚动条页面颜色设定；</p> 
+  <p>Scrollbar-Highlight-Color:滚动条斜面和左面颜色设定；</p> 
+  <p>Scrollbar-Shadow-Color:滚动条下斜面和右面颜色设定；</p> 
+  <p>Scrollbar-3Dlight-Color:滚动条上边和左边的边沿颜色设定；</p> 
+  <p>Scrollbar-Arrow-Color:滚动条两端箭头颜色设定；</p> 
+  <p>Scrollbar-Track-Color:滚动条底版颜色设定；</p> 
+  <p>Scrollbar-Darkshadow-Color:滚动条下边和右边的边沿颜色设定</p> 
+  <p>四：在jsp页面加载时执行该js函数即可</p> 
+  <p>显示效果如图：</p> 
+  <p><img title="a11" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a113.jpg" alt="报表效果" width="635" height="427" /></p>  
+ </body>
+</html>

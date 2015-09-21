@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>合并格在报表中很常见，应用非常广泛，可是合并格带来的分页问题却不容忽视。<br /> 首先，对于分组报表来说，合并格往往是分组格，此时如果明细记录非常多，需要分成好几页，用户往往希望浏览的时候，每一页的分组格都显示分组标题，即合并格每一页重复显示。<br /> 程序员很容易就想到了解决办法，分页的时候写点程序对合并格计算一下，计算出每一页的合并格大小，然后把内容复制一下就可以了。<br /> 这个似乎解决起来不是太困难，可是对于另一种情况就比较麻烦了，当合并格的内容不是分组标题，而是大文本时，比如一篇文章写到一个合并格里，此时分页的时候，需要把合并格里的内容进行拆分，分别显示在两页里。<br /> 这个就有点难了，要根据字体字号算出每一页里能放下多少文字，然后才能进行拆分，而如果碰到客户端和服务器的同一字体同一字号的尺寸不一样，麻烦还更大，往往服务器计算的正好，到了客户端不是多了就是少了。<br /> 当然，合并格的麻烦还远不止这些，比如上一页放不下直接推到下一页，既不要拆分也不要重复显示等等，也有可能动态根据格子里的数据来决定分页时的选项，此时需要动态控制了。这些功能如果要自己开发，简直太麻烦了，而且很难事先考虑周到。<br /> 如果采用润乾报表，上述的麻烦不复存在。润乾报表在细节方面考虑很周到，提供了全面的合并格的解决方案，而且设置非常简单。</p> 
+  <p><font color="#ff0000">实现步骤</font>:</p> 
+  <ol> 
+   <li>设计报表</li> 
+   <li>为合并格设置分页属性，很简单的几个打勾选项，也可以编辑表达式</li> 
+  </ol> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/more.png" title="more.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/more.png" alt="more.png" /></a></p> 
+  <p><font color="#ff0000">效果演示</font>:</p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/more1.png" title="more1.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/more1.png" alt="more1.png" /></a></p> 
+  <p align="center">第一页</p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/more2.png" title="more2.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/more2.png" alt="more2.png" /></a></p> 
+  <p align="center">第二页</p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/more3.png" title="more3.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/more3.png" alt="more3.png" /></a></p> 
+  <p align="center">第一页</p> 
+  <p align="center"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/more4.png" title="more4.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/more4.png" alt="more4.png" /></a></p> 
+  <p align="center">第二页</p>  
+ </body>
+</html>

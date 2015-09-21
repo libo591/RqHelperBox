@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>背景说明</p> 
+  <p>Tomcat应用服务器时，以润乾自带的demo为数据源时，配置连接池的方法。</p> 
+  <p><strong>Tomcat 5.0</strong><br /> \conf\Catalina\localhost下demo.xml</p> 
+  <p>&lt;?xml version=’1.0′ encoding=’utf-8′?&gt;<br /> &lt;Context docBase=”demo” path=”/demo” reloadable=”true” crossContext=”true”&gt;<br /> &lt;Resource name=”demo” auth=”Container” type=”javax.sql.DataSource” /&gt;<br /> &lt;ResourceParams name=”demo”&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;username&lt;/name&gt;<br /> &lt;value&gt;<span style="color: #ff0000;">sa</span>&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;password&lt;/name&gt;<br /> &lt;value&gt;&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;driverClassName&lt;/name&gt;<br /> &lt;value&gt;<span style="color: #ff0000;">org.hsqldb.jdbcDriver</span>&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;url&lt;/name&gt;<br /> &lt;value&gt;<span style="color: #ff0000;">jdbc:hsqldb:hsql://localhost/runqianDB</span>&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;<span style="color: #0000ff;">maxActive</span>&lt;/name&gt;<br /> &lt;value&gt;30&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;<span style="color: #0000ff;">maxIdle</span>&lt;/name&gt;<br /> &lt;value&gt;10&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;parameter&gt;<br /> &lt;name&gt;<span style="color: #0000ff;">maxWait</span>&lt;/name&gt;<br /> &lt;value&gt;5000&lt;/value&gt;<br /> &lt;/parameter&gt;<br /> &lt;/ResourceParams&gt;<br /> &lt;/Context&gt;</p> 
+  <p><strong>Tomcat 5.5</strong><br /> \conf\Catalina\localhost下demo.xml</p> 
+  <p>&lt;?xml version=’1.0′ encoding=’utf-8′?&gt;<br /> &lt;Context docBase=”demo” path=”/demo” reloadable=”true” crossContext=”true”&gt;<br /> &lt;Resource name=”demo”<br /> type=”javax.sql.DataSource”<br /> username=”sa”<br /> password=””<br /> driverClassName=”org.hsqldb.jdbcDriver”<br /> url=”jdbc:hsqldb:hsql://localhost/runqianDB”<br /> maxActive=”30″<br /> maxIdle=”10″<br /> maxWait=”5000″<br /> /&gt;<br /> &lt;/Context&gt;</p> 
+  <p><strong>Tomcat 6.0</strong><br /> \conf\Catalina\localhost\（如果没有目录\Catalina\localhost\，手动建此目录）下demo.xml</p> 
+  <p>&lt;?xml version=’1.0′ encoding=’utf-8′?&gt;<br /> &lt;Context docBase=”demo” path=”/demo” reloadable=”true” crossContext=”true”&gt;<br /> &lt;Resource name=”demo”<br /> type=”javax.sql.DataSource”<br /> username=”sa”<br /> password=””<br /> driverClassName=”org.hsqldb.jdbcDriver”<br /> url=”jdbc:hsqldb:hsql://localhost/runqianDB”<br /> maxActive=”30″<br /> maxIdle=”10″<br /> maxWait=”5000″<br /> /&gt;<br /> &lt;/Context&gt;</p> 
+  <p>对于不同的数据库，修改上边的红色字体就可以了。</p> 
+  <p>有几个蓝色字体的是连接数的控制，下边来说一下这三个的含义。</p> 
+  <p>1．maxActive 是最大激活连接数，这里取值30个，表示同时最多有30个与数据库的连接，设为0表示无限制；<br /> 2．maxIdle 是最大空闲连接数，这里取值10个，表示即使没有连接请求时，依然可以保持10个空闲的连接，而不被清除，随时处于待命状态。设为0表示无限制；<br /> 3．maxWait 最大建立连接等待时间。如果超过此时间将接到异常。这里取值5000，即表示5秒后超时。也可以取值-1，表示无限等待，直到超时为止。</p>  
+ </body>
+</html>

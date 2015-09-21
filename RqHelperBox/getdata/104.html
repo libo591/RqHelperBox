@@ -1,0 +1,27 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span style="FONT-FAMILY: 宋体"><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题<span lang="EN-US" xml:lang="EN-US">: 
+      <o:p /></span></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">操作系统<span lang="EN-US" xml:lang="EN-US">:AIX</span>系统。<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">部署服务器<span lang="EN-US" xml:lang="EN-US">:websphere V6.0 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">部署润乾应用时<span lang="EN-US" xml:lang="EN-US">websphere</span>必须得开<span lang="EN-US" xml:lang="EN-US">JIT</span>，起动服务器时出现如下错误提示<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">/opt/IBM/WebSphere64/AppServer/bin/startServer.sh[55]: 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">SKIP{com/runqian/report4/view/html/HtmlCell}{getStyle}:</span> <span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">找不到。<span lang="EN-US" xml:lang="EN-US"> 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US"> 
+    <o:p /></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">问题解决<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体">在服务器启动时设置<span lang="EN-US" xml:lang="EN-US">: 
+     <o:p /></span></span></p> 
+  <p><span lang="EN-US" style="FONT-SIZE: 9pt; FONT-FAMILY: 宋体" xml:lang="EN-US">JITC_COMPILEOPT=COMPILING:SKIP{com/runqian/report4/view/html/HtmlCell}{getStyle} 
+    <o:p /></span></p>  
+ </body>
+</html>

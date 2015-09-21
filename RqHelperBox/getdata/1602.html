@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>报表展现在web页面以后，有时需要获取某单元格的值。润乾报表中可以通过在jsp页面中设定JavaScript函数来实现这个功能。下面就通过一个下例子简单介绍一下如何通过JavaScript函数获取Web报表单元格的值。</p> 
+  <p>首先，将发布报表的jsp页面中的报表标签&lt;report:html&gt;放在一个&lt;table&gt;标签中，如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/1-0016.png" alt="1.png" width="450" height="161" /></p> 
+  <p>其中&lt;report:html&gt;中的name属性可用来定位单元格，例如：report1_A1就代表的是报表的A1单元格。</p> 
+  <p>然后，在发布报表的jsp页面中增加一段获得单元格值JavaScript函数，函数如下</p> 
+  <p><span style="color: #0000ff;">&lt;script language=”javascript”&gt;<br /> function _getDispValueByName(){<br /> var cell = document.getElementById(”report1_A1″); //通过ID去定位单元格位置<br /> alert(cell.value); //用alert()函数弹出这个单元格的值<br /> }<br /> &lt;/script&gt;</span></p> 
+  <p>为了演示效果，我们在发布报表的jsp页面上增加一个按钮，来触发这个JavaScript函数，增加按钮的代码如下</p> 
+  <p><span style="color: #0000ff;">&lt;input type=”button” onclick=_getDispValueByName() value=”check”&gt;</span></p> 
+  <p>在网页中查看报表，效果如下图</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2009/09/2-0014.png" alt="2.png" width="597" height="268" /></p> 
+  <p>这样就实现了通过javaScript函数获取web报表单元格值的功能。</p>  
+ </body>
+</html>

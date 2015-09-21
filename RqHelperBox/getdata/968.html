@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>通过weblogic提供的console界面，可以很容易地将润乾报表应用部署到weblogic10上，但有些用户反应出现了中文显示乱码的问题，而该应用在润乾内置的tomcat下时是正常的。经过细致的排查发现，原来是weblogic本身设置的问题。下面就给出遇到此问题时的解决办法。</p> 
+   <p>① 在Weblogic.xml文件的&lt; jsp-descriptor &gt;中加入：</p> 
+   <p>&lt; jsp-param &gt; &lt; param-name &gt;encoding&lt; /param-name &gt;<br /> &lt; param-value &gt;GBK&lt; /param-value &gt;<br /> &lt; /jsp-param &gt;</p> 
+   <p>指定JSP文件中采用的字符集，在JSP文件中的&lt; %@ page contentType=”text/html; charset=GBK” % &gt;会覆盖该设置。</p> 
+   <p>② 在Weblogic.xml文件的&lt; jsp-descriptor &gt;中加入：</p> 
+   <p>&lt; jsp-param &gt;<br /> &lt; param-name &gt;compilerSupportsEncoding&lt; /param-name &gt;<br /> &lt; param-value &gt;true&lt; /param-value &gt;<br /> &lt; /jsp-param &gt;</p> 
+   <p>如果为TRUE，指定在编译JSP文件时，采用在JSP文件中&lt; %@ page contentType=”text/html; charset=GBK” % &gt;或&lt; jsp-descriptor &gt;中定义的encoding参数中定义的字符集进行编码，如果为FALSE，则采用JVM中默认指定的字符集进行编码。</p> 
+   <p>③ Weblogic Server需要把HTTP request(GET 和POST)中的数据从它的原始编码转化为Unicode，以便Java servlet API进行处理，为了做这种转换，Weblogic Server需要知道HPPT request中的数据的编码方式。这可以通过在Weblogic.xml的&lt; context-param &gt;中设置：</p> 
+   <p>&lt; input-charset &gt;<br /> &lt; resource-path &gt;/&lt; /resource-path &gt;<br /> &lt; java-charset-name &gt;GBK&lt; /java-charset-name &gt;<br /> &lt; /input-charset &gt;</p> 
+   <p>经过以上三个步骤的设置后，中文乱码问题解决。</p> 
+  </div>  
+ </body>
+</html>

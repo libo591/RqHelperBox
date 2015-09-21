@@ -1,0 +1,24 @@
+<html>
+ <head></head> 
+ <body> 
+  <p><span>在一些日常财务统计<strong>报表设计</strong>中，常常会遇到这样一个问题，输入一个日期，要把这个日期所在的月份中每一天都要列出来，然后在每一天后面填写当天的数据。由于这些日期并不是来自数据库中的真实数据，所以一般只能靠事先写定来完成。可这样带来的弊端就是需要做的工作量非常的大且容易出错，那么如何来利用润乾报表来完成这样的功能呢？</span></p> 
+  <p><span>在这里，就要利用到润乾内置的时间日期函数daysInMonth()和monthbegin()了。先介绍一下这两个函数：</span></p> 
+  <p><span>daysInMonth()：&nbsp;</span></p> 
+  <p><span>函数说明：<br /> &nbsp;&nbsp;获得指定日期所在月的天数<br /> 语法：<br /> &nbsp;&nbsp;daysInMonth(dateExp)&nbsp;&nbsp;<br /> 参数说明：<br /> &nbsp;&nbsp;dateExp&nbsp;&nbsp;&nbsp;日期或标准日期格式的字符串，<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如：yyyy-MM-dd HH:mm:ss，yyyy-MM-dd，HH:mm:ss<br /> 返回值：<br /> &nbsp;&nbsp;整数&nbsp;&nbsp;<br /> 示例：<br /> &nbsp;&nbsp;例1：daysInMonth(datetime2(“19800227″,”yyyyMMdd”))&nbsp;&nbsp;&nbsp; 返回：29<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br /> &nbsp;&nbsp;例2：daysInMonth(“1972-11-08 10:20:30″)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 返回：30<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br /> &nbsp;&nbsp;例3：daysInMonth(dateTime(“2006-01-15 10:20:30″))&nbsp;&nbsp;&nbsp; 返回：31</span></p> 
+  <p><span style="font-size: small;">monthbegin()：</span></p> 
+  <p><span style="font-size: small;">函数说明：<br /> &nbsp;&nbsp;取得指定日期所在月的月首<br /> 语法：<br /> &nbsp;&nbsp;monthbegin( dateExp )<br /> 参数说明：<br /> &nbsp;&nbsp;dateExp&nbsp;&nbsp;日期或标准日期格式的字符串，<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如：yyyy-MM-dd HH:mm:ss、yyyy-MM-dd 或 HH:mm:ss&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br /> 返回值：<br /> &nbsp;&nbsp;日期时间型&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br /> 示例：<br /> &nbsp;&nbsp;例1：monthbegin(datetime2(“19800227″,”yyyyMMdd”))&nbsp;&nbsp;&nbsp; 返回：1980-02-01 00:00:00<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br /> &nbsp;&nbsp;例2：monthbegin(“1972-11-08 10:20:30″)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 返回：1972-11-01 10:20:30<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br /> &nbsp;&nbsp;例3：monthbegin(dateTime(“2006-01-15 13:20:30″))&nbsp;&nbsp;&nbsp; 返回：2006-01-01 13:20:30</span></p> 
+  <p><span style="font-size: small;"><strong>第一步：设置报表参数，此参数用来输入任意一个日期。</strong></span></p> 
+  <p><span style="font-size: small;"><a href="http://www.runqian.com.cn/archives/4241.html/a1-9" rel="attachment wp-att-4242"><img class="aligncenter size-full wp-image-4242" title="a1" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a18.jpg" alt="" width="637" height="416" /></a></span></p> 
+  <p>&nbsp;</p> 
+  <p><span><strong>第二步：利用daysInMonth()和to()函数来制造扩展单元格：</strong></span></p> 
+  <p><span><br /> <a href="http://www.runqian.com.cn/archives/4241.html/a2-5" rel="attachment wp-att-4243"><img class="aligncenter size-full wp-image-4243" title="a2" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a23.jpg" alt="" width="388" height="181" /></a><br /> 其中：A3单元格表达式为：=to(1,daysInMonth(@datetime))，利用传进来的参数算出这个日期所在的月份有多少天，然后用to函数从第一天到最后一天进行扩展。</span></p> 
+  <p><span style="font-size: small;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; B3单元格的表达式为：=left(str(monthbegin(@datetime)),8)+A3，根据参数的值用monthbegin()函数算出这个月的开始日期，并拼接上A3单元格的值，得到相应日期。</span></p> 
+  <p><strong><span>第三步：对<a href="http://www.runqian.com.cn" target="_blank">报表</a>进行一些美化。</span></strong></p> 
+  <p><span><a href="http://www.runqian.com.cn/archives/4241.html/a3-4" rel="attachment wp-att-4244"><img class="aligncenter size-full wp-image-4244" title="a3" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a33.jpg" alt="" width="442" height="182" /></a><br /> 其中，在第三行的背景色属性中，写入表达式：if(day(@datetime) == A3,-52429,-1)，这样就可以达到当前输入的日期所在的行变成红色，其他行不变色，达到提示作用。</span></p> 
+  <p><span style="font-size: small;">注：day()函数是返回所输入的日期在本月中是几号。</span></p> 
+  <p><span style="font-size: small;">我们来看一下最终效果：</span></p> 
+  <p>&nbsp;</p> 
+  <p><a href="http://www.runqian.com.cn/archives/4241.html/a4-4" rel="attachment wp-att-4245"><img class="aligncenter size-full wp-image-4245" title="a4" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a43.jpg" alt="" width="575" height="233" /></a></p> 
+  <p><a href="http://www.runqian.com.cn/archives/4241.html/a5-4" rel="attachment wp-att-4246"><img class="aligncenter size-full wp-image-4246" title="a5" src="http://www.runqian.com.cn/wp-content/uploads/2012/04/a53.jpg" alt="" width="365" height="482" /></a></p>  
+ </body>
+</html>

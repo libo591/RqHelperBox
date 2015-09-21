@@ -1,0 +1,86 @@
+<html>
+ <head></head> 
+ <body> 
+  <p class="MsoNormal"><span><strong>需求背景：</strong></span></p> 
+  <p class="MsoNormal"><span>对于行式报表可利用其提供的默认的插入，删除，追加行功能完成数据库记录的增删改操作。对于卡片式报表，一条记录在不固定行上进行显示，要实现对记录的增删改操作，需要建立不同的报表模板来实现。客户需求为根据用户输入的</span><span>id</span><span>，查找数据库表，如果有记录则显示查询结果，并可进行修改和删除。若无</span><span>id</span><span>对应的记录，则允许用户新建，用户录入数据提交会在数据库表中插入新记录。</span></p> 
+  <p class="MsoNormal">&nbsp;</p> 
+  <p class="MsoNormal"><span><strong>实现思路：</strong></span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>1．<span style="font: 7pt 'Times New Roman';"></span></span></span><span>卡片式报表的新增和修改，用参数表单</span><span>+</span><span>卡片式填报表实现。</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>2．<span style="font: 7pt 'Times New Roman';"></span></span></span><span>卡片式报表的删除可单独建立一张报表，该报表接收传入的</span><span>id</span><span>参数，并根据</span><span>id</span><span>删除数据库相应记录。</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;">&nbsp;</p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span></span></p> 
+  <p class="MsoNormal"><span><strong>具体实现：</strong></span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>1.<span style="font: 7pt 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span>卡片式报表新增和修改功能实现：</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>a.</span><span>报表模板：</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>报表参数</span><span>spid</span><span>，该参数为用户输入的参数。数据集会根据该参数检索数据库表，查询是否有相应记录。</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>模板设计如下：</span></p> 
+  <p></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><a name="OLE_LINK40"><span><img src="/wp-content/uploads/2011/09/1b3ec5a1-f8ec-43c1-baa3-de089fc1af6b.jpg" alt="" width="554" height="356" /></span></a></p> 
+  <p class="MsoListParagraph" style="text-align: left; text-indent: 0cm; margin-left: 18pt;"><span>其中第二行的隐藏行用表达式控制，</span><span>if(ds1.count()==0,false,true)</span><span>，如果没有<span>找到相应记录显示“编码小票不存在”，用户可填写单元格值，利用填报功能在数据表中插入相应记录。如果有记录则显示该记录，用户修改单元格值后，利用填报功能可在数据库中更新相应记录。</span></span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>第三行的隐藏行属性同样用表达式控制，</span><span>if(ds1.count()&gt;0,false,true),</span><span>如果数据库中查找到相应记录，显示</span><span>”</span><span>删除</span><span>”</span><span>按钮，可通过按钮删除该条记录。</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>N3</span><span>单元格的超链接属性：</span><span>“javascript:del(“+A6+”,”+N1+”)”</span><span>，其中</span><span>del</span><span>函数在报表展现页面中定义。</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>该报表为普通填报表，设计步骤不详细描述。</span></p> 
+  <p>&nbsp;</p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>b.</span><span>报表发布页面部分代码：</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>……</span></p> 
+  <p class="MsoNormal" style="text-indent: 31.5pt;"><span>&lt;script language=”javascript”&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 31.5pt;"><span>//</span><span>删除按钮调用的</span><span>js</span><span>函数</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>function del(spid,bxmpid)</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>{</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>if(confirm(“</span><span>确定要删除记录吗</span><span>?”))</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>window.open(“BMXP_Delete.jsp?raq=delete_BMXP.raq&amp;spbm=”+spid+”&amp;bmxp_id=”+bxmpid);</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>}</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;/script&gt;</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>……</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 17.95pt;"><span>//</span><span>分别发布参数表单及结果报表模板</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>&lt;report:param name=”form1″ paramFileName=”BMXP_result_arg.raq”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>needSubmit=”no”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>params=”&lt;%=param.toString()%&gt;”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>/&gt;</span></p> 
+  <p class="MsoNormal" style="text-indent: 15.75pt;"><span>……</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>&lt;report:html name=”report1″ reportFileName=”BMXP_result.raq”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>funcBarLocation=”top”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>needPageMark=”yes”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>generateParamForm=”no”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>needImportExcel=”yes”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>params=”&lt;%=param.toString()%&gt;”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>width=”-1″</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>exceptionPage=”/reportJsp/myError2.jsp”</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>/&gt;</span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>2.<span style="font: 7pt 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span>卡片式报表删除功能实现</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>a.</span><span>模板设计：</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>报表参数：</span><span>spbm</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><span></span></span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><img src="/wp-content/uploads/2011/09/7015c5dd-ef0d-4c9a-ba9e-fb97953da688.jpg" alt="" width="190" height="75" /><span>&nbsp;</span></span></p> 
+  <p>&nbsp;<br /> &nbsp;</p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>其中</span><span>A1</span><span>单元格：</span><span>=query2(“wfdb1″,”delete from bi_bmxp where bmxp_spdm=?”,spbm)</span><span>，调用</span><span>query2</span><span>函数执行</span><span>sql</span><span>语句根据传入</span><span>id</span><span>删除数据库相应记录</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>b.</span><span>删除页面部分代码：</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>……</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>&lt;body topmargin=0 leftmargin=0 rightmargin=0 bottomMargin=0 onunload=”btn_Onload();”&gt;</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>&lt;script language=”JavaScript” type=”text/javascript”&gt;</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>&lt;!–</span><span>当前页面关闭时，刷新父窗口内容，可以看到记录结果已经删除。</span><span>–&gt;</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>function btn_Onload(){</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span></span>window.opener.location.reload();</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span></span>window.close();</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span>}</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;">&nbsp;</p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;">&nbsp;</p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>&lt;/script&gt;</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>……</span></p> 
+  <p class="MsoNormal" style="text-indent: 31.5pt;"><span>&lt;report:html name=”report1″ reportFileName=”delete_BMXP.raq”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>funcBarLocation=”top”</span></p> 
+  <p class="MsoListParagraph" style="margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>exceptionPage=”/reportJsp/myError2.jsp”</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>/&gt;</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>当然删除功能可以用</span><span>java</span><span>代码来实现，本例是利用报表模板实现了，避免了自己编写代码。</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><strong></strong></span>&nbsp;</p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><strong>实现效果：</strong></span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>1.</span><span>当输入代码，数据库没有相应记录，提示“编码小票不存在”，用户填入数据点提交可以在数据库中新增记录。</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><img src="/wp-content/uploads/2011/09/6b706f89-71de-46f9-a5ba-4641d8aceab4.jpg" alt="1.bmp" width="554" height="414" /></span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span>2. </span><span>当输入代码，数据库有相应记录，用户可修改数据，点提交可以在数据库中更新记录。</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><img src="/wp-content/uploads/2011/09/82042e7c-fdff-44f7-bd38-e1cdf5d19072.jpg" alt="2.bmp" width="554" height="429" /></span></p> 
+  <p class="MsoListParagraph" style="text-indent: -18pt; margin-left: 18pt;"><span><span>1.<span style="font: 7pt 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span>在有相应记录情况下，点击上图中的删除，会删除相应记录，关闭窗口会刷新原来查询的页面，原来的页面会显示“该编码小票不存在！”</span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><img src="/wp-content/uploads/2011/09/ede91171-7eea-43b5-8d64-03022175891e.jpg" alt="" width="447" height="311" /></span></p> 
+  <p class="MsoListParagraph" style="text-indent: 0cm; margin-left: 18pt;"><span><img src="/wp-content/uploads/2011/09/c690741c-9d08-4e26-8401-60f6faead2e1.jpg" alt="3.bmp" width="554" height="430" /></span></p> 
+  <p>&nbsp;<br /> </p>  
+ </body>
+</html>

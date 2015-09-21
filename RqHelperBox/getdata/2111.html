@@ -1,0 +1,17 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>润乾报表为单元格提供了多数数据类型,分别有文本、图片字段、图片文件、HTML。也就是说，单元格里的内容可以是文字、HTML元素、也可以是图片，图片内容可以来自文件，也可以来自数据库中的字段。</p> 
+  <p>如果想在HTML数据类型的单元格中引用其他单元格的值，要如何实现呢？</p> 
+  <p>来看下面的例子：</p> 
+  <p>第一步，修改单元格数据类型为HTML：</p> 
+  <p>假如要引用A1单元格的值：</p> 
+  <p>第二步，在jsp文件中，写一段js代码，来获取A1单元格的值：</p> 
+  <p><script language="”javascript”"> 
+var a = document.getElementById(”report1″).rows[0].cells[0].innerText;//取到A1单元格的值,这里用的是table的方法,即rows[0].cells[0]代表的就是A1单元格. 
+document.getElementById(”aa”).value = a;//根据id来获取到button的value,并把A1单元格的值赋值给它. 
+</script></p> 
+  <p>由于初始状态下<br /> <input type="”button”" id="”aa”" value="”&quot;" />中,按钮的value为空那么在页面展现后，value就被赋值成A1单元格的值。</p> 
+  <p>通过类似的方式，可以根据不同的单元格的值，在单元格里来展现丰富多样的html代码了。</p>  
+ </body>
+</html>

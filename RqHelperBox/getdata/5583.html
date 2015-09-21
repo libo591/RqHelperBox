@@ -1,0 +1,9 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>关于润乾报表集成fusionMaps，经过验证是可行的。 <br />实际使用时的方法是： <br />1、在数据库里定义”地图节点id、数据、超链接” <br />2、报表设计器里写一段执行fusionMaps的js代码（可以写个自定义函数，或更友好的界面）。 <br />3、在报表的jsp里加另一个js文件。</p> 
+  <p>在报表中生成的js代码形如：</p> 
+  <p>&lt;div id=”mapdiv” align=”center”&gt; <br />FusionMaps. <br />&lt;/div&gt; <br />&lt;script type=”text/javascript”&gt; <br />var map = new FusionMaps(“./FCMap_China2.swf”, “Map1Id”, “690″, “430″, “0″, “0″); <br />map.setDataXML(“&lt;map showCanvasBorder=’1′ canvasBorderColor=’f1f1f1′ canvasBorderThickness=’2′ borderColor=’00324A’ fillColor=’F0FAFF’ hoverColor=’C0D2F8′&gt;&lt;data&gt; &lt;entity id=’CN.HB’ value=’515′ displayValue=’河北省’ link=’http://www.baidu.com’ toolText=’河北tip’ /&gt;&lt;entity id=’CN.SX’ value=’373′ /&gt;&lt;/data&gt;&lt;/map&gt;”); <br />map.render(“mapdiv”); <br />&lt;/script&gt;</p> 
+  <p>目前可实现的功能包括：超链接、定义真实值、显示值、提示信息。定义图上各要素的风格。 <br />通过深入开发应可实现：在图上做点状标记（圆、方、三角）</p>  
+ </body>
+</html>

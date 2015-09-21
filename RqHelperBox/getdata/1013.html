@@ -1,0 +1,21 @@
+<html>
+ <head></head> 
+ <body> 
+  <div class="entry"> 
+   <p>在使用润乾报表设计填报表时，若想使用checkbox样式非常简单，只需选中该单元格，右键 选择填报属性，将编辑风格设置为checkbox的样式就可以了。但是，如果想在浏览式报表中使用checkbox又该怎么做呢?浏览式报表没有填报属性 可以设置，所以要使用复选框的功能，就需要自己进行一些设计。</p> 
+   <p>润乾报表的单元格有一个特性，就是可以设定单元格的数据类型，我们通常编辑单元格的值和表达式时，默认的单元格数据类型是文本。上面所说的情况则要用到html类型的单元格。下面给出一个例子来实际说明一下用法。</p> 
+   <p>一个简单的报表，有三列，分别为姓氏、地区、城市，现在希望在前面增加一列复选框，可以自由选中需要的行，并可正确传递选中的项的值（这里假设选中某行之后取姓氏的值）。</p> 
+   <p>设计步骤：</p> 
+   <p>1、在姓氏列前增加一列，将对应单元格的数据类型设置为html，再使用html语法设计出checkbox样式风格：=”&lt;input type=’checkbox’ name=’checkbox’ value=’”+ds1.select(姓氏)+”‘/&gt;”。如下图所示：</p> 
+   <p><img src="../know-how/wp-content/uploads/2009/05/16.png" alt="1.png" width="471" height="305" /></p> 
+   <p>2、发布到网页上，可以看到，第一列出现了复选框。</p> 
+   <p><img src="../know-how/wp-content/uploads/2009/05/24.png" alt="2.png" height="305" /></p> 
+   <p>3、现在我们再来添加一个按钮，同样也用html类型的格子来设计，使得点击按钮之后会弹出提示框，其上显示复选框选中的所有项。设计如下：</p> 
+   <p><img src="../know-how/wp-content/uploads/2009/05/33.png" alt="3.png" height="310" /></p> 
+   <p>&lt;script&gt;<br /> function test1() {<br /> var val = [];<br /> var len = checkbox.length;<br /> for(i=0; i&lt;len; i++)<br /> {<br /> if (checkbox[i].checked)<br /> {<br /> val[val.length] = checkbox[i].value;<br /> }<br /> }<br /> return alert((val.length)?’选中的项为：’+val:’未选中任何项’);<br /> }<br /> &lt;/script&gt;</p> 
+   <p>4、最后，用含有上段js的jsp发布该报表即可。如下图所示，利用复选框进行选择，之后点击确定按钮，会弹出选中的项。</p> 
+   <p><img src="../know-how/wp-content/uploads/2009/05/43.png" alt="4.png" height="348" /></p> 
+   <p><span lang="EN-US"></span></p> 
+  </div>  
+ </body>
+</html>

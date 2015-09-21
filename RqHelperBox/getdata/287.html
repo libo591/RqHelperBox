@@ -1,0 +1,6 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>问题:<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在做润乾报表时，使用了一个自定义函数，结果运行时报如下异常Unsupported major.minor version 49.0<br /> 问题解决:<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这个错误是由于低版本的 JVM 无法加载高版本的 class 文件造成的.(比如:jvm是1.4,而classes文件是用1.5编译的.),只要将JDK1.5的LIB下面的TOOLS.JAR覆盖TOMCAT5.0目录/common/lib下面的tools.jar,然后重启TOMCAT5.0就可以了</p>  
+ </body>
+</html>

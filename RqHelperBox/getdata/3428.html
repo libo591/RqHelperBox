@@ -1,0 +1,16 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>在某些时候，数据库中的字段中的数据比较特殊。如一个varchar类型的字段”城市编号”，该字段中的数据是这样：”上海,,123″,”杭州,,123″。像这种包含了汉字，逗号和数字且有一定规律的字段，在报表中取数的时候可能只需要将前面的汉字展现出来，后面的逗号和数字无需展现。<br /> 那么该如何来截取这前面的一部分汉字呢？<br /> 这种功能可以通过split()和隐藏行来实现。下面具体看一下实现步骤。<br /> 首先定义一张报表，如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-004n53ae8d78.png" alt="" width="370" height="86" /></p> 
+  <p>其中，ds1数据集中的数据如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-005p18fdef84.png" alt="" width="112" height="110" /></p> 
+  <p>在A1中写：=ds1.select(城市编号,false)，将城市编号查询出来，<br /> 在B1中写：=split(A1,”,”,true)，将A1中的数据解析成多个子串，并且也解析逗号。<br /> 预览效果如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-006p2cb566d1.png" alt="" width="481" height="319" /></p> 
+  <p>然后选中B1单元格，在右边属性栏中找到”隐藏行”，在其表达式中写：<br /> if(row()%3==0 || value()==””,true,false)，意思是将行号为3的倍数的行和单元格值为空的行隐藏起来。<br /> 那么，这 时候预览效果如下图：</p> 
+  <p><img src="http://www.runqian.com.cn/know-how/wp-content/uploads/2011/03/zrclip-007n28a2bef1.png" alt="" width="481" height="144" /></p> 
+  <p>但是需要注意一点：如果报表有报表头，或者这些数据并不是位于报表中的第一行，那么隐藏行表达式中的”row()%3==0″中的3需要根据实际情况而改变。<br /> 以下是split()说明：<br /> 函数说明：<br /> 将字符串按分割符分割成多个子串</p> 
+  <p>语法：<br /> split( srcExp,sepExp{,boolExp})</p> 
+  <p>参数说明：<br /> srcExp 待分割的字符串表达式<br /> sepExp 分隔符表达式<br /> boolExp bool型，是否解析引号、括号里的分隔符，<br /> 为true时解析，为false时不解析，缺省为false</p>  
+ </body>
+</html>

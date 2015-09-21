@@ -1,0 +1,8 @@
+<html>
+ <head></head> 
+ <body> 
+  <p>有些报表用户在开发的时候没有配置数据源和连接池，而是通过jdbc的方式直接连接的数据库，这样的项目在集成润乾的产品时，&lt;reportConfig&gt;&lt;/reportConfig&gt;之间加入如下配置：</p> 
+  <p align="left"><a href="http://www.runqian.com.cn/wp-content/uploads/2008/07/jdb1.png" title="jdb1.png"><img src="http://www.runqian.com.cn/wp-content/uploads/2008/07/jdb1.png" alt="jdb1.png" /></a></p> 
+  <p>其中数据库类型的取值参考如下:<br /> com.runqian.base4.util.DBTypes 的取值<br /> public static final int ACCESS 7<br /> public static final int DB2 9<br /> public static final int ESSBASE 101<br /> public static final int FOXBAS 8<br /> public static final int FOXPRO 6<br /> public static final int INFMIX 5<br /> public static final int KINGBASE 11<br /> public static final int MYSQL 10<br /> public static final int OLAP 100<br /> public static final int ORACLE 1<br /> public static final int SQLANY 4<br /> public static final int SQLSVR 2<br /> public static final int SYBASE 3<br /> public static final int UNKNOWN 0<br /> 这样可以解决jdbc的直连问题，但是这样的方式降低了报表计算的效率，建议报表用户采取配置数据源和连接池的方式部署自己的应用。</p>  
+ </body>
+</html>

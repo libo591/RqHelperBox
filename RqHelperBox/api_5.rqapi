@@ -1,0 +1,11 @@
+/**
+ * excel导入
+ */
+private static void excelImport() throws Exception {
+	ExcelImporter ei = new ExcelImporter("F:/aa.xls");
+	int sheetcount = ei.getReportCount();
+	for(int i=0;i<sheetcount;i++){
+		IReport report = ei.getReport(i);
+		//其他操作
+	}
+}
